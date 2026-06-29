@@ -24,7 +24,7 @@
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
             width: 100%;
-            max-width: 850px;
+            max-width: 950px;
             padding: 25px;
             box-sizing: border-box;
         }
@@ -110,10 +110,10 @@
     <div class="btn-group">
         <button class="btn-reset" onclick="resetData()">Reset</button>
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
-        <button class="btn-copy" onclick="salinHasil()">Salin</button>
+        <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
     </div>
 
-    <label>Hasil Konversi:</label>
+    <label>Hasil Konversi (Urutan Terbalik - 5 Kolom Bersih):</label>
     <div class="table-container">
         <table id="resultTable">
             <thead>
@@ -121,6 +121,7 @@
                     <th>WAKTU</th>
                     <th>Used ID</th>
                     <th>Tujuan Bank</th>
+                    <th>Credit</th>
                     <th>Jumlah</th>
                 </tr>
             </thead>
@@ -136,14 +137,17 @@
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; 
-        hasilTeksUntukDisalin = "WAKTU\tUsed ID\tTujuan Bank\tJumlah\n"; 
+        hasilTeksUntukDisalin = ""; 
 
         if (!input) {
             alert('Silakan tempel log transaksi terlebih dahulu!');
             return;
         }
 
-        const baris = input.split('\n');
+        let baris = input.split('\n');
+        baris.reverse(); // Membalikkan urutan (bawah jadi atas)
+
+        let barisDataDisalin = [];
 
         baris.forEach(line => {
             if (line.trim() === '') return;
@@ -155,31 +159,36 @@
                 const waktu = fullDateTime.includes(' ') ? fullDateTime.split(' ')[1] : fullDateTime;
                 const userId = kolom[2];
                 const tujuanBank = kolom[4];
-                const jumlah = kolom[6];
+                const creditStatus = ""; // Dikosongkan total tanpa tanda apapun sesuai permintaan
+                const jumlah = kolom[6]; 
 
+                // Tambah ke tabel visual
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                hasilTeksUntukDisalin += `${waktu}\t${userId}\t${tujuanBank}\t${jumlah}\n`;
+                // Masukkan ke memori salin (kolom credit tetap ikut tapi kosong)
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
             }
         });
+
+        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        hasilTeksUntukDisalin = "";
+        hasilTeksUntilDisalin = "";
     }
 
     function salinHasil() {
-        if (!hasilTeksUntukDisalin || hasilTeksUntukDisalin.trim() === "WAKTU\tUsed ID\tTujuan Bank\tJumlah") {
+        if (!hasilTeksUntukDisalin) {
             alert('Belum ada data yang dikonversi untuk disalin!');
             return;
         }
         
-        navigator.clipboard.writeText(hasilTeksUntukDisalin.trim()).then(() => {
-            alert('Hasil konversi berhasil disalin!');
+        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
+            alert('Data transaksi 5 kolom berhasil disalin (Kolom Credit kosong)!');
         }).catch(err => {
             alert('Gagal menyalin otomatis, silakan coba lagi.');
         });
