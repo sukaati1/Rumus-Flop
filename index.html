@@ -145,7 +145,7 @@
         }
 
         let baris = input.split('\n');
-        baris.reverse(); // Membalikkan urutan (bawah jadi atas)
+        baris.reverse(); 
 
         let barisDataDisalin = [];
 
@@ -159,15 +159,13 @@
                 const waktu = fullDateTime.includes(' ') ? fullDateTime.split(' ')[1] : fullDateTime;
                 const userId = kolom[2];
                 const tujuanBank = kolom[4];
-                const creditStatus = ""; // Dikosongkan total tanpa tanda apapun sesuai permintaan
+                const creditStatus = ""; 
                 const jumlah = kolom[6]; 
 
-                // Tambah ke tabel visual
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Masukkan ke memori salin (kolom credit tetap ikut tapi kosong)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
             }
         });
@@ -178,7 +176,7 @@
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        hasilTeksUntilDisalin = "";
+        hasilTeksUntukDisalin = "";
     }
 
     function salinHasil() {
@@ -187,11 +185,8 @@
             return;
         }
         
-        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            alert('Data transaksi 5 kolom berhasil disalin (Kolom Credit kosong)!');
-        }).catch(err => {
-            alert('Gagal menyalin otomatis, silakan coba lagi.');
-        });
+        // Langsung menyalin tanpa memunculkan alert pop-up lagi
+        navigator.clipboard.writeText(hasilTeksUntukDisalin);
     }
 </script>
 </body>
