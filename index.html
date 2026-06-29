@@ -7,10 +7,10 @@
     <style>
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(rgba(10, 10, 10, 0.88), rgba(20, 5, 0, 0.95)), 
-                        url('https://images.alphacoders.com/132/1322432.png') no-repeat center center fixed;
+            background: linear-gradient(rgba(15, 15, 20, 0.85), rgba(10, 5, 0, 0.95)), 
+                        url('https://images.alphacoders.com/135/1351240.png') no-repeat center center fixed;
             background-size: cover;
-            color: #e5e7eb;
+            color: #f3f4f6;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -19,55 +19,55 @@
             min-height: 100vh;
         }
         .container {
-            background: rgba(18, 18, 18, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 69, 0, 0.3);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 69, 0, 0.15);
+            background: rgba(20, 20, 25, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 102, 0, 0.25);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.15);
             width: 100%;
             max-width: 950px;
-            padding: 30px;
+            padding: 35px;
             box-sizing: border-box;
         }
         h1 {
             text-align: center;
-            color: #ff4500;
-            font-size: 26px;
-            font-weight: 700;
+            color: #ff5500;
+            font-size: 28px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-            text-shadow: 0 0 12px rgba(255, 69, 0, 0.4);
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 85, 0, 0.5);
         }
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #ff8c00;
+            margin-bottom: 10px;
+            color: #ffa500;
             font-size: 14px;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.7px;
         }
         textarea {
             width: 100%;
-            height: 140px;
-            background: rgba(10, 10, 10, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
+            height: 150px;
+            background: rgba(10, 10, 12, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
             color: #fff;
-            padding: 14px;
+            padding: 15px;
             box-sizing: border-box;
             resize: vertical;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
-            margin-bottom: 20px;
+            font-size: 13.5px;
+            margin-bottom: 25px;
             transition: all 0.3s ease;
         }
         textarea:focus {
-            border-color: #ff4500;
+            border-color: #ff5500;
             outline: none;
-            box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
-            background: rgba(10, 10, 10, 0.9);
+            box-shadow: 0 0 12px rgba(255, 85, 0, 0.35);
+            background: rgba(5, 5, 5, 0.95);
         }
         .btn-group {
             display: flex;
@@ -76,37 +76,69 @@
         }
         button {
             flex: 1;
-            padding: 12px 20px;
+            padding: 14px 20px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
         }
-        .btn-submit { background-color: #ff4500; color: #fff; }
-        .btn-submit:hover { background-color: #ff5714; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255, 69, 0, 0.3); }
-        .btn-reset { background-color: #262626; color: #a3a3a3; border: 1px solid #404040; }
-        .btn-reset:hover { background-color: #404040; color: #fff; }
-        .btn-copy { background-color: #1d4ed8; color: #fff; }
-        .btn-copy:hover { background-color: #2563eb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3); }
-        .table-container { overflow-x: auto; margin-top: 5px; border-radius: 8px; border: 1px solid #262626; }
+        .btn-submit { 
+            background: linear-gradient(135deg, #ff4500, #ff6600); 
+            color: #fff; 
+        }
+        .btn-submit:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(255, 69, 0, 0.4); 
+        }
+        .btn-copy { 
+            background: linear-gradient(135deg, #1e40af, #3b82f6); 
+            color: #fff; 
+        }
+        .btn-copy:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4); 
+        }
+        .btn-reset { 
+            background: rgba(255, 255, 255, 0.07); 
+            color: #d1d5db; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+        }
+        .btn-reset:hover { 
+            background: rgba(255, 255, 255, 0.15); 
+            color: #fff; 
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        .table-container { 
+            overflow-x: auto; 
+            margin-top: 5px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(15, 15, 15, 0.6);
+            background: rgba(15, 15, 20, 0.65);
         }
         th, td {
-            border-bottom: 1px solid #262626;
-            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 18px;
             text-align: left;
-            font-size: 13px;
+            font-size: 13.5px;
         }
-        th { background-color: rgba(26, 26, 26, 0.9); color: #ff4500; font-weight: 600; letter-spacing: 0.5px; }
+        th { 
+            background-color: rgba(22, 22, 26, 0.95); 
+            color: #ff5500; 
+            font-weight: 700; 
+            letter-spacing: 0.8px; 
+        }
         tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
+        tr:nth-child(even) { background-color: rgba(255, 85, 0, 0.02); }
     </style>
 </head>
 <body>
@@ -118,9 +150,9 @@
     <textarea id="rawInput" placeholder="Tempel log di sini..."></textarea>
     
     <div class="btn-group">
-        <button class="btn-reset" onclick="resetData()">Reset</button>
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
         <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
+        <button class="btn-reset" onclick="resetData()">Reset</button>
     </div>
 
     <label>Hasil Konversi:</label>
@@ -180,7 +212,7 @@
             }
         });
 
-        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
+        hasilTeksUntilDisalin = barisDataDisalin.join('\n');
     }
 
     function resetData() {
