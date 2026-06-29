@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumus flop</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95)), 
+                        url('https://images.alphacoders.com/134/1341071.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #ff4500;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+            width: 100%;
+            max-width: 850px;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #ff4500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffa500;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            padding: 12px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: monospace;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        textarea:focus {
+            border-color: #ff4500;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 69, 0, 0.5);
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .btn-submit { background-color: #ff4500; color: white; }
+        .btn-submit:hover { background-color: #ff5714; box-shadow: 0 0 10px rgba(255, 69, 0, 0.5); }
+        .btn-reset { background-color: #333; color: #bbb; border: 1px solid #555; }
+        .btn-reset:hover { background-color: #444; color: #fff; }
+        .btn-copy { background-color: #008cba; color: white; }
+        .btn-copy:hover { background-color: #0099cc; box-shadow: 0 0 10px rgba(0, 140, 186, 0.5); }
+        .table-container { overflow-x: auto; margin-top: 10px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(15, 15, 15, 0.9);
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+        th { background-color: #1a1a1a; color: #ff4500; font-weight: bold; }
+        tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.03); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Rumus flop</h1>
+    
+    <label for="rawInput">Tempel log transaksi mentah disini:</label>
+    <textarea id="rawInput" placeholder="Tempel log di sini..."></textarea>
+    
+    <div class="btn-group">
+        <button class="btn-reset" onclick="resetData()">Reset</button>
+        <button class="btn-submit" onclick="konversiLog()">Submit</button>
+        <button class="btn-copy" onclick="salinHasil()">Salin</button>
+    </div>
+
+    <label>Hasil Konversi:</label>
+    <div class="table-container">
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>WAKTU</th>
+                    <th>Used ID</th>
+                    <th>Tujuan Bank</th>
+                    <th>Jumlah</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let hasilTeksUntukDisalin = "";
+
+    function konversiLog() {
+        const input = document.getElementById('rawInput').value.trim();
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = ''; 
+        hasilTeksUntukDisalin = "WAKTU\tUsed ID\tTujuan Bank\tJumlah\n"; 
+
+        if (!input) {
+            alert('Silakan tempel log transaksi terlebih dahulu!');
+            return;
+        }
+
+        const baris = input.split('\n');
+
+        baris.forEach(line => {
+            if (line.trim() === '') return;
+
+            // Memisahkan kolom berdasarkan tab atau spasi ganda ganda
+            const kolom = line.split(/\t| {2,}/);
+
+            if (kolom.length >= 7) {
+                const fullDateTime = kolom[1]; 
+                const waktu = fullDateTime.includes(' ') ? fullDateTime.split(' ')[1] : fullDateTime;
+                const userId = kolom[2];
+                const tujuanBank = kolom[4];
+                const jumlah = kolom[6];
+
+                // Tambah ke tabel visual
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
+                tbody.appendChild(tr);
+
+                // Tambah ke memori teks untuk disalin nanti
+                hasilTeksUntukDisalin += `${waktu}\t${userId}\t${tujuanBank}\t${jumlah}\n`;
+            }
+        });
+    }
+
+    function resetData() {
+        document.getElementById('rawInput').value = '';
+        document.getElementById('tableBody').innerHTML = '';
+        hasilTeksUntukDisalin = "";
+    }
+
+    function salinHasil() {
+        if (!hasilTeksUntukDisalin || hasilTeksUntukDisalin.trim() === "WAKTU\tUsed ID\tTujuan Bank\tJumlah") {
+            alert('Belum ada data yang dikonversi untuk disalin!');
+            return;
+        }
+        
+        navigator.clipboard.writeText(hasilTeksUntukDisalin.trim()).then(() => {
+            alert('Hasil konversi berhasil disalin ke clipboard!');
+        }).catch(err => {
+            alert('Gagal menyalin otomatis, silakan coba lagi.');
+        });
+    }
+</script>
+</body>
+</html>
