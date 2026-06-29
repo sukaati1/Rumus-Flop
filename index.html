@@ -6,11 +6,11 @@
     <title>Rumus flop</title>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95)), 
-                        url('https://images.alphacoders.com/134/1341071.png') no-repeat center center fixed;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(rgba(10, 10, 10, 0.88), rgba(20, 5, 0, 0.95)), 
+                        url('https://images.alphacoders.com/132/1322432.png') no-repeat center center fixed;
             background-size: cover;
-            color: #e0e0e0;
+            color: #e5e7eb;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -19,84 +19,94 @@
             min-height: 100vh;
         }
         .container {
-            background: rgba(20, 20, 20, 0.9);
-            border: 2px solid #ff4500;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 69, 0, 0.15);
             width: 100%;
             max-width: 950px;
-            padding: 25px;
+            padding: 30px;
             box-sizing: border-box;
         }
         h1 {
             text-align: center;
             color: #ff4500;
+            font-size: 26px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 12px rgba(255, 69, 0, 0.4);
         }
         label {
             display: block;
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: #ffa500;
+            color: #ff8c00;
+            font-size: 14px;
+            letter-spacing: 0.5px;
         }
         textarea {
             width: 100%;
-            height: 150px;
-            background: rgba(10, 10, 10, 0.9);
-            border: 1px solid #444;
-            border-radius: 6px;
+            height: 140px;
+            background: rgba(10, 10, 10, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
             color: #fff;
-            padding: 12px;
+            padding: 14px;
             box-sizing: border-box;
             resize: vertical;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
             margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
         textarea:focus {
             border-color: #ff4500;
             outline: none;
-            box-shadow: 0 0 8px rgba(255, 69, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+            background: rgba(10, 10, 10, 0.9);
         }
         .btn-group {
             display: flex;
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         button {
             flex: 1;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: bold;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .btn-submit { background-color: #ff4500; color: white; }
-        .btn-submit:hover { background-color: #ff5714; box-shadow: 0 0 10px rgba(255, 69, 0, 0.5); }
-        .btn-reset { background-color: #333; color: #bbb; border: 1px solid #555; }
-        .btn-reset:hover { background-color: #444; color: #fff; }
-        .btn-copy { background-color: #008cba; color: white; }
-        .btn-copy:hover { background-color: #0099cc; box-shadow: 0 0 10px rgba(0, 140, 186, 0.5); }
-        .table-container { overflow-x: auto; margin-top: 10px; }
+        .btn-submit { background-color: #ff4500; color: #fff; }
+        .btn-submit:hover { background-color: #ff5714; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255, 69, 0, 0.3); }
+        .btn-reset { background-color: #262626; color: #a3a3a3; border: 1px solid #404040; }
+        .btn-reset:hover { background-color: #404040; color: #fff; }
+        .btn-copy { background-color: #1d4ed8; color: #fff; }
+        .btn-copy:hover { background-color: #2563eb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3); }
+        .table-container { overflow-x: auto; margin-top: 5px; border-radius: 8px; border: 1px solid #262626; }
         table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(15, 15, 15, 0.9);
+            background: rgba(15, 15, 15, 0.6);
         }
         th, td {
-            border: 1px solid #333;
-            padding: 12px;
+            border-bottom: 1px solid #262626;
+            padding: 12px 16px;
             text-align: left;
             font-size: 13px;
         }
-        th { background-color: #1a1a1a; color: #ff4500; font-weight: bold; }
-        tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.03); }
+        th { background-color: rgba(26, 26, 26, 0.9); color: #ff4500; font-weight: 600; letter-spacing: 0.5px; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
     </style>
 </head>
 <body>
@@ -113,7 +123,7 @@
         <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
     </div>
 
-    <label>Hasil Konversi (Urutan Terbalik - 5 Kolom Bersih):</label>
+    <label>Hasil Konversi:</label>
     <div class="table-container">
         <table id="resultTable">
             <thead>
@@ -184,8 +194,6 @@
             alert('Belum ada data yang dikonversi untuk disalin!');
             return;
         }
-        
-        // Langsung menyalin tanpa memunculkan alert pop-up lagi
         navigator.clipboard.writeText(hasilTeksUntukDisalin);
     }
 </script>
