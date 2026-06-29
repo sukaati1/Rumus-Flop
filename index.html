@@ -148,7 +148,6 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
-            // Memisahkan kolom berdasarkan tab atau spasi ganda ganda
             const kolom = line.split(/\t| {2,}/);
 
             if (kolom.length >= 7) {
@@ -158,12 +157,10 @@
                 const tujuanBank = kolom[4];
                 const jumlah = kolom[6];
 
-                // Tambah ke tabel visual
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Tambah ke memori teks untuk disalin nanti
                 hasilTeksUntukDisalin += `${waktu}\t${userId}\t${tujuanBank}\t${jumlah}\n`;
             }
         });
@@ -182,7 +179,7 @@
         }
         
         navigator.clipboard.writeText(hasilTeksUntukDisalin.trim()).then(() => {
-            alert('Hasil konversi berhasil disalin ke clipboard!');
+            alert('Hasil konversi berhasil disalin!');
         }).catch(err => {
             alert('Gagal menyalin otomatis, silakan coba lagi.');
         });
