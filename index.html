@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(rgba(15, 15, 20, 0.85), rgba(10, 5, 0, 0.95)), 
-                        url('https://images.alphacoders.com/135/1351240.png') no-repeat center center fixed;
+            background: linear-gradient(rgba(10, 10, 15, 0.8), rgba(20, 10, 5, 0.9)), 
+                        url('https://images.alphacoders.com/132/1328014.jpeg') no-repeat center center fixed;
             background-size: cover;
             color: #f3f4f6;
             margin: 0;
@@ -19,26 +19,26 @@
             min-height: 100vh;
         }
         .container {
-            background: rgba(20, 20, 25, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 102, 0, 0.25);
-            border-radius: 20px;
+            background: rgba(15, 15, 20, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.15);
             width: 100%;
             max-width: 950px;
-            padding: 35px;
+            padding: 30px;
             box-sizing: border-box;
         }
         h1 {
             text-align: center;
-            color: #ff5500;
+            color: #ff4500;
             font-size: 28px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 4px;
             margin-bottom: 30px;
-            text-shadow: 0 0 15px rgba(255, 85, 0, 0.5);
+            text-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
         }
         label {
             display: block;
@@ -51,7 +51,7 @@
         textarea {
             width: 100%;
             height: 150px;
-            background: rgba(10, 10, 12, 0.8);
+            background: rgba(10, 10, 12, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             color: #fff;
@@ -64,9 +64,9 @@
             transition: all 0.3s ease;
         }
         textarea:focus {
-            border-color: #ff5500;
+            border-color: #ff4500;
             outline: none;
-            box-shadow: 0 0 12px rgba(255, 85, 0, 0.35);
+            box-shadow: 0 0 12px rgba(255, 69, 0, 0.35);
             background: rgba(5, 5, 5, 0.95);
         }
         .btn-group {
@@ -123,7 +123,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(15, 15, 20, 0.65);
+            background: rgba(15, 15, 20, 0.7);
         }
         th, td {
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -133,12 +133,12 @@
         }
         th { 
             background-color: rgba(22, 22, 26, 0.95); 
-            color: #ff5500; 
+            color: #ff4500; 
             font-weight: 700; 
             letter-spacing: 0.8px; 
         }
         tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) { background-color: rgba(255, 85, 0, 0.02); }
+        tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
     </style>
 </head>
 <body>
@@ -212,12 +212,13 @@
             }
         });
 
-        hasilTeksUntilDisalin = barisDataDisalin.join('\n');
+        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
+        hasilTeksUntilDisalin = "";
         hasilTeksUntukDisalin = "";
     }
 
