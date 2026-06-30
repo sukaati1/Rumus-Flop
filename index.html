@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rumus flop</title>
-    <style>
+<style>
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            /* URL Gambar latar belakang diganti dengan wallpaper Naruto HD bernuansa gelap */
+            /* Menggunakan link alternatif yang lebih stabil dan aman dari blokir */
             background: linear-gradient(rgba(10, 10, 15, 0.85), rgba(25, 10, 0, 0.95)), 
-                        url('https://images3.alphacoders.com/134/1344203.jpeg') no-repeat center center fixed;
+                        url('https://i.imgur.com/KdfZ39Y.jpeg') no-repeat center center fixed;
             background-size: cover;
             color: #f3f4f6;
             margin: 0;
@@ -141,94 +135,3 @@
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
     </style>
-</head>
-<body>
-
-<div class="container">
-    <h1>Rumus flop</h1>
-    
-    <label for="rawInput">Tempel log transaksi mentah disini:</label>
-    <textarea id="rawInput" placeholder="Tempel log di sini..."></textarea>
-    
-    <div class="btn-group">
-        <button class="btn-submit" onclick="konversiLog()">Submit</button>
-        <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
-        <button class="btn-reset" onclick="resetData()">Reset</button>
-    </div>
-
-    <label>Hasil Konversi:</label>
-    <div class="table-container">
-        <table id="resultTable">
-            <thead>
-                <tr>
-                    <th>WAKTU</th>
-                    <th>Used ID</th>
-                    <th>Tujuan Bank</th>
-                    <th>Credit</th>
-                    <th>Jumlah</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    let hasilTeksUntukDisalin = "";
-
-    function konversiLog() {
-        const input = document.getElementById('rawInput').value.trim();
-        const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = ''; 
-        hasilTeksUntukDisalin = ""; 
-
-        if (!input) {
-            alert('Silakan tempel log transaksi terlebih dahulu!');
-            return;
-        }
-
-        let baris = input.split('\n');
-        baris.reverse(); 
-
-        let barisDataDisalin = [];
-
-        baris.forEach(line => {
-            if (line.trim() === '') return;
-
-            const kolom = line.split(/\t| {2,}/);
-
-            if (kolom.length >= 7) {
-                const fullDateTime = kolom[1]; 
-                const waktu = fullDateTime.includes(' ') ? fullDateTime.split(' ')[1] : fullDateTime;
-                const userId = kolom[2];
-                const tujuanBank = kolom[4];
-                const creditStatus = ""; 
-                const jumlah = kolom[6]; 
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
-                tbody.appendChild(tr);
-
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
-            }
-        });
-
-        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-    }
-
-    function resetData() {
-        document.getElementById('rawInput').value = '';
-        document.getElementById('tableBody').innerHTML = '';
-        hasilTeksUntukDisalin = "";
-    }
-
-    function salinHasil() {
-        if (!hasilTeksUntukDisalin) {
-            alert('Belum ada data yang dikonversi untuk disalin!');
-            return;
-        }
-        navigator.clipboard.writeText(hasilTeksUntukDisalin);
-    }
-</script>
-</body>
-</html>
