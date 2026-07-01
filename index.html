@@ -11,7 +11,7 @@
         height = canvas.height = window.innerHeight;
     });
 
-    // Mengambil Gambar Siluet Naruto
+    // Mengambil Gambar Siluet Naruto dari Imgur
     const narutoImg = new Image();
     narutoImg.src = 'https://i.imgur.com/vHwzYgL.png'; 
 
@@ -22,12 +22,12 @@
         reset() {
             this.x = Math.random() * width;
             this.y = height + Math.random() * 100;
-            this.size = Math.random() * 3 + 1;
-            this.speedY = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 2 - 1;
+            this.size = Math.random() * 2.5 + 1; // Ukuran partikel disesuaikan agar smooth
+            this.speedY = Math.random() * 1.5 + 0.8;
+            this.speedX = Math.random() * 1.6 - 0.8;
             this.alpha = 1;
-            this.fade = Math.random() * 0.015 + 0.005;
-            this.color = Math.random() > 0.3 ? '#ff4500' : '#ffcc00';
+            this.fade = Math.random() * 0.01 + 0.005;
+            this.color = Math.random() > 0.35 ? '#ff4500' : '#ff9f00';
         }
         update() {
             this.y -= this.speedY;
@@ -41,7 +41,7 @@
             ctx.save();
             ctx.globalAlpha = this.alpha;
             ctx.fillStyle = this.color;
-            ctx.shadowBlur = 10;
+            ctx.shadowBlur = 8;
             ctx.shadowColor = this.color;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -51,27 +51,25 @@
     }
 
     const particles = [];
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 50; i++) {
         particles.push(new Particle());
     }
 
     function animate() {
-        // 1. Bersihkan background utama dengan solid color agar siluet tidak menumpuk/kotor
-        ctx.fillStyle = '#0c0602';
-        ctx.fillRect(0, 0, width, height);
+        // 1. Bersihkan kanvas total setiap frame (Mencegah layar jadi putih / menumpuk)
+        ctx.clearRect(0, 0, width, height);
 
-        // 2. Gambar Siluet Naruto tepat di atas background solid (di bawah partikel)
-        if (narutoImg.complete) {
-            const imgW = width * 0.35 > 400 ? 400 : width * 0.35;
+        // 2. Gambar Siluet Naruto secara statis di pojok kanan bawah
+        if (narutoImg.complete && narutoImg.naturalWidth !== 0) {
+            const imgW = width * 0.35 > 380 ? 380 : width * 0.35;
             const imgH = imgW * (narutoImg.height / narutoImg.width);
             ctx.save();
-            ctx.globalAlpha = 0.15; 
+            ctx.globalAlpha = 0.12; // Transparansi siluet agar tabel tetap kontras
             ctx.drawImage(narutoImg, width - imgW - 20, height - imgH, imgW, imgH);
             ctx.restore();
         }
 
-        // 3. Berikan lapisan transparan tipis khusus untuk efek trail partikel api jika diinginkan, 
-        // atau langsung biarkan partikel bergerak halus di atas gambar.
+        // 3. Gambar dan update animasi partikel api
         particles.forEach(p => {
             p.update();
             p.draw();
@@ -80,10 +78,7 @@
         requestAnimationFrame(animate);
     }
 
-    // Pastikan animasi berjalan setelah gambar termuat atau langsung jalan
-    narutoImg.onload = () => {
-        // Animasi otomatis dipicu oleh requestAnimationFrame
-    };
+    // Jalankan animasi langsung
     animate();
 
     // --- LOGIKA KONVERSI TRANSAKSI ---
