@@ -3,146 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rumus Flop</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            /* Wallpaper Naruto HD dengan nuansa percikan api gelap */
-            background: linear-gradient(rgba(10, 5, 0, 0.82), rgba(20, 10, 0, 0.92)), 
-                        url('https://i.imgur.com/KdfZ39Y.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            color: #f3f4f6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: rgba(15, 11, 10, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 69, 0, 0.35);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 69, 0, 0.2);
-            width: 100%;
-            max-width: 950px;
-            padding: 30px;
-            box-sizing: border-box;
-        }
-        h1 {
-            text-align: center;
-            color: #ff4500;
-            font-size: 28px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-            text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #ffa500;
-            font-size: 14px;
-            letter-spacing: 0.7px;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-            background: rgba(8, 5, 5, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            color: #fff;
-            padding: 15px;
-            box-sizing: border-box;
-            resize: vertical;
-            font-family: 'Courier New', monospace;
-            font-size: 13.5px;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-        }
-        textarea:focus {
-            border-color: #ff4500;
-            outline: none;
-            box-shadow: 0 0 12px rgba(255, 69, 0, 0.4);
-            background: rgba(5, 2, 2, 0.95);
-        }
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        button {
-            flex: 1;
-            padding: 14px 20px;
-            font-size: 14px;
-            font-weight: 700;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-        }
-        .btn-submit { 
-            background: linear-gradient(135deg, #ff4500, #ff6600); 
-            color: #fff; 
-        }
-        .btn-submit:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 15px rgba(255, 69, 0, 0.45); 
-        }
-        .btn-copy { 
-            background: linear-gradient(135deg, #1e40af, #3b82f6); 
-            color: #fff; 
-        }
-        .btn-copy:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.45); 
-        }
-        .btn-reset { 
-            background: rgba(255, 255, 255, 0.08); 
-            color: #d1d5db; 
-            border: 1px solid rgba(255, 255, 255, 0.15); 
-        }
-        .btn-reset:hover { 
-            background: rgba(255, 255, 255, 0.18); 
-            color: #fff; 
-        }
-        button:active {
-            transform: translateY(1px);
-        }
-        .table-container { 
-            overflow-x: auto; 
-            margin-top: 5px; 
-            border-radius: 10px; 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(12, 8, 8, 0.8);
-        }
-        th, td {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 14px 18px;
-            text-align: left;
-            font-size: 13.5px;
-        }
-        th { 
-            background-color: rgba(20, 12, 10, 0.95); 
-            color: #ff4500; 
-            font-weight: 700; 
-            letter-spacing: 0.8px; 
-        }
-        tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
-    </style>
+    <title>Rumus Flop - Live Wallpaper Naruto</title>
+<style>
+    body {
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #0c0602; /* Mengunci warna dasar sangat gelap sebagai jaring pengaman */
+        color: #f3f4f6;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    
+    /* Canvas ditaruh di paling latar belakang */
+    #bgCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-color: #0c0602;
+    }
+    
+    .container {
+        background: rgba(15, 8, 5, 0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 69, 0, 0.35);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 69, 0, 0.2);
+        width: 100%;
+        max-width: 950px;
+        padding: 30px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #ff4500;
+        font-size: 28px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
+        text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
+    }
+    
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #ffa500;
+        font-size: 14px;
+        letter-spacing: 0.7px;
+    }
+    
+    textarea {
+        width: 100%;
+        height: 150px;
+        background: rgba(8, 3, 1, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        color: #fff;
+        padding: 15px;
+        box-sizing: border-box;
+        resize: vertical;
+        font-family: 'Courier New', monospace;
+        font-size: 13.5px;
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    textarea:focus {
+        border-color: #ff4500;
+        outline: none;
+        box-shadow: 0 0 12px rgba(255, 69, 0, 0.4);
+        background: rgba(5, 1, 0, 0.95);
+    }
+    
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    button {
+        flex: 1;
+        padding: 14px 20px;
+        font-size: 14px;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+    }
+    
+    .btn-submit { 
+        background: linear-gradient(135deg, #ff4500, #ff6600); 
+        color: #fff; 
+    }
+    
+    .btn-submit:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 15px rgba(255, 69, 0, 0.45); 
+    }
+    
+    .btn-copy { 
+        background: linear-gradient(135deg, #1e40af, #3b82f6); 
+        color: #fff; 
+    }
+    
+    .btn-copy:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 15px rgba(59, 130, 246, 0.45); 
+    }
+    
+    .btn-reset { 
+        background: rgba(255, 255, 255, 0.08); 
+        color: #d1d5db; 
+        border: 1px solid rgba(255, 255, 255, 0.15); 
+    }
+    
+    .btn-reset:hover { 
+        background: rgba(255, 255, 255, 0.18); 
+        color: #fff; 
+    }
+    
+    button:active {
+        transform: translateY(1px);
+    }
+    
+    .table-container { 
+        overflow-x: auto; 
+        margin-top: 5px; 
+        border-radius: 10px; 
+        border: 1px solid rgba(255, 255, 255, 0.08); 
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(12, 6, 4, 0.9);
+    }
+    
+    th, td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 13.5px;
+    }
+    
+    th { 
+        background-color: rgba(20, 10, 5, 0.95); 
+        color: #ff4500; 
+        font-weight: 700; 
+        letter-spacing: 0.8px; 
+    }
+    
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
+</style>
 </head>
 <body>
+
+<!-- Elemen Live Wallpaper -->
+<canvas id="bgCanvas"></canvas>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -174,6 +206,92 @@
 </div>
 
 <script>
+    // --- LOGIKA LIVE WALLPAPER (PERCIKAN API & SILUET) ---
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    // Mengambil Gambar Siluet Naruto (Ditambahkan crossOrigin agar aman di GitHub Pages)
+    const narutoImg = new Image();
+    narutoImg.crossOrigin = "anonymous";
+    narutoImg.src = 'https://i.imgur.com/vHwzYgL.png'; 
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * width;
+            this.y = height + Math.random() * 100;
+            this.size = Math.random() * 2.5 + 1;
+            this.speedY = Math.random() * 1.5 + 0.6;
+            this.speedX = Math.random() * 1.6 - 0.8;
+            this.alpha = 1;
+            this.fade = Math.random() * 0.01 + 0.004;
+            this.color = Math.random() > 0.35 ? '#ff4500' : '#ff9f00';
+        }
+        update() {
+            this.y -= this.speedY;
+            this.x += this.speedX;
+            this.alpha -= this.fade;
+            if (this.alpha <= 0 || this.y < 0) {
+                this.reset();
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    const particles = [];
+    for (let i = 0; i < 50; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        // Bersihkan kanvas total setiap frame (Mencegah glitch putih/blank)
+        ctx.clearRect(0, 0, width, height);
+
+        // Proteksi Try-Catch: Jika gambar diblokir server, animasi api & tabel tidak akan crash
+        try {
+            if (narutoImg.complete && narutoImg.naturalWidth > 0) {
+                const imgW = width * 0.35 > 380 ? 380 : width * 0.35;
+                const imgH = imgW * (narutoImg.height / narutoImg.width);
+                ctx.save();
+                ctx.globalAlpha = 0.12; 
+                ctx.drawImage(narutoImg, width - imgW - 20, height - imgH, imgW, imgH);
+                ctx.restore();
+            }
+        } catch (e) {
+            // Mengabaikan log error agar render loop tetap berjalan lancar
+        }
+
+        // Jalankan animasi partikel api bergeraknya
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // --- LOGIKA BARU: KONVERSI TRANSAKSI (ANTI-CRASH) ---
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
@@ -185,7 +303,6 @@
         if (!input) return;
 
         let baris = input.split('\n');
-        // Membalikkan urutan baris agar baris terakhir diproses paling pertama
         baris.reverse(); 
 
         let barisDataDisalin = [];
@@ -193,32 +310,29 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
-            // Memisahkan berdasarkan Tab atau Spasi ganda ganda
-            const kolom = line.split(/\t| {2,}/);
+            // Memisahkan kolom berdasarkan spasi ganda atau tab secara cerdas
+            const kolom = line.split(/\s+/).filter(item => item.trim() !== '');
 
-            if (kolom.length >= 7) {
-                // 1. Ambil Waktu (Hanya Jam:Menit:Detik)
-                const fullDateTime = kolom[1]; 
-                const waktu = fullDateTime.includes(' ') ? fullDateTime.split(' ')[1] : fullDateTime;
+            // Fleksibel: Struktur data minimal memiliki 6 susunan kolom kata
+            if (kolom.length >= 6) {
+                // Deteksi apakah kolom pertama merupakan nomor indeks urut (1, 2, 3...)
+                const pakaiNoUrut = !isNaN(kolom[0]) && kolom[1].includes('-');
                 
-                // 2. User ID
-                const userId = kolom[2];
-                
-                // 3. Tujuan Bank
-                const tujuanBank = kolom[4];
-                
-                // 4. Credit (Dikosongkan sesuai template)
+                const idxWaktu   = pakaiNoUrut ? 2 : 1;
+                const idxUser    = pakaiNoUrut ? 3 : 2;
+                const idxBank    = pakaiNoUrut ? 5 : 4;
+                const idxJumlah  = kolom.length - 1; // Mengunci nominal selalu di kolom paling akhir
+
+                const waktu = kolom[idxWaktu] || "";
+                const userId = kolom[idxUser] || "";
+                const tujuanBank = kolom[idxBank] || "";
                 const creditStatus = ""; 
-                
-                // 5. Jumlah Bersih
-                const jumlah = kolom[6]; 
+                const jumlah = kolom[idxJumlah] || ""; 
 
-                // Membuat element baris tabel baru
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Menyimpan data untuk fitur salin tanpa menyertakan tanda strip (-)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
             }
         });
@@ -234,170 +348,8 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) return;
-        // Menyalin langsung ke clipboard tanpa memunculkan alert notifikasi
         navigator.clipboard.writeText(hasilTeksUntukDisalin);
     }
 </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Wallpaper Naruto - Uchiha Fireflies</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* Mencegah scrollbar */
-            background-color: #0c0602; /* Warna dasar sangat gelap */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Canvas sebagai latar belakang utama */
-        #bgCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Di belakang konten apa pun */
-        }
-
-        /* Container untuk judul/UI minimal (opsional) */
-        .ui-container {
-            position: relative;
-            z-index: 1; /* Di atas canvas */
-            text-align: center;
-            pointer-events: none; /* Agar tidak mengganggu klik di layar */
-        }
-
-        h1 {
-            font-family: 'Segoe UI', sans-serif;
-            color: #ff4500; /* Warna Orange Naruto */
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 2rem;
-            text-shadow: 0 0 15px rgba(255, 69, 0, 0.7);
-            opacity: 0.6;
-        }
-    </style>
-</head>
-<body>
-
-<!-- Elemen Live Wallpaper -->
-<canvas id="bgCanvas"></canvas>
-
-<!-- UI Minimal (Judul) -->
-<div class="ui-container">
-    <h1>HOKAGE'S FIRE</h1>
-</div>
-
-<script>
-    // --- KONFIGURASI LIVE WALLPAPER (PERCIKAN API & SILUET) ---
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    // Mengatasi perubahan ukuran layar
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    });
-
-    // Mengambil Gambar Siluet Naruto dari URL (Pastikan URL ini aktif)
-    // Siluet Naruto gaya minimalis
-    const narutoImg = new Image();
-    narutoImg.src = 'https://i.imgur.com/vHwzYgL.png'; 
-
-    // --- CLASS UNTUK PARTIKEL PERCIKAN API ---
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * width;
-            this.y = height + Math.random() * 100; // Mulai dari bawah layar
-            this.size = Math.random() * 2.5 + 1;   // Ukuran bervariasi
-            this.speedY = Math.random() * 1.5 + 0.5; // Kecepatan ke atas bervariasi
-            this.speedX = Math.random() * 1.6 - 0.8; // Sedikit gerakan menyamping
-            this.alpha = 1; // Transparansi penuh
-            this.fade = Math.random() * 0.012 + 0.003; // Kecepatan memudar
-            
-            // Warna percikan api (Dominan Orange Kyuubi / Merah Uchiha)
-            this.color = Math.random() > 0.35 ? '#ff4500' : '#ff9f00'; 
-        }
-
-        update() {
-            this.y -= this.speedY; // Bergerak ke atas
-            this.x += this.speedX; // Bergerak menyamping
-            this.alpha -= this.fade; // Perlahan memudar
-
-            // Jika partikel hilang atau mencapai atas, reset kembali ke bawah
-            if (this.alpha <= 0 || this.y < 0) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            ctx.save();
-            ctx.globalAlpha = this.alpha; // Mengatur transparansi partikel
-            ctx.fillStyle = this.color;
-            ctx.shadowBlur = 8; // Efek "Glow"
-            ctx.shadowColor = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); // Menggambar lingkaran
-            ctx.fill();
-            ctx.restore();
-        }
-    }
-
-    // Pembuatan Kumpulan Partikel (50 partikel agar tetap ringan)
-    const particles = [];
-    for (let i = 0; i < 50; i++) {
-        particles.push(new Particle());
-    }
-
-    // --- FUNGSI UTAMA ANIMASI (LOOP) ---
-    function animate() {
-        // 1. Bersihkan kanvas total setiap frame agar gambar tidak menumpuk
-        ctx.clearRect(0, 0, width, height);
-
-        // 2. Gambar Siluet Naruto secara statis di pojok kanan bawah
-        // Gambar hanya digambar jika sudah berhasil dimuat (CORS safe)
-        if (narutoImg.complete && narutoImg.naturalWidth !== 0) {
-            // Skala gambar dinamis berdasarkan lebar layar (max 380px)
-            const imgW = width * 0.35 > 380 ? 380 : width * 0.35;
-            const imgH = imgW * (narutoImg.height / narutoImg.width); // Jaga aspect ratio
-
-            ctx.save();
-            ctx.globalAlpha = 0.12; // Transparansi siluet agar menyatu dengan background gelap
-            // Posisi: Pojok Kanan Bawah
-            ctx.drawImage(narutoImg, width - imgW - 20, height - imgH, imgW, imgH);
-            ctx.restore();
-        }
-
-        // 3. Jalankan dan Gambar semua partikel api
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-
-        // 4. Panggil kembali fungsi animate pada frame berikutnya (Looping)
-        requestAnimationFrame(animate);
-    }
-
-    // Jalankan animasi untuk pertama kali
-    animate();
-</script>
-
 </body>
 </html>
