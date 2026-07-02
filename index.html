@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karya Anak Djarum - Live Wallpaper Naruto</title>
+    <title>Rumus Flop - Live Wallpaper Naruto</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -180,7 +180,7 @@
     <h1>Karya anak Djarum</h1>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="Dari kita untuk kita"></textarea>
+    <textarea id="rawInput" placeholder="Tempel disini brohhh"></textarea>
     
     <div class="btn-group">
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -280,13 +280,6 @@
         } catch (e) {
             // Mengabaikan log error agar render loop tetap berjalan lancar
         }
-
-        // Jalankan animasi partikel api bergeraknya
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-
         requestAnimationFrame(animate);
     }
     animate();
