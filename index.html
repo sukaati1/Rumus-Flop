@@ -28,7 +28,7 @@
     }
     
     .container {
-        background: rgba(15, 8, 5, 0.88); /* Sedikit lebih transparan agar wallpaper belakang terlihat */
+        background: rgba(15, 8, 5, 0.88); 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 69, 0, 0.35);
@@ -91,7 +91,6 @@
         margin-bottom: 30px;
     }
     
-    /* UKURAN TOMBOL DIPERKECIL */
     button {
         flex: 1;
         padding: 8px 14px; 
@@ -216,10 +215,10 @@
         height = canvas.height = window.innerHeight;
     });
 
-    // LINK GITHUB LUFFY GEAR 5 (STABIL & ANTI-ERROR)
+    // DI SINI SUDAH DIPERBAIKI (DITUTUP DENGAN TANDA KUTIP DAN TITIK KOMA)
     const narutoImg = new Image();
     narutoImg.crossOrigin = "anonymous";
-    narutoImg.src = 'https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png
+    narutoImg.src = 'https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png'; 
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
@@ -227,9 +226,9 @@
         try {
             if (narutoImg.complete && narutoImg.naturalWidth > 0) {
                 ctx.save();
-                ctx.globalAlpha = 0.30; // Tingkat kejelasan wallpaper belakang (0.10 tipis s/d 1.00 tebal)
+                ctx.globalAlpha = 0.30; 
                 
-                // LOGIKA BARU: Gambar dipaksa melebar penuh satu layar penuh (Wallpaper Utuh)
+                // Gambar penuh satu layar
                 ctx.drawImage(narutoImg, 0, 0, width, height);
                 
                 ctx.restore();
