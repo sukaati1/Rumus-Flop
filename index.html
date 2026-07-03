@@ -91,7 +91,6 @@
         margin-bottom: 30px;
     }
     
-    /* UKURAN TOMBOL DIPERKECIL DI SINI */
     button {
         flex: 1;
         padding: 8px 14px; 
@@ -216,50 +215,11 @@
         height = canvas.height = window.innerHeight;
     });
 
-    // GAMBAR BACKGROUND SUDAH DIGANTI JADI SILUET ITACHI UCHIHA SHADOW
     const narutoImg = new Image();
     narutoImg.crossOrigin = "anonymous";
     narutoImg.src = 'https://i.imgur.com/E8bYwS7.png'; 
 
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-        reset() {
-            this.x = Math.random() * width;
-            this.y = height + Math.random() * 100;
-            this.size = Math.random() * 2.5 + 1;
-            this.speedY = Math.random() * 1.5 + 0.6;
-            this.speedX = Math.random() * 1.6 - 0.8;
-            this.alpha = 1;
-            this.fade = Math.random() * 0.01 + 0.004;
-            this.color = Math.random() > 0.35 ? '#ff4500' : '#ff9f00';
-        }
-        update() {
-            this.y -= this.speedY;
-            this.x += this.speedX;
-            this.alpha -= this.fade;
-            if (this.alpha <= 0 || this.y < 0) {
-                this.reset();
-            }
-        }
-        draw() {
-            ctx.save();
-            ctx.globalAlpha = this.alpha;
-            ctx.fillStyle = this.color;
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        }
-    }
-
-    const particles = [];
-    for (let i = 0; i < 50; i++) {
-        particles.push(new Particle());
-    }
+    // EFEK PARTIKEL API SEBELUMNYA TELAH DIHAPUS TOTAL DI SINI
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
@@ -269,16 +229,11 @@
                 const imgW = width * 0.35 > 380 ? 380 : width * 0.35;
                 const imgH = imgW * (narutoImg.height / narutoImg.width);
                 ctx.save();
-                ctx.globalAlpha = 0.15; // Sedikit dinaikkan agar siluet barunya lebih jelas terlihat
+                ctx.globalAlpha = 0.80; // Dinaikkan agar siluet gambar terlihat jelas tanpa tertutup api
                 ctx.drawImage(narutoImg, width - imgW - 20, height - imgH, imgW, imgH);
                 ctx.restore();
             }
         } catch (e) {}
-
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
 
         requestAnimationFrame(animate);
     }
