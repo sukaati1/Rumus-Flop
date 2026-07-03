@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karya Anak Djarum - Live Wallpaper</title>
+    <title>Karya Anak Djarum - Wallpaper Utama</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -28,7 +28,7 @@
     }
     
     .container {
-        background: rgba(15, 8, 5, 0.92);
+        background: rgba(15, 8, 5, 0.88); /* Sedikit lebih transparan agar wallpaper belakang terlihat */
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 69, 0, 0.35);
@@ -91,6 +91,7 @@
         margin-bottom: 30px;
     }
     
+    /* UKURAN TOMBOL DIPERKECIL */
     button {
         flex: 1;
         padding: 8px 14px; 
@@ -215,22 +216,22 @@
         height = canvas.height = window.innerHeight;
     });
 
+    // LINK GITHUB LUFFY GEAR 5 (STABIL & ANTI-ERROR)
     const narutoImg = new Image();
     narutoImg.crossOrigin = "anonymous";
-    narutoImg.src = '(https://i.imgur.com/E8bYwS7.png) 
-
-    // EFEK PARTIKEL API SEBELUMNYA TELAH DIHAPUS TOTAL DI SINI
+    narutoImg.src = 'https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png'; 
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
 
         try {
             if (narutoImg.complete && narutoImg.naturalWidth > 0) {
-                const imgW = width * 0.35 > 380 ? 380 : width * 0.35;
-                const imgH = imgW * (narutoImg.height / narutoImg.width);
                 ctx.save();
-                ctx.globalAlpha = 0.80; // Dinaikkan agar siluet gambar terlihat jelas tanpa tertutup api
-                ctx.drawImage(narutoImg, width - imgW - 20, height - imgH, imgW, imgH);
+                ctx.globalAlpha = 0.30; // Tingkat kejelasan wallpaper belakang (0.10 tipis s/d 1.00 tebal)
+                
+                // LOGIKA BARU: Gambar dipaksa melebar penuh satu layar penuh (Wallpaper Utuh)
+                ctx.drawImage(narutoImg, 0, 0, width, height);
+                
                 ctx.restore();
             }
         } catch (e) {}
