@@ -253,36 +253,78 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
-            const kolom = line.split(/\s+/).filter(item => item.trim() !== '');
+            // Memisahkan kolom berdasarkan tab atau minimal 2 spasi agar text bank berkoma tidak pecah
+            let kolom = line.split(/\s{2,}|\t/).filter(item => item.trim() !== '');
+            
+            // Fallback jika log dipisah spasi tunggal biasa
+            if (kolom.length < 5) {
+                kolom = line.split(/\s+/).filter(item => item.trim() !== '');
+            }
 
-            if (kolom.length >= 6) {
-                const pakaiNoUrut = !isNaN(kolom[0]) && kolom[1].includes('-');
+            if (kolom.length >= 5) {
+                // Periksa jika elemen pertama merupakan nomor urut
+                const pakaiNoUrut = !isNaN(kolom[0]) && kolom.length > 6;
                 
-                const idxWaktu   = pakaiNoUrut ? 2 : 1;
-                const idxUser    = pakaiNoUrut ? 3 : 2;
-                const idxBank    = pakaiNoUrut ? 5 : 4;
+                // Pencarian waktu (format HH:MM:SS)
+                let waktu = "";
+                let idxWaktu = pakaiNoUrut ? 1 : 0;
+                if(kolom[idxWaktu] && kolom[idxWaktu].includes('-')) {
+                    // Jika berisi tanggal + waktu, ambil waktunya saja
+                    let pecahWaktu = kolom[idxWaktu].split(/\s+/);
+                    waktu = pecahWaktu[1] || kolom[idxWaktu];
+                } else {
+                    waktu = kolom[idxWaktu] || "";
+                }
+                
+                // Jika waktu masih mengandung tanggal (Format: 2026-07-05 06:11:32)
+                if (waktu.includes('-') && waktu.includes(':')) {
+                    waktu = waktu.split(/\s+/)[1] || waktu;
+                } else if (!waktu.includes(':') && kolom[idxWaktu+1] && kolom[idxWaktu+1].includes(':')) {
+                    // Jika tanggal dan waktu terpisah kolom
+                    waktu = kolom[idxWaktu+1];
+                }
 
-                // Memeriksa kolom paling terakhir apakah merupakan simbol/operator
-                let idxJumlah = kolom.length - 1;
-                let jumlah = kolom[idxJumlah] || "";
+                // Ambil User ID
+                let userId = "";
+                for (let i = 1; i < kolom.length; i++) {
+                    if (kolom[i].includes(':')) {
+                        userId = kolom[i+1] || "";
+                        break;
+                    }
+                }
+                if (!userId) userId = pakaiNoUrut ? kolom[2] : kolom[1];
 
-                // Jika kolom terakhir terdeteksi berupa operator (+, -, CR, DB), maka ambil kolom sebelumnya
-                if (jumlah === '+' || jumlah === '-' || jumlah.toUpperCase() === 'CR' || jumlah.toUpperCase() === 'DB' || isNaN(jumlah.replace(/[,.]/g, ''))) {
-                    if (kolom.length > 6) {
-                        idxJumlah = kolom.length - 2;
-                        jumlah = kolom[idxJumlah] || "";
+                // Ambil Tujuan Bank (Mencari bagian teks yang mengandung nama bank/koma)
+                let tujuanBank = "";
+                for (let i = 0; i < kolom.length; i++) {
+                    if (kolom[i].includes(',') || kolom[i].toUpperCase().includes('MANDIRI') || kolom[i].toUpperCase().includes('BCA') || kolom[i].toUpperCase().includes('BRI') || kolom[i].toUpperCase().includes('BNI')) {
+                        tujuanBank = kolom[i];
+                        break;
                     }
                 }
 
-                const waktu = kolom[idxWaktu] || "";
-                const userId = kolom[idxUser] || "";
-                const tujuanBank = kolom[idxBank] || "";
+                // Mencari nominal Jumlah (Mencari string berformat angka ribuan/jutaan)
+                let jumlah = "";
+                for (let i = kolom.length - 1; i >= 0; i--) {
+                    let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
+                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 4) {
+                        jumlah = kolom[i];
+                        break;
+                    }
+                }
+                // Jika tidak ketemu format ribuan, ambil fallback kolom sebelum status terakhir
+                if (!jumlah) {
+                    jumlah = kolom[kolom.length - 3] || "";
+                }
+
                 const creditStatus = ""; 
 
+                // Tampilkan ke dalam tabel HTML
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
+                // Masukkan ke array data salin dengan batas TAB (\t)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
             }
         });
