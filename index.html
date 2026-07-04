@@ -7,7 +7,7 @@
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- PROXY GAMBAR BARU: DIJAMIN 100% TEMBUS & MUNCUL --- */
+        /* --- WALLPAPER DIJAMIN MUNCUL TANPA BLOKIR CORS --- */
         background: linear-gradient(rgba(12, 6, 2, 0.75), rgba(12, 6, 2, 0.75)), 
                     url('https://images.weserv.nl/?url=raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png');
         background-size: cover;
@@ -21,16 +21,6 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-    }
-    
-    #bgCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
     }
     
     .container {
@@ -178,8 +168,6 @@
 </head>
 <body>
 
-<canvas id="bgCanvas"></canvas>
-
 <div class="container">
     <h1>Karya anak Djarum</h1>
     
@@ -210,54 +198,6 @@
 </div>
 
 <script>
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    });
-
-    const particles = [];
-    for (let i = 0; i < 35; i++) {
-        particles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: Math.random() * 2.5 + 1,
-            speedY: -(Math.random() * 0.8 + 0.3),
-            speedX: Math.random() * 0.8 - 0.4,
-            alpha: Math.random() * 0.6 + 0.1
-        });
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-
-        particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 69, 0, ${p.alpha})`;
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = "#ff4500";
-            ctx.fill();
-
-            p.y += p.speedY;
-            p.x += p.speedX;
-
-            if (p.y < 0) {
-                p.y = height;
-                p.x = Math.random() * width;
-            }
-        });
-        ctx.shadowBlur = 0;
-
-        requestAnimationFrame(animate);
-    }
-    animate();
-
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
@@ -348,27 +288,20 @@
         hasilTeksUntukDisalin = "";
     }
 
-    /* --- METODE SALIN TERBARU (ANTI GAGAL/FALLBACK TEXTAREA) --- */
+    // --- LOGIKA SALIN SENYAP (TANPA NOTIFIKASI POP-UP) ---
     function salinHasil() {
-        if (!hasilTeksUntukDisalin) {
-            alert("Belum ada data hasil konversi yang bisa disalin!");
-            return;
-        }
+        if (!hasilTeksUntukDisalin) return;
         
-        // Coba cara modern dulu
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-                alert("Data berhasil disalin!");
-            }).catch(() => {
-                salinPakaiMetodeLama(hasilTeksUntukDisalin);
+            navigator.clipboard.writeText(hasilTeksUntukDisalin).catch(() => {
+                salinLatarBelakang(hasilTeksUntukDisalin);
             });
         } else {
-            // Jika browser memblokir navigator clipboard, gunakan trik elemen bayangan
-            salinPakaiMetodeLama(hasilTeksUntukDisalin);
+            salinLatarBelakang(hasilTeksUntukDisalin);
         }
     }
 
-    function salinPakaiMetodeLama(teks) {
+    function salinLatarBelakang(teks) {
         const el = document.createElement('textarea');
         el.value = teks;
         el.setAttribute('readonly', '');
@@ -378,7 +311,6 @@
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        alert("Data berhasil disalin ke clipboard!");
     }
 </script>
 </body>
