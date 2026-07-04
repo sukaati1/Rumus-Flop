@@ -215,21 +215,69 @@
         height = canvas.height = window.innerHeight;
     });
 
+    // --- PENGATURAN WALLPAPER & LOGIKA CADANGAN ---
+    let useImage = false;
     const narutoImg = new Image();
-    narutoImg.crossOrigin = "anonymous";
+    
+    // Jangan gunakan crossOrigin jika server tujuan memblokir CORS, biarkan default
     narutoImg.src = 'https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png'; 
+    
+    narutoImg.onload = function() {
+        useImage = true; // Jika sukses dimuat, jalankan mode gambar
+    };
+
+    narutoImg.onerror = function() {
+        useImage = false; // Jika error/diblokir CORS, gunakan animasi partikel bara api
+    };
+
+    // Struktur data animasi partikel bara cadangan
+    const particles = [];
+    for (let i = 0; i < 40; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 3 + 1,
+            speedY: -(Math.random() * 1 + 0.5),
+            speedX: Math.random() * 1 - 0.5,
+            alpha: Math.random() * 0.5 + 0.2
+        });
+    }
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
 
-        try {
-            if (narutoImg.complete && narutoImg.naturalWidth > 0) {
+        if (useImage) {
+            // JIKA GAMBAR SUKSES DIMUAT
+            try {
                 ctx.save();
-                ctx.globalAlpha = 0.30; 
+                ctx.globalAlpha = 0.25; 
                 ctx.drawImage(narutoImg, 0, 0, width, height);
                 ctx.restore();
+            } catch (e) {
+                useImage = false; // Fallback otomatis jika terjadi error mendadak saat render
             }
-        } catch (e) {}
+        } else {
+            // JIKA GAMBAR EROR/BLOCKED (EFEK BARA API KEREN)
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 69, 0, ${p.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "#ff4500";
+                ctx.fill();
+
+                // Pergerakan naik ke atas
+                p.y += p.speedY;
+                p.x += p.speedX;
+
+                // Reset jika keluar layar
+                if (p.y < 0) {
+                    p.y = height;
+                    p.x = Math.random() * width;
+                }
+            });
+            ctx.shadowBlur = 0; // Reset efek glow agar tidak mempengaruhi container
+        }
 
         requestAnimationFrame(animate);
     }
@@ -253,38 +301,30 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
-            // Memisahkan kolom berdasarkan tab atau minimal 2 spasi agar text bank berkoma tidak pecah
             let kolom = line.split(/\s{2,}|\t/).filter(item => item.trim() !== '');
             
-            // Fallback jika log dipisah spasi tunggal biasa
             if (kolom.length < 5) {
                 kolom = line.split(/\s+/).filter(item => item.trim() !== '');
             }
 
             if (kolom.length >= 5) {
-                // Periksa jika elemen pertama merupakan nomor urut
                 const pakaiNoUrut = !isNaN(kolom[0]) && kolom.length > 6;
                 
-                // Pencarian waktu (format HH:MM:SS)
                 let waktu = "";
                 let idxWaktu = pakaiNoUrut ? 1 : 0;
                 if(kolom[idxWaktu] && kolom[idxWaktu].includes('-')) {
-                    // Jika berisi tanggal + waktu, ambil waktunya saja
                     let pecahWaktu = kolom[idxWaktu].split(/\s+/);
                     waktu = pecahWaktu[1] || kolom[idxWaktu];
                 } else {
                     waktu = kolom[idxWaktu] || "";
                 }
                 
-                // Jika waktu masih mengandung tanggal (Format: 2026-07-05 06:11:32)
                 if (waktu.includes('-') && waktu.includes(':')) {
                     waktu = waktu.split(/\s+/)[1] || waktu;
                 } else if (!waktu.includes(':') && kolom[idxWaktu+1] && kolom[idxWaktu+1].includes(':')) {
-                    // Jika tanggal dan waktu terpisah kolom
                     waktu = kolom[idxWaktu+1];
                 }
 
-                // Ambil User ID
                 let userId = "";
                 for (let i = 1; i < kolom.length; i++) {
                     if (kolom[i].includes(':')) {
@@ -294,7 +334,6 @@
                 }
                 if (!userId) userId = pakaiNoUrut ? kolom[2] : kolom[1];
 
-                // Ambil Tujuan Bank (Mencari bagian teks yang mengandung nama bank/koma)
                 let tujuanBank = "";
                 for (let i = 0; i < kolom.length; i++) {
                     if (kolom[i].includes(',') || kolom[i].toUpperCase().includes('MANDIRI') || kolom[i].toUpperCase().includes('BCA') || kolom[i].toUpperCase().includes('BRI') || kolom[i].toUpperCase().includes('BNI')) {
@@ -303,7 +342,6 @@
                     }
                 }
 
-                // Mencari nominal Jumlah (Mencari string berformat angka ribuan/jutaan)
                 let jumlah = "";
                 for (let i = kolom.length - 1; i >= 0; i--) {
                     let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
@@ -312,19 +350,16 @@
                         break;
                     }
                 }
-                // Jika tidak ketemu format ribuan, ambil fallback kolom sebelum status terakhir
                 if (!jumlah) {
                     jumlah = kolom[kolom.length - 3] || "";
                 }
 
                 const creditStatus = ""; 
 
-                // Tampilkan ke dalam tabel HTML
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Masukkan ke array data salin dengan batas TAB (\t)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
             }
         });
@@ -339,7 +374,12 @@
     }
 
     function salinHasil() {
-        if (!hasilTeksUntukDisalin) return;
+        if (!hasilTeksUntilDisalin) {
+            if(hasilTeksUntukDisalin) {
+                navigator.clipboard.writeText(hasilTeksUntukDisalin);
+            }
+            return;
+        }
         navigator.clipboard.writeText(hasilTeksUntukDisalin);
     }
 </script>
