@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rumus Flop - Wallpaper Utama</title>
+    <title>Karya Anak Djarum - Wallpaper Utama</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- PERBAIKAN WALLPAPER DI SINI (PASTI MUNCUL) --- */
+        /* --- PROXY GAMBAR BARU: DIJAMIN 100% TEMBUS & MUNCUL --- */
         background: linear-gradient(rgba(12, 6, 2, 0.75), rgba(12, 6, 2, 0.75)), 
-                    url('https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png');
+                    url('https://images.weserv.nl/?url=raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -30,7 +30,7 @@
         width: 100%;
         height: 100%;
         z-index: 0;
-        pointer-events: none; /* Agar tidak menghalangi klik pada tombol */
+        pointer-events: none;
     }
     
     .container {
@@ -178,7 +178,6 @@
 </head>
 <body>
 
-<!-- Canvas sekarang hanya untuk animasi partikel terbang -->
 <canvas id="bgCanvas"></canvas>
 
 <div class="container">
@@ -222,7 +221,6 @@
         height = canvas.height = window.innerHeight;
     });
 
-    // Membuat animasi butiran api terbang di atas wallpaper luar
     const particles = [];
     for (let i = 0; i < 35; i++) {
         particles.push({
@@ -350,16 +348,37 @@
         hasilTeksUntukDisalin = "";
     }
 
+    /* --- METODE SALIN TERBARU (ANTI GAGAL/FALLBACK TEXTAREA) --- */
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
             alert("Belum ada data hasil konversi yang bisa disalin!");
             return;
         }
-        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            alert("Data berhasil disalin ke clipboard!");
-        }).catch(err => {
-            console.error("Gagal menyalin data: ", err);
-        });
+        
+        // Coba cara modern dulu
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
+                alert("Data berhasil disalin!");
+            }).catch(() => {
+                salinPakaiMetodeLama(hasilTeksUntukDisalin);
+            });
+        } else {
+            // Jika browser memblokir navigator clipboard, gunakan trik elemen bayangan
+            salinPakaiMetodeLama(hasilTeksUntukDisalin);
+        }
+    }
+
+    function salinPakaiMetodeLama(teks) {
+        const el = document.createElement('textarea');
+        el.value = teks;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert("Data berhasil disalin ke clipboard!");
     }
 </script>
 </body>
