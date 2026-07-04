@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karya Anak Djarum - Wallpaper Utama</title>
+    <title>Rumus Flop - Wallpaper Utama</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        /* --- PERBAIKAN WALLPAPER DI SINI (PASTI MUNCUL) --- */
+        background: linear-gradient(rgba(12, 6, 2, 0.75), rgba(12, 6, 2, 0.75)), 
+                    url('https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         background-color: #0c0602; 
         color: #f3f4f6;
         margin: 0;
@@ -23,8 +29,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
-        background-color: #0c0602;
+        z-index: 0;
+        pointer-events: none; /* Agar tidak menghalangi klik pada tombol */
     }
     
     .container {
@@ -172,6 +178,7 @@
 </head>
 <body>
 
+<!-- Canvas sekarang hanya untuk animasi partikel terbang -->
 <canvas id="bgCanvas"></canvas>
 
 <div class="container">
@@ -215,69 +222,39 @@
         height = canvas.height = window.innerHeight;
     });
 
-    // --- PENGATURAN WALLPAPER & LOGIKA CADANGAN ---
-    let useImage = false;
-    const narutoImg = new Image();
-    
-    // Jangan gunakan crossOrigin jika server tujuan memblokir CORS, biarkan default
-    narutoImg.src = 'https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png'; 
-    
-    narutoImg.onload = function() {
-        useImage = true; // Jika sukses dimuat, jalankan mode gambar
-    };
-
-    narutoImg.onerror = function() {
-        useImage = false; // Jika error/diblokir CORS, gunakan animasi partikel bara api
-    };
-
-    // Struktur data animasi partikel bara cadangan
+    // Membuat animasi butiran api terbang di atas wallpaper luar
     const particles = [];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 35; i++) {
         particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: Math.random() * 3 + 1,
-            speedY: -(Math.random() * 1 + 0.5),
-            speedX: Math.random() * 1 - 0.5,
-            alpha: Math.random() * 0.5 + 0.2
+            radius: Math.random() * 2.5 + 1,
+            speedY: -(Math.random() * 0.8 + 0.3),
+            speedX: Math.random() * 0.8 - 0.4,
+            alpha: Math.random() * 0.6 + 0.1
         });
     }
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
 
-        if (useImage) {
-            // JIKA GAMBAR SUKSES DIMUAT
-            try {
-                ctx.save();
-                ctx.globalAlpha = 0.25; 
-                ctx.drawImage(narutoImg, 0, 0, width, height);
-                ctx.restore();
-            } catch (e) {
-                useImage = false; // Fallback otomatis jika terjadi error mendadak saat render
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 69, 0, ${p.alpha})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "#ff4500";
+            ctx.fill();
+
+            p.y += p.speedY;
+            p.x += p.speedX;
+
+            if (p.y < 0) {
+                p.y = height;
+                p.x = Math.random() * width;
             }
-        } else {
-            // JIKA GAMBAR EROR/BLOCKED (EFEK BARA API KEREN)
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 69, 0, ${p.alpha})`;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = "#ff4500";
-                ctx.fill();
-
-                // Pergerakan naik ke atas
-                p.y += p.speedY;
-                p.x += p.speedX;
-
-                // Reset jika keluar layar
-                if (p.y < 0) {
-                    p.y = height;
-                    p.x = Math.random() * width;
-                }
-            });
-            ctx.shadowBlur = 0; // Reset efek glow agar tidak mempengaruhi container
-        }
+        });
+        ctx.shadowBlur = 0;
 
         requestAnimationFrame(animate);
     }
@@ -374,13 +351,15 @@
     }
 
     function salinHasil() {
-        if (!hasilTeksUntilDisalin) {
-            if(hasilTeksUntukDisalin) {
-                navigator.clipboard.writeText(hasilTeksUntukDisalin);
-            }
+        if (!hasilTeksUntukDisalin) {
+            alert("Belum ada data hasil konversi yang bisa disalin!");
             return;
         }
-        navigator.clipboard.writeText(hasilTeksUntukDisalin);
+        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
+            alert("Data berhasil disalin ke clipboard!");
+        }).catch(err => {
+            console.error("Gagal menyalin data: ", err);
+        });
     }
 </script>
 </body>
