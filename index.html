@@ -215,7 +215,6 @@
         height = canvas.height = window.innerHeight;
     });
 
-    // DI SINI SUDAH DIPERBAIKI (DITUTUP DENGAN TANDA KUTIP DAN TITIK KOMA)
     const narutoImg = new Image();
     narutoImg.crossOrigin = "anonymous";
     narutoImg.src = 'https://raw.githubusercontent.com/sukaati1/Rumus-Flop/main/luffy.png'; 
@@ -227,10 +226,7 @@
             if (narutoImg.complete && narutoImg.naturalWidth > 0) {
                 ctx.save();
                 ctx.globalAlpha = 0.30; 
-                
-                // Gambar penuh satu layar
                 ctx.drawImage(narutoImg, 0, 0, width, height);
-                
                 ctx.restore();
             }
         } catch (e) {}
@@ -265,13 +261,23 @@
                 const idxWaktu   = pakaiNoUrut ? 2 : 1;
                 const idxUser    = pakaiNoUrut ? 3 : 2;
                 const idxBank    = pakaiNoUrut ? 5 : 4;
-                const idxJumlah  = kolom.length - 1; 
+
+                // Memeriksa kolom paling terakhir apakah merupakan simbol/operator
+                let idxJumlah = kolom.length - 1;
+                let jumlah = kolom[idxJumlah] || "";
+
+                // Jika kolom terakhir terdeteksi berupa operator (+, -, CR, DB), maka ambil kolom sebelumnya
+                if (jumlah === '+' || jumlah === '-' || jumlah.toUpperCase() === 'CR' || jumlah.toUpperCase() === 'DB' || isNaN(jumlah.replace(/[,.]/g, ''))) {
+                    if (kolom.length > 6) {
+                        idxJumlah = kolom.length - 2;
+                        jumlah = kolom[idxJumlah] || "";
+                    }
+                }
 
                 const waktu = kolom[idxWaktu] || "";
                 const userId = kolom[idxUser] || "";
                 const tujuanBank = kolom[idxBank] || "";
                 const creditStatus = ""; 
-                const jumlah = kolom[idxJumlah] || ""; 
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
