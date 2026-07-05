@@ -7,8 +7,9 @@
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- WALLPAPER GRADASI EMAS-API ANIME: 100% ANTI HITAM --- */
-        background: radial-gradient(circle at center, #2a0f02 0%, #140701 60%, #050200 100%);
+        /* --- WALLPAPER BARU: GRADASI MERAH ORANYE API MEMBARA (ANTI HITAM) --- */
+        background: linear-gradient(135deg, #4a1505 0%, #2b0b01 40%, #0f0400 100%);
+        background-size: cover;
         background-attachment: fixed;
         color: #f3f4f6;
         margin: 0;
@@ -20,12 +21,12 @@
     }
     
     .container {
-        background: rgba(20, 10, 5, 0.9); 
+        background: rgba(22, 11, 5, 0.92); 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 69, 0, 0.3);
+        border: 1px solid rgba(255, 69, 0, 0.4);
         border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 69, 0, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 69, 0, 0.2);
         width: 100%;
         max-width: 950px;
         padding: 30px;
@@ -40,7 +41,7 @@
         text-transform: uppercase;
         letter-spacing: 4px;
         margin-bottom: 30px;
-        text-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+        text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
     }
     
     label {
@@ -124,8 +125,10 @@
         color: #fff; 
     }
     
+    /* Indikator fokus yang jelas saat ditekan TAB */
     button:focus {
-        outline: 2px solid #ff4500;
+        outline: 3px solid #ff4500;
+        outline-offset: 1px;
     }
     
     button:active {
@@ -169,15 +172,12 @@
     <h1>Karya anak Djarum</h1>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <!-- URUTAN TAB 1: Input Box -->
+    <!-- KUNCI URUTAN TAB -->
     <textarea id="rawInput" tabindex="1" placeholder="Dari kita untuk kita"></textarea>
     
     <div class="btn-group">
-        <!-- URUTAN TAB 2: Tombol Submit -->
         <button class="btn-submit" tabindex="2" onclick="konversiLog()">Submit</button>
-        <!-- URUTAN TAB 3: Tombol Salin Data -->
-        <button class="btn-copy" tabindex="3" id="btnCopy" onclick="salinHasil()">Salin Data</button>
-        <!-- URUTAN TAB 4: Tombol Reset -->
+        <button class="btn-copy" tabindex="3" id="btnCopy" onclick="salinHasil(event)">Salin Data</button>
         <button class="btn-reset" tabindex="4" id="btnReset" onclick="resetData()">Reset</button>
     </div>
 
@@ -287,32 +287,28 @@
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
         hasilTeksUntukDisalin = "";
-        // Setelah reset kembalikan fokus ke Input Box utama
         document.getElementById('rawInput').focus();
     }
 
-    // --- SALIN SILENT & PAKSA LOMPAT TAB KE RESET ---
-    function salinHasil() {
-        if (!hasilTeksUntukDisalin) {
-            // Jika kosong, langsung arahkan ke tombol reset agar tidak lari
-            document.getElementById('btnReset').focus();
-            return;
-        }
-        
-        const el = document.createElement('textarea');
-        el.value = hasilTeksUntukDisalin;
-        el.setAttribute('readonly', '');
-        el.style.position = 'absolute';
-        el.style.left = '-9999px';
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+    // --- SALIN DATA DAN PAKSA ALUR TAB KE RESET ---
+    function salinHasil(e) {
+        // Cegah aksi bawaan browser agar fokus tidak rusak
+        if(e) e.preventDefault();
 
-        // FORMULA FIX: Paksa fokus pindah langsung ke tombol Reset setelah salin sukses
-        setTimeout(() => {
-            document.getElementById('btnReset').focus();
-        }, 50);
+        if (hasilTeksUntukDisalin) {
+            const el = document.createElement('textarea');
+            el.value = hasilTeksUntukDisalin;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+
+        // KUNCI UTAMA: Setelah sukses salin, kursor langsung dipaksa mengunci tombol Reset
+        document.getElementById('btnReset').focus();
     }
 </script>
 </body>
