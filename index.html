@@ -148,11 +148,11 @@
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="Dari kita untuk kita"></textarea>
     
-    <!-- REQUEST DIKUNCI: SUBMIT -> SALIN DATA -> RESET -->
+    <!-- FIX: Ditambahkan id="btnReset" agar fungsi salin tidak error -->
     <div class="btn-group">
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
         <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
-        <button class="btn-reset" onclick="resetData()">Reset</button>
+        <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
     </div>
 
     <label>Hasil Konversi:</label>
@@ -280,7 +280,7 @@
         document.execCommand('copy');
         document.body.removeChild(el);
 
-        // FORMULA JUARA: Kunci fokus langsung mendarat tepat sasaran ke tombol Reset
+        // Kunci fokus mendarat tepat sasaran ke tombol Reset tanpa error
         document.getElementById('btnReset').focus();
     }
 </script>
