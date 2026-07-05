@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - ANIME MOTION EDITION</title>
+    <title>VVIP KASIR - CYBER ANIME EDITION</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -14,23 +14,39 @@
         align-items: center;
         min-height: 100vh;
         color: #e2e8f0;
-        
-        /* --- WALLPAPER ANIME BERGERAK (LINK BARU & AKTIF) --- */
-        background-image: linear-gradient(rgba(10, 11, 15, 0.75), rgba(10, 11, 15, 0.75)), 
-                          url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbms3eXN6bnd5OHg1M3RieGphZWVpM3VwY2NkcG93bXNidm95cmh6ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13BvH87XYXv7ig/giphy.gif');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        overflow-x: hidden;
+        background-color: #08090c;
+        position: relative;
+    }
+    
+    /* --- LIVE MATRIX DIGITAL EFFECTS (TANPA INTERNET) --- */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        z-index: -1;
+        background-image: 
+            linear-gradient(0deg, rgba(255, 69, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 69, 0, 0.03) 1px, transparent 1px);
+        background-size: 30px 30px;
+        animation: matrixMove 20s linear infinite;
+    }
+
+    @keyframes matrixMove {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-30px, -30px); }
     }
     
     .container {
-        background: rgba(21, 23, 30, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(21, 23, 30, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 2px solid #ff4500;
         border-radius: 16px;
-        box-shadow: 0 0 25px rgba(255, 69, 0, 0.25);
+        box-shadow: 0 0 30px rgba(255, 69, 0, 0.2);
         width: 100%;
         max-width: 950px;
         padding: 35px;
@@ -278,7 +294,7 @@
         }
         
         const el = document.createElement('textarea');
-        el.value = hasilTeksUntukDisalin; // Fix typo disini
+        el.value = hasilTeksUntukDisalin;
         el.setAttribute('readonly', '');
         el.style.position = 'absolute';
         el.style.left = '-9999px';
