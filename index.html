@@ -3,79 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - PREMIUM EDITION</title>
+    <title>VVIP KASIR - ANIME LIVE EDITION</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        
-        /* --- SETUP WALLPAPER GAMBAR PREMIUM --- */
-        background-image: linear-gradient(rgba(13, 14, 18, 0.8), rgba(13, 14, 18, 0.8)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe'); 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        
-        color: #e2e8f0;
         margin: 0;
         padding: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        overflow-x: hidden;
+        color: #e2e8f0;
+        position: relative;
+    }
+
+    /* --- BACKGROUND VIDEO ANIME BERGERAK --- */
+    .live-wallpaper {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -2;
+        object-fit: cover;
+        filter: brightness(0.4) contrast(1.1); /* Membuat anime agak gelap agar tulisan kasir tetap kontras */
+    }
+
+    /* Lapisan kegelapan ekstra agar teks tidak silau */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 11, 15, 0.4);
+        z-index: -1;
     }
     
+    /* --- BOX CONTAINER TEMA CYBERPUNK/ANIME NEON --- */
     .container {
-        /* Menggunakan sedikit transparansi (rgba) agar wallpaper di belakangnya agak mengintip mewah */
-        background: rgba(21, 23, 30, 0.95);
-        backdrop-filter: blur(10px); /* Efek kaca buram premium */
-        border: 1px solid #ff4500; 
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(255, 69, 0, 0.15), 0 15px 35px rgba(0, 0, 0, 0.6);
+        background: rgba(15, 17, 26, 0.75);
+        backdrop-filter: blur(12px); /* Efek kaca transparan premium */
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid #ff4500;
+        border-radius: 16px;
+        /* Animasi pendaran neon di tepi kotak */
+        box-shadow: 0 0 25px rgba(255, 69, 0, 0.3), inset 0 0 15px rgba(255, 69, 0, 0.1);
         width: 100%;
         max-width: 950px;
-        padding: 30px;
+        padding: 35px;
         box-sizing: border-box;
+        animation: neonGlow 4s infinite alternate;
+    }
+
+    @keyframes neonGlow {
+        0% { box-shadow: 0 0 20px rgba(255, 69, 0, 0.25); border-color: #ff4500; }
+        100% { box-shadow: 0 0 35px rgba(255, 99, 71, 0.5); border-color: #ff6600; }
     }
     
     h1 {
         text-align: center;
         color: #ff4500;
-        font-size: 26px;
-        font-weight: 800;
+        font-size: 28px;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 5px;
+        letter-spacing: 6px;
         margin-bottom: 30px;
-        text-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+        text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
     }
     
     label {
         display: block;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 10px;
         color: #ff8700;
         font-size: 13.5px;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
     
     textarea {
         width: 100%;
         height: 150px;
-        background: #090a0d;
-        border: 1px solid #2d3139;
+        background: rgba(5, 6, 8, 0.85);
+        border: 1px solid #3b4252;
         border-radius: 8px;
         color: #fff;
         padding: 15px;
         box-sizing: border-box;
         resize: vertical;
         font-family: 'Courier New', monospace;
-        font-size: 13.5px;
+        font-size: 14px;
         margin-bottom: 25px;
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
     }
     
     textarea:focus {
-        border-color: #ff4500;
+        border-color: #ff6600;
         outline: none;
-        box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
+        box-shadow: 0 0 12px rgba(255, 102, 0, 0.4);
     }
     
     .btn-group {
@@ -86,48 +115,53 @@
     
     button {
         flex: 1;
-        padding: 12px 14px; 
-        font-size: 13px;   
-        font-weight: 700;
+        padding: 14px 18px; 
+        font-size: 13.5px;   
+        font-weight: 800;
         border: none;
-        border-radius: 6px; 
+        border-radius: 8px; 
         cursor: pointer;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: all 0.2s ease;
+        letter-spacing: 1px;
+        transition: all 0.2s ease-in-out;
     }
     
     .btn-submit { 
         background: linear-gradient(135deg, #ff4500, #ff6600); 
         color: #fff; 
+        box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
     }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5); }
     
     .btn-copy { 
         background: linear-gradient(135deg, #0052cc, #0066ff); 
         color: #fff; 
+        box-shadow: 0 4px 15px rgba(0, 82, 204, 0.3);
     }
+    .btn-copy:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5); }
     
     .btn-reset { 
         background: #22252d; 
         color: #cbd5e1; 
         border: 1px solid #3b4252; 
     }
+    .btn-reset:hover { background: #2d313b; color: #fff; }
     
     button:focus {
-        outline: 3px solid #ff4500;
+        outline: 3px solid #ff6600;
     }
     
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
         border-radius: 8px; 
-        border: 1px solid #2d3139; 
+        border: 1px solid #3b4252; 
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: #0e1014;
+        background: rgba(14, 16, 20, 0.85);
     }
     
     th, td {
@@ -138,17 +172,23 @@
     }
     
     th { 
-        background-color: #15171e; 
+        background-color: rgba(21, 23, 30, 0.9); 
         color: #ff4500; 
         font-weight: 700; 
+        letter-spacing: 0.5px;
     }
     
     tr:nth-child(even) {
-        background-color: #111319;
+        background-color: rgba(17, 19, 25, 0.6);
     }
 </style>
 </head>
 <body>
+
+<video autoplay loop muted playsinline class="live-wallpaper">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-numbers-31919-large.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -235,3 +275,60 @@
                 for (let i = 0; i < kolom.length; i++) {
                     if (kolom[i].includes(',') || kolom[i].toUpperCase().includes('MANDIRI') || kolom[i].toUpperCase().includes('BCA') || kolom[i].toUpperCase().includes('BRI') || kolom[i].toUpperCase().includes('BNI')) {
                         tujuanBank = kolom[i];
+                        break;
+                    }
+                }
+
+                let jumlah = "";
+                for (let i = kolom.length - 1; i >= 0; i--) {
+                    let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
+                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 4) {
+                        jumlah = kolom[i];
+                        break;
+                    }
+                }
+                if (!jumlah) {
+                    jumlah = kolom[kolom.length - 3] || "";
+                }
+
+                const creditStatus = ""; 
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
+                tbody.appendChild(tr);
+
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
+            }
+        });
+
+        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
+    }
+
+    function resetData() {
+        document.getElementById('rawInput').value = '';
+        document.getElementById('tableBody').innerHTML = '';
+        hasilTeksUntukDisalin = "";
+        document.getElementById('rawInput').focus();
+    }
+
+    function salinHasil() {
+        if (!hasilTeksUntukDisalin) {
+            document.getElementById('btnReset').focus();
+            return;
+        }
+        
+        const el = document.createElement('textarea');
+        el.value = hasilTeksUntukDisalin;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+
+        document.getElementById('btnReset').focus();
+    }
+</script>
+</body>
+</html>
