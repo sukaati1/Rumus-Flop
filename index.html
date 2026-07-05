@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karya Anak Djarum - Wallpaper Utama</title>
+    <title>VVIP KASIR - PREMIUM EDITION</title>
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- WALLPAPER GRADASI MERAH HITAM BARA (PASTI MUNCUL & Ringan) --- */
-        background: linear-gradient(145deg, #3a0d01, #1a0500, #0a0200);
-        background-attachment: fixed;
-        color: #f3f4f6;
+        /* --- WALLPAPER PREMIUM CHARCOAL (SOLID & ANTI HITAM PEKAT) --- */
+        background: #0d0e12;
+        color: #e2e8f0;
         margin: 0;
         padding: 20px;
         display: flex;
@@ -20,12 +19,10 @@
     }
     
     .container {
-        background: rgba(22, 11, 5, 0.92); 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 69, 0, 0.4);
-        border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
+        background: #15171e;
+        border: 1px solid #ff4500; /* Neon Orange border yang tegas */
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.15), 0 15px 35px rgba(0, 0, 0, 0.6);
         width: 100%;
         max-width: 950px;
         padding: 30px;
@@ -35,27 +32,29 @@
     h1 {
         text-align: center;
         color: #ff4500;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 4px;
+        letter-spacing: 5px;
         margin-bottom: 30px;
+        text-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
     }
     
     label {
         display: block;
         font-weight: 600;
         margin-bottom: 10px;
-        color: #ffa500;
-        font-size: 14px;
+        color: #ff8700;
+        font-size: 13.5px;
+        letter-spacing: 0.5px;
     }
     
     textarea {
         width: 100%;
         height: 150px;
-        background: rgba(8, 3, 1, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 10px;
+        background: #090a0d;
+        border: 1px solid #2d3139;
+        border-radius: 8px;
         color: #fff;
         padding: 15px;
         box-sizing: border-box;
@@ -68,6 +67,7 @@
     textarea:focus {
         border-color: #ff4500;
         outline: none;
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
     }
     
     .btn-group {
@@ -78,22 +78,65 @@
     
     button {
         flex: 1;
-        padding: 10px 14px; 
+        padding: 12px 14px; 
         font-size: 13px;   
         font-weight: 700;
         border: none;
         border-radius: 6px; 
         cursor: pointer;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
     }
     
-    .btn-submit { background: linear-gradient(135deg, #ff4500, #ff6600); color: #fff; }
-    .btn-copy { background: linear-gradient(135deg, #1e40af, #3b82f6); color: #fff; }
-    .btn-reset { background: rgba(255, 255, 255, 0.08); color: #d1d5db; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .btn-submit { 
+        background: linear-gradient(135deg, #ff4500, #ff6600); 
+        color: #fff; 
+    }
     
-    /* Indikator focus standar browser yang rapi saat ditekan TAB */
+    .btn-copy { 
+        background: linear-gradient(135deg, #0052cc, #0066ff); 
+        color: #fff; 
+    }
+    
+    .btn-reset { 
+        background: #22252d; 
+        color: #cbd5e1; 
+        border: 1px solid #3b4252; 
+    }
+    
     button:focus {
         outline: 3px solid #ff4500;
+    }
+    
+    .table-container { 
+        overflow-x: auto; 
+        margin-top: 5px; 
+        border-radius: 8px; 
+        border: 1px solid #2d3139; 
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #0e1014;
+    }
+    
+    th, td {
+        border-bottom: 1px solid #2d3139;
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 13.5px;
+    }
+    
+    th { 
+        background-color: #15171e; 
+        color: #ff4500; 
+        font-weight: 700; 
+    }
+    
+    tr:nth-child(even) {
+        background-color: #111319;
     }
 </style>
 </head>
@@ -105,10 +148,11 @@
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="Dari kita untuk kita"></textarea>
     
+    <!-- REQUEST DIKUNCI: SUBMIT -> SALIN DATA -> RESET -->
     <div class="btn-group">
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
         <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
-        <button class="btn-reset" onclick="resetData()">Reset</button>
+        <button class="btn-reset" id="btnReset" onclick="resetData()">Reset</button>
     </div>
 
     <label>Hasil Konversi:</label>
@@ -220,9 +264,11 @@
         document.getElementById('rawInput').focus();
     }
 
-    // --- FUNGSI SALIN MURNI TANPA MERUSAK STRUKTUR TOMBOL ---
     function salinHasil() {
-        if (!hasilTeksUntukDisalin) return;
+        if (!hasilTeksUntukDisalin) {
+            document.getElementById('btnReset').focus();
+            return;
+        }
         
         const el = document.createElement('textarea');
         el.value = hasilTeksUntukDisalin;
@@ -233,6 +279,9 @@
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
+
+        // FORMULA JUARA: Kunci fokus langsung mendarat tepat sasaran ke tombol Reset
+        document.getElementById('btnReset').focus();
     }
 </script>
 </body>
