@@ -15,20 +15,18 @@
         min-height: 100vh;
         color: #e2e8f0;
         
-        /* --- WALLPAPER ANIME BERGERAK (GIF LIVE) --- */
-        /* Menggunakan filter linear-gradient langsung di background agar tulisan kasir sangat jelas */
+        /* --- WALLPAPER ANIME BERGERAK (LINK BARU & AKTIF) --- */
         background-image: linear-gradient(rgba(10, 11, 15, 0.75), rgba(10, 11, 15, 0.75)), 
-                          url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0NTA3Z3Fid3VwOHZidms0M3VndXN0bXp6bXFid3pjd3pjd3omZXA9Y19pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d1E2VyhFsxCmEic0/giphy.gif');
+                          url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbms3eXN6bnd5OHg1M3RieGphZWVpM3VwY2NkcG93bXNidm95cmh6ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13BvH87XYXv7ig/giphy.gif');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
     
-    /* --- BOX CONTAINER TEMA CYBERPUNK/ANIME NEON --- */
     .container {
         background: rgba(21, 23, 30, 0.85);
-        backdrop-filter: blur(12px); /* Efek kaca transparan premium */
+        backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 2px solid #ff4500;
         border-radius: 16px;
@@ -280,7 +278,7 @@
         }
         
         const el = document.createElement('textarea');
-        el.value = hasilTeksUntilDisalin || hasilTeksUntukDisalin;
+        el.value = hasilTeksUntukDisalin; // Fix typo disini
         el.setAttribute('readonly', '');
         el.style.position = 'absolute';
         el.style.left = '-9999px';
