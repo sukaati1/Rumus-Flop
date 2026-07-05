@@ -7,7 +7,7 @@
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- WALLPAPER GRADASI MERAH HITAM BARAL - DIJAMIN TIDAK AKAN HITAM POLOS --- */
+        /* --- WALLPAPER GRADASI MERAH HITAM BARA (PASTI MUNCUL & Ringan) --- */
         background: linear-gradient(145deg, #3a0d01, #1a0500, #0a0200);
         background-attachment: fixed;
         color: #f3f4f6;
@@ -91,6 +91,7 @@
     .btn-copy { background: linear-gradient(135deg, #1e40af, #3b82f6); color: #fff; }
     .btn-reset { background: rgba(255, 255, 255, 0.08); color: #d1d5db; border: 1px solid rgba(255, 255, 255, 0.15); }
     
+    /* Indikator focus standar browser yang rapi saat ditekan TAB */
     button:focus {
         outline: 3px solid #ff4500;
     }
@@ -219,6 +220,7 @@
         document.getElementById('rawInput').focus();
     }
 
+    // --- FUNGSI SALIN MURNI TANPA MERUSAK STRUKTUR TOMBOL ---
     function salinHasil() {
         if (!hasilTeksUntukDisalin) return;
         
