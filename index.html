@@ -7,9 +7,8 @@
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- WALLPAPER BARU: GRADASI MERAH ORANYE API MEMBARA (ANTI HITAM) --- */
-        background: linear-gradient(135deg, #4a1505 0%, #2b0b01 40%, #0f0400 100%);
-        background-size: cover;
+        /* --- WALLPAPER GRADASI MERAH HITAM BARAL - DIJAMIN TIDAK AKAN HITAM POLOS --- */
+        background: linear-gradient(145deg, #3a0d01, #1a0500, #0a0200);
         background-attachment: fixed;
         color: #f3f4f6;
         margin: 0;
@@ -26,7 +25,7 @@
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 69, 0, 0.4);
         border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 69, 0, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
         width: 100%;
         max-width: 950px;
         padding: 30px;
@@ -41,7 +40,6 @@
         text-transform: uppercase;
         letter-spacing: 4px;
         margin-bottom: 30px;
-        text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
     }
     
     label {
@@ -50,7 +48,6 @@
         margin-bottom: 10px;
         color: #ffa500;
         font-size: 14px;
-        letter-spacing: 0.7px;
     }
     
     textarea {
@@ -66,13 +63,11 @@
         font-family: 'Courier New', monospace;
         font-size: 13.5px;
         margin-bottom: 25px;
-        transition: all 0.3s ease;
     }
     
     textarea:focus {
         border-color: #ff4500;
         outline: none;
-        box-shadow: 0 0 12px rgba(255, 69, 0, 0.4);
     }
     
     .btn-group {
@@ -89,81 +84,16 @@
         border: none;
         border-radius: 6px; 
         cursor: pointer;
-        transition: all 0.2s ease;
         text-transform: uppercase;
-        letter-spacing: 1px;
     }
     
-    .btn-submit { 
-        background: linear-gradient(135deg, #ff4500, #ff6600); 
-        color: #fff; 
-    }
+    .btn-submit { background: linear-gradient(135deg, #ff4500, #ff6600); color: #fff; }
+    .btn-copy { background: linear-gradient(135deg, #1e40af, #3b82f6); color: #fff; }
+    .btn-reset { background: rgba(255, 255, 255, 0.08); color: #d1d5db; border: 1px solid rgba(255, 255, 255, 0.15); }
     
-    .btn-submit:hover { 
-        transform: translateY(-2px); 
-        box-shadow: 0 6px 15px rgba(255, 69, 0, 0.45); 
-    }
-    
-    .btn-copy { 
-        background: linear-gradient(135deg, #1e40af, #3b82f6); 
-        color: #fff; 
-    }
-    
-    .btn-copy:hover { 
-        transform: translateY(-2px); 
-        box-shadow: 0 6px 15px rgba(59, 130, 246, 0.45); 
-    }
-    
-    .btn-reset { 
-        background: rgba(255, 255, 255, 0.08); 
-        color: #d1d5db; 
-        border: 1px solid rgba(255, 255, 255, 0.15); 
-    }
-    
-    .btn-reset:hover { 
-        background: rgba(255, 255, 255, 0.18); 
-        color: #fff; 
-    }
-    
-    /* Indikator fokus yang jelas saat ditekan TAB */
     button:focus {
         outline: 3px solid #ff4500;
-        outline-offset: 1px;
     }
-    
-    button:active {
-        transform: translateY(1px);
-    }
-    
-    .table-container { 
-        overflow-x: auto; 
-        margin-top: 5px; 
-        border-radius: 10px; 
-        border: 1px solid rgba(255, 255, 255, 0.08); 
-    }
-    
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: rgba(12, 6, 4, 0.9);
-    }
-    
-    th, td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 14px 18px;
-        text-align: left;
-        font-size: 13.5px;
-    }
-    
-    th { 
-        background-color: rgba(20, 10, 5, 0.95); 
-        color: #ff4500; 
-        font-weight: 700; 
-        letter-spacing: 0.8px; 
-    }
-    
-    tr:last-child td { border-bottom: none; }
-    tr:nth-child(even) { background-color: rgba(255, 69, 0, 0.02); }
 </style>
 </head>
 <body>
@@ -172,13 +102,12 @@
     <h1>Karya anak Djarum</h1>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <!-- KUNCI URUTAN TAB -->
-    <textarea id="rawInput" tabindex="1" placeholder="Dari kita untuk kita"></textarea>
+    <textarea id="rawInput" placeholder="Dari kita untuk kita"></textarea>
     
     <div class="btn-group">
-        <button class="btn-submit" tabindex="2" onclick="konversiLog()">Submit</button>
-        <button class="btn-copy" tabindex="3" id="btnCopy" onclick="salinHasil(event)">Salin Data</button>
-        <button class="btn-reset" tabindex="4" id="btnReset" onclick="resetData()">Reset</button>
+        <button class="btn-submit" onclick="konversiLog()">Submit</button>
+        <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
+        <button class="btn-reset" onclick="resetData()">Reset</button>
     </div>
 
     <label>Hasil Konversi:</label>
@@ -290,25 +219,18 @@
         document.getElementById('rawInput').focus();
     }
 
-    // --- SALIN DATA DAN PAKSA ALUR TAB KE RESET ---
-    function salinHasil(e) {
-        // Cegah aksi bawaan browser agar fokus tidak rusak
-        if(e) e.preventDefault();
-
-        if (hasilTeksUntukDisalin) {
-            const el = document.createElement('textarea');
-            el.value = hasilTeksUntukDisalin;
-            el.setAttribute('readonly', '');
-            el.style.position = 'absolute';
-            el.style.left = '-9999px';
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-        }
-
-        // KUNCI UTAMA: Setelah sukses salin, kursor langsung dipaksa mengunci tombol Reset
-        document.getElementById('btnReset').focus();
+    function salinHasil() {
+        if (!hasilTeksUntukDisalin) return;
+        
+        const el = document.createElement('textarea');
+        el.value = hasilTeksUntukDisalin;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
     }
 </script>
 </body>
