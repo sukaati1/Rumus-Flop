@@ -7,8 +7,14 @@
 <style>
     body {
         font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        /* --- WALLPAPER PREMIUM CHARCOAL (SOLID & ANTI HITAM PEKAT) --- */
-        background: #0d0e12;
+        
+        /* --- SETUP WALLPAPER GAMBAR PREMIUM --- */
+        background-image: linear-gradient(rgba(13, 14, 18, 0.8), rgba(13, 14, 18, 0.8)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe'); 
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        
         color: #e2e8f0;
         margin: 0;
         padding: 20px;
@@ -19,8 +25,10 @@
     }
     
     .container {
-        background: #15171e;
-        border: 1px solid #ff4500; /* Neon Orange border yang tegas */
+        /* Menggunakan sedikit transparansi (rgba) agar wallpaper di belakangnya agak mengintip mewah */
+        background: rgba(21, 23, 30, 0.95);
+        backdrop-filter: blur(10px); /* Efek kaca buram premium */
+        border: 1px solid #ff4500; 
         border-radius: 12px;
         box-shadow: 0 0 20px rgba(255, 69, 0, 0.15), 0 15px 35px rgba(0, 0, 0, 0.6);
         width: 100%;
@@ -148,7 +156,6 @@
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="Dari kita untuk kita"></textarea>
     
-    <!-- FIX: Ditambahkan id="btnReset" agar fungsi salin tidak error -->
     <div class="btn-group">
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
         <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
@@ -228,61 +235,3 @@
                 for (let i = 0; i < kolom.length; i++) {
                     if (kolom[i].includes(',') || kolom[i].toUpperCase().includes('MANDIRI') || kolom[i].toUpperCase().includes('BCA') || kolom[i].toUpperCase().includes('BRI') || kolom[i].toUpperCase().includes('BNI')) {
                         tujuanBank = kolom[i];
-                        break;
-                    }
-                }
-
-                let jumlah = "";
-                for (let i = kolom.length - 1; i >= 0; i--) {
-                    let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
-                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 4) {
-                        jumlah = kolom[i];
-                        break;
-                    }
-                }
-                if (!jumlah) {
-                    jumlah = kolom[kolom.length - 3] || "";
-                }
-
-                const creditStatus = ""; 
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
-                tbody.appendChild(tr);
-
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
-            }
-        });
-
-        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-    }
-
-    function resetData() {
-        document.getElementById('rawInput').value = '';
-        document.getElementById('tableBody').innerHTML = '';
-        hasilTeksUntukDisalin = "";
-        document.getElementById('rawInput').focus();
-    }
-
-    function salinHasil() {
-        if (!hasilTeksUntukDisalin) {
-            document.getElementById('btnReset').focus();
-            return;
-        }
-        
-        const el = document.createElement('textarea');
-        el.value = hasilTeksUntukDisalin;
-        el.setAttribute('readonly', '');
-        el.style.position = 'absolute';
-        el.style.left = '-9999px';
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-
-        // Kunci fokus mendarat tepat sasaran ke tombol Reset tanpa error
-        document.getElementById('btnReset').focus();
-    }
-</script>
-</body>
-</html>
