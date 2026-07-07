@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - LIGHT ANIME EDITION</title>
+    <title>VVIP KASIR - CYBER CHARCOAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        --bg-main: #f4f6fa;
-        --panel-bg: #ffffff;
-        --tech-blue: #0066cc;
+        --bg-main: #0c0d14;
+        --panel-bg: #131522;
+        --neon-cyan: #00f3ff;
         --neon-pink: #ff007f;
-        --text-main: #1a202c;
-        --border-color: #cbd5e1;
+        --text-white: #ffffff;
+        --text-muted: #a0aec0;
     }
 
     body {
@@ -24,75 +24,53 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        color: var(--text-main);
+        color: var(--text-white);
         background-color: var(--bg-main); 
         position: relative;
         overflow-x: hidden;
     }
     
-    /* WALLPAPER BERGERAK (ANIMATED TECH GRID BACKGROUND) */
+    /* WALLPAPER GRID TECH BERGERAK (ANGGUN & ADEM) */
     body::before {
         content: "";
         position: fixed;
         top: -50%; left: -50%; width: 200%; height: 200%;
         z-index: -1;
         background-image: 
-            linear-gradient(rgba(0, 102, 204, 0.05) 1.5px, transparent 1.5px),
-            linear-gradient(90deg, rgba(0, 102, 204, 0.05) 1.5px, transparent 1.5px);
-        background-size: 40px 40px;
-        /* Menjalankan animasi bergerak secara diagonal terus-menerus */
-        animation: gridMove 20s linear infinite;
-    }
-    
-    /* Efek Scanline halusnya */
-    body::after {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -1;
-        background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 102, 204, 0.02) 50%);
-        background-size: 100% 4px;
-        pointer-events: none;
+            linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+        background-size: 35px 35px;
+        animation: gridMove 25s linear infinite;
     }
 
-    /* RUMUS ANIMASI BACKROUND BERGERAK */
     @keyframes gridMove {
-        0% {
-            transform: translate(0, 0);
-        }
-        100% {
-            transform: translate(40px, 40px);
-        }
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(35px, 35px); }
     }
     
+    /* CONTAINER GELAP KONTRAS TINGGI */
     .container {
         background: var(--panel-bg); 
-        border: 2px solid var(--tech-blue);
+        border: 2px solid var(--neon-cyan);
         border-radius: 12px;
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 15px 35px rgba(0, 102, 204, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 243, 255, 0.05);
         position: relative;
-    }
-
-    .container::before {
-        content: '';
-        position: absolute;
-        top: -2px; right: 40px; width: 50px; height: 4px;
-        background: var(--neon-pink);
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
-        color: var(--tech-blue);
+        color: var(--text-white);
         font-size: 32px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
+        text-shadow: 0 0 10px var(--neon-cyan);
     }
 
     .sub-title {
@@ -111,7 +89,7 @@
         display: block;
         font-weight: 700;
         margin-bottom: 10px;
-        color: var(--tech-blue);
+        color: var(--neon-cyan);
         font-size: 13px;
         text-transform: uppercase;
         letter-spacing: 1.5px;
@@ -120,10 +98,10 @@
     textarea {
         width: 100%;
         height: 150px;
-        background: #ffffff;
-        border: 2px solid var(--border-color);
+        background: #06070c;
+        border: 2px solid #23263d;
         border-radius: 6px;
-        color: #000000;
+        color: #ffffff;
         padding: 15px;
         box-sizing: border-box;
         resize: vertical;
@@ -135,7 +113,7 @@
     }
     
     textarea:focus {
-        border-color: var(--tech-blue);
+        border-color: var(--neon-cyan);
         outline: none;
     }
     
@@ -156,63 +134,62 @@
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 2px;
-        transition: background 0.2s ease, color 0.2s ease;
+        transition: background 0.2s ease, box-shadow 0.2s ease;
     }
     
     .btn-submit { 
-        background: var(--tech-blue); 
-        color: #ffffff; 
+        background: var(--neon-cyan); 
+        color: #000000; 
     }
     .btn-submit:hover {
-        background: #004da6;
+        background: #00c8ff;
     }
     
     .btn-copy { 
-        background: #ffffff; 
-        color: var(--neon-pink); 
+        background: transparent; 
+        color: #ffffff; 
         border: 2px solid var(--neon-pink);
     }
     .btn-copy:hover { 
         background: var(--neon-pink);
-        color: #ffffff;
     }
     
     .btn-reset { 
-        background: #e2e8f0; 
-        color: #4a5568; 
-        border: 1px solid var(--border-color);
+        background: #202336; 
+        color: var(--text-white); 
+        border: 1px solid #323754;
     }
     .btn-reset:hover { 
-        background: #cbd5e1;
-        color: #1a202c;
+        background: #2a2e47;
     }
 
-    /* PENANDA LINGKARAN DI-TAB TETAP SUPER TEBAL DAN MENYALA */
+    /* KOTAK PENANDA DI-TAB DIJAMIN SUPER TERANG TERPAMPANG NYATA */
     button:focus-visible, textarea:focus-visible {
-        outline: 5px solid var(--neon-pink) !important;
-        outline-offset: 3px !important;
-        box-shadow: 0 0 20px var(--neon-pink) !important;
+        outline: 6px solid var(--neon-pink) !important;
+        outline-offset: 4px !important;
+        box-shadow: 0 0 25px var(--neon-pink), 0 0 10px #ffffff !important;
     }
     
     button:focus, textarea:focus {
         outline: none; 
     }
     
+    /* TABEL DATA SANGAT KONTRAS DAN JELAS */
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
         border-radius: 6px; 
-        border: 2px solid var(--tech-blue); 
+        border: 2px solid var(--neon-cyan); 
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: #ffffff;
+        background: #090a10;
     }
     
     th, td {
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid #1c1e30;
         padding: 15px 18px;
         text-align: left;
         font-size: 14px;
@@ -220,30 +197,33 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: var(--tech-blue); 
-        color: #ffffff; 
+        background-color: #131522; 
+        color: var(--neon-cyan); 
         font-weight: 700; 
         letter-spacing: 1px;
+        border-bottom: 2px solid var(--neon-cyan);
     }
     
     td {
         font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #1a202c;
+        color: #ffffff; /* Tulisan putih pekat biar jelas */
     }
 
+    /* Angka Nominal Dikasih Warna Hijau Neon Biar Mencolok */
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
-        color: #000000;
+        color: #00ff66;
+        text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
         font-weight: 900;
     }
     
     tr:nth-child(even) {
-        background-color: #f8fafc;
+        background-color: #0e1018;
     }
 
     tr:hover {
-        background-color: #f1f5f9;
+        background-color: rgba(0, 243, 255, 0.05);
     }
 </style>
 </head>
@@ -251,10 +231,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Light Tech Moving Grid v2.5</div>
+    <div class="sub-title">Cyber Charcoal Edition v3.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="Masukkan atau tempel data log transaksi di sini..."></textarea>
+    <textarea id="rawInput" placeholder="READY FOR DATA SCAN..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -374,10 +354,10 @@
     function salinHasil() {
         if (!hasilTeksUntukDisalin) return;
         
-        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            console.log("Data copied successfully!");
+        navigator.clipboard.writeText(hasilTeksUntilDisalin || hasilTeksUntukDisalin).then(() => {
+            console.log("Copied!");
         }).catch(err => {
-            console.error("Gagal salin: ", err);
+            console.error("Error: ", err);
         });
     }
 </script>
