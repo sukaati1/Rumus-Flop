@@ -27,17 +27,42 @@
         color: var(--text-main);
         background-color: var(--bg-main); 
         position: relative;
+        overflow-x: hidden;
     }
     
+    /* WALLPAPER BERGERAK (ANIMATED TECH GRID BACKGROUND) */
     body::before {
+        content: "";
+        position: fixed;
+        top: -50%; left: -50%; width: 200%; height: 200%;
+        z-index: -1;
+        background-image: 
+            linear-gradient(rgba(0, 102, 204, 0.05) 1.5px, transparent 1.5px),
+            linear-gradient(90deg, rgba(0, 102, 204, 0.05) 1.5px, transparent 1.5px);
+        background-size: 40px 40px;
+        /* Menjalankan animasi bergerak secara diagonal terus-menerus */
+        animation: gridMove 20s linear infinite;
+    }
+    
+    /* Efek Scanline halusnya */
+    body::after {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: -1;
-        background-image: 
-            linear-gradient(rgba(0, 102, 204, 0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 102, 204, 0.04) 1px, transparent 1px);
-        background-size: 30px 30px;
+        background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 102, 204, 0.02) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+    }
+
+    /* RUMUS ANIMASI BACKROUND BERGERAK */
+    @keyframes gridMove {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(40px, 40px);
+        }
     }
     
     .container {
@@ -48,7 +73,7 @@
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 15px 35px rgba(0, 102, 204, 0.1);
+        box-shadow: 0 15px 35px rgba(0, 102, 204, 0.15);
         position: relative;
     }
 
@@ -162,7 +187,7 @@
         color: #1a202c;
     }
 
-    /* PENANDA FOKUS / LINGKARAN DI-TAB BIKIN SUPER TERANG & MENYALA */
+    /* PENANDA LINGKARAN DI-TAB TETAP SUPER TEBAL DAN MENYALA */
     button:focus-visible, textarea:focus-visible {
         outline: 5px solid var(--neon-pink) !important;
         outline-offset: 3px !important;
@@ -226,7 +251,7 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Light Tech Edition</div>
+    <div class="sub-title">Light Tech Moving Grid v2.5</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="Masukkan atau tempel data log transaksi di sini..."></textarea>
@@ -346,12 +371,10 @@
         document.getElementById('rawInput').focus();
     }
 
-    // PERBAIKAN TOTAL: Menggunakan API modern browser agar fokus TAB tidak dirusak/pindah paksa
     function salinHasil() {
         if (!hasilTeksUntukDisalin) return;
         
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            // Berhasil salin tanpa merusak fokus tombol
             console.log("Data copied successfully!");
         }).catch(err => {
             console.error("Gagal salin: ", err);
