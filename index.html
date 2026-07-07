@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - CYBER GLOW EDITION</title>
+    <title>VVIP KASIR - CYBER ANIME EDITION</title>
+    <!-- Import Google Fonts biar font text & angka ala Sci-Fi Anime -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
 <style>
+    :root {
+        --bg-main: #06060c;
+        --panel-bg: rgba(14, 15, 26, 0.75);
+        --neon-cyan: #00f3ff;
+        --neon-pink: #ff007f;
+        --neon-orange: #ff5500;
+        --text-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+    }
+
     body {
-        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
         margin: 0;
         padding: 20px;
         display: flex;
@@ -15,84 +27,123 @@
         min-height: 100vh;
         color: #e2e8f0;
         overflow-x: hidden;
-        /* ANTI HITAM PEKAT - Menggunakan charcoal navy premium */
-        background-color: #12131a; 
+        background-color: var(--bg-main); 
         position: relative;
     }
     
-    /* EFFECT GRID CYBERPUNK BIAR GAK SEPI */
+    /* BACKGROUND GRID TECH & EFFECT SCANLINE */
     body::before {
         content: "";
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 200%;
-        height: 200%;
-        z-index: -1;
+        top: 0; left: 0; width: 200%; height: 200%;
+        z-index: -2;
         background-image: 
-            linear-gradient(0deg, rgba(255, 69, 0, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 69, 0, 0.05) 1px, transparent 1px);
-        background-size: 40px 40px;
-        animation: matrixMove 25s linear infinite;
+            linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
+        background-size: 30px 30px;
+        animation: matrixMove 30s linear infinite;
+    }
+
+    body::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 999;
+        background-size: 100% 3px, 6px 100%;
+        pointer-events: none;
     }
 
     @keyframes matrixMove {
         0% { transform: translate(0, 0); }
-        100% { transform: translate(-40px, -40px); }
+        100% { transform: translate(-30px, -30px); }
     }
     
     .container {
-        background: #1a1c24; /* Solid charcoal transparan */
-        border: 2px solid #ff4500;
+        background: var(--panel-bg); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid var(--neon-cyan);
         border-radius: 16px;
-        /* Efek neon menyala tebal */
-        box-shadow: 0 0 30px rgba(255, 69, 0, 0.35), inset 0 0 15px rgba(255, 69, 0, 0.1);
+        box-shadow: 0 0 35px rgba(0, 243, 255, 0.25), inset 0 0 20px rgba(0, 243, 255, 0.1);
         width: 100%;
         max-width: 950px;
         padding: 35px;
         box-sizing: border-box;
+        position: relative;
+    }
+
+    /* Ornamen Sudut Mecha ala Anime UI */
+    .container::before {
+        content: '';
+        position: absolute;
+        top: -2px; right: 20px; width: 40px; height: 4px;
+        background: var(--neon-pink);
+        box-shadow: 0 0 10px var(--neon-pink);
+    }
+    .container::after {
+        content: '';
+        position: absolute;
+        bottom: -2px; left: 20px; width: 40px; height: 4px;
+        background: var(--neon-pink);
+        box-shadow: 0 0 10px var(--neon-pink);
     }
     
     h1 {
+        font-family: 'Orbitron', sans-serif;
         text-align: center;
-        color: #ff4500;
-        font-size: 26px;
-        font-weight: 800;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 5px;
-        margin-bottom: 30px;
-        text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
+        letter-spacing: 6px;
+        margin-bottom: 5px;
+        text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px rgba(0, 243, 255, 0.5);
+    }
+
+    .sub-title {
+        text-align: center;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 12px;
+        color: var(--neon-pink);
+        letter-spacing: 4px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 35px;
+        text-shadow: 0 0 8px var(--neon-pink);
     }
     
     label {
         display: block;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 10px;
-        color: #ff8700;
-        font-size: 13.5px;
-        letter-spacing: 0.5px;
-        text-shadow: 0 0 5px rgba(255, 135, 0, 0.2);
+        color: var(--neon-cyan);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
     }
     
     textarea {
         width: 100%;
         height: 150px;
-        background: #0d0e12;
-        border: 1px solid #3b4252;
+        background: rgba(5, 6, 10, 0.85);
+        border: 1px solid rgba(0, 243, 255, 0.3);
         border-radius: 8px;
         color: #fff;
         padding: 15px;
         box-sizing: border-box;
         resize: vertical;
         font-family: 'Courier New', monospace;
-        font-size: 13.5px;
+        font-size: 14px;
         margin-bottom: 25px;
+        transition: all 0.3s ease;
     }
     
     textarea:focus {
-        border-color: #ff4500;
+        border-color: var(--neon-pink);
         outline: none;
-        box-shadow: 0 0 12px rgba(255, 69, 0, 0.4);
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
     }
     
     .btn-group {
@@ -102,71 +153,107 @@
     }
     
     button {
+        font-family: 'Orbitron', sans-serif;
         flex: 1;
-        padding: 14px 14px; 
+        padding: 15px; 
         font-size: 13px;   
         font-weight: 700;
         border: none;
-        border-radius: 6px; 
+        border-radius: 8px; 
         cursor: pointer;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: all 0.2s ease;
+        letter-spacing: 1.5px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
     
     .btn-submit { 
-        background: linear-gradient(135deg, #ff4500, #ff6600); 
-        color: #fff; 
-        box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+        background: linear-gradient(135deg, #00f3ff, #0088cc); 
+        color: #000; 
+        font-weight: 900;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:hover { 
+        box-shadow: 0 0 25px var(--neon-cyan);
+        transform: translateY(-2px); 
+    }
     
     .btn-copy { 
-        background: linear-gradient(135deg, #0052cc, #0066ff); 
+        background: transparent; 
         color: #fff; 
-        box-shadow: 0 0 15px rgba(0, 102, 255, 0.4);
+        border: 2px solid var(--neon-pink);
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
     }
-    .btn-copy:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-copy:hover { 
+        background: var(--neon-pink);
+        box-shadow: 0 0 25px var(--neon-pink);
+        transform: translateY(-2px); 
+    }
     
     .btn-reset { 
-        background: #2a2e3d; 
+        background: #181926; 
         color: #cbd5e1; 
-        border: 1px solid #4c566a; 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
     }
-    .btn-reset:hover { background: #3b4252; }
+    .btn-reset:hover { 
+        background: #23253a; 
+        color: #fff;
+    }
     
     button:focus {
-        outline: 3px solid #ff4500;
+        outline: none;
     }
     
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
         border-radius: 8px; 
-        border: 1px solid #3b4252; 
+        border: 1px solid rgba(0, 243, 255, 0.2); 
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: #0d0e12;
+        background: rgba(10, 11, 18, 0.9);
     }
     
     th, td {
-        border-bottom: 1px solid #2d3139;
-        padding: 14px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 15px 18px;
         text-align: left;
-        font-size: 13.5px;
+        font-size: 14px;
     }
     
     th { 
-        background-color: #222530; 
-        color: #ff4500; 
+        font-family: 'Orbitron', sans-serif;
+        background-color: rgba(20, 22, 37, 0.95); 
+        color: var(--neon-cyan); 
         font-weight: 700; 
+        letter-spacing: 1px;
+        border-bottom: 2px solid var(--neon-cyan);
+    }
+    
+    td {
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Styling khusus angka biar kontras ala indikator mecha */
+    td:nth-child(5) {
+        font-family: 'Orbitron', sans-serif;
+        color: #fff;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
     
     tr:nth-child(even) {
-        background-color: #161820;
+        background-color: rgba(16, 18, 30, 0.5);
+    }
+
+    tr:hover {
+        background-color: rgba(0, 243, 255, 0.05);
     }
 </style>
 </head>
@@ -174,9 +261,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
+    <div class="sub-title">Cyber Anime Edition</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="Dari kita untuk kita"></textarea>
+    <textarea id="rawInput" placeholder="Dari kita untuk kita // Ready for data scan..."></textarea>
     
     <div class="btn-group">
         <button class="btn-submit" onclick="konversiLog()">Submit</button>
