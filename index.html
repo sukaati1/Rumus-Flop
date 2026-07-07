@@ -163,11 +163,12 @@
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: background 0.2s ease, box-shadow 0.2s ease;
         position: relative;
         overflow: hidden;
     }
     
+    /* EFEK POLOS: Di-hover tetap diam */
     .btn-submit { 
         background: linear-gradient(135deg, #00f3ff, #0088cc); 
         color: #000; 
@@ -176,7 +177,6 @@
     }
     .btn-submit:hover { 
         box-shadow: 0 0 25px var(--neon-cyan);
-        transform: translateY(-2px); 
     }
     
     .btn-copy { 
@@ -188,7 +188,6 @@
     .btn-copy:hover { 
         background: var(--neon-pink);
         box-shadow: 0 0 25px var(--neon-pink);
-        transform: translateY(-2px); 
     }
     
     .btn-reset { 
@@ -200,9 +199,22 @@
         background: #23253a; 
         color: #fff;
     }
+
+    /* BARU: TANDA OUTLINE NEON SAAT DI-TAB (FOKUS) */
+    button:focus-visible {
+        outline: 3px solid var(--neon-pink);
+        outline-offset: 4px;
+        box-shadow: 0 0 20px var(--neon-pink);
+        animation: pulseGlow 1.5s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+        0% { box-shadow: 0 0 10px var(--neon-pink); }
+        100% { box-shadow: 0 0 25px var(--neon-pink), 0 0 10px var(--neon-cyan); }
+    }
     
     button:focus {
-        outline: none;
+        outline: none; /* bypass outline default browser */
     }
     
     .table-container { 
@@ -241,7 +253,7 @@
         letter-spacing: 0.5px;
     }
 
-    /* Styling khusus angka biar kontras ala indikator mecha */
+    /* Angka nominal kontras */
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
         color: #fff;
@@ -267,8 +279,8 @@
     <textarea id="rawInput" placeholder="Dari kita untuk kita // Ready for data scan..."></textarea>
     
     <div class="btn-group">
-        <button class="btn-submit" onclick="konversiLog()">Submit</button>
-        <button class="btn-copy" onclick="salinHasil()">Salin Data</button>
+        <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
+        <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
         <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
     </div>
 
@@ -383,7 +395,6 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            document.getElementById('btnReset').focus();
             return;
         }
         
@@ -397,7 +408,8 @@
         document.execCommand('copy');
         document.body.removeChild(el);
 
-        document.getElementById('btnReset').focus();
+        // Tetap di input utama
+        document.getElementById('rawInput').focus();
     }
 </script>
 </body>
