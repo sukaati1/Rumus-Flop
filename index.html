@@ -11,7 +11,9 @@
         --bg-main: #0c0d14;
         --panel-bg: #131522;
         --neon-cyan: #00f3ff;
+        /* WARNA PINK BERKILAU / SHIMMER CHROME EFFECT */
         --neon-pink: #ff007f;
+        --shimmer-pink: linear-gradient(135deg, #ff007f 0%, #ff66b2 25%, #ff007f 50%, #ffffff 75%, #ff007f 100%);
         --text-white: #ffffff;
         --text-muted: #a0aec0;
     }
@@ -73,16 +75,25 @@
         text-shadow: 0 0 10px var(--neon-cyan);
     }
 
+    /* SUBTITLE DENGAN EFEK GRADASI PINK BERKILAU */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 11px;
-        color: var(--neon-pink);
+        background: var(--shimmer-pink);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         letter-spacing: 4px;
         font-weight: 700;
         text-transform: uppercase;
         margin-top: 6px;
         margin-bottom: 35px;
+        animation: shine 3s linear infinite;
+    }
+    
+    @keyframes shine {
+        to { background-position: 200% center; }
     }
     
     label {
@@ -143,15 +154,23 @@
     }
     .btn-submit:hover {
         background: #00c8ff;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     }
     
+    /* TOMBOL COPY BERKILAU */
     .btn-copy { 
         background: transparent; 
         color: #ffffff; 
         border: 2px solid var(--neon-pink);
+        position: relative;
+        overflow: hidden;
     }
     .btn-copy:hover { 
-        background: var(--neon-pink);
+        background: var(--shimmer-pink);
+        background-size: 200% auto;
+        animation: shine 1.5s linear infinite;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
     }
     
     .btn-reset { 
@@ -163,11 +182,17 @@
         background: #2a2e47;
     }
 
-    /* KOTAK PENANDA DI-TAB DIJAMIN SUPER TERANG TERPAMPANG NYATA */
+    /* INDIKATOR FOKUS DI-TAB BERKILAU NYATA */
     button:focus-visible, textarea:focus-visible {
         outline: 6px solid var(--neon-pink) !important;
         outline-offset: 4px !important;
         box-shadow: 0 0 25px var(--neon-pink), 0 0 10px #ffffff !important;
+        animation: pulseGlow 1.5s infinite alternate;
+    }
+    
+    @keyframes pulseGlow {
+        0% { box-shadow: 0 0 15px var(--neon-pink), 0 0 5px #ffffff; }
+        100% { box-shadow: 0 0 30px #ff66b2, 0 0 15px #ffffff; }
     }
     
     button:focus, textarea:focus {
@@ -240,7 +265,6 @@
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
         <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
         <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
-    }
     </div>
 
     <label>Hasil Konversi:</label>
@@ -362,10 +386,10 @@
             const btnCopy = document.getElementById('btnCopy');
             const teksAwal = btnCopy.innerText;
             
-            // Efek visual sukses menyalin data
             btnCopy.innerText = "BERHASIL DISALIN!";
             btnCopy.style.background = "var(--neon-cyan)";
             btnCopy.style.color = "#000000";
+            btnCopy.style.animation = "none"; 
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
@@ -376,6 +400,7 @@
             console.error("Error: ", err);
             alert("Gagal menyalin data, pastikan izin clipboard aktif.");
         });
+    }
 </script>
 </body>
 </html>
