@@ -183,17 +183,17 @@
         background: #2a2e47;
     }
 
-    /* INDIKATOR FOKUS DI-TAB BERKILAU NYATA */
+    /* INDIKATOR FOKUS DI-TAB SEKARANG LEBIH TIPIS & CYAN BERKILAU */
     button:focus-visible, textarea:focus-visible {
-        outline: 6px solid var(--neon-pink) !important;
-        outline-offset: 4px !important;
-        box-shadow: 0 0 25px var(--neon-pink), 0 0 10px #ffffff !important;
-        animation: pulseGlow 1.5s infinite alternate;
+        outline: 3px solid var(--neon-cyan) !important;
+        outline-offset: 3px !important;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5), 0 0 5px #ffffff !important;
+        animation: pulseGlow 2s infinite alternate;
     }
     
     @keyframes pulseGlow {
-        0% { box-shadow: 0 0 15px var(--neon-pink), 0 0 5px #ffffff; }
-        100% { box-shadow: 0 0 30px #ff66b2, 0 0 15px #ffffff; }
+        0% { box-shadow: 0 0 8px rgba(0, 243, 255, 0.4), 0 0 2px #ffffff; }
+        100% { box-shadow: 0 0 18px rgba(0, 243, 255, 0.8), 0 0 8px #ffffff; }
     }
     
     button:focus, textarea:focus {
