@@ -9,7 +9,8 @@
 <style>
     :root {
         --bg-main: #06070a;
-        --panel-bg: rgba(19, 21, 34, 0.85); /* Dibuat semi-transparan biar wallpaper tembus pandang */
+        /* Diubah ke solid agar tidak butuh rendering GPU berat */
+        --panel-bg: #111322; 
         --neon-cyan: #00f3ff;
         
         /* WARNA PINK BERKILAU / METALLIC SHIMMER CHROME */
@@ -29,34 +30,27 @@
         min-height: 100vh;
         color: var(--text-white);
         
-        /* WALLPAPER GRADASI RADIAL UNTUK EFEK PENDALAM CAHAYA STYLISH */
-        background: radial-gradient(circle at center, #101528 0%, #05060b 80%);
+        /* WALLPAPER AMBIENT BLUE - DIJAMIN MUNCUL DI SEMUA LAYAR */
+        background-color: #05070f;
+        background-image: radial-gradient(circle at center, #11162d 0%, #05070f 100%);
         position: relative;
         overflow-x: hidden;
     }
     
-    /* WALLPAPER GRID TECH BERGERAK 3D PERSPEKTIF */
+    /* WALLPAPER GRID TECH STABIL (Anti Gagal Render) */
     body::before {
         content: "";
         position: fixed;
-        top: -20%; left: -20%; width: 140%; height: 140%;
+        top: 0; left: 0; width: 100%; height: 100%;
         z-index: -1;
+        /* Meninggikan kontras garis agar tidak samar/hilang */
         background-image: 
-            linear-gradient(rgba(0, 243, 255, 0.05) 1.5px, transparent 1.5px),
-            linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1.5px, transparent 1.5px);
-        background-size: 50px 50px;
-        
-        /* Memberikan efek neon glow lembut pada garis grid belakang */
-        filter: drop-shadow(0 0 1px rgba(0, 243, 255, 0.3));
-        animation: gridMove3D 20s linear infinite;
-    }
-
-    @keyframes gridMove3D {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(50px, 50px); }
+            linear-gradient(rgba(0, 243, 255, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.08) 1px, transparent 1px);
+        background-size: 40px 40px;
     }
     
-    /* CONTAINER GELAP KONTRAS TINGGI DENGAN EFFECT GLASSMORPHISM */
+    /* CONTAINER PANEL */
     .container {
         background: var(--panel-bg); 
         border: 2px solid var(--neon-cyan);
@@ -65,9 +59,8 @@
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 243, 255, 0.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
         position: relative;
-        backdrop-filter: blur(8px); /* Efek kaca buram tembus pandang ke wallpaper grid */
     }
     
     h1 {
@@ -116,7 +109,7 @@
     textarea {
         width: 100%;
         height: 150px;
-        background: rgba(6, 7, 12, 0.9);
+        background: #020306;
         border: 2px solid #23263d;
         border-radius: 6px;
         color: #ffffff;
@@ -193,13 +186,7 @@
     button:focus-visible, textarea:focus-visible {
         outline: 3px solid var(--neon-cyan) !important;
         outline-offset: 3px !important;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5), 0 0 5px #ffffff !important;
-        animation: pulseGlow 2s infinite alternate;
-    }
-    
-    @keyframes pulseGlow {
-        0% { box-shadow: 0 0 8px rgba(0, 243, 255, 0.4), 0 0 2px #ffffff; }
-        100% { box-shadow: 0 0 18px rgba(0, 243, 255, 0.8), 0 0 8px #ffffff; }
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5) !important;
     }
     
     button:focus, textarea:focus {
@@ -227,7 +214,7 @@
         font-size: 14px;
     }
     
-    /* HEADER TABEL DENGAN EFEK CAHAYA CYBER CHARCOAL NEON */
+    /* HEADER TABEL */
     th { 
         font-family: 'Orbitron', sans-serif;
         background-color: #131522; 
@@ -236,23 +223,7 @@
         letter-spacing: 2px;
         border-bottom: 2px solid var(--neon-cyan);
         text-transform: uppercase;
-        
-        /* Efek Pancaran Cahaya Dobel */
-        text-shadow: 0 0 5px rgba(0, 243, 255, 0.6), 0 0 10px rgba(0, 243, 255, 0.4);
-        box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.05);
-        
-        /* Animasi Micro-Flicker Casual Tech */
-        animation: cyberPulse 4s infinite alternate;
-    }
-    
-    @keyframes cyberPulse {
-        0%, 95%, 100% {
-            text-shadow: 0 0 5px rgba(0, 243, 255, 0.7), 0 0 10px rgba(0, 243, 255, 0.4);
-        }
-        97% {
-            text-shadow: 0 0 2px rgba(0, 243, 255, 0.2), 0 0 4px rgba(0, 243, 255, 0.1);
-            color: #00a3ad;
-        }
+        text-shadow: 0 0 5px rgba(0, 243, 255, 0.6);
     }
     
     td {
@@ -261,7 +232,7 @@
         color: #ffffff;
     }
 
-    /* Angka Nominal Dikasih Warna Hijau Neon Biar Mencolok */
+    /* Angka Nominal Hijau Neon */
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
         color: #00ff66;
@@ -398,7 +369,7 @@
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        hasilTeksUntukDisalin = "";
+        hasilTeksUntilDisalin = "";
         document.getElementById('rawInput').focus();
     }
 
@@ -415,10 +386,17 @@
             btnCopy.innerText = "BERHASIL DISALIN!";
             btnCopy.style.background = "var(--neon-cyan)";
             btnCopy.style.color = "#000000";
-            btnCopy.style.animation = "none"; 
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
                 btnCopy.style.background = "transparent";
                 btnCopy.style.color = "#ffffff";
-            }, 150
+            }, 1500);
+        }).catch(err => {
+            console.error("Error: ", err);
+            alert("Gagal menyalin data, pastikan izin clipboard aktif.");
+        });
+    }
+</script>
+</body>
+</html>
