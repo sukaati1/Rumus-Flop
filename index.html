@@ -9,7 +9,6 @@
 <style>
     :root {
         --bg-main: #06070a;
-        /* Diubah ke solid agar tidak butuh rendering GPU berat */
         --panel-bg: #111322; 
         --neon-cyan: #00f3ff;
         
@@ -30,27 +29,26 @@
         min-height: 100vh;
         color: var(--text-white);
         
-        /* WALLPAPER AMBIENT BLUE - DIJAMIN MUNCUL DI SEMUA LAYAR */
-        background-color: #05070f;
+        /* WALLPAPER AMBIENT BLUE GRADIENT */
+        background-color: var(--bg-main);
         background-image: radial-gradient(circle at center, #11162d 0%, #05070f 100%);
         position: relative;
         overflow-x: hidden;
     }
     
-    /* WALLPAPER GRID TECH STABIL (Anti Gagal Render) */
+    /* GARIS CYBER GRID BELAKANG - DIJAMIN TEMBUS & MUNCUL */
     body::before {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: -1;
-        /* Meninggikan kontras garis agar tidak samar/hilang */
         background-image: 
             linear-gradient(rgba(0, 243, 255, 0.08) 1px, transparent 1px),
             linear-gradient(90deg, rgba(0, 243, 255, 0.08) 1px, transparent 1px);
         background-size: 40px 40px;
     }
     
-    /* CONTAINER PANEL */
+    /* CONTAINER PANEL UTAMA */
     .container {
         background: var(--panel-bg); 
         border: 2px solid var(--neon-cyan);
@@ -75,7 +73,7 @@
         text-shadow: 0 0 10px var(--neon-cyan);
     }
 
-    /* SUBTITLE DENGAN EFEK GRADASI PINK BERKILAU */
+    /* SUBTITLE GRADASI PINK METALLIC CHROME */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -157,7 +155,6 @@
         box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     }
     
-    /* TOMBOL COPY BERKILAU */
     .btn-copy { 
         background: transparent; 
         color: #ffffff; 
@@ -182,7 +179,7 @@
         background: #2a2e47;
     }
 
-    /* INDIKATOR FOKUS DI-TAB SEKARANG LEBIH TIPIS & CYAN BERKILAU */
+    /* INDIKATOR FOKUS TAB - AMAN & HALUS (CYAN NEON) */
     button:focus-visible, textarea:focus-visible {
         outline: 3px solid var(--neon-cyan) !important;
         outline-offset: 3px !important;
@@ -193,7 +190,7 @@
         outline: none; 
     }
     
-    /* TABEL DATA SANGAT KONTRAS DAN JELAS */
+    /* TABEL DATA */
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
@@ -214,7 +211,6 @@
         font-size: 14px;
     }
     
-    /* HEADER TABEL */
     th { 
         font-family: 'Orbitron', sans-serif;
         background-color: #131522; 
@@ -232,7 +228,6 @@
         color: #ffffff;
     }
 
-    /* Angka Nominal Hijau Neon */
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
         color: #00ff66;
@@ -369,7 +364,7 @@
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        hasilTeksUntilDisalin = "";
+        hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
     }
 
