@@ -8,8 +8,8 @@
     
 <style>
     :root {
-        --bg-main: #0c0d14;
-        --panel-bg: #131522;
+        --bg-main: #06070a;
+        --panel-bg: rgba(19, 21, 34, 0.85); /* Dibuat semi-transparan biar wallpaper tembus pandang */
         --neon-cyan: #00f3ff;
         
         /* WARNA PINK BERKILAU / METALLIC SHIMMER CHROME */
@@ -28,30 +28,35 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
-        background-color: var(--bg-main); 
+        
+        /* WALLPAPER GRADASI RADIAL UNTUK EFEK PENDALAM CAHAYA STYLISH */
+        background: radial-gradient(circle at center, #101528 0%, #05060b 80%);
         position: relative;
         overflow-x: hidden;
     }
     
-    /* WALLPAPER GRID TECH BERGERAK (ANGGUN & ADEM) */
+    /* WALLPAPER GRID TECH BERGERAK 3D PERSPEKTIF */
     body::before {
         content: "";
         position: fixed;
-        top: -50%; left: -50%; width: 200%; height: 200%;
+        top: -20%; left: -20%; width: 140%; height: 140%;
         z-index: -1;
         background-image: 
-            linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-        background-size: 35px 35px;
-        animation: gridMove 25s linear infinite;
+            linear-gradient(rgba(0, 243, 255, 0.05) 1.5px, transparent 1.5px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1.5px, transparent 1.5px);
+        background-size: 50px 50px;
+        
+        /* Memberikan efek neon glow lembut pada garis grid belakang */
+        filter: drop-shadow(0 0 1px rgba(0, 243, 255, 0.3));
+        animation: gridMove3D 20s linear infinite;
     }
 
-    @keyframes gridMove {
+    @keyframes gridMove3D {
         0% { transform: translate(0, 0); }
-        100% { transform: translate(35px, 35px); }
+        100% { transform: translate(50px, 50px); }
     }
     
-    /* CONTAINER GELAP KONTRAS TINGGI */
+    /* CONTAINER GELAP KONTRAS TINGGI DENGAN EFFECT GLASSMORPHISM */
     .container {
         background: var(--panel-bg); 
         border: 2px solid var(--neon-cyan);
@@ -60,8 +65,9 @@
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 243, 255, 0.05);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 243, 255, 0.1);
         position: relative;
+        backdrop-filter: blur(8px); /* Efek kaca buram tembus pandang ke wallpaper grid */
     }
     
     h1 {
@@ -110,7 +116,7 @@
     textarea {
         width: 100%;
         height: 150px;
-        background: #06070c;
+        background: rgba(6, 7, 12, 0.9);
         border: 2px solid #23263d;
         border-radius: 6px;
         color: #ffffff;
@@ -415,12 +421,4 @@
                 btnCopy.innerText = teksAwal;
                 btnCopy.style.background = "transparent";
                 btnCopy.style.color = "#ffffff";
-            }, 1500);
-        }).catch(err => {
-            console.error("Error: ", err);
-            alert("Gagal menyalin data, pastikan izin clipboard aktif.");
-        });
-    }
-</script>
-</body>
-</html>
+            }, 150
