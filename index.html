@@ -154,4 +154,247 @@
         color: #000000; 
     }
     .btn-submit:hover {
-        background: #
+        background: #00c8ff;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+    }
+    
+    .btn-copy { 
+        background: transparent; 
+        color: #ffffff; 
+        border: 2px solid var(--neon-pink);
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-copy:hover { 
+        background: var(--shimmer-pink);
+        background-size: 200% auto;
+        animation: shine 1.5s linear infinite;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+    }
+    
+    .btn-reset { 
+        background: #202336; 
+        color: var(--text-white); 
+        border: 1px solid #323754;
+    }
+    .btn-reset:hover { 
+        background: #2a2e47;
+    }
+
+    /* INDIKATOR FOKUS TAB - AMAN & HALUS (CYAN NEON) */
+    button:focus-visible, textarea:focus-visible {
+        outline: 3px solid var(--neon-cyan) !important;
+        outline-offset: 3px !important;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5) !important;
+    }
+    
+    button:focus, textarea:focus {
+        outline: none; 
+    }
+    
+    /* TABEL DATA */
+    .table-container { 
+        overflow-x: auto; 
+        margin-top: 5px; 
+        border-radius: 6px; 
+        border: 2px solid var(--neon-cyan); 
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #090a10;
+    }
+    
+    th, td {
+        border-bottom: 1px solid #1c1e30;
+        padding: 15px 18px;
+        text-align: left;
+        font-size: 14px;
+    }
+    
+    th { 
+        font-family: 'Orbitron', sans-serif;
+        background-color: #131522; 
+        color: var(--neon-cyan); 
+        font-weight: 900; 
+        letter-spacing: 2px;
+        border-bottom: 2px solid var(--neon-cyan);
+        text-transform: uppercase;
+        text-shadow: 0 0 5px rgba(0, 243, 255, 0.6);
+    }
+    
+    td {
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    td:nth-child(5) {
+        font-family: 'Orbitron', sans-serif;
+        color: #00ff66;
+        text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
+        font-weight: 900;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #0e1018;
+    }
+
+    tr:hover {
+        background-color: rgba(0, 243, 255, 0.05);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Rumus Flop</h1>
+    <div class="sub-title">Cyber Charcoal Edition v3.0</div>
+    
+    <label for="rawInput">Tempel log transaksi disini:</label>
+    <textarea id="rawInput" placeholder="READY FOR DATA SCAN..."></textarea>
+    
+    <div class="btn-group">
+        <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
+        <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
+        <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
+    </div>
+
+    <label>Hasil Konversi:</label>
+    <div class="table-container">
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>WAKTU</th>
+                    <th>Used ID</th>
+                    <th>Tujuan Bank</th>
+                    <th>Credit</th>
+                    <th>Jumlah</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let hasilTeksUntukDisalin = "";
+
+    function konversiLog() {
+        const input = document.getElementById('rawInput').value.trim();
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = ''; 
+        hasilTeksUntukDisalin = ""; 
+
+        if (!input) return;
+
+        let baris = input.split('\n');
+        baris.reverse(); 
+
+        let barisDataDisalin = [];
+
+        baris.forEach(line => {
+            if (line.trim() === '') return;
+
+            let kolom = line.split(/\s{2,}|\t/).filter(item => item.trim() !== '');
+            
+            if (kolom.length < 5) {
+                kolom = line.split(/\s+/).filter(item => item.trim() !== '');
+            }
+
+            if (kolom.length >= 5) {
+                const pakaiNoUrut = !isNaN(kolom[0]) && kolom.length > 6;
+                
+                let waktu = "";
+                let idxWaktu = pakaiNoUrut ? 1 : 0;
+                if(kolom[idxWaktu] && kolom[idxWaktu].includes('-')) {
+                    let pecahWaktu = kolom[idxWaktu].split(/\s+/);
+                    waktu = pecahWaktu[1] || kolom[idxWaktu];
+                } else {
+                    waktu = kolom[idxWaktu] || "";
+                }
+                
+                if (waktu.includes('-') && waktu.includes(':')) {
+                    waktu = waktu.split(/\s+/)[1] || waktu;
+                } else if (!waktu.includes(':') && kolom[idxWaktu+1] && kolom[idxWaktu+1].includes(':')) {
+                    waktu = kolom[idxWaktu+1];
+                }
+
+                let userId = "";
+                for (let i = 1; i < kolom.length; i++) {
+                    if (kolom[i].includes(':')) {
+                        userId = kolom[i+1] || "";
+                        break;
+                    }
+                }
+                if (!userId) userId = pakaiNoUrut ? kolom[2] : kolom[1];
+
+                let tujuanBank = "";
+                for (let i = 0; i < kolom.length; i++) {
+                    if (kolom[i].includes(',') || kolom[i].toUpperCase().includes('MANDIRI') || kolom[i].toUpperCase().includes('BCA') || kolom[i].toUpperCase().includes('BRI') || kolom[i].toUpperCase().includes('BNI')) {
+                        tujuanBank = kolom[i];
+                        break;
+                    }
+                }
+
+                let jumlah = "";
+                for (let i = kolom.length - 1; i >= 0; i--) {
+                    let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
+                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 4) {
+                        jumlah = kolom[i];
+                        break;
+                    }
+                }
+                if (!jumlah) {
+                    jumlah = kolom[kolom.length - 3] || "";
+                }
+
+                const creditStatus = ""; 
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
+                tbody.appendChild(tr);
+
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
+            }
+        });
+
+        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
+    }
+
+    function resetData() {
+        document.getElementById('rawInput').value = '';
+        document.getElementById('tableBody').innerHTML = '';
+        hasilTeksUntukDisalin = "";
+        document.getElementById('rawInput').focus();
+    }
+
+    function salinHasil() {
+        if (!hasilTeksUntukDisalin) {
+            alert("Tidak ada data untuk disalin! Silakan submit log terlebih dahulu.");
+            return;
+        }
+        
+        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
+            const btnCopy = document.getElementById('btnCopy');
+            const teksAwal = btnCopy.innerText;
+            
+            btnCopy.innerText = "BERHASIL DISALIN!";
+            btnCopy.style.background = "var(--neon-cyan)";
+            btnCopy.style.color = "#000000";
+            
+            setTimeout(() => {
+                btnCopy.innerText = teksAwal;
+                btnCopy.style.background = "transparent";
+                btnCopy.style.color = "#ffffff";
+            }, 1500);
+        }).catch(err => {
+            console.error("Error: ", err);
+            alert("Gagal menyalin data, pastikan izin clipboard aktif.");
+        });
+    }
+</script>
+</body>
+</html>
