@@ -8,7 +8,7 @@
     
 <style>
     :root {
-        --panel-bg: rgba(16, 12, 24, 0.88); /* Background panel gelap keunguan */
+        --panel-bg: #0c0914;               /* Hitam pekat keunguan agar bersahabat dengan browser lu */
         --nika-white: #ffffff;             
         --gear5-purple: #a855f7;           
         --shimmer-nika: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ffffff 100%);
@@ -24,61 +24,43 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
-        background-color: #08050e; /* Dasar malam gelap Wano */
-        position: relative;
+        background-color: #050308; /* Hitam murni total */
         overflow-x: hidden;
     }
-
-    /* PURE CSS LIVE WALLPAPER: Efek Aura & Petir Gear 5 Bergerak Murni Tanpa Gambar/Video */
-    .pure-css-auras {
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        z-index: 1;
-        pointer-events: none;
-        overflow: hidden;
-    }
-
-    /* Aura Putih Nika Bergerak di Kiri Atas */
-    .aura-cloud-1 {
-        position: absolute;
-        top: -10%; left: -10%;
-        width: 60vw; height: 60vw;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
-        border-radius: 50%;
-        animation: floatAura 8s ease-in-out infinite alternate;
-    }
-
-    /* Aura Petir Ungu Bergerak di Kanan Bawah */
-    .aura-cloud-2 {
-        position: absolute;
-        bottom: -10%; right: -10%;
-        width: 70vw; height: 70vw;
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
-        border-radius: 50%;
-        animation: floatAura 11s ease-in-out infinite alternate-reverse;
-    }
-
-    @keyframes floatAura {
-        0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-        100% { transform: translate(5%, 5%) scale(1.2); opacity: 1; }
-    }
     
-    /* PANEL UTAMA - SUN GOD GLASSMORPHISM */
+    /* PANEL UTAMA - NEON LIGHTNING BORDER (BERGERAK AKSI) */
     .container {
         background: var(--panel-bg); 
-        border: 2px solid rgba(168, 85, 247, 0.45); /* Bingkai petir ungu dipertegas */
+        border: 3px solid var(--gear5-purple); 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        backdrop-filter: blur(15px); 
-        -webkit-backdrop-filter: blur(15px);
+        
+        /* Efek Petir Menyala di Pinggiran Kotak yang Berdenyut Otomatis */
         box-shadow: 
-            0 25px 60px rgba(0, 0, 0, 0.9), 
-            0 0 35px rgba(168, 85, 247, 0.3);
-        position: relative;
-        z-index: 10; 
+            0 0 20px rgba(168, 85, 247, 0.6),
+            0 0 40px rgba(255, 255, 255, 0.2),
+            inset 0 0 15px rgba(168, 85, 247, 0.3);
+        
+        animation: lightningPulse 4s ease-in-out infinite alternate;
+    }
+
+    /* Animasi petir Gear 5 murni pada border kotak kasir */
+    @keyframes lightningPulse {
+        0% {
+            border-color: #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5), 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+        50% {
+            border-color: #ffffff;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.7), 0 0 40px rgba(168, 85, 247, 0.6);
+        }
+        100% {
+            border-color: #d8b4fe;
+            box-shadow: 0 0 20px rgba(216, 180, 254, 0.6), 0 0 35px rgba(168, 85, 247, 0.4);
+        }
     }
     
     h1 {
@@ -90,7 +72,7 @@
         text-transform: uppercase;
         letter-spacing: 8px;
         margin: 0;
-        text-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 15px var(--gear5-purple);
+        text-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
     }
 
     .sub-title {
@@ -127,8 +109,8 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(10, 7, 15, 0.95);
-        border: 1px solid rgba(168, 85, 247, 0.35); 
+        background: #000000;
+        border: 1px solid rgba(168, 85, 247, 0.4); 
         border-radius: 10px;
         color: #ffffff;
         padding: 18px;
@@ -171,7 +153,7 @@
     .btn-submit { 
         background: #ffffff; 
         color: #0c0813; 
-        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
     }
     .btn-submit:hover {
         background: #f3e8ff;
@@ -179,25 +161,24 @@
     }
     
     .btn-copy { 
-        background: rgba(255, 255, 255, 0.02); 
+        background: rgba(0, 0, 0, 0.4); 
         color: #ffffff; 
         border: 2px solid var(--gear5-purple);
-        box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
     }
     .btn-copy:hover { 
         background: var(--gear5-purple);
         color: #ffffff;
         transform: translateY(-2px);
-        box-shadow: 0 0 20px var(--gear5-purple);
+        box-shadow: 0 0 15px var(--gear5-purple);
     }
     
     .btn-reset { 
-        background: #24123a; 
+        background: #1e112a; 
         color: var(--text-white); 
         border: 1px solid rgba(168, 85, 247, 0.2);
     }
     .btn-reset:hover { 
-        background: #311453;
+        background: #2d193f;
         transform: translateY(-2px);
     }
     
@@ -224,13 +205,12 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: rgba(36, 18, 58, 0.95); 
+        background-color: #170d22; 
         color: #ffffff; 
         font-weight: 900; 
         letter-spacing: 2px;
         text-transform: uppercase;
         border-bottom: 2px solid var(--gear5-purple);
-        text-shadow: 0 0 5px var(--gear5-purple);
     }
     
     td {
@@ -239,13 +219,7 @@
         color: #f3e8ff;
     }
 
-    /* Kolom Credit sekarang sengaja dibikin buram samar-samar/kosong */
     td:nth-child(4) {
-        color: rgba(255, 255, 255, 0.2); 
-        font-weight: 500;
-    }
-
-    td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
         color: #ffffff; 
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
@@ -257,21 +231,15 @@
     }
 
     tr:hover {
-        background-color: rgba(168, 85, 247, 0.12);
+        background-color: rgba(168, 85, 247, 0.15);
     }
 </style>
 </head>
 <body>
 
-<!-- BACKGOUND ANIMASI CSS MURNI (ANTI BLOKIR BROWSER) -->
-<div class="pure-css-auras">
-    <div class="aura-cloud-1"></div>
-    <div class="aura-cloud-2"></div>
-</div>
-
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">JOY BOY MODE - KONOHA KASIR v6.0</div>
+    <div class="sub-title">JOY BOY MODE - KONOHA KASIR v6.5</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="DRUMS OF LIBERATION DETECTED... READY TO TRANSLATE LOGS..."></textarea>
@@ -290,7 +258,6 @@
                     <th>WAKTU</th>
                     <th>Used ID</th>
                     <th>Tujuan Bank</th>
-                    <th>Credit</th>
                     <th>Jumlah</th>
                 </tr>
             </thead>
@@ -327,7 +294,6 @@
                 let waktu = "00:00:00";
                 let userId = "-";
                 let tujuanBank = "-";
-                let creditStatus = ""; // DIKOSONGKAN TOTAL SESUAI REKUES
                 let jumlah = "0";
 
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
@@ -358,12 +324,12 @@
                 }
 
                 const tr = document.createElement('tr');
-                // Kolom ke-4 (Credit) dipaksa nampilin kosong/strip
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>-</td><td>${jumlah}</td>`;
+                // Kolom Credit dihapus total dari tampilan tabel
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Di teks kopiannya juga dikosongkan biar rapi pas lu paste ke Excel/catatan
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
+                // Di teks salinan hasil juga dihapus biar pas di-paste rapi pas masuk kolom excel
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${jumlah}`);
             }
         });
 
@@ -393,7 +359,7 @@
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
-                btnCopy.style.background = "rgba(255, 255, 255, 0.02)";
+                btnCopy.style.background = "rgba(0, 0, 0, 0.4)";
                 btnCopy.style.color = "#ffffff";
             }, 1500);
         }).catch(err => {
