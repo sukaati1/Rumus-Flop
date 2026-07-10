@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - NARUTO SAGE & CHAKRA EDITION</title>
+    <title>VVIP KASIR - NARUTO SAGE PERFECT</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        /* PALET WARNA SAGE MODE & CHAKRA KURAMA */
-        --bg-deep: #0f0301;          /* Hitam kemerahan ultra gelap (bukan hitam polos) */
-        --panel-bg: rgba(22, 7, 3, 0.94); /* Transparan gelap dengan rona oranye kayu manis */
-        
-        --kurama-orange: #ff5500;    /* Oranye Chakra Kurama */
-        --sage-gold: #ffaa00;        /* Kuning Emas Sage Mode */
-        --scroll-red: #9e1b1b;       /* Merah Gulungan Jurus (Scroll) */
-        
+        --bg-deep: #0a0201;          
+        --panel-bg: rgba(22, 7, 3, 0.95); 
+        --kurama-orange: #ff5500;    
+        --sage-gold: #ffaa00;        
+        --scroll-red: #9e1b1b;       
         --shimmer-naruto: linear-gradient(135deg, #ff5500 0%, #ffaa00 50%, #9e1b1b 100%);
         --text-white: #ffffff;
     }
@@ -31,77 +28,48 @@
         color: var(--text-white);
         background-color: var(--bg-deep);
         
-        /* WALLPAPER: Pusaran energi oranye kemerahan dari tengah (Tanpa Kotak/Grid!) */
-        background-image: 
-            radial-gradient(circle at 50% 35%, rgba(255, 85, 0, 0.25) 0%, rgba(15, 3, 1, 0.9) 70%, #030000 100%);
+        /* BACKGROUND DIJAMIN MULUS TOTAL: Hanya pendaran cahaya oranye bulat tanpa garis arsir/petir */
+        background-image: radial-gradient(circle at 50% 35%, rgba(255, 85, 0, 0.25) 0%, rgba(15, 3, 1, 0.9) 65%, #000000 100%);
         background-attachment: fixed;
         position: relative;
         overflow-x: hidden;
     }
     
-    /* EFEK LATAR: Lambang Segel Spiral Uzumaki & Asap Jurus */
+    /* HANYA PUSARAN UZUMAKI LEMBUT DI BELAKANG (TANPA KOTAK-KOTAK) */
     body::before {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: -2;
-        opacity: 0.2;
-        
-        /* Lambang Pusaran Uzumaki Legendaris */
-        background-image: 
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10C27.9 10 10 27.9 10 50s17.9 40 40 40 40-17.9 40-40S72.1 10 50 10zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm0-56c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24-10.7-24-24-24zm0 40c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z' fill='%23ff5500'/%3E%3C/svg%3E"),
-            radial-gradient(circle at 10% 10%, rgba(255, 170, 0, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 90% 90%, rgba(158, 27, 27, 0.15) 0%, transparent 50%);
+        opacity: 0.15;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10C27.9 10 10 27.9 10 50s17.9 40 40 40 40-17.9 40-40S72.1 10 50 10zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm0-56c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24-10.7-24-24-24zm0 40c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z' fill='%23ff5500'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: 350px, cover, cover;
-        filter: blur(1px);
-        animation: uzumakiFloat 20s linear infinite;
-    }
-    
-    /* EFEK DEPAN: Aliran Chakra Emas & Oranye */
-    body::after {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -1;
-        opacity: 0.25;
-        background-image: 
-            linear-gradient(135deg, transparent 45%, var(--kurama-orange) 48%, var(--sage-gold) 50%, var(--kurama-orange) 52%, transparent 55%),
-            linear-gradient(45deg, transparent 40%, var(--scroll-red) 43%, var(--kurama-orange) 45%, var(--scroll-red) 47%, transparent 50%);
-        background-size: 350px 350px;
-        animation: chakraFlow 8s linear infinite;
+        background-size: 380px;
+        animation: uzumakiFloat 25s linear infinite;
     }
 
     @keyframes uzumakiFloat {
-        0% { transform: rotate(0deg) scale(0.95); }
-        50% { transform: rotate(180deg) scale(1.05); }
-        100% { transform: rotate(360deg) scale(0.95); }
-    }
-
-    @keyframes chakraFlow {
-        0% { background-position: 0px 0px; }
-        100% { background-position: 350px 700px; }
+        0% { transform: rotate(0deg) scale(0.98); }
+        50% { transform: rotate(180deg) scale(1.02); }
+        100% { transform: rotate(360deg) scale(0.98); }
     }
     
-    /* PANEL UTAMA: Didesain layaknya Gulungan Jurus Rahasia Konoha */
+    /* UTAMA PANEL - MATTE & SEAMLESS OVERLAY */
     .container {
         background: var(--panel-bg); 
-        border: 3px solid transparent;
-        /* Bingkai gradasi membara */
-        border-image: linear-gradient(to right, var(--scroll-red), var(--kurama-orange), var(--sage-gold)) 1;
-        border-radius: 2px;
+        border: none; 
+        border-radius: 24px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
         box-shadow: 
-            0 20px 50px rgba(0, 0, 0, 0.95), 
-            0 0 30px rgba(255, 85, 0, 0.3),
-            inset 0 0 20px rgba(255, 170, 0, 0.05);
+            0 25px 60px rgba(0, 0, 0, 0.95), 
+            0 0 40px rgba(255, 85, 0, 0.12);
         position: relative;
         z-index: 1;
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(15px);
     }
     
     h1 {
@@ -113,15 +81,7 @@
         text-transform: uppercase;
         letter-spacing: 8px;
         margin: 0;
-        text-shadow: 
-            0 0 10px var(--kurama-orange),
-            0 0 25px rgba(255, 85, 0, 0.6);
-        animation: sageGlow 2.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes sageGlow {
-        0% { text-shadow: 0 0 10px var(--kurama-orange), 0 0 20px rgba(255, 85, 0, 0.5); }
-        100% { text-shadow: 0 0 15px var(--sage-gold), 0 0 30px rgba(255, 170, 0, 0.7); }
+        text-shadow: 0 0 15px var(--kurama-orange);
     }
 
     .sub-title {
@@ -147,41 +107,41 @@
     label {
         display: block;
         font-weight: 700;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         color: var(--sage-gold);
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
-        text-shadow: 0 0 5px rgba(255, 170, 0, 0.3);
     }
     
+    /* TEXTAREA TANPA GARIS PINGGIR KAKU */
     textarea {
         width: 100%;
-        height: 150px;
-        background: #0d0402;
-        border: 2px solid #52180c;
-        border-radius: 4px;
+        height: 140px;
+        background: rgba(13, 4, 2, 0.8);
+        border: none; 
+        border-radius: 12px;
         color: #ffffff;
-        padding: 15px;
+        padding: 18px;
         box-sizing: border-box;
         resize: vertical;
         font-family: 'Courier New', monospace;
         font-size: 14px;
         font-weight: bold;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
         transition: all 0.3s ease;
     }
     
     textarea:focus {
-        border-color: var(--kurama-orange);
         outline: none;
-        box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.9), 0 0 15px rgba(255, 85, 0, 0.4);
     }
     
     .btn-group {
         display: flex;
         gap: 15px;
-        margin-bottom: 35px;
+        margin-bottom: 40px;
     }
     
     button {
@@ -191,114 +151,94 @@
         font-size: 13px;   
         font-weight: 900;
         border: none;
-        border-radius: 4px; 
+        border-radius: 12px; 
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 2.5px;
         transition: all 0.2s ease;
     }
     
-    /* TOMBOL SUBMIT - CHAKRA MODE */
     .btn-submit { 
         background: var(--kurama-orange); 
         color: #ffffff; 
-        box-shadow: 0 0 10px rgba(255, 85, 0, 0.4);
-        text-shadow: 0 0 5px #000;
+        box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
     }
     .btn-submit:hover {
         background: #ff6a1f;
-        box-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 85, 0, 0.5);
     }
     
-    /* TOMBOL COPY - SAGE SCRIPT MODE */
     .btn-copy { 
-        background: transparent; 
+        background: rgba(255, 255, 255, 0.05); 
         color: #ffffff; 
         border: 2px solid var(--sage-gold);
-        position: relative;
-        overflow: hidden;
     }
     .btn-copy:hover { 
-        background: var(--shimmer-naruto);
-        background-size: 200% auto;
-        animation: shine 1.5s linear infinite;
-        border-color: #ffffff;
+        background: var(--sage-gold);
         color: #000000;
-        box-shadow: 0 0 20px rgba(255, 170, 0, 0.7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
     }
     
-    /* TOMBOL RESET - DEEP SCROLL RED */
     .btn-reset { 
         background: #2b0805; 
         color: var(--text-white); 
-        border: 1px solid #5a1409;
     }
     .btn-reset:hover { 
         background: #420f06;
-    }
-
-    button:focus-visible, textarea:focus-visible {
-        outline: 3px solid var(--kurama-orange) !important;
-        outline-offset: 3px !important;
+        transform: translateY(-2px);
     }
     
-    button:focus, textarea:focus {
-        outline: none; 
-    }
-    
-    /* TABEL DATA */
+    /* TABEL DATA TANPA KOTAK GARIS */
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
-        border-radius: 4px; 
-        border: 2px solid var(--kurama-orange); 
-        box-shadow: 0 0 15px rgba(255, 85, 0, 0.15);
+        border-radius: 16px;
+        border: none; 
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: #0d0402;
+        background: transparent; 
     }
     
     th, td {
-        border-bottom: 1px solid #2e0d06;
-        padding: 16px 18px;
+        border: none; 
+        padding: 18px 20px;
         text-align: left;
         font-size: 14px;
     }
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #1a0805; 
+        background-color: rgba(35, 12, 6, 0.6); 
         color: var(--sage-gold); 
         font-weight: 900; 
         letter-spacing: 2px;
-        border-bottom: 2px solid var(--kurama-orange);
         text-transform: uppercase;
-        text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
     }
     
     td {
         font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #ffffff;
+        color: #e2e8f0;
     }
 
-    /* Nilai Jumlah menyala oranye keemasan */
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
         color: var(--sage-gold); 
-        text-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+        text-shadow: 0 0 8px rgba(255, 170, 0, 0.4);
         font-weight: 900;
     }
     
     tr:nth-child(even) {
-        background-color: #140704;
+        background-color: rgba(255, 255, 255, 0.02);
     }
 
     tr:hover {
-        background-color: rgba(255, 85, 0, 0.08);
+        background-color: rgba(255, 85, 0, 0.06);
     }
 </style>
 </head>
@@ -306,7 +246,7 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Sage Mode - Konoha Kasir v3.0</div>
+    <div class="sub-title">Sage Mode - Konoha Kasir v5.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="SAGE CHAKRA DETECTED... READY TO TRANSLATE LOGS..."></textarea>
