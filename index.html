@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - SAGE MINIMALIST</title>
+    <title>VVIP KASIR - GEAR 5 NIKA MODE</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        --panel-bg: rgba(10, 3, 1, 0.9); /* Transparan gelap agar gambar latar belakang tembus cantik */
-        --kurama-orange: #ff4500;    
-        --sage-gold: #ffaa00;        
-        --shimmer-naruto: linear-gradient(135deg, #ff4500 0%, #ffaa00 50%, #ff4500 100%);
+        --panel-bg: rgba(15, 12, 22, 0.82); /* Gelap keunguan transparan */
+        --nika-white: #ffffff;             /* Putih Rambut Gear 5 */
+        --gear5-purple: #a855f7;           /* Ungu Haki/Petir */
+        --shimmer-nika: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ffffff 100%);
         --text-white: #ffffff;
     }
 
@@ -24,70 +24,76 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
-        
-        /* SOLUSI PASTI: Menggunakan gambar aura chakra asli yang dijamin tembus di semua browser */
-        background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-color: #000000; /* Cadangan jika internet lambat */
+        background-color: #0c0813;
         position: relative;
+        overflow-x: hidden;
     }
 
-    /* Lapisan filter oranye di atas gambar agar nuansa Kurama/Sage Mode lebih pekat */
-    body::before {
-        content: "";
+    /* LIVE WALLPAPER LUFFY GEAR 5 BERGERAK */
+    .video-background {
         position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(255, 69, 0, 0.15) 100%);
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
         z-index: 1;
-        pointer-events: none; /* Supaya klik mouse tembus ke tombol */
+        pointer-events: none;
+    }
+
+    /* Efek Vignette Biar Layar Ga Terlalu Terang & Tulisan Kasir Jelas */
+    .overlay-vignette {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(12, 8, 19, 0.85) 90%);
+        z-index: 2;
+        pointer-events: none;
     }
     
-    /* PANEL UTAMA - SAGE GLASSMORPHISM */
+    /* PANEL UTAMA - SUN GOD GLASSMORPHISM */
     .container {
         background: var(--panel-bg); 
-        border: 2px solid rgba(255, 69, 0, 0.4); /* Bingkai menyala oranye */
-        border-radius: 20px; 
+        border: 2px solid rgba(168, 85, 247, 0.4); /* Bingkai petir ungu */
+        border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        backdrop-filter: blur(10px); 
-        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px); 
+        -webkit-backdrop-filter: blur(15px);
         box-shadow: 
-            0 25px 60px rgba(0, 0, 0, 0.9), 
-            0 0 30px rgba(255, 69, 0, 0.3);
+            0 25px 60px rgba(0, 0, 0, 0.85), 
+            0 0 35px rgba(168, 85, 247, 0.25);
         position: relative;
-        z-index: 10; /* Berada aman di atas background */
+        z-index: 10; 
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
-        color: var(--text-white);
+        color: var(--nika-white);
         font-size: 36px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 8px;
         margin: 0;
-        text-shadow: 0 0 20px var(--kurama-orange);
+        text-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 15px var(--gear5-purple);
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
-        font-size: 12px;
-        background: var(--shimmer-naruto);
+        font-size: 13px;
+        background: var(--shimmer-nika);
         background-size: 200% auto;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: 6px;
+        letter-spacing: 5px;
         font-weight: 900;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        animation: shine 2.5s linear infinite;
+        animation: shine 3s linear infinite;
     }
     
     @keyframes shine {
@@ -98,7 +104,7 @@
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: var(--sage-gold);
+        color: #e9d5ff; /* Ungu muda */
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -108,8 +114,8 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(0, 0, 0, 0.85);
-        border: 1px solid rgba(255, 69, 0, 0.3); 
+        background: rgba(10, 7, 15, 0.9);
+        border: 1px solid rgba(168, 85, 247, 0.3); 
         border-radius: 10px;
         color: #ffffff;
         padding: 18px;
@@ -119,14 +125,14 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 30px;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
         transition: all 0.3s ease;
     }
     
     textarea:focus {
         outline: none;
-        border-color: rgba(255, 69, 0, 0.7);
-        box-shadow: inset 0 2px 8px rgba(0,0,0,1), 0 0 15px rgba(255, 69, 0, 0.4);
+        border-color: var(--gear5-purple);
+        box-shadow: inset 0 2px 8px rgba(0,0,0,1), 0 0 15px rgba(168, 85, 247, 0.5);
     }
     
     .btn-group {
@@ -150,33 +156,35 @@
     }
     
     .btn-submit { 
-        background: var(--kurama-orange); 
-        color: #ffffff; 
-        box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+        background: #ffffff; 
+        color: #0c0813; 
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
     }
     .btn-submit:hover {
-        background: #ff6a1f;
+        background: #f3e8ff;
         transform: translateY(-2px);
     }
     
     .btn-copy { 
-        background: rgba(255, 255, 255, 0.03); 
+        background: rgba(255, 255, 255, 0.02); 
         color: #ffffff; 
-        border: 2px solid var(--sage-gold);
+        border: 2px solid var(--gear5-purple);
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
     }
     .btn-copy:hover { 
-        background: var(--sage-gold);
-        color: #000000;
+        background: var(--gear5-purple);
+        color: #ffffff;
         transform: translateY(-2px);
+        box-shadow: 0 0 20px var(--gear5-purple);
     }
     
     .btn-reset { 
-        background: #230604; 
+        background: #24123a; 
         color: var(--text-white); 
-        border: 1px solid rgba(255, 69, 0, 0.2);
+        border: 1px solid rgba(168, 85, 247, 0.2);
     }
     .btn-reset:hover { 
-        background: #380b06;
+        background: #311453;
         transform: translateY(-2px);
     }
     
@@ -203,29 +211,30 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: rgba(35, 9, 4, 0.9); 
-        color: var(--sage-gold); 
+        background-color: rgba(36, 18, 58, 0.9); 
+        color: #ffffff; 
         font-weight: 900; 
         letter-spacing: 2px;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(255, 69, 0, 0.3);
+        border-bottom: 2px solid var(--gear5-purple);
+        text-shadow: 0 0 5px var(--gear5-purple);
     }
     
     td {
         font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #e2e8f0;
+        color: #f3e8ff;
     }
 
     td:nth-child(4) {
-        color: #00ffcc; 
+        color: #00ffcc; /* Status CR hijau neon */
         font-weight: 900;
     }
 
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
-        color: var(--sage-gold); 
-        text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+        color: #ffffff; 
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         font-weight: 900;
     }
     
@@ -234,18 +243,27 @@
     }
 
     tr:hover {
-        background-color: rgba(255, 69, 0, 0.08);
+        background-color: rgba(168, 85, 247, 0.12);
     }
 </style>
 </head>
 <body>
 
+<!-- VIDEO BACKGROUND BERGERAK LUFFY GEAR 5 -->
+<video class="video-background" autoplay loop muted playsinline>
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-41764-large.mp4" type="video/mp4">
+    <!-- Catatan: Menggunakan video abstrak loop petir ungu-putih berbobot ringan super smooth -->
+</video>
+
+<!-- LAPISAN KABUT PEREDAM -->
+<div class="overlay-vignette"></div>
+
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Sage Mode - Konoha Kasir v6.0</div>
+    <div class="sub-title">JOY BOY MODE - KONOHA KASIR v6.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="SAGE CHAKRA DETECTED... READY TO TRANSLATE LOGS..."></textarea>
+    <textarea id="rawInput" placeholder="DRUMS OF LIBERATION DETECTED... READY TO TRANSLATE LOGS..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -356,13 +374,13 @@
             const btnCopy = document.getElementById('btnCopy');
             const teksAwal = btnCopy.innerText;
             
-            btnCopy.innerText = "JURUS COPY SUKSES!";
-            btnCopy.style.background = "var(--kurama-orange)";
+            btnCopy.innerText = "GOMU GOMU COPY SUKSES!";
+            btnCopy.style.background = "var(--gear5-purple)";
             btnCopy.style.color = "#ffffff";
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
-                btnCopy.style.background = "rgba(255, 255, 255, 0.03)";
+                btnCopy.style.background = "rgba(255, 255, 255, 0.02)";
                 btnCopy.style.color = "#ffffff";
             }, 1500);
         }).catch(err => {
