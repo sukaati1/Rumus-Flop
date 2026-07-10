@@ -8,9 +8,9 @@
     
 <style>
     :root {
-        --panel-bg: rgba(15, 12, 22, 0.82); /* Gelap keunguan transparan */
-        --nika-white: #ffffff;             /* Putih Rambut Gear 5 */
-        --gear5-purple: #a855f7;           /* Ungu Haki/Petir */
+        --panel-bg: rgba(16, 12, 24, 0.88); /* Background panel gelap keunguan */
+        --nika-white: #ffffff;             
+        --gear5-purple: #a855f7;           
         --shimmer-nika: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ffffff 100%);
         --text-white: #ffffff;
     }
@@ -24,36 +24,49 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
-        background-color: #0c0813;
+        background-color: #08050e; /* Dasar malam gelap Wano */
         position: relative;
         overflow-x: hidden;
     }
 
-    /* LIVE WALLPAPER LUFFY GEAR 5 BERGERAK */
-    .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    /* Efek Vignette Biar Layar Ga Terlalu Terang & Tulisan Kasir Jelas */
-    .overlay-vignette {
+    /* PURE CSS LIVE WALLPAPER: Efek Aura & Petir Gear 5 Bergerak Murni Tanpa Gambar/Video */
+    .pure-css-auras {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(12, 8, 19, 0.85) 90%);
-        z-index: 2;
+        z-index: 1;
         pointer-events: none;
+        overflow: hidden;
+    }
+
+    /* Aura Putih Nika Bergerak di Kiri Atas */
+    .aura-cloud-1 {
+        position: absolute;
+        top: -10%; left: -10%;
+        width: 60vw; height: 60vw;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: floatAura 8s ease-in-out infinite alternate;
+    }
+
+    /* Aura Petir Ungu Bergerak di Kanan Bawah */
+    .aura-cloud-2 {
+        position: absolute;
+        bottom: -10%; right: -10%;
+        width: 70vw; height: 70vw;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: floatAura 11s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes floatAura {
+        0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+        100% { transform: translate(5%, 5%) scale(1.2); opacity: 1; }
     }
     
     /* PANEL UTAMA - SUN GOD GLASSMORPHISM */
     .container {
         background: var(--panel-bg); 
-        border: 2px solid rgba(168, 85, 247, 0.4); /* Bingkai petir ungu */
+        border: 2px solid rgba(168, 85, 247, 0.45); /* Bingkai petir ungu dipertegas */
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
@@ -62,8 +75,8 @@
         backdrop-filter: blur(15px); 
         -webkit-backdrop-filter: blur(15px);
         box-shadow: 
-            0 25px 60px rgba(0, 0, 0, 0.85), 
-            0 0 35px rgba(168, 85, 247, 0.25);
+            0 25px 60px rgba(0, 0, 0, 0.9), 
+            0 0 35px rgba(168, 85, 247, 0.3);
         position: relative;
         z-index: 10; 
     }
@@ -104,7 +117,7 @@
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: #e9d5ff; /* Ungu muda */
+        color: #e9d5ff; 
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -114,8 +127,8 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(10, 7, 15, 0.9);
-        border: 1px solid rgba(168, 85, 247, 0.3); 
+        background: rgba(10, 7, 15, 0.95);
+        border: 1px solid rgba(168, 85, 247, 0.35); 
         border-radius: 10px;
         color: #ffffff;
         padding: 18px;
@@ -125,7 +138,7 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 30px;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
         transition: all 0.3s ease;
     }
     
@@ -211,7 +224,7 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: rgba(36, 18, 58, 0.9); 
+        background-color: rgba(36, 18, 58, 0.95); 
         color: #ffffff; 
         font-weight: 900; 
         letter-spacing: 2px;
@@ -226,15 +239,16 @@
         color: #f3e8ff;
     }
 
+    /* Kolom Credit sekarang sengaja dibikin buram samar-samar/kosong */
     td:nth-child(4) {
-        color: #00ffcc; /* Status CR hijau neon */
-        font-weight: 900;
+        color: rgba(255, 255, 255, 0.2); 
+        font-weight: 500;
     }
 
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
         color: #ffffff; 
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
         font-weight: 900;
     }
     
@@ -249,14 +263,11 @@
 </head>
 <body>
 
-<!-- VIDEO BACKGROUND BERGERAK LUFFY GEAR 5 -->
-<video class="video-background" autoplay loop muted playsinline>
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-41764-large.mp4" type="video/mp4">
-    <!-- Catatan: Menggunakan video abstrak loop petir ungu-putih berbobot ringan super smooth -->
-</video>
-
-<!-- LAPISAN KABUT PEREDAM -->
-<div class="overlay-vignette"></div>
+<!-- BACKGOUND ANIMASI CSS MURNI (ANTI BLOKIR BROWSER) -->
+<div class="pure-css-auras">
+    <div class="aura-cloud-1"></div>
+    <div class="aura-cloud-2"></div>
+</div>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -316,7 +327,7 @@
                 let waktu = "00:00:00";
                 let userId = "-";
                 let tujuanBank = "-";
-                let creditStatus = "CR"; 
+                let creditStatus = ""; // DIKOSONGKAN TOTAL SESUAI REKUES
                 let jumlah = "0";
 
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
@@ -347,10 +358,12 @@
                 }
 
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
+                // Kolom ke-4 (Credit) dipaksa nampilin kosong/strip
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>-</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
+                // Di teks kopiannya juga dikosongkan biar rapi pas lu paste ke Excel/catatan
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
         });
 
