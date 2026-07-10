@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - NARUTO SAGE SMOOTH</title>
+    <title>VVIP KASIR - CYBER CHARCOAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        --bg-deep: #0e0301;          
-        --panel-bg: rgba(24, 8, 4, 0.96); 
-        --kurama-orange: #ff5500;    
-        --sage-gold: #ffaa00;        
-        --scroll-red: #9e1b1b;       
-        --shimmer-naruto: linear-gradient(135deg, #ff5500 0%, #ffaa00 50%, #9e1b1b 100%);
+        --bg-main: #06070a;
+        --panel-bg: #111322; 
+        --neon-cyan: #00f3ff;
+        
+        /* WARNA PINK BERKILAU / METALLIC SHIMMER CHROME */
+        --neon-pink: #ff007f;
+        --shimmer-pink: linear-gradient(135deg, #ff007f 0%, #ff66b2 25%, #ff007f 50%, #ffffff 75%, #ff007f 100%);
         --text-white: #ffffff;
+        --text-muted: #a0aec0;
     }
 
     body {
@@ -27,55 +29,69 @@
         min-height: 100vh;
         color: var(--text-white);
         
-        /* SOLUSI ANTI-POLOS: Menggunakan kombinasi warna solid dan radial gradient murni */
-        background-color: var(--bg-deep);
-        background-image: radial-gradient(circle at 50% 35%, #4a1500 0%, #1a0601 50%, #050100 100%);
+        /* FIX WALLPAPER: Gradasi biru cyber-navy yang sedikit diterangkan agar tidak terbaca hitam polos */
+        background-color: #05070f;
+        background-image: radial-gradient(circle at 50% 35%, #13193e 0%, #0b0f24 60%, #030408 100%);
         background-attachment: fixed;
+        position: relative;
+        overflow-x: hidden;
     }
     
-    /* PANEL UTAMA - SEAMLESS MATTE */
+    /* GARIS CYBER GRID BELAKANG - Transparansi dinaikkan ke 0.1 agar garisnya terlihat nyata */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1;
+        background-image: 
+            linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        -webkit-mask-image: radial-gradient(circle at center, white, transparent 85%);
+        mask-image: radial-gradient(circle at center, white, transparent 85%);
+    }
+    
+    /* CONTAINER PANEL UTAMA */
     .container {
         background: var(--panel-bg); 
-        border: none; 
-        border-radius: 24px; 
+        border: 2px solid var(--neon-cyan);
+        border-radius: 12px;
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 
-            0 25px 60px rgba(0, 0, 0, 0.95), 
-            0 0 40px rgba(255, 85, 0, 0.15);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 243, 255, 0.1);
         position: relative;
-        z-index: 1;
-        backdrop-filter: blur(15px);
+        z-index: 1; /* Memastikan kontainer berada di atas grid */
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
         color: var(--text-white);
-        font-size: 36px;
+        font-size: 32px;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 8px;
+        letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 15px var(--kurama-orange);
+        text-shadow: 0 0 10px var(--neon-cyan);
     }
 
+    /* SUBTITLE GRADASI PINK METALLIC CHROME */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
-        font-size: 12px;
-        background: var(--shimmer-naruto);
+        font-size: 11px;
+        background: var(--shimmer-pink);
         background-size: 200% auto;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: 6px;
-        font-weight: 900;
+        letter-spacing: 4px;
+        font-weight: 700;
         text-transform: uppercase;
-        margin-top: 8px;
+        margin-top: 6px;
         margin-bottom: 35px;
-        animation: shine 2.5s linear infinite;
+        animation: shine 3s linear infinite;
     }
     
     @keyframes shine {
@@ -85,138 +101,150 @@
     label {
         display: block;
         font-weight: 700;
-        margin-bottom: 12px;
-        color: var(--sage-gold);
-        font-size: 14px;
+        margin-bottom: 10px;
+        color: var(--neon-cyan);
+        font-size: 13px;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
     }
     
-    /* INPUT AREA */
     textarea {
         width: 100%;
-        height: 140px;
-        background: #0b0200;
-        border: none; 
-        border-radius: 12px;
+        height: 150px;
+        background: #020306;
+        border: 2px solid #23263d;
+        border-radius: 6px;
         color: #ffffff;
-        padding: 18px;
+        padding: 15px;
         box-sizing: border-box;
         resize: vertical;
         font-family: 'Courier New', monospace;
         font-size: 14px;
         font-weight: bold;
-        margin-bottom: 30px;
-        box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
-        transition: all 0.3s ease;
+        margin-bottom: 25px;
+        transition: border-color 0.2s ease;
     }
     
     textarea:focus {
+        border-color: var(--neon-cyan);
         outline: none;
-        box-shadow: inset 0 2px 10px rgba(0,0,0,0.9), 0 0 15px rgba(255, 85, 0, 0.4);
     }
     
     .btn-group {
         display: flex;
         gap: 15px;
-        margin-bottom: 40px;
+        margin-bottom: 35px;
     }
     
     button {
         font-family: 'Orbitron', sans-serif;
         flex: 1;
-        padding: 18px; 
+        padding: 16px; 
         font-size: 13px;   
         font-weight: 900;
         border: none;
-        border-radius: 12px; 
+        border-radius: 6px; 
         cursor: pointer;
         text-transform: uppercase;
-        letter-spacing: 2.5px;
+        letter-spacing: 2px;
         transition: all 0.2s ease;
     }
     
     .btn-submit { 
-        background: var(--kurama-orange); 
-        color: #ffffff; 
-        box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+        background: var(--neon-cyan); 
+        color: #000000; 
     }
     .btn-submit:hover {
-        background: #ff6a1f;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 85, 0, 0.5);
+        background: #00c8ff;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     }
     
     .btn-copy { 
-        background: rgba(255, 255, 255, 0.05); 
+        background: transparent; 
         color: #ffffff; 
-        border: 2px solid var(--sage-gold);
+        border: 2px solid var(--neon-pink);
+        position: relative;
+        overflow: hidden;
     }
     .btn-copy:hover { 
-        background: var(--sage-gold);
-        color: #000000;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        background: var(--shimmer-pink);
+        background-size: 200% auto;
+        animation: shine 1.5s linear infinite;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
     }
     
     .btn-reset { 
-        background: #2b0805; 
+        background: #202336; 
         color: var(--text-white); 
+        border: 1px solid #323754;
     }
     .btn-reset:hover { 
-        background: #420f06;
-        transform: translateY(-2px);
+        background: #2a2e47;
+    }
+
+    /* INDIKATOR FOKUS TAB - AMAN & HALUS (CYAN NEON) */
+    button:focus-visible, textarea:focus-visible {
+        outline: 3px solid var(--neon-cyan) !important;
+        outline-offset: 3px !important;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5) !important;
     }
     
-    /* TABEL DATA TANPA KOTAK GARIS PINGGIR */
+    button:focus, textarea:focus {
+        outline: none; 
+    }
+    
+    /* TABEL DATA */
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
-        border-radius: 16px;
-        border: none; 
+        border-radius: 6px; 
+        border: 2px solid var(--neon-cyan); 
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: transparent; 
+        background: #090a10;
     }
     
     th, td {
-        border: none; 
-        padding: 18px 20px;
+        border-bottom: 1px solid #1c1e30;
+        padding: 15px 18px;
         text-align: left;
         font-size: 14px;
     }
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: rgba(45, 14, 7, 0.7); 
-        color: var(--sage-gold); 
+        background-color: #131522; 
+        color: var(--neon-cyan); 
         font-weight: 900; 
         letter-spacing: 2px;
+        border-bottom: 2px solid var(--neon-cyan);
         text-transform: uppercase;
+        text-shadow: 0 0 5px rgba(0, 243, 255, 0.6);
     }
     
     td {
         font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #e2e8f0;
+        color: #ffffff;
     }
 
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
-        color: var(--sage-gold); 
-        text-shadow: 0 0 8px rgba(255, 170, 0, 0.4);
+        color: #00ff66;
+        text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
         font-weight: 900;
     }
     
     tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.02);
+        background-color: #0e1018;
     }
 
     tr:hover {
-        background-color: rgba(255, 85, 0, 0.06);
+        background-color: rgba(0, 243, 255, 0.05);
     }
 </style>
 </head>
@@ -224,10 +252,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Sage Mode - Konoha Kasir v5.5</div>
+    <div class="sub-title">Cyber Charcoal Edition v3.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="SAGE CHAKRA DETECTED... READY TO TRANSLATE LOGS..."></textarea>
+    <textarea id="rawInput" placeholder="READY FOR DATA SCAN..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -354,9 +382,9 @@
             const btnCopy = document.getElementById('btnCopy');
             const teksAwal = btnCopy.innerText;
             
-            btnCopy.innerText = "JURUS COPY SUKSES!";
-            btnCopy.style.background = "var(--kurama-orange)";
-            btnCopy.style.color = "#ffffff";
+            btnCopy.innerText = "BERHASIL DISALIN!";
+            btnCopy.style.background = "var(--neon-cyan)";
+            btnCopy.style.color = "#000000";
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
