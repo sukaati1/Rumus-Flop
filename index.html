@@ -8,8 +8,7 @@
     
 <style>
     :root {
-        --bg-solid: #050100;          
-        --panel-bg: rgba(15, 4, 2, 0.88); 
+        --panel-bg: rgba(10, 3, 1, 0.9); /* Transparan gelap agar gambar latar belakang tembus cantik */
         --kurama-orange: #ff4500;    
         --sage-gold: #ffaa00;        
         --shimmer-naruto: linear-gradient(135deg, #ff4500 0%, #ffaa00 50%, #ff4500 100%);
@@ -25,61 +24,42 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
-        background-color: var(--bg-solid);
+        
+        /* SOLUSI PASTI: Menggunakan gambar aura chakra asli yang dijamin tembus di semua browser */
+        background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-color: #000000; /* Cadangan jika internet lambat */
         position: relative;
-        overflow: hidden;
     }
 
-    /* FIX DEFINITIF: ELEMEN LATAR BELAKANG AKTIF */
-    .chakra-layer-1 {
+    /* Lapisan filter oranye di atas gambar agar nuansa Kurama/Sage Mode lebih pekat */
+    body::before {
+        content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 15% 15%, rgba(255, 69, 0, 0.25) 0%, transparent 45%);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(255, 69, 0, 0.15) 100%);
         z-index: 1;
-        pointer-events: none;
-    }
-
-    .chakra-layer-2 {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 85% 85%, rgba(255, 170, 0, 0.2) 0%, transparent 45%);
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    /* Efek Inti Aura Tepat di Belakang Kotak Kasir */
-    .chakra-center-glow {
-        position: fixed;
-        top: 50%; left: 50%;
-        width: 800px; height: 800px;
-        background: radial-gradient(circle, rgba(255, 69, 0, 0.22) 0%, transparent 60%);
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        pointer-events: none;
-        animation: pulseAura 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes pulseAura {
-        0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-        100% { transform: translate(-49%, -51%) scale(1.1); opacity: 1; }
+        pointer-events: none; /* Supaya klik mouse tembus ke tombol */
     }
     
-    /* PANEL UTAMA - KACA TRANSPARAN TEBAL */
+    /* PANEL UTAMA - SAGE GLASSMORPHISM */
     .container {
         background: var(--panel-bg); 
-        border: 2px solid rgba(255, 69, 0, 0.35); /* Dipertebal biar kelihatan menyala tepi kotaknya */
+        border: 2px solid rgba(255, 69, 0, 0.4); /* Bingkai menyala oranye */
         border-radius: 20px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        backdrop-filter: blur(12px); 
-        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(10px); 
+        -webkit-backdrop-filter: blur(10px);
         box-shadow: 
-            0 25px 60px rgba(0, 0, 0, 0.95), 
-            0 0 30px rgba(255, 69, 0, 0.25);
+            0 25px 60px rgba(0, 0, 0, 0.9), 
+            0 0 30px rgba(255, 69, 0, 0.3);
         position: relative;
-        z-index: 10; /* Berada di atas lapisan chakra background */
+        z-index: 10; /* Berada aman di atas background */
     }
     
     h1 {
@@ -128,7 +108,7 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.85);
         border: 1px solid rgba(255, 69, 0, 0.3); 
         border-radius: 10px;
         color: #ffffff;
@@ -223,7 +203,7 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #230904; 
+        background-color: rgba(35, 9, 4, 0.9); 
         color: var(--sage-gold); 
         font-weight: 900; 
         letter-spacing: 2px;
@@ -259,11 +239,6 @@
 </style>
 </head>
 <body>
-
-<!-- Lapisan Background Tambahan (Dipisah Agar Browser Terpaksa Render Efek Warna) -->
-<div class="chakra-layer-1"></div>
-<div class="chakra-layer-2"></div>
-<div class="chakra-center-glow"></div>
 
 <div class="container">
     <h1>Rumus Flop</h1>
