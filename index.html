@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - CYBER CHARCOAL</title>
+    <title>VVIP KASIR - CYBER LUFFY EDITION</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        --bg-main: #06070a;
-        --panel-bg: #111322; 
-        --neon-cyan: #00f3ff;
+        --bg-main: #050508;
+        --panel-bg: rgba(13, 11, 18, 0.95); /* Panel gelap dengan sedikit sentuhan ungu/merah */
         
-        /* WARNA PINK BERKILAU / METALLIC SHIMMER CHROME */
-        --neon-pink: #ff007f;
-        --shimmer-pink: linear-gradient(135deg, #ff007f 0%, #ff66b2 25%, #ff007f 50%, #ffffff 75%, #ff007f 100%);
+        /* WARNA TEMA LUFFY CYBER */
+        --neon-cyan: #ff2a5f; /* Merah Neon (Haki/Luffy) sebagai warna utama pengganti cyan */
+        --neon-gold: #ffb700; /* Kuning Emas (Gear 5 Aura / Topi Jerami) */
+        --neon-pink: #ff0055;
+        
+        /* GRADASI SHIMMER CHROME MERAH EMAS */
+        --shimmer-pink: linear-gradient(135deg, #ff0055 0%, #ffb700 50%, #ff0055 100%);
         --text-white: #ffffff;
         --text-muted: #a0aec0;
     }
@@ -28,30 +31,59 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
+        background-color: var(--bg-main);
         
-        /* FIX WALLPAPER: Gradasi biru cyber-navy yang sedikit diterangkan agar tidak terbaca hitam polos */
-        background-color: #05070f;
-        background-image: radial-gradient(circle at 50% 35%, #13193e 0%, #0b0f24 60%, #030408 100%);
+        /* LATAR BELAKANG: Gradasi Merah-Hitam Deep Space dengan Haki Aura */
+        background-image: 
+            radial-gradient(circle at 50% 25%, rgba(120, 10, 35, 0.25) 0%, rgba(15, 5, 10, 0.9) 70%, #030205 100%);
         background-attachment: fixed;
         position: relative;
         overflow-x: hidden;
     }
     
-    /* GARIS CYBER GRID BELAKANG - Transparansi dinaikkan ke 0.1 agar garisnya terlihat nyata */
+    /* EFEK SILUET TOPI JERAMI DAN AURA PETIR HAKI DI BELAKANG */
     body::before {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: -1;
-        background-image: 
-            linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
-        background-size: 50px 50px;
-        -webkit-mask-image: radial-gradient(circle at center, white, transparent 85%);
-        mask-image: radial-gradient(circle at center, white, transparent 85%);
+        opacity: 0.15;
+        
+        /* Menggunakan SVG inline sebagai background untuk menggambar siluet tengkorak topi jerami */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.4'%3E%3Cpath d='M50 15c-15 0-22 8-22 15 0 2 3 5 7 5h30c4 0 7-3 7-5 0-7-7-15-22-15zm-25 20c-8 0-10 4-10 6 0 6 15 8 35 8s35-2 35-8c0-2-2-6-10-6H25zm13 18c-2 0-4 3-3 6l3 7c1 2 3 3 5 3h14c2 0 4-1 5-3l3-7c1-3-1-6-3-6H38zm-11 5c-3 0-5 3-4 6l2 4c2 3 6 1 6-2v-4c0-2-2-4-4-4zm46 0c-2 0-4 2-4 4v4c0 3 4 5 6 2l2-4c1-3-1-6-4-6z' fill='%23ff2a5f'/%3E%3C/svg%3E"), 
+                             radial-gradient(circle at 50% 40%, transparent 30%, rgba(255, 42, 95, 0.1) 60%, transparent 100%);
+        background-repeat: no-repeat;
+        background-position: center 30%;
+        background-size: 400px, cover;
+        filter: blur(1px);
+        animation: hakiPulse 6s ease-in-out infinite alternate;
     }
     
-    /* CONTAINER PANEL UTAMA */
+    /* EFEK PETIR HAKI BERKILAU */
+    body::after {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1;
+        opacity: 0.08;
+        background-image: 
+            linear-gradient(45deg, transparent 45%, var(--neon-gold) 48%, var(--neon-gold) 52%, transparent 55%),
+            linear-gradient(-45deg, transparent 45%, var(--neon-cyan) 48%, var(--neon-cyan) 52%, transparent 55%);
+        background-size: 300px 300px;
+        animation: lightning 8s linear infinite;
+    }
+
+    @keyframes hakiPulse {
+        0% { transform: scale(0.98); opacity: 0.12; }
+        100% { transform: scale(1.02); opacity: 0.22; }
+    }
+
+    @keyframes lightning {
+        0% { background-position: 0px 0px; }
+        100% { background-position: 300px 600px; }
+    }
+    
+    /* CONTAINER PANEL UTAMA (GAYA CYBER LUFFY) */
     .container {
         background: var(--panel-bg); 
         border: 2px solid var(--neon-cyan);
@@ -60,9 +92,10 @@
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 243, 255, 0.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 42, 95, 0.2);
         position: relative;
-        z-index: 1; /* Memastikan kontainer berada di atas grid */
+        z-index: 1;
+        backdrop-filter: blur(8px); /* Membuat background di belakang panel agak blur agar teks mudah dibaca */
     }
     
     h1 {
@@ -74,10 +107,10 @@
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 10px var(--neon-cyan);
+        text-shadow: 0 0 15px var(--neon-cyan);
     }
 
-    /* SUBTITLE GRADASI PINK METALLIC CHROME */
+    /* SUBTITLE GRADASI GOLD & PINK (GEAR 5 / KAIDO FIGHT) */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -92,6 +125,7 @@
         margin-top: 6px;
         margin-bottom: 35px;
         animation: shine 3s linear infinite;
+        text-shadow: 0 0 2px rgba(255, 183, 0, 0.5);
     }
     
     @keyframes shine {
@@ -102,7 +136,7 @@
         display: block;
         font-weight: 700;
         margin-bottom: 10px;
-        color: var(--neon-cyan);
+        color: var(--neon-gold); /* Menggunakan warna emas topi jerami untuk label */
         font-size: 13px;
         text-transform: uppercase;
         letter-spacing: 1.5px;
@@ -111,8 +145,8 @@
     textarea {
         width: 100%;
         height: 150px;
-        background: #020306;
-        border: 2px solid #23263d;
+        background: #09060b;
+        border: 2px solid #3d1622;
         border-radius: 6px;
         color: #ffffff;
         padding: 15px;
@@ -128,6 +162,7 @@
     textarea:focus {
         border-color: var(--neon-cyan);
         outline: none;
+        box-shadow: 0 0 10px rgba(255, 42, 95, 0.3);
     }
     
     .btn-group {
@@ -155,14 +190,14 @@
         color: #000000; 
     }
     .btn-submit:hover {
-        background: #00c8ff;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        background: #ff4775;
+        box-shadow: 0 0 15px rgba(255, 42, 95, 0.6);
     }
     
     .btn-copy { 
         background: transparent; 
         color: #ffffff; 
-        border: 2px solid var(--neon-pink);
+        border: 2px solid var(--neon-gold);
         position: relative;
         overflow: hidden;
     }
@@ -171,23 +206,23 @@
         background-size: 200% auto;
         animation: shine 1.5s linear infinite;
         border-color: #ffffff;
-        box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+        box-shadow: 0 0 15px rgba(255, 183, 0, 0.6);
     }
     
     .btn-reset { 
-        background: #202336; 
+        background: #251319; 
         color: var(--text-white); 
-        border: 1px solid #323754;
+        border: 1px solid #4a1f2c;
     }
     .btn-reset:hover { 
-        background: #2a2e47;
+        background: #361b24;
     }
 
-    /* INDIKATOR FOKUS TAB - AMAN & HALUS (CYAN NEON) */
+    /* INDIKATOR FOKUS TAB */
     button:focus-visible, textarea:focus-visible {
         outline: 3px solid var(--neon-cyan) !important;
         outline-offset: 3px !important;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5) !important;
+        box-shadow: 0 0 15px rgba(255, 42, 95, 0.5) !important;
     }
     
     button:focus, textarea:focus {
@@ -205,11 +240,11 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        background: #090a10;
+        background: #0b070d;
     }
     
     th, td {
-        border-bottom: 1px solid #1c1e30;
+        border-bottom: 1px solid #231218;
         padding: 15px 18px;
         text-align: left;
         font-size: 14px;
@@ -217,13 +252,13 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #131522; 
-        color: var(--neon-cyan); 
+        background-color: #190c13; 
+        color: var(--neon-gold); 
         font-weight: 900; 
         letter-spacing: 2px;
         border-bottom: 2px solid var(--neon-cyan);
         text-transform: uppercase;
-        text-shadow: 0 0 5px rgba(0, 243, 255, 0.6);
+        text-shadow: 0 0 5px rgba(255, 183, 0, 0.6);
     }
     
     td {
@@ -234,17 +269,17 @@
 
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
-        color: #00ff66;
-        text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
+        color: #ffb700; /* Warna emas untuk jumlah transaksi */
+        text-shadow: 0 0 5px rgba(255, 183, 0, 0.4);
         font-weight: 900;
     }
     
     tr:nth-child(even) {
-        background-color: #0e1018;
+        background-color: #110912;
     }
 
     tr:hover {
-        background-color: rgba(0, 243, 255, 0.05);
+        background-color: rgba(255, 42, 95, 0.05);
     }
 </style>
 </head>
@@ -252,10 +287,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Cyber Charcoal Edition v3.0</div>
+    <div class="sub-title">Luffy Gear 5 - Cyber Charcoal v3.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="READY FOR DATA SCAN..."></textarea>
+    <textarea id="rawInput" placeholder="READY FOR HAKI DATA SCAN..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
