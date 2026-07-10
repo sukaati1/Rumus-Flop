@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - CYBER LUFFY EDITION</title>
+    <title>VVIP KASIR - GEAR 5 LUFFY EDITION</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        /* WARNA DIUBAH MENJADI MERAH DAN EMAS KHAS LUFFY */
-        --bg-main: #140309; /* Warna dasar merah maroon super gelap (BUKAN HITAM POLOS) */
-        --panel-bg: rgba(22, 10, 16, 0.95); 
-        --neon-cyan: #ff1155; /* Merah Haki */
-        --neon-gold: #ffb700; /* Kuning Emas Gear 5 / Topi Jerami */
-        --neon-pink: #ff0055;
+        /* PALET WARNA GEAR 5 & HAKI LUFFY */
+        --bg-deep: #0a040b;
+        --panel-bg: rgba(18, 9, 16, 0.93); /* Transparan mewah dengan rona ungu kemerahan */
         
-        --shimmer-pink: linear-gradient(135deg, #ff1155 0%, #ffb700 50%, #ff1155 100%);
+        --haki-red: #ff003c;       /* Merah Haki membara */
+        --gear5-gold: #ffaa00;     /* Kuning Emas Gear 5 / Topi Jerami */
+        --liberation-white: #ffffff; /* Awan putih suci Gear 5 */
+        
+        --shimmer-luffy: linear-gradient(135deg, #ff003c 0%, #ffaa00 30%, #ffffff 50%, #ffaa00 70%, #ff003c 100%);
         --text-white: #ffffff;
-        --text-muted: #a0aec0;
     }
 
     body {
@@ -29,100 +29,123 @@
         align-items: center;
         min-height: 100vh;
         color: var(--text-white);
+        background-color: var(--bg-deep);
         
-        /* WALLPAPER ANTI-HITAM: Merah maroon gelap dengan pancaran aura merah terang di tengah */
-        background-color: var(--bg-main);
-        background-image: radial-gradient(circle at 50% 35%, #50061a 0%, #170308 70%, #080103 100%);
+        /* 1. LAYER DASAR: Langit badai laut malam dengan pusat cahaya merah membara di tengah */
+        background-image: 
+            radial-gradient(circle at 50% 40%, rgba(255, 0, 60, 0.28) 0%, rgba(35, 10, 20, 0.9) 60%, #030005 100%);
         background-attachment: fixed;
         position: relative;
         overflow-x: hidden;
     }
     
-    /* SILUET TOPI JERAMI DAN AURA MERAH */
+    /* 2. LAYER TENGAH: Pusaran awan Gear 5 (Drums of Liberation) & Siluet Topi Jerami Raksasa */
     body::before {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -1;
-        opacity: 0.25; /* Dinaikkan agar lebih jelas kelihatan */
+        z-index: -2;
+        opacity: 0.25;
         
-        /* Siluet Jolly Roger Luffy */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 15c-15 0-22 8-22 15 0 2 3 5 7 5h30c4 0 7-3 7-5 0-7-7-15-22-15zm-25 20c-8 0-10 4-10 6 0 6 15 8 35 8s35-2 35-8c0-2-2-6-10-6H25zm13 18c-2 0-4 3-3 6l3 7c1 2 3 3 5 3h14c2 0 4-1 5-3l3-7c1-3-1-6-3-6H38zm-11 5c-3 0-5 3-4 6l2 4c2 3 6 1 6-2v-4c0-2-2-4-4-4zm46 0c-2 0-4 2-4 4v4c0 3 4 5 6 2l2-4c1-3-1-6-4-6z' fill='%23ff1155'/%3E%3C/svg%3E"), 
-                             radial-gradient(circle at 50% 35%, rgba(255, 17, 85, 0.25) 0%, transparent 60%);
+        /* Gambar awan badai melingkar + Siluet Jolly Roger */
+        background-image: 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 12c-17 0-24 9-24 17 0 2 3 5 8 5h32c4 0 8-3 8-5 0-8-8-17-24-17zm-28 23c-9 0-11 4-11 7 0 7 17 9 39 9s39-2 39-9c0-3-2-7-11-7H22zm15 20c-2 0-4 3-3 7l3 8c1 2 3 3 6 3h14c3 0 5-1 6-3l3-8c1-4-1-7-3-7H37zm-12 5c-3 0-6 3-5 7l2 4c2 3 7 1 7-2v-4c0-3-2-5-4-5zm50 0c-2 0-4 2-4 5v4c0 3 4 5 7 2l2-4c1-4-1-7-5-7z' fill='%23ff003c'/%3E%3C/svg%3E"),
+            radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 70% 80%, rgba(255, 170, 0, 0.15) 0%, transparent 40%);
         background-repeat: no-repeat;
-        background-position: center 30%;
-        background-size: 380px, cover;
-        animation: hakiPulse 4s ease-in-out infinite alternate;
+        background-position: center center;
+        background-size: 450px, 800px 800px, 800px 800px;
+        filter: blur(2px);
+        animation: gear5Float 12s ease-in-out infinite alternate;
     }
     
-    /* EFEK PETIR HAKI BERGERAK */
+    /* 3. LAYER DEPAN: Petir Haoshoku Haki (Merah & Emas) yang menyambar secara dinamis */
     body::after {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: -1;
-        opacity: 0.12; /* Dinaikkan agar garis petirnya tidak terlalu samar */
+        opacity: 0.4;
         background-image: 
-            linear-gradient(45deg, transparent 46%, var(--neon-gold) 49%, var(--neon-gold) 51%, transparent 54%),
-            linear-gradient(-45deg, transparent 46%, var(--neon-cyan) 49%, var(--neon-cyan) 51%, transparent 54%);
-        background-size: 250px 250px;
-        animation: lightning 10s linear infinite;
+            linear-gradient(135deg, transparent 40%, var(--haki-red) 41%, var(--haki-red) 43%, transparent 44%, transparent 60%, var(--gear5-gold) 61%, var(--gear5-gold) 63%, transparent 64%),
+            linear-gradient(45deg, transparent 30%, var(--gear5-gold) 31%, var(--gear5-gold) 33%, transparent 34%, transparent 70%, var(--haki-red) 71%, var(--haki-red) 73%, transparent 74%);
+        background-size: 400px 400px;
+        animation: hakiLightning 6s steps(1) infinite;
     }
 
-    /* Efek denyut Haki */
-    @keyframes hakiPulse {
-        0% { transform: scale(0.97); opacity: 0.2; }
-        100% { transform: scale(1.03); opacity: 0.35; }
+    /* Animasi mengambang tenang ala Gear 5 */
+    @keyframes gear5Float {
+        0% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.05) rotate(3deg); }
+        100% { transform: scale(0.95) rotate(-3deg); }
     }
 
-    /* Pergerakan petir */
-    @keyframes lightning {
-        0% { background-position: 0px 0px; }
-        100% { background-position: 250px 500px; }
+    /* Efek sambaran petir Haki yang berkedip ganas */
+    @keyframes hakiLightning {
+        0%, 100% { background-position: 0px 0px; opacity: 0.1; }
+        15% { background-position: 40px 80px; opacity: 0.6; }
+        17% { background-position: -20px 120px; opacity: 0.2; }
+        30% { background-position: 150px -50px; opacity: 0.7; }
+        32% { background-position: 0px 0px; opacity: 0.1; }
+        65% { background-position: -100px 200px; opacity: 0.8; }
+        68% { background-position: 80px -80px; opacity: 0.3; }
+        80% { background-position: 200px 100px; opacity: 0.1; }
     }
     
-    /* CONTAINER PANEL UTAMA */
+    /* PANEL UTAMA: Didesain dengan bingkai Haki Membara */
     .container {
         background: var(--panel-bg); 
-        border: 2px solid var(--neon-cyan);
-        border-radius: 12px;
+        border: 3px solid transparent;
+        border-image: linear-gradient(to right, var(--haki-red), var(--gear5-gold), var(--haki-red)) 1;
+        border-radius: 1px; /* Potongan siku khas poster buronan */
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 17, 85, 0.25);
+        box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 0.95), 
+            0 0 25px rgba(255, 0, 60, 0.25),
+            inset 0 0 15px rgba(255, 170, 0, 0.1);
         position: relative;
         z-index: 1;
-        backdrop-filter: blur(10px); /* Efek kaca buram transparan */
+        backdrop-filter: blur(12px);
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
         color: var(--text-white);
-        font-size: 32px;
+        font-size: 36px;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 6px;
+        letter-spacing: 8px;
         margin: 0;
-        text-shadow: 0 0 15px var(--neon-cyan);
+        text-shadow: 
+            0 0 10px var(--haki-red),
+            0 0 25px rgba(255, 0, 60, 0.6);
+        animation: titleGlow 2s ease-in-out infinite alternate;
     }
 
+    @keyframes titleGlow {
+        0% { text-shadow: 0 0 10px var(--haki-red), 0 0 20px rgba(255, 0, 60, 0.6); }
+        100% { text-shadow: 0 0 15px var(--gear5-gold), 0 0 30px rgba(255, 170, 0, 0.8); }
+    }
+
+    /* SUBTITLE GRADASI CHROME GAYA WANOKUNI */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
-        font-size: 11px;
-        background: var(--shimmer-pink);
+        font-size: 12px;
+        background: var(--shimmer-luffy);
         background-size: 200% auto;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: 4px;
-        font-weight: 700;
+        letter-spacing: 5px;
+        font-weight: 900;
         text-transform: uppercase;
-        margin-top: 6px;
+        margin-top: 8px;
         margin-bottom: 35px;
-        animation: shine 3s linear infinite;
-        text-shadow: 0 0 2px rgba(255, 183, 0, 0.5);
+        animation: shine 2.5s linear infinite;
     }
     
     @keyframes shine {
@@ -133,18 +156,19 @@
         display: block;
         font-weight: 700;
         margin-bottom: 10px;
-        color: var(--neon-gold);
-        font-size: 13px;
+        color: var(--gear5-gold);
+        font-size: 14px;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
+        text-shadow: 0 0 5px rgba(255, 170, 0, 0.3);
     }
     
     textarea {
         width: 100%;
         height: 150px;
         background: #090306;
-        border: 2px solid #4a1321;
-        border-radius: 6px;
+        border: 2px solid #5a1122;
+        border-radius: 4px;
         color: #ffffff;
         padding: 15px;
         box-sizing: border-box;
@@ -153,13 +177,13 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 25px;
-        transition: border-color 0.2s ease;
+        transition: all 0.3s ease;
     }
     
     textarea:focus {
-        border-color: var(--neon-cyan);
+        border-color: var(--gear5-gold);
         outline: none;
-        box-shadow: 0 0 10px rgba(255, 17, 85, 0.4);
+        box-shadow: 0 0 15px rgba(255, 170, 0, 0.4);
     }
     
     .btn-group {
@@ -171,54 +195,59 @@
     button {
         font-family: 'Orbitron', sans-serif;
         flex: 1;
-        padding: 16px; 
+        padding: 18px; 
         font-size: 13px;   
         font-weight: 900;
         border: none;
-        border-radius: 6px; 
+        border-radius: 4px; 
         cursor: pointer;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 2.5px;
         transition: all 0.2s ease;
     }
     
+    /* TOMBOL SUBMIT - MODE HAKI RAJA */
     .btn-submit { 
-        background: var(--neon-cyan); 
-        color: #000000; 
+        background: var(--haki-red); 
+        color: #ffffff; 
+        box-shadow: 0 0 10px rgba(255, 0, 60, 0.4);
+        text-shadow: 0 0 5px #000;
     }
     .btn-submit:hover {
-        background: #ff3c73;
-        box-shadow: 0 0 15px rgba(255, 17, 85, 0.6);
+        background: #ff2a5f;
+        box-shadow: 0 0 20px rgba(255, 0, 60, 0.8);
     }
     
+    /* TOMBOL COPY - MODE GEAR 5 SUN GOD */
     .btn-copy { 
         background: transparent; 
         color: #ffffff; 
-        border: 2px solid var(--neon-gold);
+        border: 2px solid var(--gear5-gold);
         position: relative;
         overflow: hidden;
     }
     .btn-copy:hover { 
-        background: var(--shimmer-pink);
+        background: var(--shimmer-luffy);
         background-size: 200% auto;
         animation: shine 1.5s linear infinite;
         border-color: #ffffff;
-        box-shadow: 0 0 15px rgba(255, 183, 0, 0.6);
+        color: #000000;
+        box-shadow: 0 0 20px rgba(255, 170, 0, 0.7);
     }
     
+    /* TOMBOL RESET - MAROON RED */
     .btn-reset { 
-        background: #2b0e16; 
+        background: #2b0b14; 
         color: var(--text-white); 
-        border: 1px solid #4d1523;
+        border: 1px solid #5a1223;
     }
     .btn-reset:hover { 
-        background: #3d121e;
+        background: #420f1c;
     }
 
     button:focus-visible, textarea:focus-visible {
-        outline: 3px solid var(--neon-cyan) !important;
+        outline: 3px solid var(--gear5-gold) !important;
         outline-offset: 3px !important;
-        box-shadow: 0 0 15px rgba(255, 17, 85, 0.5) !important;
     }
     
     button:focus, textarea:focus {
@@ -229,8 +258,9 @@
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
-        border-radius: 6px; 
-        border: 2px solid var(--neon-cyan); 
+        border-radius: 4px; 
+        border: 2px solid var(--haki-red); 
+        box-shadow: 0 0 15px rgba(255, 0, 60, 0.15);
     }
     
     table {
@@ -240,21 +270,21 @@
     }
     
     th, td {
-        border-bottom: 1px solid #280a13;
-        padding: 15px 18px;
+        border-bottom: 1px solid #2b0b15;
+        padding: 16px 18px;
         text-align: left;
         font-size: 14px;
     }
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #20070f; 
-        color: var(--neon-gold); 
+        background-color: #1a050d; 
+        color: var(--gear5-gold); 
         font-weight: 900; 
         letter-spacing: 2px;
-        border-bottom: 2px solid var(--neon-cyan);
+        border-bottom: 2px solid var(--haki-red);
         text-transform: uppercase;
-        text-shadow: 0 0 5px rgba(255, 183, 0, 0.6);
+        text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
     }
     
     td {
@@ -263,10 +293,11 @@
         color: #ffffff;
     }
 
+    /* Bagian harga/jumlah dibuat menyala emas */
     td:nth-child(5) {
         font-family: 'Orbitron', sans-serif;
-        color: #ffb700; 
-        text-shadow: 0 0 5px rgba(255, 183, 0, 0.4);
+        color: var(--gear5-gold); 
+        text-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
         font-weight: 900;
     }
     
@@ -275,7 +306,7 @@
     }
 
     tr:hover {
-        background-color: rgba(255, 17, 85, 0.07);
+        background-color: rgba(255, 0, 60, 0.08);
     }
 </style>
 </head>
@@ -283,10 +314,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">Luffy Gear 5 - Cyber Charcoal v3.0</div>
+    <div class="sub-title">Luffy Gear 5 - Cyber Pirate v3.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="READY FOR HAKI DATA SCAN..."></textarea>
+    <textarea id="rawInput" placeholder="AURA HAKI READY... SCANNIN' LOGS..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -414,8 +445,8 @@
             const teksAwal = btnCopy.innerText;
             
             btnCopy.innerText = "BERHASIL DISALIN!";
-            btnCopy.style.background = "var(--neon-cyan)";
-            btnCopy.style.color = "#000000";
+            btnCopy.style.background = "var(--haki-red)";
+            btnCopy.style.color = "#ffffff";
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
