@@ -3,89 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - GEAR 5 NIKA ULTRA GLOW</title>
+    <title>VVIP KASIR - GEAR 5 REVERSE MODE</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
-    /* JURUS PAMUNGKAS: Mengakali Force Dark Mode Browser */
-    html {
-        background-color: #000000 !important;
-    }
-
-    body {
-        font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* TRUMF CARD: MEMAKSA BROWSER LU YANG MEMBUATKAN TEMA GELAPNYA */
+    html, body {
+        background-color: #ffffff !important; /* Sengaja dibikin putih total */
+        color: #000000 !important;            /* Sengaja dibikin hitam total */
+        font-family: 'Rajdhani', sans-serif;
         margin: 0;
         padding: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        color: #ffffff !important;
-        background: #0d0714 !important; /* Latar belakang asli ungu sangat gelap */
-        overflow-x: hidden;
     }
     
-    /* KOTAK CASIR DENGAN DOUBLE NEON GLOW ANTI DARK-MODE */
+    /* KOTAK UTAMA KASIR */
     .container {
-        background: #120a1c !important; 
-        border: 4px solid #a855f7 !important; /* Border tebal ungu benderang */
+        background-color: #f5f5f5 !important; /* Abu-abu terang, nanti bakal diubah jadi abu gelap oleh browser */
+        border: 4px solid #000000 !important; /* Border hitam, nanti bakal diubah jadi putih/terang oleh browser */
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        
-        /* Efek paksa bayangan menyala tebal murni */
-        box-shadow: 
-            0 0 30px #a855f7, 
-            0 0 60px rgba(168, 85, 247, 0.8),
-            inset 0 0 20px #2e104d !important;
-        
-        animation: nikaLightning 2.5s ease-in-out infinite alternate;
-    }
-
-    /* Efek kedip petir yang dipaksa lolos sensor browser */
-    @keyframes nikaLightning {
-        0% {
-            border-color: #a855f7 !important;
-            box-shadow: 0 0 25px #a855f7, 0 0 50px rgba(168, 85, 247, 0.6);
-        }
-        100% {
-            border-color: #ffffff !important;
-            box-shadow: 0 0 40px #ffffff, 0 0 80px #a855f7;
-        }
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
-        color: #ffffff !important;
+        color: #000000 !important; /* Nanti otomatis jadi teks putih besar */
         font-size: 36px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 8px;
         margin: 0;
-        text-shadow: 0 0 20px #a855f7, 0 0 10px #ffffff !important;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 13px;
-        color: #d8b4fe !important;
+        color: #555555 !important; /* Nanti otomatis jadi teks terang */
         letter-spacing: 5px;
         font-weight: 900;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        text-shadow: 0 0 10px #a855f7;
     }
     
     label {
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: #e9d5ff !important; 
+        color: #222222 !important; 
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -95,10 +69,10 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: #000000 !important;
-        border: 2px solid #a855f7 !important; 
+        background: #ffffff !important;
+        border: 2px solid #000000 !important; 
         border-radius: 10px;
-        color: #ffffff !important;
+        color: #000000 !important;
         padding: 18px;
         box-sizing: border-box;
         resize: vertical;
@@ -106,12 +80,6 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 30px;
-    }
-    
-    textarea:focus {
-        outline: none;
-        border-color: #ffffff !important;
-        box-shadow: 0 0 20px #a855f7 !important;
     }
     
     .btn-group {
@@ -126,47 +94,29 @@
         padding: 18px; 
         font-size: 13px;   
         font-weight: 900;
-        border: none;
+        border: 2px solid #000000 !important;
         border-radius: 10px; 
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 2.5px;
-        transition: all 0.2s ease;
     }
     
     .btn-submit { 
-        background: #ffffff !important; 
-        color: #000000 !important; 
-        box-shadow: 0 4px 25px rgba(255, 255, 255, 0.6);
-    }
-    .btn-submit:hover {
-        background: #e9d5ff !important;
-        transform: translateY(-2px);
+        background: #000000 !important; 
+        color: #ffffff !important; 
     }
     
     .btn-copy { 
-        background: #000000 !important; 
-        color: #ffffff !important; 
-        border: 2px solid #a855f7 !important;
-    }
-    .btn-copy:hover { 
-        background: #a855f7 !important;
-        color: #ffffff !important;
-        transform: translateY(-2px);
-        box-shadow: 0 0 20px #a855f7;
+        background: #ffffff !important; 
+        color: #000000 !important; 
     }
     
     .btn-reset { 
-        background: #25123e !important; 
-        color: #ffffff !important; 
-        border: 1px solid #a855f7 !important;
-    }
-    .btn-reset:hover { 
-        background: #3b1d62 !important;
-        transform: translateY(-2px);
+        background: #dddddd !important; 
+        color: #000000 !important; 
     }
     
-    /* TABEL DATA */
+    /* TABEL DATA (TANPA CREDIT) */
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
@@ -186,34 +136,29 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #201135 !important; 
-        color: #ffffff !important; 
+        background-color: #eeeeee !important; 
+        color: #000000 !important; 
         font-weight: 900; 
         letter-spacing: 2px;
         text-transform: uppercase;
-        border-bottom: 3px solid #a855f7 !important;
+        border-bottom: 3px solid #000000 !important;
     }
     
     td {
         font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #f3e8ff !important;
-        border-bottom: 1px solid rgba(168, 85, 247, 0.1) !important;
+        color: #111111 !important;
+        border-bottom: 1px solid #e0e0e0 !important;
     }
 
     td:nth-child(4) {
         font-family: 'Orbitron', sans-serif;
-        color: #ffffff !important; 
-        text-shadow: 0 0 10px #ffffff;
+        color: #000000 !important; 
         font-weight: 900;
     }
     
     tr:nth-child(even) {
-        background-color: rgba(168, 85, 247, 0.05) !important;
-    }
-
-    tr:hover {
-        background-color: rgba(168, 85, 247, 0.2) !important;
+        background-color: #f9f9f9 !important;
     }
 </style>
 </head>
@@ -221,10 +166,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">JOY BOY MODE - KONOHA KASIR v7.0</div>
+    <div class="sub-title">JOY BOY REVERSE MODE - v8.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="DRUMS OF LIBERATION DETECTED... READY TO TRANSLATE LOGS..."></textarea>
+    <textarea id="rawInput" placeholder="READY TO TRANSLATE LOGS..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -306,7 +251,6 @@
                 }
 
                 const tr = document.createElement('tr');
-                // Kolom Credit sudah dibuang sepenuhnya dari baris tabel
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
@@ -326,26 +270,11 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            alert("Tidak ada data untuk disalin! Silakan submit log terlebih dahulu.");
+            alert("Tidak ada data untuk disalin!");
             return;
         }
-        
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            const btnCopy = document.getElementById('btnCopy');
-            const teksAwal = btnCopy.innerText;
-            
-            btnCopy.innerText = "GOMU GOMU COPY SUKSES!";
-            btnCopy.style.background = "#a855f7 !important";
-            btnCopy.style.color = "#ffffff !important";
-            
-            setTimeout(() => {
-                btnCopy.innerText = teksAwal;
-                btnCopy.style.background = "#000000 !important";
-                btnCopy.style.color = "#ffffff !important";
-            }, 1500);
-        }).catch(err => {
-            console.error("Error: ", err);
-            alert("Gagal menyalin data, pastikan izin clipboard aktif.");
+            alert("Berhasil menyalin data!");
         });
     }
 </script>
