@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - STANDARD STABLE</title>
+    <title>VVIP KASIR - GEAR 5 MATRIX MODE</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=700;900&family=Rajdhani:wght=600;700&display=swap" rel="stylesheet">
     
 <style>
@@ -16,18 +16,34 @@
         align-items: center;
         min-height: 100vh;
         color: #ffffff;
-        background-color: #100c18;
+        background-color: #08050e;
+        position: relative;
+        overflow-x: hidden;
     }
     
+    /* BACKGROUND HUJAN KODE (ANTI BLOKIR BROWSER) */
+    #matrixCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    /* KOTAK UTAMA KASIR (Z-INDEX DIATAS CANVAS BIAR GAK KETUTUP) */
     .container {
-        background: rgba(25, 18, 36, 0.95); 
-        border: 1px solid #a855f7; 
+        background: rgba(16, 12, 24, 0.93); 
+        border: 2px solid #a855f7; 
         border-radius: 12px; 
         width: 100%;
         max-width: 950px;
         padding: 35px;
         box-sizing: border-box;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+        position: relative;
+        z-index: 10;
     }
     
     h1 {
@@ -39,13 +55,14 @@
         text-transform: uppercase;
         letter-spacing: 5px;
         margin: 0;
+        text-shadow: 0 0 10px #a855f7;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 12px;
-        color: #a855f7;
+        color: #d8b4fe;
         letter-spacing: 4px;
         font-weight: 700;
         text-transform: uppercase;
@@ -155,9 +172,12 @@
 </head>
 <body>
 
+<!-- CANVAS UNTUK EFEK HUJAN DIGITAL GEAR 5 -->
+<canvas id="matrixCanvas"></canvas>
+
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">KONOHA KASIR - STABLE VERSION</div>
+    <div class="sub-title">KONOHA KASIR - NIKA MATRIX v10.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini..."></textarea>
@@ -186,6 +206,58 @@
 </div>
 
 <script>
+    // --- SKRIP BACKGROUND MATRIX (ANTI EMULASI DARK MODE) ---
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Karakter acak khas nika/angka digital
+    const katakana = '0123456789NIKAJKBOY777';
+    const alphabet = katakana.split('');
+
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const rainDrops = [];
+    for (let x = 0; x < columns; x++) {
+        rainDrops[x] = 1;
+    }
+
+    function drawMatrix() {
+        // Efek trail hitam transparan di latar belakang
+        ctx.fillStyle = 'rgba(8, 5, 14, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < rainDrops.length; i++) {
+            const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+            
+            // Variasi warna acak ungu dan putih kilat Gear 5
+            if (Math.random() > 0.85) {
+                ctx.fillStyle = '#ffffff'; // Putih kilat Nika
+                ctx.font = 'bold ' + fontSize + 'px monospace';
+            } else {
+                ctx.fillStyle = '#a855f7'; // Ungu Haki Gear 5
+                ctx.font = fontSize + 'px monospace';
+            }
+
+            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                rainDrops[i] = 0;
+            }
+            rainDrops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 30);
+
+
+    // --- FUNGSI LOGIKA UTAMA KASIR (100% AMAN DAN STABIL) ---
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
@@ -196,7 +268,6 @@
 
         if (!input) return;
 
-        // Memisahkan baris dan membalikkan urutan (bawah ke atas)
         let baris = input.split('\n');
         baris.reverse(); 
 
@@ -205,7 +276,6 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
-            // Deteksi kolom berdasarkan spasi ganda atau tab
             let kolom = line.split(/\s{2,}|\t/).filter(item => item.trim() !== '');
             if (kolom.length < 4) {
                 kolom = line.split(/\s+/).filter(item => item.trim() !== '');
@@ -215,17 +285,15 @@
                 let waktu = "00:00:00";
                 let userId = "-";
                 let tujuanBank = "-";
-                let creditStatus = "-"; // Diisi kosong/strip sesuai permintaan awal
+                let creditStatus = "-"; 
                 let jumlah = "0";
 
-                // 1. Ambil Waktu
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
                 if (waktuDitemukan) {
                     let matchWaktu = waktuDitemukan.match(/\d{2}:\d{2}(:\d{2})?/);
                     if (matchWaktu) waktu = matchWaktu[0];
                 }
 
-                // 2. Ambil Jumlah Nominal Angka
                 for (let i = kolom.length - 1; i >= 0; i--) {
                     let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
                     if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3) {
@@ -234,14 +302,12 @@
                     }
                 }
 
-                // 3. Ambil Nama Bank
                 let bankDitemukan = kolom.find(k => {
                     let upper = k.toUpperCase();
                     return upper.includes('BCA') || upper.includes('MANDIRI') || upper.includes('BRI') || upper.includes('BNI') || upper.includes('CIMB') || upper.includes('DANAMON') || upper.includes(',');
                 });
                 if (bankDitemukan) tujuanBank = bankDitemukan;
 
-                // 4. Ambil User ID
                 let kandidatUser = kolom.filter(k => k !== waktuDitemukan && k !== bankDitemukan && k !== jumlah && isNaN(k.replace(/[,.-]/g, '')));
                 if (kandidatUser.length > 0) {
                     userId = kandidatUser[0]; 
@@ -249,17 +315,16 @@
                     userId = kolom[1] || "-";
                 }
 
-                // Render ke tabel HTML
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Format data teks untuk clipboard (Credit dikosongkan pake tab kosong)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
         });
 
-        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
+        hasilTeksUntilDisalin = barisDataDisalin.join('\n');
+        hasilTeksUntukDisalin = hasilTeksUntilDisalin;
     }
 
     function resetData() {
