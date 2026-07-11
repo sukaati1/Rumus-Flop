@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - GEAR 5 REVERSE MODE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
+    <title>VVIP KASIR - STANDARD STABLE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=700;900&family=Rajdhani:wght=600;700&display=swap" rel="stylesheet">
     
 <style>
-    /* TRUMF CARD: MEMAKSA BROWSER LU YANG MEMBUATKAN TEMA GELAPNYA */
-    html, body {
-        background-color: #ffffff !important; /* Sengaja dibikin putih total */
-        color: #000000 !important;            /* Sengaja dibikin hitam total */
+    body {
         font-family: 'Rajdhani', sans-serif;
         margin: 0;
         padding: 20px;
@@ -18,109 +15,111 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        color: #ffffff;
+        background-color: #100c18;
     }
     
-    /* KOTAK UTAMA KASIR */
     .container {
-        background-color: #f5f5f5 !important; /* Abu-abu terang, nanti bakal diubah jadi abu gelap oleh browser */
-        border: 4px solid #000000 !important; /* Border hitam, nanti bakal diubah jadi putih/terang oleh browser */
-        border-radius: 16px; 
+        background: rgba(25, 18, 36, 0.95); 
+        border: 1px solid #a855f7; 
+        border-radius: 12px; 
         width: 100%;
         max-width: 950px;
-        padding: 40px;
+        padding: 35px;
         box-sizing: border-box;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
-        color: #000000 !important; /* Nanti otomatis jadi teks putih besar */
-        font-size: 36px;
+        color: #ffffff;
+        font-size: 32px;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 8px;
+        letter-spacing: 5px;
         margin: 0;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
-        font-size: 13px;
-        color: #555555 !important; /* Nanti otomatis jadi teks terang */
-        letter-spacing: 5px;
-        font-weight: 900;
+        font-size: 12px;
+        color: #a855f7;
+        letter-spacing: 4px;
+        font-weight: 700;
         text-transform: uppercase;
-        margin-top: 8px;
-        margin-bottom: 35px;
+        margin-top: 5px;
+        margin-bottom: 30px;
     }
     
     label {
         display: block;
         font-weight: 700;
-        margin-bottom: 12px;
-        color: #222222 !important; 
+        margin-bottom: 10px;
+        color: #d8b4fe; 
         font-size: 14px;
         text-transform: uppercase;
-        letter-spacing: 2px;
     }
     
-    /* INPUT AREA */
     textarea {
         width: 100%;
         height: 140px;
-        background: #ffffff !important;
-        border: 2px solid #000000 !important; 
-        border-radius: 10px;
-        color: #000000 !important;
-        padding: 18px;
+        background: #000000;
+        border: 1px solid #a855f7; 
+        border-radius: 8px;
+        color: #ffffff;
+        padding: 15px;
         box-sizing: border-box;
         resize: vertical;
-        font-family: 'Courier New', monospace;
+        font-family: monospace;
         font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
     
     .btn-group {
         display: flex;
         gap: 15px;
-        margin-bottom: 40px;
+        margin-bottom: 35px;
     }
     
     button {
         font-family: 'Orbitron', sans-serif;
         flex: 1;
-        padding: 18px; 
+        padding: 16px; 
         font-size: 13px;   
-        font-weight: 900;
-        border: 2px solid #000000 !important;
-        border-radius: 10px; 
+        font-weight: 700;
+        border: none;
+        border-radius: 8px; 
         cursor: pointer;
         text-transform: uppercase;
-        letter-spacing: 2.5px;
+        letter-spacing: 2px;
+        transition: background 0.2s;
     }
     
     .btn-submit { 
-        background: #000000 !important; 
-        color: #ffffff !important; 
+        background: #ffffff; 
+        color: #100c18; 
     }
+    .btn-submit:hover { background: #f3e8ff; }
     
     .btn-copy { 
-        background: #ffffff !important; 
-        color: #000000 !important; 
+        background: transparent; 
+        color: #ffffff; 
+        border: 1px solid #a855f7;
     }
+    .btn-copy:hover { background: #a855f7; }
     
     .btn-reset { 
-        background: #dddddd !important; 
-        color: #000000 !important; 
+        background: #24123a; 
+        color: #ffffff; 
     }
+    .btn-reset:hover { background: #311453; }
     
-    /* TABEL DATA (TANPA CREDIT) */
     .table-container { 
         overflow-x: auto; 
         margin-top: 5px; 
-        border-radius: 12px;
+        border-radius: 8px;
     }
     
     table {
@@ -129,36 +128,28 @@
     }
     
     th, td {
-        padding: 16px 20px;
+        padding: 14px 18px;
         text-align: left;
         font-size: 14px;
     }
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #eeeeee !important; 
-        color: #000000 !important; 
-        font-weight: 900; 
-        letter-spacing: 2px;
+        background-color: #24123a; 
+        color: #ffffff; 
+        font-weight: 700; 
         text-transform: uppercase;
-        border-bottom: 3px solid #000000 !important;
+        border-bottom: 2px solid #a855f7;
     }
     
     td {
-        font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #111111 !important;
-        border-bottom: 1px solid #e0e0e0 !important;
-    }
-
-    td:nth-child(4) {
-        font-family: 'Orbitron', sans-serif;
-        color: #000000 !important; 
-        font-weight: 900;
+        color: #f3e8ff;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.1);
     }
     
     tr:nth-child(even) {
-        background-color: #f9f9f9 !important;
+        background-color: rgba(255, 255, 255, 0.02);
     }
 </style>
 </head>
@@ -166,10 +157,10 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">JOY BOY REVERSE MODE - v8.0</div>
+    <div class="sub-title">KONOHA KASIR - STABLE VERSION</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="READY TO TRANSLATE LOGS..."></textarea>
+    <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini..."></textarea>
     
     <div class="btn-group">
         <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
@@ -185,6 +176,7 @@
                     <th>WAKTU</th>
                     <th>Used ID</th>
                     <th>Tujuan Bank</th>
+                    <th>Credit</th>
                     <th>Jumlah</th>
                 </tr>
             </thead>
@@ -204,6 +196,7 @@
 
         if (!input) return;
 
+        // Memisahkan baris dan membalikkan urutan (bawah ke atas)
         let baris = input.split('\n');
         baris.reverse(); 
 
@@ -212,6 +205,7 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
+            // Deteksi kolom berdasarkan spasi ganda atau tab
             let kolom = line.split(/\s{2,}|\t/).filter(item => item.trim() !== '');
             if (kolom.length < 4) {
                 kolom = line.split(/\s+/).filter(item => item.trim() !== '');
@@ -221,14 +215,17 @@
                 let waktu = "00:00:00";
                 let userId = "-";
                 let tujuanBank = "-";
+                let creditStatus = "-"; // Diisi kosong/strip sesuai permintaan awal
                 let jumlah = "0";
 
+                // 1. Ambil Waktu
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
                 if (waktuDitemukan) {
                     let matchWaktu = waktuDitemukan.match(/\d{2}:\d{2}(:\d{2})?/);
                     if (matchWaktu) waktu = matchWaktu[0];
                 }
 
+                // 2. Ambil Jumlah Nominal Angka
                 for (let i = kolom.length - 1; i >= 0; i--) {
                     let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
                     if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3) {
@@ -237,12 +234,14 @@
                     }
                 }
 
+                // 3. Ambil Nama Bank
                 let bankDitemukan = kolom.find(k => {
                     let upper = k.toUpperCase();
                     return upper.includes('BCA') || upper.includes('MANDIRI') || upper.includes('BRI') || upper.includes('BNI') || upper.includes('CIMB') || upper.includes('DANAMON') || upper.includes(',');
                 });
                 if (bankDitemukan) tujuanBank = bankDitemukan;
 
+                // 4. Ambil User ID
                 let kandidatUser = kolom.filter(k => k !== waktuDitemukan && k !== bankDitemukan && k !== jumlah && isNaN(k.replace(/[,.-]/g, '')));
                 if (kandidatUser.length > 0) {
                     userId = kandidatUser[0]; 
@@ -250,11 +249,13 @@
                     userId = kolom[1] || "-";
                 }
 
+                // Render ke tabel HTML
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
+                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${jumlah}`);
+                // Format data teks untuk clipboard (Credit dikosongkan pake tab kosong)
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
         });
 
@@ -270,11 +271,19 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            alert("Tidak ada data untuk disalin!");
+            alert("Tidak ada data untuk disalin! Silakan submit log terlebih dahulu.");
             return;
         }
+        
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            alert("Berhasil menyalin data!");
+            const btnCopy = document.getElementById('btnCopy');
+            const teksAwal = btnCopy.innerText;
+            
+            btnCopy.innerText = "BERHASIL DISALIN!";
+            setTimeout(() => { btnCopy.innerText = teksAwal; }, 1200);
+        }).catch(err => {
+            console.error("Error: ", err);
+            alert("Gagal menyalin data otomatis.");
         });
     }
 </script>
