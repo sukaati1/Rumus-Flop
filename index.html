@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - GEAR 5 NIKA MODE</title>
+    <title>VVIP KASIR - GEAR 5 NIKA ULTRA GLOW</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
-    :root {
-        --panel-bg: #0c0914;               /* Hitam pekat keunguan agar bersahabat dengan browser lu */
-        --nika-white: #ffffff;             
-        --gear5-purple: #a855f7;           
-        --shimmer-nika: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ffffff 100%);
-        --text-white: #ffffff;
+    /* JURUS PAMUNGKAS: Mengakali Force Dark Mode Browser */
+    html {
+        background-color: #000000 !important;
     }
 
     body {
@@ -23,83 +20,72 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        color: var(--text-white);
-        background-color: #050308; /* Hitam murni total */
+        color: #ffffff !important;
+        background: #0d0714 !important; /* Latar belakang asli ungu sangat gelap */
         overflow-x: hidden;
     }
     
-    /* PANEL UTAMA - NEON LIGHTNING BORDER (BERGERAK AKSI) */
+    /* KOTAK CASIR DENGAN DOUBLE NEON GLOW ANTI DARK-MODE */
     .container {
-        background: var(--panel-bg); 
-        border: 3px solid var(--gear5-purple); 
+        background: #120a1c !important; 
+        border: 4px solid #a855f7 !important; /* Border tebal ungu benderang */
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
         
-        /* Efek Petir Menyala di Pinggiran Kotak yang Berdenyut Otomatis */
+        /* Efek paksa bayangan menyala tebal murni */
         box-shadow: 
-            0 0 20px rgba(168, 85, 247, 0.6),
-            0 0 40px rgba(255, 255, 255, 0.2),
-            inset 0 0 15px rgba(168, 85, 247, 0.3);
+            0 0 30px #a855f7, 
+            0 0 60px rgba(168, 85, 247, 0.8),
+            inset 0 0 20px #2e104d !important;
         
-        animation: lightningPulse 4s ease-in-out infinite alternate;
+        animation: nikaLightning 2.5s ease-in-out infinite alternate;
     }
 
-    /* Animasi petir Gear 5 murni pada border kotak kasir */
-    @keyframes lightningPulse {
+    /* Efek kedip petir yang dipaksa lolos sensor browser */
+    @keyframes nikaLightning {
         0% {
-            border-color: #a855f7;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5), 0 0 30px rgba(255, 255, 255, 0.1);
-        }
-        50% {
-            border-color: #ffffff;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.7), 0 0 40px rgba(168, 85, 247, 0.6);
+            border-color: #a855f7 !important;
+            box-shadow: 0 0 25px #a855f7, 0 0 50px rgba(168, 85, 247, 0.6);
         }
         100% {
-            border-color: #d8b4fe;
-            box-shadow: 0 0 20px rgba(216, 180, 254, 0.6), 0 0 35px rgba(168, 85, 247, 0.4);
+            border-color: #ffffff !important;
+            box-shadow: 0 0 40px #ffffff, 0 0 80px #a855f7;
         }
     }
     
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
-        color: var(--nika-white);
+        color: #ffffff !important;
         font-size: 36px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 8px;
         margin: 0;
-        text-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
+        text-shadow: 0 0 20px #a855f7, 0 0 10px #ffffff !important;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 13px;
-        background: var(--shimmer-nika);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #d8b4fe !important;
         letter-spacing: 5px;
         font-weight: 900;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        animation: shine 3s linear infinite;
-    }
-    
-    @keyframes shine {
-        to { background-position: 200% center; }
+        text-shadow: 0 0 10px #a855f7;
     }
     
     label {
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: #e9d5ff; 
+        color: #e9d5ff !important; 
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -109,10 +95,10 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: #000000;
-        border: 1px solid rgba(168, 85, 247, 0.4); 
+        background: #000000 !important;
+        border: 2px solid #a855f7 !important; 
         border-radius: 10px;
-        color: #ffffff;
+        color: #ffffff !important;
         padding: 18px;
         box-sizing: border-box;
         resize: vertical;
@@ -120,14 +106,12 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 30px;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
-        transition: all 0.3s ease;
     }
     
     textarea:focus {
         outline: none;
-        border-color: var(--gear5-purple);
-        box-shadow: inset 0 2px 8px rgba(0,0,0,1), 0 0 15px rgba(168, 85, 247, 0.5);
+        border-color: #ffffff !important;
+        box-shadow: 0 0 20px #a855f7 !important;
     }
     
     .btn-group {
@@ -151,34 +135,34 @@
     }
     
     .btn-submit { 
-        background: #ffffff; 
-        color: #0c0813; 
-        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+        background: #ffffff !important; 
+        color: #000000 !important; 
+        box-shadow: 0 4px 25px rgba(255, 255, 255, 0.6);
     }
     .btn-submit:hover {
-        background: #f3e8ff;
+        background: #e9d5ff !important;
         transform: translateY(-2px);
     }
     
     .btn-copy { 
-        background: rgba(0, 0, 0, 0.4); 
-        color: #ffffff; 
-        border: 2px solid var(--gear5-purple);
+        background: #000000 !important; 
+        color: #ffffff !important; 
+        border: 2px solid #a855f7 !important;
     }
     .btn-copy:hover { 
-        background: var(--gear5-purple);
-        color: #ffffff;
+        background: #a855f7 !important;
+        color: #ffffff !important;
         transform: translateY(-2px);
-        box-shadow: 0 0 15px var(--gear5-purple);
+        box-shadow: 0 0 20px #a855f7;
     }
     
     .btn-reset { 
-        background: #1e112a; 
-        color: var(--text-white); 
-        border: 1px solid rgba(168, 85, 247, 0.2);
+        background: #25123e !important; 
+        color: #ffffff !important; 
+        border: 1px solid #a855f7 !important;
     }
     .btn-reset:hover { 
-        background: #2d193f;
+        background: #3b1d62 !important;
         transform: translateY(-2px);
     }
     
@@ -187,17 +171,14 @@
         overflow-x: auto; 
         margin-top: 5px; 
         border-radius: 12px;
-        border: none; 
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: transparent; 
     }
     
     th, td {
-        border: none; 
         padding: 16px 20px;
         text-align: left;
         font-size: 14px;
@@ -205,33 +186,34 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background-color: #170d22; 
-        color: #ffffff; 
+        background-color: #201135 !important; 
+        color: #ffffff !important; 
         font-weight: 900; 
         letter-spacing: 2px;
         text-transform: uppercase;
-        border-bottom: 2px solid var(--gear5-purple);
+        border-bottom: 3px solid #a855f7 !important;
     }
     
     td {
         font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        color: #f3e8ff;
+        color: #f3e8ff !important;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.1) !important;
     }
 
     td:nth-child(4) {
         font-family: 'Orbitron', sans-serif;
-        color: #ffffff; 
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        color: #ffffff !important; 
+        text-shadow: 0 0 10px #ffffff;
         font-weight: 900;
     }
     
     tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.02);
+        background-color: rgba(168, 85, 247, 0.05) !important;
     }
 
     tr:hover {
-        background-color: rgba(168, 85, 247, 0.15);
+        background-color: rgba(168, 85, 247, 0.2) !important;
     }
 </style>
 </head>
@@ -239,7 +221,7 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">JOY BOY MODE - KONOHA KASIR v6.5</div>
+    <div class="sub-title">JOY BOY MODE - KONOHA KASIR v7.0</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="DRUMS OF LIBERATION DETECTED... READY TO TRANSLATE LOGS..."></textarea>
@@ -324,11 +306,10 @@
                 }
 
                 const tr = document.createElement('tr');
-                // Kolom Credit dihapus total dari tampilan tabel
+                // Kolom Credit sudah dibuang sepenuhnya dari baris tabel
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Di teks salinan hasil juga dihapus biar pas di-paste rapi pas masuk kolom excel
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${jumlah}`);
             }
         });
@@ -354,13 +335,13 @@
             const teksAwal = btnCopy.innerText;
             
             btnCopy.innerText = "GOMU GOMU COPY SUKSES!";
-            btnCopy.style.background = "var(--gear5-purple)";
-            btnCopy.style.color = "#ffffff";
+            btnCopy.style.background = "#a855f7 !important";
+            btnCopy.style.color = "#ffffff !important";
             
             setTimeout(() => {
                 btnCopy.innerText = teksAwal;
-                btnCopy.style.background = "rgba(0, 0, 0, 0.4)";
-                btnCopy.style.color = "#ffffff";
+                btnCopy.style.background = "#000000 !important";
+                btnCopy.style.color = "#ffffff !important";
             }, 1500);
         }).catch(err => {
             console.error("Error: ", err);
