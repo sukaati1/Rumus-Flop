@@ -25,11 +25,12 @@
         box-sizing: border-box;
         overflow-x: hidden;
         
-        /* WALLPAPER: DASAR KACA HITAM PEKAT */
-        background-color: #05070f;
+        /* WALLPAPER: AIR NETES DI KACA HITAM PEKAT DENGAN EMISI WARNA BIRU */
+        background: url('https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?q=80&w=1920') no-repeat center center fixed;
+        background-size: cover;
     }
 
-    /* EFEK DIGITAL AIR NETES WARNA BIRU PADA KACA HITAM (CSS GRADIENT RAINDROPS) */
+    /* OVERLAY GLASS UNTUK MENAMBAH KESAN GELAP PEKAT & KONTRAS NEON */
     body::before {
         content: '';
         position: absolute;
@@ -37,43 +38,16 @@
         left: 0;
         width: 100%;
         height: 100%;
+        background: rgba(4, 7, 16, 0.75); /* Kaca dibikin makin hitam pekat malam */
         z-index: 1;
-        pointer-events: none;
-        opacity: 0.65;
-        background-image: 
-            /* Tetesan Air 1 (Biru Neon Terang) */
-            radial-gradient(circle at 15% 25%, #00f2fe 1px, transparent 3px),
-            radial-gradient(circle at 20% 70%, #0ea5e9 2px, transparent 5px),
-            /* Efek Aliran Air Memanjang */
-            linear-gradient(to bottom, transparent, rgba(0, 242, 254, 0.4) 10%, transparent 30%),
-            /* Tetesan Air 2 (Biru Cyan) */
-            radial-gradient(circle at 45% 15%, #00f2fe 1.5px, transparent 4px),
-            radial-gradient(circle at 50% 85%, #0ea5e9 2px, transparent 6px),
-            /* Tetesan Air 3 (Biru Gelap/Deep Blue) */
-            radial-gradient(circle at 75% 40%, #0ea5e9 3px, transparent 7px),
-            radial-gradient(circle at 85% 20%, #00f2fe 1px, transparent 3px),
-            radial-gradient(circle at 90% 65%, #1d4ed8 2.5px, transparent 6px);
-        background-size: 300px 400px; /* Bikin pola tetesan air menyebar rata */
-    }
-
-    /* EFEK CAHAYA REFLEKSI KACA (GLARE EFFECT) */
-    body::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.04) 0%, transparent 70%);
-        z-index: 2;
         pointer-events: none;
     }
     
-    /* SCI-FI GLASS CONTAINER (PANEL HOLOGRAM DI BALIK KACA) */
+    /* SCI-FI GLASS CONTAINER (PANEL INTERAKTIF HOLOGRAM) */
     .container {
-        background: rgba(13, 14, 21, 0.65); 
-        backdrop-filter: blur(25px) saturate(180%);
-        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        background: rgba(10, 12, 22, 0.6); 
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
         border: 2px solid rgba(0, 242, 254, 0.3); 
         border-radius: 16px; 
         width: 100%;
@@ -319,7 +293,7 @@
 </div>
 
 <script>
-    // --- FUNGSI LOGIKA UTAMA KASIR (100% UTAL & AMAN TIDAK BERUBAH) ---
+    // --- FUNGSI LOGIKA UTAMA KASIR (100% AMAN TIDAK BERUBAH) ---
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
