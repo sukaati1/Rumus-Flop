@@ -12,7 +12,6 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #0d0e15; /* Diubah ke Gelap Estetik Cyberpunk */
     }
 
     body {
@@ -25,20 +24,13 @@
         position: relative;
         box-sizing: border-box;
         overflow-x: hidden;
-    }
-    
-    /* BACKGROUND DIGITAL MATRIX LIGHTS */
-    #matrixCanvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
+        
+        /* WALLPAPER: AIR NETES DI KACA HITAM BIRU */
+        background: url('https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?q=80&w=1920') no-repeat center center fixed;
+        background-size: cover;
     }
 
-    /* GLOBAL GLOW EFFECT OVERLAY */
+    /* OVERLAY GELAP UNTUK MEMPERTEGAS EFEK KACA HITAM */
     body::before {
         content: '';
         position: absolute;
@@ -46,25 +38,24 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at 20% 30%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
-                    radial-gradient(circle at 80% 70%, rgba(253, 0, 142, 0.08) 0%, transparent 40%);
-        z-index: 2;
+        background: rgba(2, 6, 18, 0.75); /* Bikin suasana kaca makin gelap malam */
+        z-index: 1;
         pointer-events: none;
     }
     
-    /* SCI-FI GLASS CONTAINER */
+    /* SCI-FI GLASS CONTAINER (EFEK HOLOGRAM DI BALIK KACA) */
     .container {
-        background: #161925; 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 2px solid rgba(0, 242, 254, 0.3); 
+        background: rgba(13, 14, 21, 0.5); 
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 2px solid rgba(0, 242, 254, 0.25); 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 30px rgba(0, 242, 254, 0.15), 
-                    inset 0 0 20px rgba(0, 242, 254, 0.05);
+        box-shadow: 0 0 40px rgba(0, 242, 254, 0.15), 
+                    inset 0 0 25px rgba(255, 255, 255, 0.05);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -126,7 +117,7 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: #0d0e15;
+        background: rgba(13, 14, 21, 0.8);
         border: 1px solid rgba(0, 242, 254, 0.4); 
         border-radius: 8px;
         color: #f1f5f9;
@@ -219,7 +210,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(13, 14, 21, 0.8);
+        background: rgba(13, 14, 21, 0.75);
     }
     
     th, td {
@@ -230,7 +221,7 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background: #161925; 
+        background: rgba(22, 25, 37, 0.9); 
         color: #00f2fe; 
         font-weight: 700; 
         text-transform: uppercase;
@@ -271,9 +262,6 @@
 </head>
 <body>
 
-<!-- CANVAS BACKGROUND -->
-<canvas id="matrixCanvas"></canvas>
-
 <div class="container">
     <h1>Rumus Flop</h1>
     <div class="sub-title">KONOHA KASIR - NIKA MATRIX v10.1</div>
@@ -305,69 +293,7 @@
 </div>
 
 <script>
-    // --- SKRIP BACKGROUND MATRIX DENGAN LIGHTS PERUBAHAN WARNA CYAN & BLUE ---
-    const canvas = document.getElementById('matrixCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = Math.max(
-            document.body.scrollHeight, 
-            document.body.offsetHeight, 
-            document.documentElement.clientHeight, 
-            document.documentElement.scrollHeight, 
-            document.documentElement.offsetHeight
-        );
-    }
-    
-    resizeCanvas();
-    
-    window.addEventListener('resize', () => {
-        setTimeout(resizeCanvas, 100);
-    });
-
-    const katakana = '0123456789NIKAJKBOY777';
-    const alphabet = katakana.split('');
-
-    const fontSize = 16;
-    const columns = window.innerWidth / fontSize;
-
-    const rainDrops = [];
-    for (let x = 0; x < columns; x++) {
-        rainDrops[x] = 1;
-    }
-
-    function drawMatrix() {
-        // Efek trail background gelap malam fiksi ilmiah
-        ctx.fillStyle = 'rgba(13, 14, 21, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (let i = 0; i < rainDrops.length; i++) {
-            const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-            
-            if (Math.random() > 0.88) {
-                ctx.fillStyle = '#ffffff'; // Light center head drop
-                ctx.font = 'bold ' + fontSize + 'px monospace';
-            } else if (Math.random() > 0.4) {
-                ctx.fillStyle = '#00f2fe'; // Diubah ke Cyan Neon
-                ctx.font = fontSize + 'px monospace';
-            } else {
-                ctx.fillStyle = '#fd008e'; // Diubah ke Pink Neon Accent Stream
-                ctx.font = fontSize + 'px monospace';
-            }
-
-            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                rainDrops[i] = 0;
-            }
-            rainDrops[i]++;
-        }
-    }
-    setInterval(drawMatrix, 30);
-
-
-    // --- FUNGSI LOGIKA UTAMA KASIR (100% UTAL & AMAN TIDAK BERUBAH) ---
+    // --- FUNGSI LOGIKA UTAMA KASIR (100% AMAN & SAMA PERSIS DENGAN KODE AWAL LU) ---
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
@@ -434,9 +360,6 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        
-        // Triger recalculate tinggi canvas setelah data masuk tabel (agar canvas memanjang ke bawah otomatis)
-        setTimeout(resizeCanvas, 50);
     }
 
     function resetData() {
@@ -444,7 +367,6 @@
         document.getElementById('tableBody').innerHTML = '';
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
-        setTimeout(resizeCanvas, 50);
     }
 
     function salinHasil() {
