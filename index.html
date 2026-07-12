@@ -12,7 +12,8 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #020408; /* Hitam OLED Pekat */
+        background-color: #000000; /* HITAM PEKAT TOTAL */
+        overflow-x: hidden;
     }
 
     body {
@@ -24,12 +25,11 @@
         color: #ffffff;
         position: relative;
         box-sizing: border-box;
-        overflow-x: hidden;
     }
     
-    /* CANVAS UNTUK ANIMASI AIR HUJAN BERGERAK */
+    /* CANVAS BACKGROUND AIR BERGERAK */
     #rainCanvas {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
@@ -37,39 +37,25 @@
         z-index: 1;
         pointer-events: none;
     }
-
-    /* OVERLAY AMBIENT GLOW UNTUK PROYEKSI WARNA NEON */
-    body::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 50% 30%, rgba(0, 242, 254, 0.18) 0%, transparent 75%);
-        z-index: 2;
-        pointer-events: none;
-    }
     
-    /* PANEL UTAMA: HOLOGRAM GLASSMORPHISM TERANG */
+    /* PANEL UTAMA: HOLOGRAM GLASSMORPHISM */
     .container {
-        background: rgba(6, 10, 20, 0.75); 
-        backdrop-filter: blur(25px) saturate(200%);
-        -webkit-backdrop-filter: blur(25px) saturate(200%);
-        border: 2px solid #00f2fe; /* Border Cyan Terang */
+        background: rgba(5, 10, 20, 0.85); 
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 2px solid #00f2fe; 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 40px rgba(0, 242, 254, 0.45), 
-                    inset 0 0 25px rgba(0, 242, 254, 0.2);
+        box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
         position: relative;
         z-index: 10;
         margin: auto;
     }
 
-    /* DEKORASI SUDUT HUD GLOWING */
+    /* DEKORASI SUDUT GLOWING */
     .container::before, .container::after {
         content: '';
         position: absolute;
@@ -83,7 +69,7 @@
     .container::before { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 16px; }
     .container::after { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 16px; }
     
-    /* JUDUL MENYALA MAKSIMAL */
+    /* JUDUL */
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
@@ -93,20 +79,20 @@
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 20px #00f2fe, 0 0 40px rgba(0, 242, 254, 0.7);
+        text-shadow: 0 0 15px #00f2fe;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 13px;
-        color: #ff007f; /* Pink Neon Terang */
+        color: #ff007f; 
         letter-spacing: 4px;
         font-weight: 700;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        text-shadow: 0 0 12px #ff007f;
+        text-shadow: 0 0 10px #ff007f;
     }
     
     label {
@@ -118,15 +104,14 @@
         text-transform: uppercase;
         letter-spacing: 2px;
         font-family: 'Orbitron', sans-serif;
-        text-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
     }
     
     /* INPUT BOX */
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(2, 4, 8, 0.9);
-        border: 2px solid rgba(0, 242, 254, 0.6); 
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid rgba(0, 242, 254, 0.5); 
         border-radius: 8px;
         color: #ffffff;
         padding: 18px;
@@ -136,16 +121,14 @@
         font-size: 15px;
         font-weight: bold;
         margin-bottom: 30px;
-        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 242, 254, 0.2);
-        transition: all 0.3s ease;
     }
     textarea:focus {
         outline: none;
         border-color: #00f2fe;
-        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 242, 254, 0.5);
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
     }
     
-    /* TOMBOL GRADASI SUPER TERANG */
+    /* TOMBOL KASIR */
     .btn-group {
         display: flex;
         gap: 20px;
@@ -163,61 +146,53 @@
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 3px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
+        transition: all 0.2s ease;
     }
     
     .btn-submit { 
         background: linear-gradient(135deg, #ff007f 0%, #00f2fe 100%); 
         color: #ffffff; 
-        box-shadow: 0 0 20px rgba(255, 0, 127, 0.6), 0 0 20px rgba(0, 242, 254, 0.6);
-        text-shadow: 0 0 5px #fff;
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
     }
     .btn-submit:hover { 
-        transform: translateY(-3px);
-        box-shadow: 0 0 35px #00f2fe;
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px #00f2fe;
     }
     
     .btn-copy { 
-        background: rgba(0, 242, 254, 0.15); 
+        background: rgba(0, 242, 254, 0.1); 
         color: #00f2fe; 
         border: 2px solid #00f2fe;
-        box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.3), 0 0 10px rgba(0, 242, 254, 0.3);
-        text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
     }
     .btn-copy:hover { 
         background: #00f2fe; 
-        color: #03050a;
-        box-shadow: 0 0 30px #00f2fe;
-        transform: translateY(-3px);
+        color: #000000;
+        box-shadow: 0 0 25px #00f2fe;
+        transform: translateY(-2px);
     }
     
     .btn-reset { 
-        background: #0d1117; 
+        background: #111; 
         color: #a0aec0; 
-        border: 2px solid rgba(160, 174, 192, 0.4);
+        border: 2px solid #444;
     }
     .btn-reset:hover { 
-        background: #1a202c; 
-        color: #ffffff;
-        border-color: #ffffff;
-        transform: translateY(-3px);
+        background: #222; 
+        color: #fff;
+        transform: translateY(-2px);
     }
     
-    /* TABEL KASIR TERANG */
+    /* TABEL HASIL */
     .table-container { 
         overflow-x: auto; 
-        margin-top: 5px; 
         border-radius: 8px;
         border: 2px solid #00f2fe;
-        box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(2, 4, 8, 0.85);
+        background: rgba(0, 0, 0, 0.9);
     }
     
     th, td {
@@ -228,48 +203,30 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background: rgba(6, 10, 20, 0.95); 
+        background: #050a14; 
         color: #00f2fe; 
         font-weight: 700; 
-        text-transform: uppercase;
-        letter-spacing: 2px;
         border-bottom: 3px solid #00f2fe;
-        text-shadow: 0 0 8px rgba(0, 242, 254, 0.7);
     }
     
     td {
         font-weight: 700;
         color: #ffffff;
-        border-bottom: 1px solid rgba(0, 242, 254, 0.3);
-        letter-spacing: 1px;
+        border-bottom: 1px solid rgba(0, 242, 254, 0.2);
     }
     
     tr:nth-child(even) {
-        background-color: rgba(0, 242, 254, 0.04);
+        background-color: rgba(0, 242, 254, 0.03);
     }
-
     tr:hover td {
         color: #00f2fe;
-        background-color: rgba(0, 242, 254, 0.15);
-        text-shadow: 0 0 8px #00f2fe;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #020408;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(#ff007f, #00f2fe);
-        border-radius: 4px;
+        background-color: rgba(0, 242, 254, 0.1);
     }
 </style>
 </head>
 <body>
 
-<!-- CANVAS UNTUK ANIMASI AIR HUJAN BERGERAK -->
+<!-- BACKGROUND ANIMASI AIR NEON BERGERAK -->
 <canvas id="rainCanvas"></canvas>
 
 <div class="container">
@@ -303,79 +260,66 @@
 </div>
 
 <script>
-    // --- REALISTIC DYNAMIC RAIN ON GLASS ENGINE ---
+    // --- ENGINE AIR HUJAN NEON ULTRA TERANG ---
     const canvas = document.getElementById('rainCanvas');
     const ctx = canvas.getContext('2d');
 
-    function resizeCanvas() {
+    function resize() {
         canvas.width = window.innerWidth;
-        canvas.height = Math.max(
-            document.body.scrollHeight, 
-            document.body.offsetHeight, 
-            document.documentElement.clientHeight, 
-            document.documentElement.scrollHeight, 
-            document.documentElement.offsetHeight
-        );
+        canvas.height = window.innerHeight;
     }
-    resizeCanvas();
-    window.addEventListener('resize', () => { setTimeout(resizeCanvas, 100); });
+    resize();
+    window.addEventListener('resize', resize);
 
-    const maxDrops = 120; 
+    const maxDrops = 100;
     const drops = [];
 
-    // Membuat struktur data butiran air netes ke kaca
     for (let i = 0; i < maxDrops; i++) {
         drops.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: Math.random() * 2.5 + 1,       // Ukuran ketebalan air netes
-            length: Math.random() * 25 + 15,     // Panjang ekor seretan air
-            speed: Math.random() * 2.5 + 1.5,    // Kecepatan meluncur turun
-            opacity: Math.random() * 0.5 + 0.3
+            length: Math.random() * 30 + 20, // Lebih panjang biar kelihatan meluncur
+            speed: Math.random() * 5 + 4,     // Gerakan lebih cepat dan responsif
+            weight: Math.random() * 2 + 1.5   // Air dibuat tebal biar jelas kelihatan
         });
     }
 
-    function animateRain() {
-        // Lapisan kaca hitam pekat dibersihkan tipis per frame agar berjejak estetik
-        ctx.fillStyle = 'rgba(2, 4, 8, 0.18)'; 
+    function drawRain() {
+        // Hapus layar dengan warna hitam pekat tapi meninggalkan jejak air (trail)
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // Setting efek GLOW / CAHAYA NEON pada air agar super terang
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = '#00f2fe';
+
         drops.forEach(drop => {
-            // Gambar butiran/aliran air (Biru Neon Cyan Menyala)
+            // Menggambar batang air warna biru neon terang
             ctx.beginPath();
-            
-            // Menggunakan gradasi linear dari pudar ke terang di ujung tetesan air
-            let gradient = ctx.createLinearGradient(drop.x, drop.y, drop.x, drop.y + drop.length);
-            gradient.addColorStop(0, 'rgba(0, 242, 254, 0)');
-            gradient.addColorStop(0.7, `rgba(0, 190, 254, ${drop.opacity * 0.5})`);
-            gradient.addColorStop(1, `rgba(0, 242, 254, ${drop.opacity})`);
-            
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = drop.size;
+            ctx.strokeStyle = '#00f2fe';
+            ctx.lineWidth = drop.weight;
             ctx.lineCap = 'round';
-            
-            // Menggambar garis aliran vertikal air netes ke bawah
             ctx.moveTo(drop.x, drop.y);
             ctx.lineTo(drop.x, drop.y + drop.length);
             ctx.stroke();
 
-            // Gerakkan air meluncur ke bawah kaca
+            // Gerakkan air turun ke bawah kaca
             drop.y += drop.speed;
 
-            // Jika tetesan air sudah melewati batas bawah layar, munculkan lagi dari atas secara acak
+            // Jika sampai bawah, looping lagi dari atas
             if (drop.y > canvas.height) {
-                drop.y = -drop.length - 20;
+                drop.y = -drop.length;
                 drop.x = Math.random() * canvas.width;
-                drop.speed = Math.random() * 2.5 + 1.5;
-                drop.opacity = Math.random() * 0.5 + 0.3;
+                drop.speed = Math.random() * 5 + 4;
             }
         });
 
-        requestAnimationFrame(animateRain);
+        // Reset shadow biar tidak merembet ke fungsi render canvas lain jika ada
+        ctx.shadowBlur = 0;
+
+        requestAnimationFrame(drawRain);
     }
-    
-    // Mulai render animasi jalannya air hujan
-    animateRain();
+    drawRain();
 
 
     // --- FUNGSI LOGIKA UTAMA KASIR (100% AMAN TIDAK BERUBAH) ---
@@ -445,7 +389,6 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        setTimeout(resizeCanvas, 50); 
     }
 
     function resetData() {
@@ -453,7 +396,6 @@
         document.getElementById('tableBody').innerHTML = '';
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
-        setTimeout(resizeCanvas, 50);
     }
 
     function salinHasil() {
