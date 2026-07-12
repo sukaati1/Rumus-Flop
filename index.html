@@ -12,7 +12,7 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #03050a; /* Hitam OLED Pekat */
+        background-color: #020408; /* Hitam OLED Pekat */
     }
 
     body {
@@ -38,7 +38,7 @@
         pointer-events: none;
     }
 
-    /* OVERLAY GLOW BIAR WARNA NEON MAKIN MENYALA LALAP */
+    /* OVERLAY AMBIENT GLOW UNTUK PROYEKSI WARNA NEON */
     body::before {
         content: '';
         position: absolute;
@@ -46,24 +46,24 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at 50% 30%, rgba(0, 242, 254, 0.15) 0%, transparent 70%);
+        background: radial-gradient(circle at 50% 30%, rgba(0, 242, 254, 0.18) 0%, transparent 75%);
         z-index: 2;
         pointer-events: none;
     }
     
     /* PANEL UTAMA: HOLOGRAM GLASSMORPHISM TERANG */
     .container {
-        background: rgba(10, 15, 30, 0.75); 
-        backdrop-filter: blur(20px) saturate(200%);
-        -webkit-backdrop-filter: blur(20px) saturate(200%);
+        background: rgba(6, 10, 20, 0.75); 
+        backdrop-filter: blur(25px) saturate(200%);
+        -webkit-backdrop-filter: blur(25px) saturate(200%);
         border: 2px solid #00f2fe; /* Border Cyan Terang */
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 35px rgba(0, 242, 254, 0.4), 
-                    inset 0 0 20px rgba(0, 242, 254, 0.2);
+        box-shadow: 0 0 40px rgba(0, 242, 254, 0.45), 
+                    inset 0 0 25px rgba(0, 242, 254, 0.2);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -93,7 +93,7 @@
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 20px #00f2fe, 0 0 40px rgba(0, 242, 254, 0.6);
+        text-shadow: 0 0 20px #00f2fe, 0 0 40px rgba(0, 242, 254, 0.7);
     }
 
     .sub-title {
@@ -125,7 +125,7 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(3, 5, 10, 0.9);
+        background: rgba(2, 4, 8, 0.9);
         border: 2px solid rgba(0, 242, 254, 0.6); 
         border-radius: 8px;
         color: #ffffff;
@@ -217,7 +217,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(3, 5, 10, 0.85);
+        background: rgba(2, 4, 8, 0.85);
     }
     
     th, td {
@@ -228,7 +228,7 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background: rgba(10, 15, 30, 0.95); 
+        background: rgba(6, 10, 20, 0.95); 
         color: #00f2fe; 
         font-weight: 700; 
         text-transform: uppercase;
@@ -259,7 +259,7 @@
         width: 8px;
     }
     ::-webkit-scrollbar-track {
-        background: #03050a;
+        background: #020408;
     }
     ::-webkit-scrollbar-thumb {
         background: linear-gradient(#ff007f, #00f2fe);
@@ -269,7 +269,7 @@
 </head>
 <body>
 
-<!-- CANVAS UNTUK EFEK AIR HUJAN BERGERAK -->
+<!-- CANVAS UNTUK ANIMASI AIR HUJAN BERGERAK -->
 <canvas id="rainCanvas"></canvas>
 
 <div class="container">
@@ -303,7 +303,7 @@
 </div>
 
 <script>
-    // --- ENGINE ANIMASI AIR HUJAN MENGALIR DI KACA (100% REALTIME DYNAMIC) ---
+    // --- REALISTIC DYNAMIC RAIN ON GLASS ENGINE ---
     const canvas = document.getElementById('rainCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -320,52 +320,61 @@
     resizeCanvas();
     window.addEventListener('resize', () => { setTimeout(resizeCanvas, 100); });
 
-    const maxDrops = 150; 
+    const maxDrops = 120; 
     const drops = [];
 
-    // Inisialisasi butiran air awal
+    // Membuat struktur data butiran air netes ke kaca
     for (let i = 0; i < maxDrops; i++) {
         drops.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            length: Math.random() * 20 + 10, // Panjang aliran tetesan air
-            speed: Math.random() * 4 + 2,    // Kecepatan meluncur turun
-            opacity: Math.random() * 0.4 + 0.2
+            size: Math.random() * 2.5 + 1,       // Ukuran ketebalan air netes
+            length: Math.random() * 25 + 15,     // Panjang ekor seretan air
+            speed: Math.random() * 2.5 + 1.5,    // Kecepatan meluncur turun
+            opacity: Math.random() * 0.5 + 0.3
         });
     }
 
     function animateRain() {
-        // Efek trail kaca basah gelap malam
-        ctx.fillStyle = 'rgba(3, 5, 10, 0.15)'; 
+        // Lapisan kaca hitam pekat dibersihkan tipis per frame agar berjejak estetik
+        ctx.fillStyle = 'rgba(2, 4, 8, 0.18)'; 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         drops.forEach(drop => {
-            // Gambar aliran air menetes vertikal (Warna Biru Neon Cyan Terang)
+            // Gambar butiran/aliran air (Biru Neon Cyan Menyala)
             ctx.beginPath();
+            
+            // Menggunakan gradasi linear dari pudar ke terang di ujung tetesan air
             let gradient = ctx.createLinearGradient(drop.x, drop.y, drop.x, drop.y + drop.length);
             gradient.addColorStop(0, 'rgba(0, 242, 254, 0)');
+            gradient.addColorStop(0.7, `rgba(0, 190, 254, ${drop.opacity * 0.5})`);
             gradient.addColorStop(1, `rgba(0, 242, 254, ${drop.opacity})`);
             
             ctx.strokeStyle = gradient;
-            ctx.lineWidth = 2;
+            ctx.lineWidth = drop.size;
             ctx.lineCap = 'round';
+            
+            // Menggambar garis aliran vertikal air netes ke bawah
             ctx.moveTo(drop.x, drop.y);
             ctx.lineTo(drop.x, drop.y + drop.length);
             ctx.stroke();
 
-            // Gerakkan butiran air ke bawah
+            // Gerakkan air meluncur ke bawah kaca
             drop.y += drop.speed;
 
-            // Jika sampai ke bawah layar, reset ke atas secara acak
+            // Jika tetesan air sudah melewati batas bawah layar, munculkan lagi dari atas secara acak
             if (drop.y > canvas.height) {
-                drop.y = -drop.length;
+                drop.y = -drop.length - 20;
                 drop.x = Math.random() * canvas.width;
-                drop.speed = Math.random() * 4 + 2;
+                drop.speed = Math.random() * 2.5 + 1.5;
+                drop.opacity = Math.random() * 0.5 + 0.3;
             }
         });
 
         requestAnimationFrame(animateRain);
     }
+    
+    // Mulai render animasi jalannya air hujan
     animateRain();
 
 
@@ -436,7 +445,7 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        setTimeout(resizeCanvas, 50); // Selaraskan tinggi animasi pas tabel memanjang
+        setTimeout(resizeCanvas, 50); 
     }
 
     function resetData() {
