@@ -7,12 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
+    /* =======================================================
+       CSS BUAT BACKGROUND GIF (GIPHY) - ANTI HITAM
+       ======================================================= */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background: #0a0f1d; /* Latar dasar gelap berkelas */
+        
+        /* 1. KODE UNTUK MEMANGGIL GIF LO DARI GITHUB */
+        /* GANTI 'nama_file_gif_kamu.gif' DENGAN NAMA FILE GIF YANG LO UPLOAD */
+        background-image: url('nama_file_gif_kamu.gif'); 
+        
+        /* 2. PENGATURAN BIAR GIF-NYA BAGUS */
+        background-size: cover;          /* GIF menutupi seluruh layar */
+        background-position: center;     /* GIF rata tengah */
+        background-attachment: fixed;    /* GIF diem pas discroll */
+        background-repeat: no-repeat;    /* GIF ga ngulang-ngulang (kotak-kotak) */
+        
+        /* Warna cadangan kalau GIF gagal loading (pake biru gelap keren) */
+        background-color: #040714; 
+        
         overflow-x: hidden;
     }
 
@@ -27,122 +43,13 @@
         box-sizing: border-box;
     }
 
-    /* =======================================================
-       CSS SUPER CAR ANIMATION (100% TANPA INTERNET / ANTI HITAM)
-       ======================================================= */
+    /* Animasi CSS lama dihapus karena diganti GIF */
     .scene {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        overflow: hidden;
-        background: linear-gradient(to bottom, #111e36, #040714);
-        pointer-events: none;
-    }
-
-    /* Jalanan Bergerak */
-    .road {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 120px;
-        background: #15151c;
-        border-top: 4px solid #00f2fe;
-    }
-    .road::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-        height: 6px;
-        background: linear-gradient(90deg, #fff 0%, #fff 70%, transparent 70%, transparent 100%);
-        background-size: 80px 100%;
-        animation: jalanBergerak 0.4s linear infinite;
-    }
-
-    @keyframes jalanBergerak {
-        0% { background-position: 0px; }
-        100% { background-position: -80px; }
-    }
-
-    /* Badan Mobil (Siluet Mobil Sport Terang) */
-    .car-container {
-        position: absolute;
-        bottom: 45px;
-        left: 10%;
-        width: 320px;
-        height: 90px;
-    }
-
-    .car-body {
-        position: absolute;
-        width: 100%;
-        height: 50px;
-        background: linear-gradient(135deg, #00f2fe, #ff007f);
-        bottom: 15px;
-        border-radius: 40px 90px 10px 15px;
-        box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
-    }
-
-    /* Kaca & Atap Mobil */
-    .car-cabin {
-        position: absolute;
-        bottom: 60px;
-        left: 70px;
-        width: 130px;
-        height: 30px;
-        background: #fff;
-        border-radius: 50px 60px 0 0;
-        opacity: 0.8;
-    }
-
-    /* RODA BERGERAK BERPUTAR ASLI */
-    .wheel {
-        position: absolute;
-        bottom: 0;
-        width: 50px;
-        height: 50px;
-        background: #111;
-        border: 4px solid #00f2fe;
-        border-radius: 50%;
-        box-shadow: 0 0 15px #00f2fe;
-        animation: rodaBerputar 0.3s linear infinite;
-    }
-    .wheel.front { right: 40px; }
-    .wheel.back { left: 40px; }
-
-    /* Velg di dalam roda agar kelihatan muter */
-    .wheel::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 84%;
-        height: 8px;
-        background: #fff;
-        transform: translate(-50%, -50%);
-    }
-    .wheel::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 8px;
-        height: 84%;
-        background: #fff;
-        transform: translate(-50%, -50%);
-    }
-
-    @keyframes rodaBerputar {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        display: none;
     }
 
     /* =======================================================
-       PANEL UTAMA KASIR
+       PANEL UTAMA KASIR (TETEP SAMA)
        ======================================================= */
     .container {
         background: rgba(5, 10, 25, 0.88); 
@@ -329,17 +236,6 @@
 </head>
 <body>
 
-<!-- ANIMASI BACKGROUND JALANAN DAN MOBIL CSS MURNI -->
-<div class="scene">
-    <div class="car-container">
-        <div class="car-body"></div>
-        <div class="car-cabin"></div>
-        <div class="wheel back"></div>
-        <div class="wheel front"></div>
-    </div>
-    <div class="road"></div>
-</div>
-
 <div class="container">
     <h1>Rumus Flop</h1>
     <div class="sub-title">KONOHA KASIR - NIKA MATRIX v10.1</div>
@@ -371,6 +267,7 @@
 </div>
 
 <script>
+    // SCRIPT JAVASCRIPT LO TETEP SAMA, GA ADA YANG DIUBAH
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
