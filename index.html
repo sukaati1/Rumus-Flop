@@ -12,7 +12,7 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #0d1117;
+        background-color: #111; /* Cadangan kalau loading lambat */
         overflow-x: hidden;
     }
 
@@ -26,9 +26,8 @@
         position: relative;
         box-sizing: border-box;
         
-        /* BACKGROUND MOBIL GIF BERGERAK NYATA + TERANG */
-        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                          url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V4Njk0Znd5N3I1cHJjZ3B5ejZid3E0NXN2b3p3bXp3bXp3bXp3JiZXBfaW5kZXg9MQ/67w0V63wVfC2A/giphy.gif');
+        /* BACKGROUND MOBIL ANIMASI BERGERAK ASLI DAN SANGAT TERANG */
+        background-image: url('https://i.pinimg.com/originals/fb/cb/3a/fbcb3a964f51fa69e0617300c3260c6d.gif');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -37,16 +36,16 @@
     
     /* ---- PANEL UTAMA KASIR ---- */
     .container {
-        background: rgba(5, 10, 20, 0.85); 
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        background: rgba(3, 7, 15, 0.9); 
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 2px solid #00f2fe; 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 40px rgba(0, 242, 254, 0.4);
+        box-shadow: 0 0 40px rgba(0, 242, 254, 0.5);
         position: relative;
         z-index: 10;
         margin: auto;
