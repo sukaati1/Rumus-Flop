@@ -12,8 +12,7 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #000000; /* HITAM PEKAT TOTAL */
-        overflow-x: hidden;
+        background-color: #000000;
     }
 
     body {
@@ -25,17 +24,13 @@
         color: #ffffff;
         position: relative;
         box-sizing: border-box;
-    }
-    
-    /* CANVAS BACKGROUND AIR BERGERAK */
-    #rainCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
+        /* BACKGROUND FOTO MOBIL KEREN */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                          url('https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=1920&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
     }
     
     /* PANEL UTAMA: HOLOGRAM GLASSMORPHISM */
@@ -133,11 +128,13 @@
         display: flex;
         gap: 20px;
         margin-bottom: 40px;
+        flex-wrap: wrap; /* Supaya tombol aman saat di-zoom */
     }
     
     button {
         font-family: 'Orbitron', sans-serif;
         flex: 1;
+        min-width: 120px;
         padding: 18px; 
         font-size: 14px;    
         font-weight: 900;
@@ -199,6 +196,7 @@
         padding: 16px 20px;
         text-align: left;
         font-size: 15px;
+        white-space: nowrap; /* Menjaga teks tabel rapi saat menyusut */
     }
     
     th { 
@@ -225,9 +223,6 @@
 </style>
 </head>
 <body>
-
-<!-- BACKGROUND ANIMASI AIR NEON BERGERAK -->
-<canvas id="rainCanvas"></canvas>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -260,69 +255,7 @@
 </div>
 
 <script>
-    // --- ENGINE AIR HUJAN NEON ULTRA TERANG ---
-    const canvas = document.getElementById('rainCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const maxDrops = 100;
-    const drops = [];
-
-    for (let i = 0; i < maxDrops; i++) {
-        drops.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            length: Math.random() * 30 + 20, // Lebih panjang biar kelihatan meluncur
-            speed: Math.random() * 5 + 4,     // Gerakan lebih cepat dan responsif
-            weight: Math.random() * 2 + 1.5   // Air dibuat tebal biar jelas kelihatan
-        });
-    }
-
-    function drawRain() {
-        // Hapus layar dengan warna hitam pekat tapi meninggalkan jejak air (trail)
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Setting efek GLOW / CAHAYA NEON pada air agar super terang
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = '#00f2fe';
-
-        drops.forEach(drop => {
-            // Menggambar batang air warna biru neon terang
-            ctx.beginPath();
-            ctx.strokeStyle = '#00f2fe';
-            ctx.lineWidth = drop.weight;
-            ctx.lineCap = 'round';
-            ctx.moveTo(drop.x, drop.y);
-            ctx.lineTo(drop.x, drop.y + drop.length);
-            ctx.stroke();
-
-            // Gerakkan air turun ke bawah kaca
-            drop.y += drop.speed;
-
-            // Jika sampai bawah, looping lagi dari atas
-            if (drop.y > canvas.height) {
-                drop.y = -drop.length;
-                drop.x = Math.random() * canvas.width;
-                drop.speed = Math.random() * 5 + 4;
-            }
-        });
-
-        // Reset shadow biar tidak merembet ke fungsi render canvas lain jika ada
-        ctx.shadowBlur = 0;
-
-        requestAnimationFrame(drawRain);
-    }
-    drawRain();
-
-
-    // --- FUNGSI LOGIKA UTAMA KASIR (100% AMAN TIDAK BERUBAH) ---
+    // --- FUNGSI LOGIKA UTAMA KASIR (100% UTUH & AMAN) ---
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
