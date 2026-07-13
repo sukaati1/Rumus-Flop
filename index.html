@@ -12,7 +12,8 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #000000;
+        background-color: #0d1117;
+        overflow-x: hidden;
     }
 
     body {
@@ -24,33 +25,75 @@
         color: #ffffff;
         position: relative;
         box-sizing: border-box;
-        /* BACKGROUND FOTO MOBIL KEREN */
-        background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+    }
+
+    /* ---- VISUAL BACKGROUND MOBIL + RODA BERGERAK ---- */
+    .bg-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        /* Gambar Mobil dibuat lebih terang dengan overlay tipis */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
                           url('https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=1920&auto=format&fit=crop');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        background-repeat: no-repeat;
+    }
+
+    /* Efek Simulasi Roda Berputar Neon di Belakang Panel */
+    .spinning-wheel-1, .spinning-wheel-2 {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border: 6px dashed #00f2fe;
+        border-radius: 50%;
+        box-shadow: 0 0 20px #00f2fe, inset 0 0 20px #00f2fe;
+        animation: putarRoda 2s linear infinite;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+    /* Posisi Roda Kiri */
+    .spinning-wheel-1 {
+        bottom: 10%;
+        left: 15%;
+    }
+    /* Posisi Roda Kanan */
+    .spinning-wheel-2 {
+        bottom: 15%;
+        right: 12%;
+        width: 140px;
+        height: 140px;
+        border-color: #ff007f;
+        box-shadow: 0 0 20px #ff007f, inset 0 0 20px #ff007f;
+        animation: putarRoda 1.5s linear infinite;
+    }
+
+    /* Animasi Berputar */
+    @keyframes putarRoda {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
     
-    /* PANEL UTAMA: HOLOGRAM GLASSMORPHISM */
+    /* ---- PANEL UTAMA KASIR ---- */
     .container {
         background: rgba(5, 10, 20, 0.85); 
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         border: 2px solid #00f2fe; 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+        box-shadow: 0 0 40px rgba(0, 242, 254, 0.4);
         position: relative;
         z-index: 10;
         margin: auto;
     }
 
-    /* DEKORASI SUDUT GLOWING */
     .container::before, .container::after {
         content: '';
         position: absolute;
@@ -64,7 +107,6 @@
     .container::before { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 16px; }
     .container::after { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 16px; }
     
-    /* JUDUL */
     h1 {
         font-family: 'Orbitron', sans-serif;
         text-align: center;
@@ -101,7 +143,6 @@
         font-family: 'Orbitron', sans-serif;
     }
     
-    /* INPUT BOX */
     textarea {
         width: 100%;
         height: 140px;
@@ -123,12 +164,11 @@
         box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
     }
     
-    /* TOMBOL KASIR */
     .btn-group {
         display: flex;
         gap: 20px;
         margin-bottom: 40px;
-        flex-wrap: wrap; /* Supaya tombol aman saat di-zoom */
+        flex-wrap: wrap;
     }
     
     button {
@@ -179,7 +219,6 @@
         transform: translateY(-2px);
     }
     
-    /* TABEL HASIL */
     .table-container { 
         overflow-x: auto; 
         border-radius: 8px;
@@ -196,7 +235,7 @@
         padding: 16px 20px;
         text-align: left;
         font-size: 15px;
-        white-space: nowrap; /* Menjaga teks tabel rapi saat menyusut */
+        white-space: nowrap;
     }
     
     th { 
@@ -223,6 +262,13 @@
 </style>
 </head>
 <body>
+
+<!-- BACKGROUND MANAGER -->
+<div class="bg-wrapper">
+    <!-- Efek Simulasi Ban Mobil Berputar Elegan -->
+    <div class="spinning-wheel-1"></div>
+    <div class="spinning-wheel-2"></div>
+</div>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -255,7 +301,6 @@
 </div>
 
 <script>
-    // --- FUNGSI LOGIKA UTAMA KASIR (100% UTUH & AMAN) ---
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
