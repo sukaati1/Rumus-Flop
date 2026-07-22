@@ -43,13 +43,12 @@
         box-sizing: border-box;
     }
 
-    /* Animasi CSS lama dihapus karena diganti GIF */
     .scene {
         display: none;
     }
 
     /* =======================================================
-       PANEL UTAMA KASIR (TETEP SAMA)
+       PANEL UTAMA KASIR
        ======================================================= */
     .container {
         background: rgba(5, 10, 25, 0.88); 
@@ -159,24 +158,12 @@
         transition: all 0.2s ease;
     }
     
-    .btn-submit { 
+    .btn-copy { 
         background: linear-gradient(135deg, #ff007f 0%, #00f2fe 100%); 
         color: #ffffff; 
         box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
     }
-    .btn-submit:hover { 
-        transform: translateY(-2px);
-        box-shadow: 0 0 25px #00f2fe;
-    }
-    
-    .btn-copy { 
-        background: rgba(0, 242, 254, 0.1); 
-        color: #00f2fe; 
-        border: 2px solid #00f2fe;
-    }
     .btn-copy:hover { 
-        background: #00f2fe; 
-        color: #000000;
         box-shadow: 0 0 25px #00f2fe;
         transform: translateY(-2px);
     }
@@ -241,10 +228,10 @@
     <div class="sub-title">KONOHA KASIR - NIKA MATRIX v10.1</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini..."></textarea>
+    <!-- Ditambahkan event listener oninput & onpaste agar konversi berjalan otomatis -->
+    <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini (Konversi Otomatis)..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnSubmit" class="btn-submit" onclick="konversiLog()">Submit</button>
         <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
         <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
     </div>
@@ -267,7 +254,6 @@
 </div>
 
 <script>
-    // SCRIPT JAVASCRIPT LO TETEP SAMA, GA ADA YANG DIUBAH
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
@@ -345,7 +331,7 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            alert("Tidak ada data untuk disalin! Silakan submit log terlebih dahulu.");
+            alert("Tidak ada data untuk disalin! Silakan tempel log terlebih dahulu.");
             return;
         }
         
