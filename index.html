@@ -8,7 +8,7 @@
     
 <style>
     /* =======================================================
-       CSS BUAT BACKGROUND GIF (GIPHY) - ANTI HITAM
+       CSS BACKGROUND WALLPAPER LUFFY DARI GITHUB
        ======================================================= */
     html, body {
         margin: 0;
@@ -16,17 +16,16 @@
         width: 100%;
         min-height: 100vh;
         
-        /* 1. KODE UNTUK MEMANGGIL GIF LO DARI GITHUB */
-        /* GANTI 'nama_file_gif_kamu.gif' DENGAN NAMA FILE GIF YANG LO UPLOAD */
-        background-image: url('nama_file_gif_kamu.gif'); 
+        /* Panggil file GIF Luffy di folder yang sama di GitHub Pages */
+        background-image: url('luffy.gif'); 
         
-        /* 2. PENGATURAN BIAR GIF-NYA BAGUS */
-        background-size: cover;          /* GIF menutupi seluruh layar */
-        background-position: center;     /* GIF rata tengah */
-        background-attachment: fixed;    /* GIF diem pas discroll */
-        background-repeat: no-repeat;    /* GIF ga ngulang-ngulang (kotak-kotak) */
+        /* Pengaturan agar wallpaper responsif dan fit di layar HP/Desktop */
+        background-size: cover;          /* Gambar menutupi seluruh layar */
+        background-position: center;     /* Posisi tengah */
+        background-attachment: fixed;    /* Tetap diam saat di-scroll */
+        background-repeat: no-repeat;
         
-        /* Warna cadangan kalau GIF gagal loading (pake biru gelap keren) */
+        /* Warna latar cadangan jika GIF sedang di-load */
         background-color: #040714; 
         
         overflow-x: hidden;
@@ -48,19 +47,19 @@
     }
 
     /* =======================================================
-       PANEL UTAMA KASIR
+       PANEL UTAMA KASIR (TRANSPARAN DENGAN NEON AMBIENT)
        ======================================================= */
     .container {
-        background: rgba(5, 10, 25, 0.88); 
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        background: rgba(5, 10, 25, 0.85); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 2px solid #00f2fe; 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 40px rgba(0, 242, 254, 0.4);
+        box-shadow: 0 0 40px rgba(0, 242, 254, 0.35);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -118,7 +117,7 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.85);
         border: 2px solid rgba(0, 242, 254, 0.5); 
         border-radius: 8px;
         color: #ffffff;
@@ -188,7 +187,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.85);
     }
     
     th, td {
@@ -228,8 +227,7 @@
     <div class="sub-title">KONOHA KASIR - NIKA MATRIX v10.1</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
-    <!-- Ditambahkan event listener oninput & onpaste agar konversi berjalan otomatis -->
-    <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini (Konversi Otomatis)..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+    <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini (Otomatis Terkonversi)..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
         <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
@@ -331,7 +329,7 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            alert("Tidak ada data untuk disalin! Silakan tempel log terlebih dahulu.");
+            alert("Tidak ada data untuk disalin!");
             return;
         }
         
