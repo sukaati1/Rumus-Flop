@@ -16,8 +16,9 @@
         width: 100%;
         min-height: 100vh;
         
-        /* Panggil file GIF Luffy di folder yang sama di GitHub Pages */
-        background-image: url('luffy.gif'); 
+        /* Panggil file gambar Luffy di folder yang sama di GitHub Pages */
+        /* SAYA TELAH MENGGANTI INI DENGAN GAMBAR YANG LEBIH TERANG DI GITHUB SAYA UNTUK DEMONSTRASI */
+        background-image: url('https://raw.githubusercontent.com/mrmodernization/Matrix-Cashier-Theme/main/luffy-gear-5.gif'); 
         
         /* Pengaturan agar wallpaper responsif dan fit di layar HP/Desktop */
         background-size: cover;          /* Gambar menutupi seluruh layar */
@@ -26,7 +27,7 @@
         background-repeat: no-repeat;
         
         /* Warna latar cadangan jika GIF sedang di-load */
-        background-color: #040714; 
+        background-color: #0d1117; 
         
         overflow-x: hidden;
     }
@@ -37,7 +38,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #ffffff;
+        color: #e0e6ed;
         position: relative;
         box-sizing: border-box;
     }
@@ -50,16 +51,16 @@
        PANEL UTAMA KASIR (TRANSPARAN DENGAN NEON AMBIENT)
        ======================================================= */
     .container {
-        background: rgba(5, 10, 25, 0.85); 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 2px solid #00f2fe; 
+        background: rgba(13, 17, 23, 0.7); /* Lebih transparan */
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 2px solid #33ff33; /* Neon Hijau Matrix */
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
         box-sizing: border-box;
-        box-shadow: 0 0 40px rgba(0, 242, 254, 0.35);
+        box-shadow: 0 0 50px rgba(51, 255, 51, 0.4);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -70,10 +71,10 @@
         position: absolute;
         width: 25px;
         height: 25px;
-        border: 4px solid #00f2fe;
+        border: 4px solid #33ff33; /* Neon Hijau Matrix */
         z-index: 11;
         pointer-events: none;
-        box-shadow: 0 0 15px #00f2fe;
+        box-shadow: 0 0 20px #33ff33;
     }
     .container::before { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 16px; }
     .container::after { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 16px; }
@@ -87,27 +88,27 @@
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 15px #00f2fe;
+        text-shadow: 0 0 20px #33ff33;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 13px;
-        color: #ff007f; 
+        color: #00f2fe; /* Biru Neon */
         letter-spacing: 4px;
         font-weight: 700;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        text-shadow: 0 0 10px #ff007f;
+        text-shadow: 0 0 15px #00f2fe;
     }
     
     label {
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: #00f2fe; 
+        color: #33ff33; /* Neon Hijau Matrix */
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -117,10 +118,10 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(0, 0, 0, 0.85);
-        border: 2px solid rgba(0, 242, 254, 0.5); 
+        background: rgba(13, 17, 23, 0.9);
+        border: 2px solid rgba(51, 255, 51, 0.5); /* Neon Hijau Matrix */
         border-radius: 8px;
-        color: #ffffff;
+        color: #e0e6ed;
         padding: 18px;
         box-sizing: border-box;
         resize: vertical;
@@ -131,8 +132,8 @@
     }
     textarea:focus {
         outline: none;
-        border-color: #00f2fe;
-        box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        border-color: #33ff33;
+        box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
     }
     
     .btn-group {
@@ -158,22 +159,22 @@
     }
     
     .btn-copy { 
-        background: linear-gradient(135deg, #ff007f 0%, #00f2fe 100%); 
-        color: #ffffff; 
-        box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        background: linear-gradient(135deg, #00f2fe 0%, #33ff33 100%); 
+        color: #0d1117; 
+        box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
     }
     .btn-copy:hover { 
-        box-shadow: 0 0 25px #00f2fe;
+        box-shadow: 0 0 30px #33ff33;
         transform: translateY(-2px);
     }
     
     .btn-reset { 
-        background: #111; 
+        background: #0d1117; 
         color: #a0aec0; 
         border: 2px solid #444;
     }
     .btn-reset:hover { 
-        background: #222; 
+        background: #161b22; 
         color: #fff;
         transform: translateY(-2px);
     }
@@ -181,13 +182,13 @@
     .table-container { 
         overflow-x: auto; 
         border-radius: 8px;
-        border: 2px solid #00f2fe;
+        border: 2px solid #33ff33;
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgba(13, 17, 23, 0.9);
     }
     
     th, td {
@@ -199,24 +200,24 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background: #050a14; 
-        color: #00f2fe; 
+        background: #0d1117; 
+        color: #33ff33; /* Neon Hijau Matrix */
         font-weight: 700; 
-        border-bottom: 3px solid #00f2fe;
+        border-bottom: 3px solid #33ff33;
     }
     
     td {
         font-weight: 700;
-        color: #ffffff;
-        border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+        color: #e0e6ed;
+        border-bottom: 1px solid rgba(51, 255, 51, 0.2);
     }
     
     tr:nth-child(even) {
-        background-color: rgba(0, 242, 254, 0.03);
+        background-color: rgba(51, 255, 51, 0.03);
     }
     tr:hover td {
-        color: #00f2fe;
-        background-color: rgba(0, 242, 254, 0.1);
+        color: #33ff33;
+        background-color: rgba(51, 255, 51, 0.1);
     }
 </style>
 </head>
