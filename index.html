@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only light">
-    <title>Rumus Flop Kasir - Vivid Motion Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <title>Rumus Flop Kasir - Clean Luxury</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
@@ -16,22 +16,20 @@
         box-sizing: border-box;
     }
 
-    /* LATAR BELAKANG MEWAH, CERAH, TAPI SELESE/NYAMAN */
+    /* LATAR MONOKROM SLATE ELEGAN */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #0b1329 !important;
-        /* Grid cerah lembut + ambient light */
+        background-color: #0b0f17 !important;
         background-image: 
-            radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.18) 0%, transparent 60%),
-            radial-gradient(circle at 85% 90%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
-            linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
-        background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px !important;
+            radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 70%),
+            linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+        background-size: 100% 100%, 32px 32px, 32px 32px !important;
         background-attachment: fixed !important;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         color: #f8fafc !important;
     }
 
@@ -42,165 +40,129 @@
         align-items: center;
     }
 
-    /* CONTAINER CARD EFEK KACA MEWAH */
+    /* CONTAINER SOBER & MINIMALIS */
     .container {
-        background: rgba(18, 28, 56, 0.85) !important; 
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(56, 189, 248, 0.25) !important; 
-        border-radius: 20px; 
+        background: #111827 !important; 
+        border: 1px solid #1f293d !important; 
+        border-radius: 16px; 
         width: 100%;
-        max-width: 880px;
+        max-width: 860px;
         padding: 40px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         margin: auto;
     }
 
     h1 {
         text-align: center;
-        font-size: 28px;
-        font-weight: 800;
-        letter-spacing: 2px;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
         margin: 0;
-        background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #f8fafc !important;
     }
 
     .sub-title {
         text-align: center;
         font-size: 11px;
-        color: #f59e0b !important; /* Vivid Gold/Amber */
-        letter-spacing: 3.5px;
-        font-weight: 700;
+        color: #94a3b8 !important;
+        letter-spacing: 3px;
+        font-weight: 600;
         text-transform: uppercase;
-        margin-top: 8px;
+        margin-top: 6px;
         margin-bottom: 32px;
     }
     
     label {
         display: block;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #38bdf8 !important; 
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #cbd5e1 !important; 
         font-size: 12px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
     }
     
     textarea {
         width: 100%;
-        height: 125px;
-        background-color: #080e21 !important;
-        border: 1.5px solid rgba(56, 189, 248, 0.3) !important; 
-        border-radius: 10px;
+        height: 120px;
+        background-color: #0b0f17 !important;
+        border: 1px solid #1f293d !important; 
+        border-radius: 8px;
         color: #38bdf8 !important;
-        padding: 14px 16px;
+        padding: 14px;
         box-sizing: border-box;
         resize: vertical;
-        font-family: monospace;
-        font-size: 13.5px;
-        margin-bottom: 28px;
-        transition: all 0.3s ease;
+        font-family: 'Inter', monospace;
+        font-size: 13px;
+        margin-bottom: 24px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
     textarea:focus {
         outline: none;
         border-color: #38bdf8 !important;
-        box-shadow: 0 0 18px rgba(56, 189, 248, 0.35) !important;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
     }
     
     /* =======================================================
-       DESAIN TOMBOL MEWAH & BERGERAK (INTERAKTIF ANIMATED)
+       TOMBOL BERGERAK TAPI ELEGAN & MINIMALIS (CLEAN MOTION)
        ======================================================= */
     .btn-group {
         display: flex;
-        gap: 16px;
+        gap: 14px;
         margin-bottom: 32px;
     }
     
     button {
         position: relative;
         flex: 1;
-        padding: 16px; 
+        padding: 14px; 
         font-size: 13px;    
-        font-weight: 800;
-        border-radius: 10px; 
+        font-weight: 600;
+        border-radius: 8px; 
         cursor: pointer;
-        letter-spacing: 1.5px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
-        border: none;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1;
+        border: 1px solid transparent;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Efek Kilatan Cahaya Berjalan di Tombol (Shimmer) */
-    button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.4),
-            transparent
-        );
-        transition: 0.5s;
-        z-index: 2;
-    }
-
-    button:hover::before {
-        left: 100%;
-    }
-
-    /* Tombol Salin (Emerald / Cyan Neon Glow) */
+    /* Tombol Utama (Salin Data) - Pure White Minimalist Glow */
     .btn-copy { 
-        background: linear-gradient(135deg, #10b981 0%, #0284c7 100%) !important; 
-        color: #ffffff !important; 
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+        background-color: #f8fafc !important; 
+        color: #0f172a !important; 
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
     
     .btn-copy:hover { 
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
-        animation: pulseGlow 1.5s infinite alternate;
+        transform: translateY(-2px);
+        background-color: #ffffff !important;
+        box-shadow: 0 8px 20px -4px rgba(248, 250, 252, 0.25);
     }
 
-    /* Tombol Reset (Amber Gold Glow) */
+    /* Tombol Reset - Ghost Border Smooth Fill */
     .btn-reset { 
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important; 
-        color: #ffffff !important; 
-        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+        background-color: rgba(255, 255, 255, 0.03) !important; 
+        color: #94a3b8 !important; 
+        border: 1px solid #1f293d !important;
     }
     
     .btn-reset:hover { 
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.55);
+        transform: translateY(-2px);
+        background-color: rgba(255, 255, 255, 0.08) !important; 
+        color: #f8fafc !important;
+        border-color: #334155 !important;
     }
 
     button:active {
-        transform: translateY(1px) scale(0.98);
-    }
-
-    /* Animasi Bergetar Cahaya Lembut saat Hover */
-    @keyframes pulseGlow {
-        0% {
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-        }
-        100% {
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.8);
-        }
+        transform: translateY(0px) scale(0.98);
     }
     
-    /* TABEL CERAH & SPASIONAL */
+    /* TABEL MINIMALIS */
     .table-container { 
         overflow-x: auto; 
-        border-radius: 10px;
-        border: 1px solid rgba(56, 189, 248, 0.2) !important;
-        background-color: #080e21 !important;
+        border-radius: 8px;
+        border: 1px solid #1f293d !important;
+        background-color: #0b0f17 !important;
     }
     
     table {
@@ -209,25 +171,25 @@
     }
     
     th, td {
-        padding: 14px 18px;
+        padding: 13px 16px;
         text-align: left;
-        font-size: 13.5px;
+        font-size: 13px;
         white-space: nowrap;
     }
     
     th { 
-        font-weight: 700;
-        background-color: #121c38 !important; 
+        font-weight: 600;
+        background-color: #111827 !important; 
         color: #38bdf8 !important; 
         font-size: 11px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+        border-bottom: 1px solid #1f293d !important;
     }
     
     td {
-        color: #e2e8f0 !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        color: #cbd5e1 !important;
+        border-bottom: 1px solid #111827 !important;
     }
     
     tr:last-child td {
@@ -235,7 +197,7 @@
     }
 
     tr:hover td {
-        background-color: rgba(56, 189, 248, 0.08) !important;
+        background-color: rgba(255, 255, 255, 0.02) !important;
         color: #ffffff !important;
     }
 </style>
@@ -357,7 +319,7 @@
             const btnCopy = document.getElementById('btnCopy');
             const teksAwal = btnCopy.innerText;
             
-            btnCopy.innerText = "✨ BERHASIL DISALIN ✨";
+            btnCopy.innerText = "BERHASIL DISALIN";
             setTimeout(() => { btnCopy.innerText = teksAwal; }, 1200);
         }).catch(err => {
             console.error("Error: ", err);
