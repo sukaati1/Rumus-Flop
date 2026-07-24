@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegance Kasir - Premium Edition</title>
+    <title>Elegance Kasir - Ultra Stable Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
 <style>
@@ -11,40 +11,66 @@
         box-sizing: border-box;
     }
 
-    /* Kunci warna dasar di CSS agar TIDAK PERNAH HITAM POLOS */
-    html {
+    /* BACKGROUND CSS MURE (TANPA JS CANVAS = ANTI HITAM POLOS) */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
         background-color: #0b0d12;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
     }
 
     body {
-        margin: 0;
         padding: 60px 20px;
-        width: 100%;
-        min-height: 100vh;
-        background: radial-gradient(circle at 50% 20%, #151a26 0%, #0b0d12 100%);
-        background-attachment: fixed;
-        font-family: 'Inter', sans-serif;
-        color: #e2e8f0;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
+        overflow-x: hidden;
     }
 
-    /* Ambient Canvas Latar Belakang */
-    #ambientCanvas {
+    /* Efek Cahaya Ambient Menggunakan Pure CSS Animation */
+    .bg-glow-1, .bg-glow-2 {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
+        border-radius: 50%;
+        filter: blur(120px);
         pointer-events: none;
+        z-index: 1;
+        opacity: 0.4;
+        animation: floatAnimation 12s infinite alternate ease-in-out;
+    }
+
+    .bg-glow-1 {
+        top: -10%;
+        left: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+    }
+
+    .bg-glow-2 {
+        bottom: -10%;
+        right: -10%;
+        width: 60vw;
+        height: 60vw;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+        animation-delay: -6s;
+    }
+
+    @keyframes floatAnimation {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            transform: translate(5%, 8%) scale(1.1);
+        }
     }
 
     /* Panel Frosted Glassmorphism Premium */
     .container {
-        background: rgba(18, 22, 31, 0.78); 
+        background: rgba(18, 22, 31, 0.85); 
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.08); 
@@ -52,7 +78,7 @@
         width: 100%;
         max-width: 920px;
         padding: 48px;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -96,7 +122,7 @@
     textarea {
         width: 100%;
         height: 130px;
-        background: rgba(10, 13, 20, 0.6);
+        background: rgba(10, 13, 20, 0.7);
         border: 1px solid rgba(255, 255, 255, 0.1); 
         border-radius: 12px;
         color: #e2e8f0;
@@ -112,8 +138,8 @@
     textarea:focus {
         outline: none;
         border-color: rgba(212, 175, 55, 0.5);
-        box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-        background: rgba(10, 13, 20, 0.85);
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+        background: rgba(10, 13, 20, 0.9);
     }
     
     .btn-group {
@@ -162,7 +188,7 @@
         overflow-x: auto; 
         border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(10, 13, 20, 0.4);
+        background: rgba(10, 13, 20, 0.5);
     }
     
     table {
@@ -198,14 +224,16 @@
     }
 
     tr:hover td {
-        background-color: rgba(255, 255, 255, 0.02);
+        background-color: rgba(255, 255, 255, 0.03);
         color: #ffffff;
     }
 </style>
 </head>
 <body>
 
-<canvas id="ambientCanvas"></canvas>
+<!-- Cahaya latar animasi Pure CSS -->
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -238,60 +266,7 @@
 
 <script>
     /* =======================================================
-       SOFT AMBIENT GLOW BACKGROUND (NO MORE BLACKOUT)
-       ======================================================= */
-    const canvas = document.getElementById('ambientCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let orbs = [];
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        if (orbs.length === 0) {
-            initOrbs();
-        }
-    }
-
-    function initOrbs() {
-        orbs = [
-            { x: window.innerWidth * 0.2, y: window.innerHeight * 0.3, r: 280, color: 'rgba(212, 175, 55, 0.08)', vx: 0.3, vy: 0.2 },
-            { x: window.innerWidth * 0.8, y: window.innerHeight * 0.7, r: 350, color: 'rgba(99, 102, 241, 0.06)', vx: -0.2, vy: -0.3 },
-            { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, r: 220, color: 'rgba(255, 255, 255, 0.03)', vx: 0.15, vy: -0.15 }
-        ];
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        orbs.forEach(orb => {
-            orb.x += orb.vx;
-            orb.y += orb.vy;
-
-            if (orb.x < -100 || orb.x > canvas.width + 100) orb.vx *= -1;
-            if (orb.y < -100 || orb.y > canvas.height + 100) orb.vy *= -1;
-
-            const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.r);
-            gradient.addColorStop(0, orb.color);
-            gradient.addColorStop(1, 'transparent');
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(orb.x, orb.y, orb.r, 0, Math.PI * 2);
-            ctx.fill();
-        });
-
-        requestAnimationFrame(draw);
-    }
-
-    resizeCanvas();
-    draw();
-
-    /* =======================================================
-       LOGIKA KASIR
+       LOGIKA KASIR (MURNI TANPA CANVAS ANIMASI)
        ======================================================= */
     let hasilTeksUntukDisalin = "";
 
