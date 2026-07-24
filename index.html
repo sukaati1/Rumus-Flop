@@ -7,60 +7,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
-    /* =======================================================
-       CSS BACKGROUND WALLPAPER LUFFY DARI GITHUB
-       ======================================================= */
+    * {
+        box-sizing: border-box;
+    }
+
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        
-        /* Panggil file gambar Luffy di folder yang sama di GitHub Pages */
-        /* SAYA TELAH MENGGANTI INI DENGAN GAMBAR YANG LEBIH TERANG DI GITHUB SAYA UNTUK DEMONSTRASI */
-        background-image: url('https://raw.githubusercontent.com/mrmodernization/Matrix-Cashier-Theme/main/luffy-gear-5.gif'); 
-        
-        /* Pengaturan agar wallpaper responsif dan fit di layar HP/Desktop */
-        background-size: cover;          /* Gambar menutupi seluruh layar */
-        background-position: center;     /* Posisi tengah */
-        background-attachment: fixed;    /* Tetap diam saat di-scroll */
-        background-repeat: no-repeat;
-        
-        /* Warna latar cadangan jika GIF sedang di-load */
-        background-color: #0d1117; 
-        
+        background-color: #03070d;
         overflow-x: hidden;
+        font-family: 'Rajdhani', sans-serif;
+        color: #e0e6ed;
+    }
+
+    /* Background Matrix Rain via Canvas */
+    #matrixCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+        pointer-events: none;
     }
 
     body {
-        font-family: 'Rajdhani', sans-serif;
         padding: 40px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #e0e6ed;
         position: relative;
-        box-sizing: border-box;
     }
 
-    .scene {
-        display: none;
-    }
-
-    /* =======================================================
-       PANEL UTAMA KASIR (TRANSPARAN DENGAN NEON AMBIENT)
-       ======================================================= */
+    /* PANEL UTAMA (Lebih Transparan & Menyala) */
     .container {
-        background: rgba(13, 17, 23, 0.7); /* Lebih transparan */
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 2px solid #33ff33; /* Neon Hijau Matrix */
+        background: rgba(10, 25, 47, 0.75); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid #00ff66; 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
-        box-sizing: border-box;
-        box-shadow: 0 0 50px rgba(51, 255, 51, 0.4);
+        box-shadow: 0 0 35px rgba(0, 255, 102, 0.4), inset 0 0 15px rgba(0, 255, 102, 0.1);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -71,10 +62,10 @@
         position: absolute;
         width: 25px;
         height: 25px;
-        border: 4px solid #33ff33; /* Neon Hijau Matrix */
+        border: 4px solid #00ff66;
         z-index: 11;
         pointer-events: none;
-        box-shadow: 0 0 20px #33ff33;
+        box-shadow: 0 0 15px #00ff66;
     }
     .container::before { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 16px; }
     .container::after { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 16px; }
@@ -88,27 +79,27 @@
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 20px #33ff33;
+        text-shadow: 0 0 20px #00ff66, 0 0 40px #00ff66;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 13px;
-        color: #00f2fe; /* Biru Neon */
+        color: #00f2fe; 
         letter-spacing: 4px;
         font-weight: 700;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        text-shadow: 0 0 15px #00f2fe;
+        text-shadow: 0 0 12px #00f2fe;
     }
     
     label {
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: #33ff33; /* Neon Hijau Matrix */
+        color: #00ff66; 
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -118,10 +109,10 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(13, 17, 23, 0.9);
-        border: 2px solid rgba(51, 255, 51, 0.5); /* Neon Hijau Matrix */
+        background: rgba(4, 12, 24, 0.85);
+        border: 2px solid rgba(0, 255, 102, 0.5); 
         border-radius: 8px;
-        color: #e0e6ed;
+        color: #33ff88;
         padding: 18px;
         box-sizing: border-box;
         resize: vertical;
@@ -132,8 +123,8 @@
     }
     textarea:focus {
         outline: none;
-        border-color: #33ff33;
-        box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+        border-color: #00ff66;
+        box-shadow: 0 0 20px rgba(0, 255, 102, 0.5);
     }
     
     .btn-group {
@@ -159,36 +150,38 @@
     }
     
     .btn-copy { 
-        background: linear-gradient(135deg, #00f2fe 0%, #33ff33 100%); 
-        color: #0d1117; 
-        box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+        background: linear-gradient(135deg, #00f2fe 0%, #00ff66 100%); 
+        color: #03070d; 
+        box-shadow: 0 0 20px rgba(0, 255, 102, 0.5);
     }
     .btn-copy:hover { 
-        box-shadow: 0 0 30px #33ff33;
+        box-shadow: 0 0 30px #00ff66;
         transform: translateY(-2px);
     }
     
     .btn-reset { 
-        background: #0d1117; 
+        background: rgba(15, 23, 42, 0.8); 
         color: #a0aec0; 
-        border: 2px solid #444;
+        border: 2px solid #334155;
     }
     .btn-reset:hover { 
-        background: #161b22; 
+        background: rgba(30, 41, 59, 0.9); 
         color: #fff;
+        border-color: #00ff66;
         transform: translateY(-2px);
     }
     
     .table-container { 
         overflow-x: auto; 
         border-radius: 8px;
-        border: 2px solid #33ff33;
+        border: 2px solid #00ff66;
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(13, 17, 23, 0.9);
+        background: rgba(4, 12, 24, 0.85);
     }
     
     th, td {
@@ -200,28 +193,31 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background: #0d1117; 
-        color: #33ff33; /* Neon Hijau Matrix */
+        background: rgba(8, 20, 38, 0.95); 
+        color: #00ff66; 
         font-weight: 700; 
-        border-bottom: 3px solid #33ff33;
+        border-bottom: 3px solid #00ff66;
     }
     
     td {
         font-weight: 700;
-        color: #e0e6ed;
-        border-bottom: 1px solid rgba(51, 255, 51, 0.2);
+        color: #ffffff;
+        border-bottom: 1px solid rgba(0, 255, 102, 0.2);
     }
     
     tr:nth-child(even) {
-        background-color: rgba(51, 255, 51, 0.03);
+        background-color: rgba(0, 255, 102, 0.03);
     }
     tr:hover td {
-        color: #33ff33;
-        background-color: rgba(51, 255, 51, 0.1);
+        color: #00ff66;
+        background-color: rgba(0, 255, 102, 0.12);
     }
 </style>
 </head>
 <body>
+
+<!-- Canvas Animasi Matrix -->
+<canvas id="matrixCanvas"></canvas>
 
 <div class="container">
     <h1>Rumus Flop</h1>
@@ -253,6 +249,63 @@
 </div>
 
 <script>
+    /* =======================================================
+       ANIMASI BACKGROUND MATRIX RAIN (TANPA GAMBAR/GIF EXTERNAL)
+       ======================================================= */
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const alphabet = katakana + latin;
+
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
+    let rainDrops = Array(columns).fill(1);
+
+    function drawMatrix() {
+        // Efek trail transparan
+        ctx.fillStyle = 'rgba(3, 7, 13, 0.15)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#0f0'; // Warna teks Matrix
+        ctx.font = fontSize + 'px monospace';
+
+        // Update jumlah kolom jika window berubah ukuran
+        const currentColumns = Math.floor(canvas.width / fontSize);
+        if (currentColumns !== columns) {
+            columns = currentColumns;
+            rainDrops = Array(columns).fill(1);
+        }
+
+        for (let i = 0; i < rainDrops.length; i++) {
+            const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+            const x = i * fontSize;
+            const y = rainDrops[i] * fontSize;
+
+            // Karakter paling bawah lebih terang/putih
+            ctx.fillStyle = Math.random() > 0.85 ? '#ffffff' : '#00ff66';
+            ctx.fillText(text, x, y);
+
+            if (y > canvas.height && Math.random() > 0.975) {
+                rainDrops[i] = 0;
+            }
+            rainDrops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 33);
+
+    /* =======================================================
+       LOGIKA KASIR (TETAP SAMA)
+       ======================================================= */
     let hasilTeksUntukDisalin = "";
 
     function konversiLog() {
