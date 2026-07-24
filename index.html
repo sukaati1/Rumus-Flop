@@ -11,46 +11,48 @@
         box-sizing: border-box;
     }
 
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        min-height: 100vh;
+    /* Kunci warna dasar di CSS agar TIDAK PERNAH HITAM POLOS */
+    html {
         background-color: #0b0d12;
-        font-family: 'Inter', sans-serif;
-        color: #e2e8f0;
-    }
-
-    /* Ambient Canvas Latar Belakang yang Elegan */
-    #ambientCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
     }
 
     body {
+        margin: 0;
         padding: 60px 20px;
+        width: 100%;
+        min-height: 100vh;
+        background: radial-gradient(circle at 50% 20%, #151a26 0%, #0b0d12 100%);
+        background-attachment: fixed;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
     }
 
+    /* Ambient Canvas Latar Belakang */
+    #ambientCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+        pointer-events: none;
+    }
+
     /* Panel Frosted Glassmorphism Premium */
     .container {
-        background: rgba(18, 22, 31, 0.75); 
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
+        background: rgba(18, 22, 31, 0.78); 
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.08); 
         border-radius: 20px; 
         width: 100%;
         max-width: 920px;
         padding: 48px;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -60,7 +62,6 @@
     h1 {
         font-family: 'Cinzel', serif;
         text-align: center;
-        color: #f1f5f9;
         font-size: 32px;
         font-weight: 700;
         letter-spacing: 4px;
@@ -237,7 +238,7 @@
 
 <script>
     /* =======================================================
-       SOFT AMBIENT GLOW BACKGROUND (SOFT & ELEGANT)
+       SOFT AMBIENT GLOW BACKGROUND (NO MORE BLACKOUT)
        ======================================================= */
     const canvas = document.getElementById('ambientCanvas');
     const ctx = canvas.getContext('2d');
@@ -245,11 +246,8 @@
     let orbs = [];
 
     function resizeCanvas() {
-        const width = window.innerWidth;
-        const height = Math.max(document.body.scrollHeight, window.innerHeight);
-
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         if (orbs.length === 0) {
             initOrbs();
@@ -258,14 +256,13 @@
 
     function initOrbs() {
         orbs = [
-            { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 250, color: 'rgba(212, 175, 55, 0.05)', vx: 0.2, vy: 0.1 },
-            { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 300, color: 'rgba(99, 102, 241, 0.04)', vx: -0.15, vy: -0.2 },
-            { x: canvas.width * 0.5, y: canvas.height * 0.5, r: 200, color: 'rgba(255, 255, 255, 0.02)', vx: 0.1, vy: -0.1 }
+            { x: window.innerWidth * 0.2, y: window.innerHeight * 0.3, r: 280, color: 'rgba(212, 175, 55, 0.08)', vx: 0.3, vy: 0.2 },
+            { x: window.innerWidth * 0.8, y: window.innerHeight * 0.7, r: 350, color: 'rgba(99, 102, 241, 0.06)', vx: -0.2, vy: -0.3 },
+            { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, r: 220, color: 'rgba(255, 255, 255, 0.03)', vx: 0.15, vy: -0.15 }
         ];
     }
 
     window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('visualViewport' in window ? 'visualViewport' : 'resize', resizeCanvas);
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -274,8 +271,8 @@
             orb.x += orb.vx;
             orb.y += orb.vy;
 
-            if (orb.x < 0 || orb.x > canvas.width) orb.vx *= -1;
-            if (orb.y < 0 || orb.y > canvas.height) orb.vy *= -1;
+            if (orb.x < -100 || orb.x > canvas.width + 100) orb.vx *= -1;
+            if (orb.y < -100 || orb.y > canvas.height + 100) orb.vy *= -1;
 
             const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.r);
             gradient.addColorStop(0, orb.color);
@@ -362,7 +359,6 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        setTimeout(resizeCanvas, 50);
     }
 
     function resetData() {
@@ -370,7 +366,6 @@
         document.getElementById('tableBody').innerHTML = '';
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
-        resizeCanvas();
     }
 
     function salinHasil() {
