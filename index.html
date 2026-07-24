@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VVIP KASIR - CYBERPUNK MATRIX</title>
+    <title>VVIP KASIR - ELECTRIC CYAN EDITION</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=400;700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     
 <style>
@@ -16,19 +16,18 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #080711;
-        overflow-x: hidden;
+        background-color: #050814;
         font-family: 'Rajdhani', sans-serif;
         color: #ffffff;
     }
 
-    /* Canvas Animation background */
+    /* Canvas Latar Belakang yang Responsif saat Zoom */
     #cyberCanvas {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         z-index: 1;
         pointer-events: none;
     }
@@ -41,17 +40,17 @@
         position: relative;
     }
 
-    /* Panel utama dengan efek Glassmorphism + Neon Glow */
+    /* Panel utama dengan Efek Neon Cyan & Ungu */
     .container {
-        background: rgba(15, 12, 30, 0.82); 
+        background: rgba(10, 16, 35, 0.85); 
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 2px solid #ff0055; 
+        border: 2px solid #00f0ff; 
         border-radius: 16px; 
         width: 100%;
         max-width: 950px;
         padding: 40px;
-        box-shadow: 0 0 35px rgba(255, 0, 85, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.2);
+        box-shadow: 0 0 35px rgba(0, 240, 255, 0.35), inset 0 0 15px rgba(189, 0, 255, 0.2);
         position: relative;
         z-index: 10;
         margin: auto;
@@ -63,10 +62,10 @@
         position: absolute;
         width: 25px;
         height: 25px;
-        border: 4px solid #00f0ff;
+        border: 4px solid #bd00ff;
         z-index: 11;
         pointer-events: none;
-        box-shadow: 0 0 15px #00f0ff;
+        box-shadow: 0 0 15px #bd00ff;
     }
     .container::before { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 16px; }
     .container::after { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 16px; }
@@ -80,27 +79,27 @@
         text-transform: uppercase;
         letter-spacing: 6px;
         margin: 0;
-        text-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055;
+        text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
     }
 
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
         font-size: 13px;
-        color: #00f0ff; 
+        color: #bd00ff; 
         letter-spacing: 4px;
         font-weight: 700;
         text-transform: uppercase;
         margin-top: 8px;
         margin-bottom: 35px;
-        text-shadow: 0 0 12px #00f0ff;
+        text-shadow: 0 0 12px #bd00ff;
     }
     
     label {
         display: block;
         font-weight: 700;
         margin-bottom: 12px;
-        color: #ff0055; 
+        color: #00f0ff; 
         font-size: 14px;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -110,8 +109,8 @@
     textarea {
         width: 100%;
         height: 140px;
-        background: rgba(8, 6, 18, 0.9);
-        border: 2px solid rgba(0, 240, 255, 0.6); 
+        background: rgba(5, 10, 24, 0.9);
+        border: 2px solid rgba(0, 240, 255, 0.5); 
         border-radius: 8px;
         color: #00f0ff;
         padding: 18px;
@@ -124,8 +123,8 @@
     }
     textarea:focus {
         outline: none;
-        border-color: #ff0055;
-        box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+        border-color: #bd00ff;
+        box-shadow: 0 0 20px rgba(189, 0, 255, 0.5);
     }
     
     .btn-group {
@@ -151,23 +150,24 @@
     }
     
     .btn-copy { 
-        background: linear-gradient(135deg, #ff0055 0%, #00f0ff 100%); 
+        background: linear-gradient(135deg, #00f0ff 0%, #bd00ff 100%); 
         color: #ffffff; 
-        box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
     }
     .btn-copy:hover { 
-        box-shadow: 0 0 30px #00f0ff;
+        box-shadow: 0 0 30px #bd00ff;
         transform: translateY(-2px);
     }
     
     .btn-reset { 
-        background: rgba(25, 20, 45, 0.8); 
+        background: rgba(15, 23, 42, 0.8); 
         color: #a0aec0; 
-        border: 2px solid #ff0055;
+        border: 2px solid #00f0ff;
     }
     .btn-reset:hover { 
-        background: rgba(45, 30, 75, 0.9); 
+        background: rgba(30, 41, 59, 0.9); 
         color: #fff;
+        border-color: #bd00ff;
         transform: translateY(-2px);
     }
     
@@ -175,13 +175,13 @@
         overflow-x: auto; 
         border-radius: 8px;
         border: 2px solid #00f0ff;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(8, 6, 18, 0.9);
+        background: rgba(5, 10, 24, 0.9);
     }
     
     th, td {
@@ -193,10 +193,10 @@
     
     th { 
         font-family: 'Orbitron', sans-serif;
-        background: rgba(20, 15, 35, 0.95); 
-        color: #ff0055; 
+        background: rgba(12, 20, 45, 0.95); 
+        color: #00f0ff; 
         font-weight: 700; 
-        border-bottom: 3px solid #00f0ff;
+        border-bottom: 3px solid #bd00ff;
     }
     
     td {
@@ -206,11 +206,11 @@
     }
     
     tr:nth-child(even) {
-        background-color: rgba(255, 0, 85, 0.05);
+        background-color: rgba(0, 240, 255, 0.03);
     }
     tr:hover td {
         color: #00f0ff;
-        background-color: rgba(0, 240, 255, 0.15);
+        background-color: rgba(189, 0, 255, 0.15);
     }
 </style>
 </head>
@@ -221,7 +221,7 @@
 
 <div class="container">
     <h1>Rumus Flop</h1>
-    <div class="sub-title">KONOHA KASIR - CYBERPUNK EDITION v10.1</div>
+    <div class="sub-title">KONOHA KASIR - CYAN MATRIX v10.1</div>
     
     <label for="rawInput">Tempel log transaksi disini:</label>
     <textarea id="rawInput" placeholder="Tempel log transaksi mentah di sini (Otomatis Terkonversi)..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
@@ -250,40 +250,51 @@
 
 <script>
     /* =======================================================
-       ANIMASI BACKGROUND CYBERPUNK NEON NETWORK
+       ANIMASI BACKGROUND CYAN & UNGU NEON
        ======================================================= */
     const canvas = document.getElementById('cyberCanvas');
     const ctx = canvas.getContext('2d');
 
-    function resize() { 
-        canvas.width = window.innerWidth; 
-        canvas.height = window.innerHeight; 
-    }
-    resize(); 
-    window.addEventListener('resize', resize);
+    let particles = [];
 
-    // Membuat partikel neon bertema Merah & Cyan
-    const particles = Array.from({length: 65}, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5,
-        color: Math.random() > 0.5 ? '#ff0055' : '#00f0ff'
-    }));
+    function resizeCanvas() {
+        const width = window.innerWidth;
+        const height = Math.max(document.body.scrollHeight, window.innerHeight);
+
+        canvas.width = width;
+        canvas.height = height;
+
+        if (particles.length === 0 || Math.abs(particles.length - Math.floor(width / 20)) > 20) {
+            initParticles();
+        }
+    }
+
+    function initParticles() {
+        const count = Math.min(Math.floor(window.innerWidth / 15), 80);
+        particles = Array.from({ length: count }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5,
+            // Bebas warna merah: Menggunakan Cyan (#00f0ff) dan Ungu Neon (#bd00ff)
+            color: Math.random() > 0.5 ? '#00f0ff' : '#bd00ff'
+        }));
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('visualViewport' in window ? 'visualViewport' : 'resize', resizeCanvas);
 
     function draw() {
-        ctx.fillStyle = 'rgba(8, 7, 17, 0.2)';
+        ctx.fillStyle = 'rgba(5, 8, 20, 0.2)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         particles.forEach((p, i) => {
             p.x += p.vx; 
             p.y += p.vy;
 
-            // Memantul jika mengenai pinggiran layar
             if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
             if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-            // Gambar titik neon
             ctx.beginPath();
             ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
             ctx.fillStyle = p.color;
@@ -291,7 +302,6 @@
             ctx.shadowColor = p.color;
             ctx.fill();
 
-            // Hubungkan titik-titik dengan garis neon
             for(let j = i + 1; j < particles.length; j++) {
                 const p2 = particles[j];
                 const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
@@ -309,10 +319,12 @@
         });
         requestAnimationFrame(draw);
     }
+
+    resizeCanvas();
     draw();
 
     /* =======================================================
-       LOGIKA KASIR (TRANSAKSI KONVERSI)
+       LOGIKA KASIR
        ======================================================= */
     let hasilTeksUntukDisalin = "";
 
@@ -380,6 +392,7 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
+        setTimeout(resizeCanvas, 50);
     }
 
     function resetData() {
@@ -387,6 +400,7 @@
         document.getElementById('tableBody').innerHTML = '';
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
+        resizeCanvas();
     }
 
     function salinHasil() {
