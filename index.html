@@ -3,48 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rumus Flop Kasir - Premium Background</title>
+    <meta name="color-scheme" content="only light">
+    <title>Rumus Flop Kasir - Anti Hitam Fixed</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
 <style>
+    /* MEMATIKAN FORCE DARK MODE BROWSER */
+    :root {
+        color-scheme: only light !important;
+    }
+
     * {
         box-sizing: border-box;
     }
 
-    /* LATAR BELAKANG STABIL (PURE CSS, ANTI HITAM POLOS) */
-    html {
-        background-color: #0d1117;
+    /* GAMBAR LATAR BELAKANG ASLI (GAK BISA DIBUAT HITAM OLEH HP/BROWSER) */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        background-color: #2b3245 !important;
+        background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        font-family: 'Inter', sans-serif;
+        color: #ffffff !important;
     }
 
     body {
-        margin: 0;
-        padding: 50px 20px;
-        width: 100%;
-        min-height: 100vh;
-        /* Gradasi warna latar belakang visual */
-        background: 
-            radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
-            radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
-            radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, #0d1117 100%);
-        background-attachment: fixed;
-        font-family: 'Inter', sans-serif;
-        color: #f1f5f9;
+        padding: 40px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    /* Container Card Efek Kaca Transparan */
+    /* Container Card dengan Latar Solid Gelap Mewah */
     .container {
-        background: rgba(22, 27, 34, 0.75); 
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1); 
+        background-color: #1a202c !important; 
+        border: 2px solid #319795 !important; 
         border-radius: 16px; 
         width: 100%;
         max-width: 880px;
         padding: 40px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         margin: auto;
     }
 
@@ -54,15 +57,13 @@
         font-weight: 700;
         letter-spacing: 2px;
         margin: 0;
-        background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #ffffff !important;
     }
 
     .sub-title {
         text-align: center;
         font-size: 11px;
-        color: #38bdf8;
+        color: #319795 !important;
         letter-spacing: 4px;
         font-weight: 600;
         text-transform: uppercase;
@@ -74,7 +75,7 @@
         display: block;
         font-weight: 600;
         margin-bottom: 8px;
-        color: #94a3b8; 
+        color: #cbd5e0 !important; 
         font-size: 12px;
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -83,22 +84,21 @@
     textarea {
         width: 100%;
         height: 130px;
-        background: rgba(13, 17, 23, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.12); 
+        background-color: #2d3748 !important;
+        border: 1px solid #4a5568 !important; 
         border-radius: 8px;
-        color: #e2e8f0;
+        color: #e2e8f0 !important;
         padding: 14px;
         box-sizing: border-box;
         resize: vertical;
         font-family: monospace;
         font-size: 13px;
         margin-bottom: 24px;
-        transition: all 0.2s;
     }
     textarea:focus {
         outline: none;
-        border-color: #38bdf8;
-        box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+        border-color: #319795 !important;
+        box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.3) !important;
     }
     
     .btn-group {
@@ -117,36 +117,30 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         border: none;
-        transition: transform 0.2s, background-color 0.2s;
     }
     
     .btn-copy { 
-        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); 
-        color: #ffffff; 
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+        background-color: #319795 !important; 
+        color: #ffffff !important; 
     }
     .btn-copy:hover { 
-        transform: translateY(-1px);
-        background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+        background-color: #2c7a7b !important;
     }
     
     .btn-reset { 
-        background: rgba(255, 255, 255, 0.05); 
-        color: #94a3b8; 
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: #4a5568 !important; 
+        color: #e2e8f0 !important; 
     }
     .btn-reset:hover { 
-        background: rgba(255, 255, 255, 0.1); 
-        color: #ffffff;
-        transform: translateY(-1px);
+        background-color: #718096 !important; 
     }
     
-    /* Tabel Elegant */
+    /* Tabel Solid */
     .table-container { 
         overflow-x: auto; 
         border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(13, 17, 23, 0.5);
+        border: 1px solid #4a5568 !important;
+        background-color: #2d3748 !important;
     }
     
     table {
@@ -163,26 +157,21 @@
     
     th { 
         font-weight: 600;
-        background: rgba(255, 255, 255, 0.03); 
-        color: #38bdf8; 
+        background-color: #1a202c !important; 
+        color: #319795 !important; 
         font-size: 11px;
         letter-spacing: 1px;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid #4a5568 !important;
     }
     
     td {
-        color: #cbd5e1;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        color: #e2e8f0 !important;
+        border-bottom: 1px solid #4a5568 !important;
     }
     
     tr:last-child td {
-        border-bottom: none;
-    }
-
-    tr:hover td {
-        background-color: rgba(255, 255, 255, 0.02);
-        color: #ffffff;
+        border-bottom: none !important;
     }
 </style>
 </head>
