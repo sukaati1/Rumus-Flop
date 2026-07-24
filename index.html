@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only light">
-    <title>Rumus Flop Kasir - Giphy Background</title>
+    <title>Rumus Flop Kasir - Executive Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
 <style>
@@ -16,22 +16,21 @@
         box-sizing: border-box;
     }
 
-    /* LATAR BELAKANG PAKAI GIPHY (DIKUNCI ANTI HITAM) */
+    /* LATAR MATTE DARK + TEXTURE BUATAN (TANPA LINK OUTSIDE = PASTI BISA) */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #0b0d12 !important;
-        
-        /* GANTI LINK DI BAWAH INI DENGAN LINK GIPHY PILIHANMU */
-        background-image: url(https://giphy.com/gifs/matrix-the-cyberpunk-v7WM6sLcnGIc8.gif') !important;
-        
-        background-size: cover !important;
-        background-position: center !important;
-        background-attachment: fixed !important; /* Kunci Latar */
+        background-color: #0f172a !important;
+        /* Pattern Grid Halus Embedded */
+        background-image: 
+            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+        background-size: 24px 24px !important;
+        background-attachment: fixed !important;
         font-family: 'Inter', sans-serif;
-        color: #ffffff !important;
+        color: #f8fafc !important;
     }
 
     body {
@@ -41,34 +40,32 @@
         align-items: center;
     }
 
-    /* Panel Kaca Transparan di atas GIF */
+    /* Container Card Minimalis & Solid (Anti-Norak) */
     .container {
-        background-color: rgba(18, 22, 31, 0.85) !important; 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.15) !important; 
-        border-radius: 16px; 
+        background-color: #1e293b !important; 
+        border: 1px solid #334155 !important; 
+        border-radius: 12px; 
         width: 100%;
-        max-width: 880px;
+        max-width: 860px;
         padding: 36px;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
         margin: auto;
     }
 
     h1 {
         text-align: center;
-        font-size: 26px;
+        font-size: 24px;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         margin: 0;
-        color: #ffffff !important;
+        color: #f8fafc !important;
     }
 
     .sub-title {
         text-align: center;
         font-size: 11px;
         color: #38bdf8 !important;
-        letter-spacing: 3px;
+        letter-spacing: 2.5px;
         font-weight: 600;
         text-transform: uppercase;
         margin-top: 6px;
@@ -81,18 +78,18 @@
         margin-bottom: 8px;
         color: #94a3b8 !important; 
         font-size: 12px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
     }
     
     textarea {
         width: 100%;
         height: 120px;
-        background-color: rgba(11, 13, 18, 0.8) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important; 
-        border-radius: 8px;
-        color: #38bdf8 !important;
-        padding: 14px;
+        background-color: #0f172a !important;
+        border: 1px solid #334155 !important; 
+        border-radius: 6px;
+        color: #e2e8f0 !important;
+        padding: 12px 14px;
         box-sizing: border-box;
         resize: vertical;
         font-family: monospace;
@@ -101,8 +98,8 @@
     }
     textarea:focus {
         outline: none;
-        border-color: #38bdf8 !important;
-        box-shadow: 0 0 12px rgba(56, 189, 248, 0.3) !important;
+        border-color: #0284c7 !important;
+        box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2) !important;
     }
     
     .btn-group {
@@ -113,40 +110,36 @@
     
     button {
         flex: 1;
-        padding: 13px; 
+        padding: 12px; 
         font-size: 13px;    
-        font-weight: 700;
+        font-weight: 600;
         border-radius: 6px; 
         cursor: pointer;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
         border: none;
+        transition: opacity 0.2s ease;
+    }
+    button:hover {
+        opacity: 0.9;
     }
     
     .btn-copy { 
         background-color: #0284c7 !important; 
         color: #ffffff !important; 
     }
-    .btn-copy:hover { 
-        background-color: #0369a1 !important;
-    }
     
     .btn-reset { 
-        background-color: rgba(255, 255, 255, 0.1) !important; 
-        color: #e2e8f0 !important; 
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    }
-    .btn-reset:hover { 
-        background-color: rgba(255, 255, 255, 0.2) !important; 
-        color: #ffffff !important;
+        background-color: #334155 !important; 
+        color: #cbd5e1 !important; 
     }
     
-    /* Tabel Transparan */
+    /* Tabel Clean & Terstruktur */
     .table-container { 
         overflow-x: auto; 
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        background-color: rgba(11, 13, 18, 0.7) !important;
+        border-radius: 6px;
+        border: 1px solid #334155 !important;
+        background-color: #0f172a !important;
     }
     
     table {
@@ -155,7 +148,7 @@
     }
     
     th, td {
-        padding: 13px 16px;
+        padding: 12px 16px;
         text-align: left;
         font-size: 13px;
         white-space: nowrap;
@@ -163,17 +156,17 @@
     
     th { 
         font-weight: 600;
-        background-color: rgba(255, 255, 255, 0.05) !important; 
+        background-color: #1e293b !important; 
         color: #38bdf8 !important; 
         font-size: 11px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-bottom: 1px solid #334155 !important;
     }
     
     td {
-        color: #e2e8f0 !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        color: #cbd5e1 !important;
+        border-bottom: 1px solid #1e293b !important;
     }
     
     tr:last-child td {
@@ -181,7 +174,8 @@
     }
 
     tr:hover td {
-        background-color: rgba(255, 255, 255, 0.08) !important;
+        background-color: #1e293b !important;
+        color: #ffffff !important;
     }
 </style>
 </head>
