@@ -16,26 +16,25 @@
         box-sizing: border-box;
     }
 
-    /* LATAR GAMBAR DI-OPTIMALKAN AGAR TIDAK BLUR */
+    /* LATAR BERGERAK TAJAM (PURE CSS - TANPA GAMBAR BLUR) */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        
-        /* Memanggil gambar kamu */
-        background-image: linear-gradient(rgba(11, 15, 23, 0.4), rgba(11, 15, 23, 0.4)), url('background2.jpg.jpg') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        background-attachment: fixed !important;
-        
-        /* Pengaturan Penajam Gambar (Anti-Blur) */
-        image-rendering: -webkit-optimize-contrast !important;
-        image-rendering: crisp-edges !important;
-        
         font-family: 'Inter', -apple-system, sans-serif;
         color: #f8fafc !important;
+        
+        /* Animasi pergerakan warna */
+        background: linear-gradient(-45deg, #0b0f17, #1e293b, #0f172a, #1e1b4b) !important;
+        background-size: 400% 400% !important;
+        animation: gerakLatar 12s ease infinite !important;
+    }
+
+    @keyframes gerakLatar {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
 
     body {
@@ -45,17 +44,17 @@
         align-items: center;
     }
 
-    /* CONTAINER TRANSPARAN MEWAH (Membuat latar belakang terasa estetik) */
+    /* CONTAINER TRANSPARAN */
     .container {
-        background: rgba(17, 24, 39, 0.75) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        backdrop-filter: blur(12px) !important; /* Efek blur halus di dalam box */
-        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
+        background: rgba(17, 24, 39, 0.85) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid #1f293d !important; 
         border-radius: 16px; 
         width: 100%;
         max-width: 860px;
         padding: 40px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         margin: auto;
     }
 
