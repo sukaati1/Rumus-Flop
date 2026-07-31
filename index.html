@@ -22,7 +22,7 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        /* Menggunakan foto background2.jpg yang kamu upload */
+        /* Menggunakan foto background2.jpg */
         background-image: url('background2.jpg') !important;
         background-size: cover !important;
         background-position: center !important;
@@ -41,8 +41,8 @@
 
     /* CONTAINER TRANSPARAN GELAP (Supaya teks tetap terbaca di atas foto) */
     .container {
-        background: rgba(17, 24, 39, 0.85) !important; /* Efek sedikit transparan */
-        backdrop-filter: blur(8px); /* Efek kaca buram (opsional) */
+        background: rgba(17, 24, 39, 0.85) !important;
+        backdrop-filter: blur(8px);
         border: 1px solid #1f293d !important; 
         border-radius: 16px; 
         width: 100%;
@@ -274,9 +274,10 @@
                     }
                 }
 
+                // Diberbaiki: Pendeteksian bank tanpa koma acak
                 let bankDitemukan = kolom.find(k => {
                     let upper = k.toUpperCase();
-                    return upper.includes('BCA') || upper.includes('MANDIRI') || upper.includes('BRI') || upper.includes('BNI') || upper.includes('CIMB') || upper.includes('DANAMON') || upper.includes(',');
+                    return upper.includes('BCA') || upper.includes('MANDIRI') || upper.includes('BRI') || upper.includes('BNI') || upper.includes('CIMB') || upper.includes('DANAMON');
                 });
                 if (bankDitemukan) tujuanBank = bankDitemukan;
 
