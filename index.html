@@ -3,32 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="only light">
-    <title>Rumus Flop Kasir - Clean Luxury</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="color-scheme" content="only dark">
+    <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
 <style>
     :root {
-        color-scheme: only light !important;
+        color-scheme: only dark !important;
+        --gold-primary: #dfa855;
+        --gold-light: #fbe3b5;
+        --gold-dark: #996e29;
+        --bg-glass: rgba(13, 17, 23, 0.75);
     }
 
     * {
         box-sizing: border-box;
+        user-select: none;
     }
 
-    /* LATAR BELAKANG MOBIL GIF */
+    /* BACKGROUND GIF DENGAN OVERLAY PREMIUM */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-image: linear-gradient(rgba(11, 15, 23, 0.45), rgba(11, 15, 23, 0.45)), url('mobil.gif') !important;
+        background: radial-gradient(circle at center, rgba(15, 23, 42, 0.3) 0%, rgba(5, 7, 10, 0.85) 100%), url('mobil.gif') !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
-        image-rendering: -webkit-optimize-contrast !important;
-        font-family: 'Inter', -apple-system, sans-serif;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
         color: #f8fafc !important;
     }
 
@@ -39,132 +43,157 @@
         align-items: center;
     }
 
+    /* KARTU UTAMA GLASSMORPHISM MEWAH */
     .container {
-        background: rgba(17, 24, 39, 0.75) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
-        border-radius: 16px; 
+        position: relative;
+        background: var(--bg-glass) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(223, 168, 85, 0.25) !important; 
+        border-radius: 24px; 
         width: 100%;
-        max-width: 860px;
-        padding: 40px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        max-width: 900px;
+        padding: 48px;
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9),
+                    0 0 40px rgba(223, 168, 85, 0.08);
         margin: auto;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ANIMASI TEKS KILAU NEON / GLOW BERNAFAS */
-    @keyframes kilauCahaya {
-        0% {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5), 0 0 20px rgba(56, 189, 248, 0.3);
-        }
-        50% {
-            color: #38bdf8;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 35px rgba(56, 189, 248, 0.8);
-        }
-        100% {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5), 0 0 20px rgba(56, 189, 248, 0.3);
-        }
+    /* ANIMASI KILAU TEKS EMAS METALIK (SHIMMER ELEGANT) */
+    @keyframes goldShimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
     }
 
     h1 {
         text-align: center;
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 700;
-        letter-spacing: 0.5px;
+        letter-spacing: -0.5px;
         margin: 0;
-        animation: kilauCahaya 2s infinite ease-in-out !important; /* KILAU BERGERAK SANGAT JELAS */
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+        background-size: 200% auto;
+        color: transparent !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        animation: goldShimmer 6s linear infinite;
+        filter: drop-shadow(0 2px 8px rgba(191, 149, 63, 0.2));
     }
 
     .sub-title {
         text-align: center;
-        font-size: 11px;
-        letter-spacing: 3px;
+        font-size: 10px;
+        color: #94a3b8 !important;
+        letter-spacing: 4px;
         font-weight: 600;
         text-transform: uppercase;
-        margin-top: 6px;
-        margin-bottom: 32px;
-        animation: kilauCahaya 3s infinite ease-in-out !important;
+        margin-top: 8px;
+        margin-bottom: 36px;
+        opacity: 0.8;
     }
     
     label {
         display: block;
         font-weight: 600;
-        margin-bottom: 8px;
-        color: #cbd5e1 !important; 
-        font-size: 12px;
-        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+        color: var(--gold-light) !important; 
+        font-size: 11px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
+        opacity: 0.9;
     }
     
+    /* INPUT TEXTAREA HIGH-END */
     textarea {
         width: 100%;
-        height: 120px;
-        background-color: rgba(11, 15, 23, 0.85) !important;
-        border: 1px solid #1f293d !important; 
-        border-radius: 8px;
+        height: 130px;
+        background-color: rgba(5, 7, 10, 0.75) !important;
+        border: 1px solid rgba(223, 168, 85, 0.2) !important; 
+        border-radius: 12px;
         color: #38bdf8 !important;
-        padding: 14px;
+        padding: 16px;
         box-sizing: border-box;
         resize: vertical;
-        font-family: 'Inter', monospace;
+        font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        margin-bottom: 24px;
-        transition: all 0.2s ease;
+        margin-bottom: 28px;
+        user-select: text;
+        transition: all 0.3s ease;
     }
 
     textarea:focus {
         outline: none;
-        border-color: #38bdf8 !important;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4) !important;
+        border-color: var(--gold-primary) !important;
+        box-shadow: 0 0 20px rgba(223, 168, 85, 0.2) !important;
+        background-color: rgba(5, 7, 10, 0.9) !important;
     }
 
-    /* TOMBOL DENGAN EFEK MEMBAL & KLIK ANIMAIS */
+    textarea::placeholder {
+        color: rgba(148, 163, 184, 0.4);
+    }
+
+    /* GROUP TOMBOL */
     .btn-group {
         display: flex;
-        gap: 14px;
-        margin-bottom: 32px;
+        gap: 16px;
+        margin-bottom: 36px;
     }
     
     button {
         position: relative;
         flex: 1;
-        padding: 14px; 
-        font-size: 13px;    
-        font-weight: 600;
-        border-radius: 8px; 
+        padding: 16px; 
+        font-size: 12px;    
+        font-weight: 700;
+        border-radius: 12px; 
         cursor: pointer;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
         text-transform: uppercase;
         border: 1px solid transparent;
-        transition: transform 0.1s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow: hidden;
     }
 
+    /* TOMBOL UTAMA (GOLD) */
     .btn-copy { 
-        background-color: #f8fafc !important; 
-        color: #0f172a !important; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, #dfa855 0%, #a87932 100%) !important; 
+        color: #0b0f17 !important; 
+        box-shadow: 0 4px 20px rgba(223, 168, 85, 0.25);
+    }
+    
+    .btn-copy:hover { 
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(223, 168, 85, 0.4);
+        filter: brightness(1.1);
     }
 
+    /* TOMBOL RESET (DARK LUXURY) */
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
-        border: 1px solid #1f293d !important;
-    }
-
-    /* REAKSI EKSPLOSIF SAAT TOMBOL DIKLIK */
-    button:active {
-        transform: scale(0.90) rotate(-1deg) !important; /* TOMBOL MENEKAN DEEP SAAT DIKLIK */
-        filter: brightness(1.3);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
     
-    /* TABEL */
+    .btn-reset:hover { 
+        transform: translateY(-2px);
+        background-color: rgba(255, 255, 255, 0.07) !important; 
+        color: #f8fafc !important;
+        border-color: rgba(223, 168, 85, 0.4) !important;
+    }
+
+    /* REAKSI TEKAN TOMBOL (HAPTIC EFFECT) */
+    button:active {
+        transform: translateY(1px) scale(0.97) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    /* TABEL HASIL */
     .table-container { 
         overflow-x: auto; 
-        border-radius: 8px;
-        border: 1px solid #1f293d !important;
-        background-color: rgba(11, 15, 23, 0.85) !important;
+        border-radius: 12px;
+        border: 1px solid rgba(223, 168, 85, 0.15) !important;
+        background-color: rgba(5, 7, 10, 0.65) !important;
     }
     
     table {
@@ -173,39 +202,40 @@
     }
     
     th, td {
-        padding: 13px 16px;
+        padding: 14px 18px;
         text-align: left;
         font-size: 13px;
         white-space: nowrap;
-        transition: all 0.15s ease;
+        user-select: text;
     }
     
     th { 
         font-weight: 600;
-        background-color: rgba(17, 24, 39, 0.9) !important; 
-        color: #38bdf8 !important; 
+        background-color: rgba(17, 24, 39, 0.95) !important; 
+        color: var(--gold-primary) !important; 
         font-size: 11px;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        border-bottom: 1px solid #1f293d !important;
+        border-bottom: 1px solid rgba(223, 168, 85, 0.2) !important;
     }
     
     td {
-        color: #cbd5e1 !important;
-        border-bottom: 1px solid #111827 !important;
+        color: #e2e8f0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
     }
     
     tr:last-child td {
         border-bottom: none !important;
     }
 
-    /* BARIS TABEL MELOMPAT SAAT DIKLIK */
-    tr:active {
-        transform: scale(0.98);
+    tr {
+        transition: background-color 0.2s ease;
     }
 
     tr:hover td {
-        background-color: rgba(56, 189, 248, 0.15) !important;
+        background-color: rgba(223, 168, 85, 0.08) !important;
         color: #ffffff !important;
     }
 </style>
@@ -214,14 +244,14 @@
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
-    <div class="sub-title">Clean Luxury Edition</div>
+    <div class="sub-title">Ultra Luxury Edition</div>
 
     <label for="rawInput">Tempel Log Transaksi</label>
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="salinHasil(event)">Salin Data</button>
-        <button id="btnReset" class="btn-reset" onclick="resetData(event)">Reset</button>
+        <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
+        <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
     </div>
 
     <label>Hasil Konversi</label>
