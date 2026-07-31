@@ -16,18 +16,24 @@
         box-sizing: border-box;
     }
 
-    /* TAMPILAN LATAR GAMBAR */
+    /* LATAR GAMBAR DI-OPTIMALKAN AGAR TIDAK BLUR */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        /* Menggunakan foto background2.jpg.jp */
-        background-image: url('background2.jpg.jpg') !important;
+        
+        /* Memanggil gambar kamu */
+        background-image: linear-gradient(rgba(11, 15, 23, 0.4), rgba(11, 15, 23, 0.4)), url('background2.jpg.jpg') !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
+        
+        /* Pengaturan Penajam Gambar (Anti-Blur) */
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
+        
         font-family: 'Inter', -apple-system, sans-serif;
         color: #f8fafc !important;
     }
@@ -39,16 +45,17 @@
         align-items: center;
     }
 
-    /* CONTAINER TRANSPARAN GELAP (Supaya teks tetap terbaca di atas foto) */
+    /* CONTAINER TRANSPARAN MEWAH (Membuat latar belakang terasa estetik) */
     .container {
-        background: rgba(17, 24, 39, 0.85) !important;
-        backdrop-filter: blur(8px);
-        border: 1px solid #1f293d !important; 
+        background: rgba(17, 24, 39, 0.75) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        backdrop-filter: blur(12px) !important; /* Efek blur halus di dalam box */
+        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
         border-radius: 16px; 
         width: 100%;
         max-width: 860px;
         padding: 40px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         margin: auto;
     }
 
@@ -274,7 +281,6 @@
                     }
                 }
 
-                // Diberbaiki: Pendeteksian bank tanpa koma acak
                 let bankDitemukan = kolom.find(k => {
                     let upper = k.toUpperCase();
                     return upper.includes('BCA') || upper.includes('MANDIRI') || upper.includes('BRI') || upper.includes('BNI') || upper.includes('CIMB') || upper.includes('DANAMON');
