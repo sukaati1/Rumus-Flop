@@ -16,18 +16,17 @@
         box-sizing: border-box;
     }
 
-    /* LATAR MONOKROM SLATE ELEGAN */
+    /* TAMPILAN LATAR GAMBAR */
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #0b0f17 !important;
-        background-image: 
-            radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 70%),
-            linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
-        background-size: 100% 100%, 32px 32px, 32px 32px !important;
+        /* Menggunakan foto background.jpg yang kamu upload */
+        background-image: url('background.jpg') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
         background-attachment: fixed !important;
         font-family: 'Inter', -apple-system, sans-serif;
         color: #f8fafc !important;
@@ -40,9 +39,10 @@
         align-items: center;
     }
 
-    /* CONTAINER SOBER & MINIMALIS */
+    /* CONTAINER TRANSPARAN GELAP (Supaya teks tetap terbaca di atas foto) */
     .container {
-        background: #111827 !important; 
+        background: rgba(17, 24, 39, 0.85) !important; /* Efek sedikit transparan */
+        backdrop-filter: blur(8px); /* Efek kaca buram (opsional) */
         border: 1px solid #1f293d !important; 
         border-radius: 16px; 
         width: 100%;
@@ -85,7 +85,7 @@
     textarea {
         width: 100%;
         height: 120px;
-        background-color: #0b0f17 !important;
+        background-color: rgba(11, 15, 23, 0.8) !important;
         border: 1px solid #1f293d !important; 
         border-radius: 8px;
         color: #38bdf8 !important;
@@ -103,9 +103,7 @@
         box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
     }
     
-    /* =======================================================
-       TOMBOL BERGERAK TAPI ELEGAN & MINIMALIS (CLEAN MOTION)
-       ======================================================= */
+    /* TOMBOL */
     .btn-group {
         display: flex;
         gap: 14px;
@@ -126,7 +124,6 @@
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Tombol Utama (Salin Data) - Pure White Minimalist Glow */
     .btn-copy { 
         background-color: #f8fafc !important; 
         color: #0f172a !important; 
@@ -139,7 +136,6 @@
         box-shadow: 0 8px 20px -4px rgba(248, 250, 252, 0.25);
     }
 
-    /* Tombol Reset - Ghost Border Smooth Fill */
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
@@ -157,12 +153,12 @@
         transform: translateY(0px) scale(0.98);
     }
     
-    /* TABEL MINIMALIS */
+    /* TABEL */
     .table-container { 
         overflow-x: auto; 
         border-radius: 8px;
         border: 1px solid #1f293d !important;
-        background-color: #0b0f17 !important;
+        background-color: rgba(11, 15, 23, 0.8) !important;
     }
     
     table {
@@ -179,7 +175,7 @@
     
     th { 
         font-weight: 600;
-        background-color: #111827 !important; 
+        background-color: rgba(17, 24, 39, 0.9) !important; 
         color: #38bdf8 !important; 
         font-size: 11px;
         letter-spacing: 0.5px;
@@ -197,15 +193,17 @@
     }
 
     tr:hover td {
-        background-color: rgba(255, 255, 255, 0.02) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
         color: #ffffff !important;
     }
 </style>
 </head>
 <body>
 
-<body style="background-image: url('background.jpg'); background-size: cover; background-position: center;">
-    
+<div class="container">
+    <h1>Rumus Flop Kasir</h1>
+    <div class="sub-title">Clean Luxury Edition</div>
+
     <label for="rawInput">Tempel Log Transaksi</label>
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
