@@ -291,7 +291,7 @@
                 let waktu = "00:00:00";
                 let userId = "-";
                 let tujuanBank = "-";
-                let creditStatus = "-"; 
+                let creditStatus = ""; // Dibiarkan kosong total
                 let jumlah = "0";
 
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
@@ -325,7 +325,8 @@
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t${creditStatus}\t${jumlah}`);
+                // Tab ganda (\t\t) memastikan saat di-paste ke Excel, kolom CREDIT tetap kosong
+                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
         });
 
