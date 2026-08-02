@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
     <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
-    <!-- Google Font Cinzel & Jakarta Sans & JetBrains Mono -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
 <style>
@@ -147,8 +146,6 @@
         text-transform: uppercase;
         border: 1px solid transparent;
         overflow: hidden;
-        /* Hapus semua transisi CSS agar gerakan JS langsung bereaksi tanpa jeda */
-        transition: none !important;
     }
 
     .btn-copy { 
@@ -161,6 +158,20 @@
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    /* KUNCI EFEK GETAR BARU: Menggunakan Margin untuk Menggeser Fisik Tombol */
+    @keyframes getarDahsyat {
+        0% { margin-left: 0px; margin-right: 0px; }
+        20% { margin-left: -15px; margin-right: 15px; }
+        40% { margin-left: 15px; margin-right: -15px; }
+        60% { margin-left: -10px; margin-right: 10px; }
+        80% { margin-left: 10px; margin-right: -10px; }
+        100% { margin-left: 0px; margin-right: 0px; }
+    }
+
+    .efek-getar {
+        animation: getarDahsyat 0.2s ease-in-out !important;
     }
     
     .table-container { 
@@ -224,8 +235,8 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="jalankanEfekGetar(this, salinHasil)">Salin Data</button>
-        <button id="btnReset" class="btn-reset" onclick="jalankanEfekGetar(this, resetData)">Reset</button>
+        <button id="btnCopy" class="btn-copy" onclick="mainkanGetar(this); salinHasil();">Salin Data</button>
+        <button id="btnReset" class="btn-reset" onclick="mainkanGetar(this); resetData();">Reset</button>
     </div>
 
     <label>Hasil Konversi</label>
@@ -248,28 +259,20 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    // SCRIPT GETAR MANUAL JAMINAN BISA: Mengocok posisi elemen pakai JS langsung
-    function jalankanEfekGetar(element, callbackPekerjaan) {
-        // Vibrasi fisik HP (jika didukung)
+    function mainkanGetar(tombol) {
+        // Vibrasi HP jika ada
         if ("vibrate" in navigator) {
-            navigator.vibrate([30, 30, 30]);
+            navigator.vibrate(100);
         }
 
-        const urutanPosisi = [-12, 12, -10, 10, -6, 6, -3, 3, 0];
-        let index = 0;
+        // Trik pasang-lepas class CSS yang dijamin memicu animasi
+        tombol.classList.remove("efek-getar");
+        void tombol.offsetWidth; // Force Reflow
+        tombol.classList.add("efek-getar");
 
-        let interval = setInterval(() => {
-            if (index < urutanPosisi.length) {
-                element.style.transform = `translateX(${urutanPosisi[index]}px)`;
-                index++;
-            } else {
-                clearInterval(interval);
-                element.style.transform = "translateX(0px)";
-                
-                // Jalankan fungsi (salin/reset) SETELAH animasi getar selesai
-                if (callbackPekerjaan) callbackPekerjaan();
-            }
-        }, 30); // Berpindah posisi setiap 30 milidetik
+        setTimeout(() => {
+            tombol.classList.remove("efek-getar");
+        }, 200);
     }
 
     function konversiLog() {
@@ -367,7 +370,6 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            // Mengubah tombol menjadi indikator visual jika kosong (bukan alert memotong)
             const btnCopy = document.getElementById('btnCopy');
             const teksAwal = btnCopy.innerText;
             btnCopy.innerText = "DATA KOSONG!";
