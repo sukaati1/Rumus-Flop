@@ -277,7 +277,25 @@
         baris.reverse(); 
 
         let barisDataDisalin = [];
-        const bankList = ['BCA', 'MANDIRI', 'BRI', 'BNI', 'CIMB', 'DANAMON', 'PERMATA', 'DANA', 'OVO', 'GOPAY', 'SEABANK', 'NEO', 'SHOPEEPAY'];
+
+        // Daftar Bank lengkap termasuk BSI, JAGO, dan variasi penulisannya
+        const bankMap = [
+            { keywords: ['BANK JAGO', 'BANKJAGO', 'JAGO'], display: 'JAGO' },
+            { keywords: ['BANK BSI', 'BANKBSI', 'BSI'], display: 'BSI' },
+            { keywords: ['BCA'], display: 'BCA' },
+            { keywords: ['MANDIRI'], display: 'MANDIRI' },
+            { keywords: ['BRI'], display: 'BRI' },
+            { keywords: ['BNI'], display: 'BNI' },
+            { keywords: ['CIMB'], display: 'CIMB' },
+            { keywords: ['DANAMON'], display: 'DANAMON' },
+            { keywords: ['PERMATA'], display: 'PERMATA' },
+            { keywords: ['DANA'], display: 'DANA' },
+            { keywords: ['OVO'], display: 'OVO' },
+            { keywords: ['GOPAY'], display: 'GOPAY' },
+            { keywords: ['SEABANK'], display: 'SEABANK' },
+            { keywords: ['NEO'], display: 'NEO' },
+            { keywords: ['SHOPEEPAY'], display: 'SHOPEEPAY' }
+        ];
 
         baris.forEach(line => {
             if (line.trim() === '') return;
@@ -294,12 +312,14 @@
                 let creditStatus = ""; // Dibiarkan kosong total
                 let jumlah = "0";
 
+                // 1. Deteksi Waktu (Format HH:MM atau HH:MM:SS)
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
                 if (waktuDitemukan) {
                     let matchWaktu = waktuDitemukan.match(/\d{2}:\d{2}(:\d{2})?/);
                     if (matchWaktu) waktu = matchWaktu[0];
                 }
 
+                // 2. Deteksi Jumlah Nominal (Angka terakhir di kolom)
                 for (let i = kolom.length - 1; i >= 0; i--) {
                     let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
                     if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3) {
@@ -308,24 +328,36 @@
                     }
                 }
 
-                let bankDitemukan = kolom.find(k => {
-                    let upper = k.toUpperCase();
-                    return bankList.some(bank => upper.includes(bank));
-                });
-                if (bankDitemukan) tujuanBank = bankDitemukan;
+                // 3. Deteksi Bank (Mencakup BSI, JAGO, dll.)
+                let lineUpper = line.toUpperCase();
+                let bankObj = bankMap.find(b => b.keywords.some(kw => lineUpper.includes(kw)));
+                if (bankObj) {
+                    tujuanBank = bankObj.display;
+                }
 
-                let kandidatUser = kolom.filter(k => k !== waktuDitemukan && k !== bankDitemukan && k !== jumlah && isNaN(k.replace(/[,.-]/g, '')));
+                // 4. Deteksi User ID (Membuang elemen Waktu, Nama Bank, Kata 'BANK', dan Jumlah)
+                let kandidatUser = kolom.filter(k => {
+                    let text = k.toUpperCase();
+                    let isTime = text.includes(':');
+                    let isAmount = (k === jumlah);
+                    let isNumeric = !isNaN(k.replace(/[,.-]/g, ''));
+                    let isBankWord = (text === 'BANK' || bankMap.some(b => b.keywords.some(kw => text.includes(kw))));
+
+                    return !isTime && !isAmount && !isNumeric && !isBankWord;
+                });
+
                 if (kandidatUser.length > 0) {
                     userId = kandidatUser[0]; 
                 } else {
                     userId = kolom[1] || "-";
                 }
 
+                // Render ke Tabel
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Tab ganda (\t\t) memastikan saat di-paste ke Excel, kolom CREDIT tetap kosong
+                // Format salinan data (\t\t memastikan kolom CREDIT tetap kosong)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
         });
