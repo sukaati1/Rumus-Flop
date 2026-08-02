@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
     <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
+    <!-- Google Font Cinzel & Jakarta Sans & JetBrains Mono -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
 <style>
@@ -115,6 +116,7 @@
         font-size: 13px;
         margin-bottom: 28px;
         user-select: text;
+        transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     textarea:focus {
@@ -146,6 +148,13 @@
         text-transform: uppercase;
         border: 1px solid transparent;
         overflow: hidden;
+        transition: all 0.2s ease;
+    }
+
+    /* Span khusus untuk memuat teks tombol agar bisa digetarkan terpisah */
+    button .btn-text {
+        display: inline-block;
+        pointer-events: none;
     }
 
     .btn-copy { 
@@ -153,25 +162,39 @@
         color: #0b0f17 !important; 
         box-shadow: 0 4px 20px rgba(223, 168, 85, 0.25);
     }
+    
+    .btn-copy:hover { 
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(223, 168, 85, 0.4);
+        filter: brightness(1.1);
+    }
 
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
-
-    /* KUNCI EFEK GETAR BARU: Menggunakan Margin untuk Menggeser Fisik Tombol */
-    @keyframes getarDahsyat {
-        0% { margin-left: 0px; margin-right: 0px; }
-        20% { margin-left: -15px; margin-right: 15px; }
-        40% { margin-left: 15px; margin-right: -15px; }
-        60% { margin-left: -10px; margin-right: 10px; }
-        80% { margin-left: 10px; margin-right: -10px; }
-        100% { margin-left: 0px; margin-right: 0px; }
+    
+    .btn-reset:hover { 
+        transform: translateY(-2px);
+        background-color: rgba(255, 255, 255, 0.07) !important; 
+        color: #f8fafc !important;
+        border-color: rgba(223, 168, 85, 0.4) !important;
     }
 
-    .efek-getar {
-        animation: getarDahsyat 0.2s ease-in-out !important;
+    /* ANIMASI GETAR TULISAN (TEXT SHAKE / GLITCH) */
+    @keyframes textShake {
+        0% { transform: translate(0, 0); text-shadow: none; }
+        15% { transform: translate(-4px, 2px); text-shadow: 2px -1px 0 #00ffff, -2px 1px 0 #ff0055; }
+        30% { transform: translate(4px, -2px); text-shadow: -2px 1px 0 #00ffff, 2px -1px 0 #ff0055; }
+        45% { transform: translate(-3px, -1px); text-shadow: 1px -2px 0 #00ffff, -1px 2px 0 #ff0055; }
+        60% { transform: translate(3px, 1px); text-shadow: -1px 2px 0 #00ffff, 1px -2px 0 #ff0055; }
+        75% { transform: translate(-1px, 2px); text-shadow: none; }
+        100% { transform: translate(0, 0); text-shadow: none; }
+    }
+
+    .text-shake-active {
+        animation: textShake 0.35s ease-in-out !important;
     }
     
     .table-container { 
@@ -235,8 +258,12 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="mainkanGetar(this); salinHasil();">Salin Data</button>
-        <button id="btnReset" class="btn-reset" onclick="mainkanGetar(this); resetData();">Reset</button>
+        <button id="btnCopy" class="btn-copy" onclick="getarkanTulisan(this); salinHasil();">
+            <span class="btn-text">Salin Data</span>
+        </button>
+        <button id="btnReset" class="btn-reset" onclick="getarkanTulisan(this); resetData();">
+            <span class="btn-text">Reset</span>
+        </button>
     </div>
 
     <label>Hasil Konversi</label>
@@ -259,20 +286,18 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    function mainkanGetar(tombol) {
-        // Vibrasi HP jika ada
-        if ("vibrate" in navigator) {
-            navigator.vibrate(100);
-        }
+    // Fungsi khusus menggetarkan TULISAN di dalam tombol
+    function getarkanTulisan(tombol) {
+        const spanTeks = tombol.querySelector('.btn-text');
+        if (!spanTeks) return;
 
-        // Trik pasang-lepas class CSS yang dijamin memicu animasi
-        tombol.classList.remove("efek-getar");
-        void tombol.offsetWidth; // Force Reflow
-        tombol.classList.add("efek-getar");
-
+        spanTeks.classList.remove('text-shake-active');
+        void spanTeks.offsetWidth; // Trigger Reflow
+        spanTeks.classList.add('text-shake-active');
+        
         setTimeout(() => {
-            tombol.classList.remove("efek-getar");
-        }, 200);
+            spanTeks.classList.remove('text-shake-active');
+        }, 350);
     }
 
     function konversiLog() {
@@ -369,20 +394,19 @@
     }
 
     function salinHasil() {
+        const btnText = document.querySelector('#btnCopy .btn-text');
+        
         if (!hasilTeksUntukDisalin) {
-            const btnCopy = document.getElementById('btnCopy');
-            const teksAwal = btnCopy.innerText;
-            btnCopy.innerText = "DATA KOSONG!";
-            setTimeout(() => { btnCopy.innerText = teksAwal; }, 1000);
+            const teksAwal = btnText.innerText;
+            btnText.innerText = "DATA KOSONG!";
+            setTimeout(() => { btnText.innerText = teksAwal; }, 1000);
             return;
         }
         
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            const btnCopy = document.getElementById('btnCopy');
-            const teksAwal = btnCopy.innerText;
-            
-            btnCopy.innerText = "BERHASIL DISALIN";
-            setTimeout(() => { btnCopy.innerText = teksAwal; }, 1200);
+            const teksAwal = "SALIN DATA";
+            btnText.innerText = "BERHASIL DISALIN";
+            setTimeout(() => { btnText.innerText = teksAwal; }, 1200);
         }).catch(err => {
             console.error("Error: ", err);
         });
