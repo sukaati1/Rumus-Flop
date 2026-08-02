@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
     <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <!-- Tambahan Google Font Cinzel untuk Judul Luxury -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
 <style>
     :root {
@@ -63,11 +64,13 @@
         100% { background-position: 200% center; }
     }
 
+    /* Pembaruan Font Judul: Lebih Besar & Menggunakan Font Cinzel */
     h1 {
         text-align: center;
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        font-family: 'Cinzel', serif;
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
         margin: 0;
         background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
         background-size: 200% auto;
@@ -75,17 +78,17 @@
         -webkit-background-clip: text !important;
         background-clip: text !important;
         animation: goldShimmer 6s linear infinite;
-        filter: drop-shadow(0 2px 8px rgba(191, 149, 63, 0.2));
+        filter: drop-shadow(0 2px 8px rgba(191, 149, 63, 0.3));
     }
 
     .sub-title {
         text-align: center;
-        font-size: 10px;
+        font-size: 11px;
         color: #94a3b8 !important;
-        letter-spacing: 4px;
+        letter-spacing: 5px;
         font-weight: 600;
         text-transform: uppercase;
-        margin-top: 8px;
+        margin-top: 6px;
         margin-bottom: 36px;
         opacity: 0.8;
     }
@@ -175,8 +178,18 @@
         border-color: rgba(223, 168, 85, 0.4) !important;
     }
 
-    button:active {
-        transform: translateY(1px) scale(0.97) !important;
+    /* Animation Keyframes untuk Efek Bergetar Tombol */
+    @keyframes btnShake {
+        0% { transform: translate(0, 0); }
+        20% { transform: translate(-4px, 2px); }
+        40% { transform: translate(4px, -2px); }
+        60% { transform: translate(-3px, -1px); }
+        80% { transform: translate(3px, 1px); }
+        100% { transform: translate(0, 0); }
+    }
+
+    button:active, button.shake-active {
+        animation: btnShake 0.25s ease-in-out !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
     }
     
@@ -241,8 +254,8 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="salinHasil()">Salin Data</button>
-        <button id="btnReset" class="btn-reset" onclick="resetData()">Reset</button>
+        <button id="btnCopy" class="btn-copy" onclick="triggerGetar(this); salinHasil();">Salin Data</button>
+        <button id="btnReset" class="btn-reset" onclick="triggerGetar(this); resetData();">Reset</button>
     </div>
 
     <label>Hasil Konversi</label>
@@ -265,6 +278,23 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
+    // Fungsi untuk memicu getaran visual & getaran fisik HP
+    function triggerGetar(element) {
+        // Getaran Fisik di HP (jika didukung perangkat)
+        if ("vibrate" in navigator) {
+            navigator.vibrate(50);
+        }
+        
+        // Trigger animasi CSS Bergetar
+        element.classList.remove('shake-active');
+        void element.offsetWidth; // Trigger reflow
+        element.classList.add('shake-active');
+        
+        setTimeout(() => {
+            element.classList.remove('shake-active');
+        }, 250);
+    }
+
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
@@ -278,7 +308,6 @@
 
         let barisDataDisalin = [];
 
-        // Daftar kata kunci bank untuk mendeteksi kolom bank/rekening
         const bankKeywords = [
             'BCA', 'MANDIRI', 'BRI', 'BNI', 'CIMB', 'DANAMON', 'PERMATA', 
             'DANA', 'OVO', 'GOPAY', 'SEABANK', 'NEO', 'SHOPEEPAY', 'BSI', 
@@ -288,10 +317,8 @@
         baris.forEach(line => {
             if (line.trim() === '') return;
 
-            // Pisahkan berdasarkan tab atau spasi berturut-turut (2 atau lebih)
             let kolom = line.split(/\t|\s{2,}/).map(item => item.trim()).filter(item => item !== '');
 
-            // Jika pemisahan spasi lebar gagal, coba split spasi biasa
             if (kolom.length < 4) {
                 kolom = line.split(/\s+/).map(item => item.trim()).filter(item => item !== '');
             }
@@ -300,17 +327,15 @@
                 let waktu = "00:00:00";
                 let userId = "-";
                 let tujuanBank = "-";
-                let creditStatus = ""; // Dibiarkan kosong
+                let creditStatus = ""; 
                 let jumlah = "0";
 
-                // 1. Ambil Waktu (Contoh: 09:55:49)
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
                 if (waktuDitemukan) {
                     let matchWaktu = waktuDitemukan.match(/\d{2}:\d{2}(:\d{2})?/);
                     if (matchWaktu) waktu = matchWaktu[0];
                 }
 
-                // 2. Ambil Jumlah Nominal (Mengambil angka berformat seperti 600,000)
                 for (let i = kolom.length - 1; i >= 0; i--) {
                     let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
                     if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3) {
@@ -319,18 +344,15 @@
                     }
                 }
 
-                // 3. Ambil TUJUAN BANK secara FULL (Misal: "TAUFIK MUHAJJAR , 1050937794, BSI")
-                // Mencari kolom yang memuat salah satu kata kunci bank
                 let kolomBankUtuh = kolom.find(k => {
                     let textUpper = k.toUpperCase();
                     return bankKeywords.some(kw => textUpper.includes(kw));
                 });
 
                 if (kolomBankUtuh) {
-                    tujuanBank = kolomBankUtuh; // Mengambil FULL isi kolom tersebut
+                    tujuanBank = kolomBankUtuh;
                 }
 
-                // 4. Ambil User ID (Kolom setelah tanggal/waktu yang bukan status/tipe/bank/jumlah)
                 let kandidatUser = kolom.filter(k => {
                     let text = k.toUpperCase();
                     let isTime = text.includes(':') || text.match(/\d{4}-\d{2}-\d{2}/);
@@ -348,12 +370,10 @@
                     userId = kolom[2] || kolom[1] || "-";
                 }
 
-                // Render Hasil ke Tabel
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
                 tbody.appendChild(tr);
 
-                // Format salinan data (\t\t membuat kolom CREDIT tetap kosong saat dipaste ke Excel)
                 barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
         });
