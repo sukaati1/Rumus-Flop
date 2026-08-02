@@ -116,7 +116,6 @@
         font-size: 13px;
         margin-bottom: 28px;
         user-select: text;
-        transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     textarea:focus {
@@ -147,8 +146,9 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         border: 1px solid transparent;
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
         overflow: hidden;
+        /* Hapus semua transisi CSS agar gerakan JS langsung bereaksi tanpa jeda */
+        transition: none !important;
     }
 
     .btn-copy { 
@@ -156,43 +156,11 @@
         color: #0b0f17 !important; 
         box-shadow: 0 4px 20px rgba(223, 168, 85, 0.25);
     }
-    
-    .btn-copy:hover { 
-        box-shadow: 0 8px 25px rgba(223, 168, 85, 0.4);
-        filter: brightness(1.1);
-    }
 
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    .btn-reset:hover { 
-        background-color: rgba(255, 255, 255, 0.07) !important; 
-        color: #f8fafc !important;
-        border-color: rgba(223, 168, 85, 0.4) !important;
-    }
-
-    /* ANIMASI GETAR BARU: Menggunakan kombinasi perpindahan posisi & kilatan cahaya */
-    @keyframes superShake {
-        0% { transform: translate(0, 0) scale(1); }
-        10% { transform: translate(-8px, -2px) scale(0.98); }
-        20% { transform: translate(8px, 2px) scale(1.02); }
-        30% { transform: translate(-8px, 1px) scale(0.98); }
-        40% { transform: translate(8px, -1px) scale(1.02); }
-        50% { transform: translate(-5px, 0) scale(0.99); }
-        60% { transform: translate(5px, 0) scale(1.01); }
-        70% { transform: translate(-3px, 0) scale(1); }
-        80% { transform: translate(3px, 0) scale(1); }
-        100% { transform: translate(0, 0) scale(1); }
-    }
-
-    /* Efek dipaksa aktif dan mengabaikan hover */
-    button.shake-active {
-        animation: superShake 0.4s cubic-bezier(.36,.07,.19,.97) both !important;
-        box-shadow: 0 0 25px rgba(223, 168, 85, 0.8) !important;
-        border-color: #ffffff !important;
     }
     
     .table-container { 
@@ -256,8 +224,8 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="triggerGetar(this); salinHasil();">Salin Data</button>
-        <button id="btnReset" class="btn-reset" onclick="triggerGetar(this); resetData();">Reset</button>
+        <button id="btnCopy" class="btn-copy" onclick="jalankanEfekGetar(this, salinHasil)">Salin Data</button>
+        <button id="btnReset" class="btn-reset" onclick="jalankanEfekGetar(this, resetData)">Reset</button>
     </div>
 
     <label>Hasil Konversi</label>
@@ -280,25 +248,28 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    function triggerGetar(element) {
-        // Vibrasi HP jika ada
+    // SCRIPT GETAR MANUAL JAMINAN BISA: Mengocok posisi elemen pakai JS langsung
+    function jalankanEfekGetar(element, callbackPekerjaan) {
+        // Vibrasi fisik HP (jika didukung)
         if ("vibrate" in navigator) {
-            navigator.vibrate([40, 40, 40]);
+            navigator.vibrate([30, 30, 30]);
         }
-        
-        // Hapus kelas animasi jika sudah terpasang
-        element.classList.remove('shake-active');
-        
-        // Memaksa browser merender ulang (Reflow Trigger)
-        void element.offsetWidth; 
-        
-        // Pasang kelas animasi
-        element.classList.add('shake-active');
-        
-        // Lepas kelas setelah 400ms
-        setTimeout(() => {
-            element.classList.remove('shake-active');
-        }, 400);
+
+        const urutanPosisi = [-12, 12, -10, 10, -6, 6, -3, 3, 0];
+        let index = 0;
+
+        let interval = setInterval(() => {
+            if (index < urutanPosisi.length) {
+                element.style.transform = `translateX(${urutanPosisi[index]}px)`;
+                index++;
+            } else {
+                clearInterval(interval);
+                element.style.transform = "translateX(0px)";
+                
+                // Jalankan fungsi (salin/reset) SETELAH animasi getar selesai
+                if (callbackPekerjaan) callbackPekerjaan();
+            }
+        }, 30); // Berpindah posisi setiap 30 milidetik
     }
 
     function konversiLog() {
@@ -396,7 +367,11 @@
 
     function salinHasil() {
         if (!hasilTeksUntukDisalin) {
-            alert("Tidak ada data untuk disalin!");
+            // Mengubah tombol menjadi indikator visual jika kosong (bukan alert memotong)
+            const btnCopy = document.getElementById('btnCopy');
+            const teksAwal = btnCopy.innerText;
+            btnCopy.innerText = "DATA KOSONG!";
+            setTimeout(() => { btnCopy.innerText = teksAwal; }, 1000);
             return;
         }
         
@@ -408,7 +383,6 @@
             setTimeout(() => { btnCopy.innerText = teksAwal; }, 1200);
         }).catch(err => {
             console.error("Error: ", err);
-            alert("Gagal menyalin data.");
         });
     }
 </script>
