@@ -149,10 +149,10 @@
         overflow: hidden;
     }
 
-    /* Target utama animasi getar teks */
     .vibrate-text {
         display: inline-block !important;
         will-change: transform;
+        transition: color 0.1s;
     }
 
     .btn-copy { 
@@ -224,10 +224,17 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="getarkanDanProses('txtCopy', salinHasil);">
+        <!-- Event ditempel ke onmouseenter (saat kursor masuk) & onmouseleave (saat kursor keluar) -->
+        <button id="btnCopy" class="btn-copy" 
+                onmouseenter="mulaiGetar('txtCopy')" 
+                onmouseleave="stopGetar('txtCopy')" 
+                onclick="salinHasil()">
             <span class="vibrate-text" id="txtCopy">SALIN DATA</span>
         </button>
-        <button id="btnReset" class="btn-reset" onclick="getarkanDanProses('txtReset', resetData);">
+        <button id="btnReset" class="btn-reset" 
+                onmouseenter="mulaiGetar('txtReset')" 
+                onmouseleave="stopGetar('txtReset')" 
+                onclick="resetData()">
             <span class="vibrate-text" id="txtReset">RESET</span>
         </button>
     </div>
@@ -251,41 +258,43 @@
 
 <script>
     let hasilTeksUntukDisalin = "";
+    let timerGetar = {};
 
-    // FUNGSI GETAR TEKS UTAMA (MENGACAK POSISI SECARA EKSTREM VIA JAVASCRIPT)
-    function getarkanDanProses(elementId, callback) {
+    // FUNGSI MULAI GETAR PAS KURSOR DI ATAS TOMBOL
+    function mulaiGetar(elementId) {
         const el = document.getElementById(elementId);
         if (!el) return;
 
-        let iterasi = 0;
-        const maxIterasi = 20; // Bergetar selama 20 frame (sekitar 0.3 detik)
+        // Cegah tabrakan timer jika kursor keluar masuk dengan cepat
+        if (timerGetar[elementId]) clearInterval(timerGetar[elementId]);
+
         const warnaGlitch = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#ff9900'];
 
-        const loopGetar = setInterval(() => {
-            iterasi++;
-            
-            // Acak posisi koordinat X dan Y secara ekstrem (-12px sampai 12px)
-            const randomX = (Math.random() * 24 - 12).toFixed(1);
-            const randomY = (Math.random() * 12 - 6).toFixed(1);
+        timerGetar[elementId] = setInterval(() => {
+            // Gerak acak X (-10px s/d 10px) dan Y (-5px s/d 5px)
+            const randomX = (Math.random() * 20 - 10).toFixed(1);
+            const randomY = (Math.random() * 10 - 5).toFixed(1);
             const color = warnaGlitch[Math.floor(Math.random() * warnaGlitch.length)];
 
             el.style.transform = `translate(${randomX}px, ${randomY}px)`;
             el.style.color = color;
             el.style.textShadow = `${-randomX}px 0 #00ffff, ${randomX}px 0 #ff0055`;
+        }, 20); // Mengacak koordinat tiap 20 milidetik
+    }
 
-            if (iterasi >= maxIterasi) {
-                clearInterval(loopGetar);
-                // Kembalikan ke tampilan normal
-                el.style.transform = 'translate(0, 0)';
-                el.style.color = '';
-                el.style.textShadow = '';
+    // FUNGSI STOP GETAR PAS KURSOR KELUAR
+    function stopGetar(elementId) {
+        if (timerGetar[elementId]) {
+            clearInterval(timerGetar[elementId]);
+            delete timerGetar[elementId];
+        }
 
-                // Jalankan fungsi salin/reset setelah getaran selesai
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            }
-        }, 15); // Loop setiap 15ms
+        const el = document.getElementById(elementId);
+        if (el) {
+            el.style.transform = 'translate(0, 0)';
+            el.style.color = '';
+            el.style.textShadow = '';
+        }
     }
 
     function konversiLog() {
