@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
     <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
-    <!-- Google Font Cinzel & Jakarta Sans & JetBrains Mono -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
 <style>
@@ -151,10 +150,12 @@
         transition: all 0.2s ease;
     }
 
-    /* Span khusus untuk memuat teks tombol agar bisa digetarkan terpisah */
-    button .btn-text {
-        display: inline-block;
-        pointer-events: none;
+    /* TEKS DALAM TOMBOL */
+    .btn-text {
+        display: inline-block !important;
+        width: 100%;
+        text-align: center;
+        transition: transform 0.05s;
     }
 
     .btn-copy { 
@@ -182,19 +183,23 @@
         border-color: rgba(223, 168, 85, 0.4) !important;
     }
 
-    /* ANIMASI GETAR TULISAN (TEXT SHAKE / GLITCH) */
-    @keyframes textShake {
-        0% { transform: translate(0, 0); text-shadow: none; }
-        15% { transform: translate(-4px, 2px); text-shadow: 2px -1px 0 #00ffff, -2px 1px 0 #ff0055; }
-        30% { transform: translate(4px, -2px); text-shadow: -2px 1px 0 #00ffff, 2px -1px 0 #ff0055; }
-        45% { transform: translate(-3px, -1px); text-shadow: 1px -2px 0 #00ffff, -1px 2px 0 #ff0055; }
-        60% { transform: translate(3px, 1px); text-shadow: -1px 2px 0 #00ffff, 1px -2px 0 #ff0055; }
-        75% { transform: translate(-1px, 2px); text-shadow: none; }
-        100% { transform: translate(0, 0); text-shadow: none; }
+    /* ANIMASI GETAR TEKS EKSTREM (TERLIHAT SANGAT JELAS) */
+    @keyframes getarTeksEkstrem {
+        0% { transform: translate(0, 0) scale(1); color: inherit; }
+        10% { transform: translate(-8px, -5px) scale(1.1); color: #ff0055; text-shadow: 2px 2px #00ffff; }
+        20% { transform: translate(8px, 5px) scale(0.95); color: #00ffff; text-shadow: -2px -2px #ff0055; }
+        30% { transform: translate(-8px, 4px) scale(1.1); color: #ffff00; }
+        40% { transform: translate(8px, -4px) scale(0.95); color: #ff0055; }
+        50% { transform: translate(-6px, -3px) scale(1.05); color: #00ffff; }
+        60% { transform: translate(6px, 3px) scale(0.98); color: #ffffff; }
+        70% { transform: translate(-4px, 2px) scale(1.02); }
+        80% { transform: translate(4px, -2px) scale(1); }
+        90% { transform: translate(-2px, 1px) scale(1); }
+        100% { transform: translate(0, 0) scale(1); color: inherit; text-shadow: none; }
     }
 
-    .text-shake-active {
-        animation: textShake 0.35s ease-in-out !important;
+    .efek-getar-teks {
+        animation: getarTeksEkstrem 0.5s cubic-bezier(.36,.07,.19,.97) !important;
     }
     
     .table-container { 
@@ -258,10 +263,10 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="getarkanTulisan(this); salinHasil();">
+        <button id="btnCopy" class="btn-copy" onclick="picuGetarTeks(this); salinHasil();">
             <span class="btn-text">Salin Data</span>
         </button>
-        <button id="btnReset" class="btn-reset" onclick="getarkanTulisan(this); resetData();">
+        <button id="btnReset" class="btn-reset" onclick="picuGetarTeks(this); resetData();">
             <span class="btn-text">Reset</span>
         </button>
     </div>
@@ -286,18 +291,18 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    // Fungsi khusus menggetarkan TULISAN di dalam tombol
-    function getarkanTulisan(tombol) {
+    function picuGetarTeks(tombol) {
         const spanTeks = tombol.querySelector('.btn-text');
         if (!spanTeks) return;
 
-        spanTeks.classList.remove('text-shake-active');
-        void spanTeks.offsetWidth; // Trigger Reflow
-        spanTeks.classList.add('text-shake-active');
+        // Paksa reset animasi
+        spanTeks.classList.remove('efek-getar-teks');
+        void spanTeks.offsetWidth; // Force Reflow Browser
+        spanTeks.classList.add('efek-getar-teks');
         
         setTimeout(() => {
-            spanTeks.classList.remove('text-shake-active');
-        }, 350);
+            spanTeks.classList.remove('efek-getar-teks');
+        }, 500);
     }
 
     function konversiLog() {
@@ -404,9 +409,8 @@
         }
         
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            const teksAwal = "SALIN DATA";
             btnText.innerText = "BERHASIL DISALIN";
-            setTimeout(() => { btnText.innerText = teksAwal; }, 1200);
+            setTimeout(() => { btnText.innerText = "SALIN DATA"; }, 1200);
         }).catch(err => {
             console.error("Error: ", err);
         });
