@@ -56,7 +56,6 @@
         box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9),
                     0 0 40px rgba(223, 168, 85, 0.08);
         margin: auto;
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes goldShimmer {
@@ -117,7 +116,7 @@
         font-size: 13px;
         margin-bottom: 28px;
         user-select: text;
-        transition: all 0.3s ease;
+        transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     textarea:focus {
@@ -148,7 +147,7 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         border: 1px solid transparent;
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, filter 0.2s ease;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
         overflow: hidden;
     }
 
@@ -159,7 +158,6 @@
     }
     
     .btn-copy:hover { 
-        transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(223, 168, 85, 0.4);
         filter: brightness(1.1);
     }
@@ -171,28 +169,30 @@
     }
     
     .btn-reset:hover { 
-        transform: translateY(-2px);
         background-color: rgba(255, 255, 255, 0.07) !important; 
         color: #f8fafc !important;
         border-color: rgba(223, 168, 85, 0.4) !important;
     }
 
-    /* Animation Keyframes - Efek Bergetar Horizontal Jelas */
-    @keyframes btnShake {
-        0% { transform: translateX(0); }
-        15% { transform: translateX(-6px); }
-        30% { transform: translateX(6px); }
-        45% { transform: translateX(-5px); }
-        60% { transform: translateX(5px); }
-        75% { transform: translateX(-3px); }
-        90% { transform: translateX(3px); }
-        100% { transform: translateX(0); }
+    /* ANIMASI GETAR BARU: Menggunakan kombinasi perpindahan posisi & kilatan cahaya */
+    @keyframes superShake {
+        0% { transform: translate(0, 0) scale(1); }
+        10% { transform: translate(-8px, -2px) scale(0.98); }
+        20% { transform: translate(8px, 2px) scale(1.02); }
+        30% { transform: translate(-8px, 1px) scale(0.98); }
+        40% { transform: translate(8px, -1px) scale(1.02); }
+        50% { transform: translate(-5px, 0) scale(0.99); }
+        60% { transform: translate(5px, 0) scale(1.01); }
+        70% { transform: translate(-3px, 0) scale(1); }
+        80% { transform: translate(3px, 0) scale(1); }
+        100% { transform: translate(0, 0) scale(1); }
     }
 
-    /* Kelas Aktif Animasi Getar (Mengesampingkan Efek Hover) */
+    /* Efek dipaksa aktif dan mengabaikan hover */
     button.shake-active {
-        animation: btnShake 0.35s ease-in-out !important;
-        box-shadow: 0 0 20px rgba(223, 168, 85, 0.6) !important;
+        animation: superShake 0.4s cubic-bezier(.36,.07,.19,.97) both !important;
+        box-shadow: 0 0 25px rgba(223, 168, 85, 0.8) !important;
+        border-color: #ffffff !important;
     }
     
     .table-container { 
@@ -280,22 +280,25 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    // Fungsi untuk memicu getaran visual & getaran fisik HP
     function triggerGetar(element) {
-        // Getaran Fisik di HP (jika didukung perangkat)
+        // Vibrasi HP jika ada
         if ("vibrate" in navigator) {
-            navigator.vibrate([30, 30, 30]);
+            navigator.vibrate([40, 40, 40]);
         }
         
-        // Reset animasi
+        // Hapus kelas animasi jika sudah terpasang
         element.classList.remove('shake-active');
-        void element.offsetWidth; // Force Reflow agar animasi bisa dipicu ulang
+        
+        // Memaksa browser merender ulang (Reflow Trigger)
+        void element.offsetWidth; 
+        
+        // Pasang kelas animasi
         element.classList.add('shake-active');
         
-        // Hapus kelas setelah animasi selesai
+        // Lepas kelas setelah 400ms
         setTimeout(() => {
             element.classList.remove('shake-active');
-        }, 350);
+        }, 400);
     }
 
     function konversiLog() {
