@@ -147,15 +147,12 @@
         text-transform: uppercase;
         border: 1px solid transparent;
         overflow: hidden;
-        transition: all 0.2s ease;
+        transition: transform 0.1s;
     }
 
-    /* TEKS DALAM TOMBOL */
-    .btn-text {
-        display: inline-block !important;
-        width: 100%;
-        text-align: center;
-        transition: transform 0.05s;
+    .btn-text-wrapper {
+        display: inline-block;
+        position: relative;
     }
 
     .btn-copy { 
@@ -163,43 +160,11 @@
         color: #0b0f17 !important; 
         box-shadow: 0 4px 20px rgba(223, 168, 85, 0.25);
     }
-    
-    .btn-copy:hover { 
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(223, 168, 85, 0.4);
-        filter: brightness(1.1);
-    }
 
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    .btn-reset:hover { 
-        transform: translateY(-2px);
-        background-color: rgba(255, 255, 255, 0.07) !important; 
-        color: #f8fafc !important;
-        border-color: rgba(223, 168, 85, 0.4) !important;
-    }
-
-    /* ANIMASI GETAR TEKS EKSTREM (TERLIHAT SANGAT JELAS) */
-    @keyframes getarTeksEkstrem {
-        0% { transform: translate(0, 0) scale(1); color: inherit; }
-        10% { transform: translate(-8px, -5px) scale(1.1); color: #ff0055; text-shadow: 2px 2px #00ffff; }
-        20% { transform: translate(8px, 5px) scale(0.95); color: #00ffff; text-shadow: -2px -2px #ff0055; }
-        30% { transform: translate(-8px, 4px) scale(1.1); color: #ffff00; }
-        40% { transform: translate(8px, -4px) scale(0.95); color: #ff0055; }
-        50% { transform: translate(-6px, -3px) scale(1.05); color: #00ffff; }
-        60% { transform: translate(6px, 3px) scale(0.98); color: #ffffff; }
-        70% { transform: translate(-4px, 2px) scale(1.02); }
-        80% { transform: translate(4px, -2px) scale(1); }
-        90% { transform: translate(-2px, 1px) scale(1); }
-        100% { transform: translate(0, 0) scale(1); color: inherit; text-shadow: none; }
-    }
-
-    .efek-getar-teks {
-        animation: getarTeksEkstrem 0.5s cubic-bezier(.36,.07,.19,.97) !important;
     }
     
     .table-container { 
@@ -243,10 +208,6 @@
         border-bottom: none !important;
     }
 
-    tr {
-        transition: background-color 0.2s ease;
-    }
-
     tr:hover td {
         background-color: rgba(223, 168, 85, 0.08) !important;
         color: #ffffff !important;
@@ -263,11 +224,11 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" onclick="picuGetarTeks(this); salinHasil();">
-            <span class="btn-text">Salin Data</span>
+        <button id="btnCopy" class="btn-copy" onclick="paksaGetarTeks(this); salinHasil();">
+            <span class="btn-text-wrapper" id="txtCopy">Salin Data</span>
         </button>
-        <button id="btnReset" class="btn-reset" onclick="picuGetarTeks(this); resetData();">
-            <span class="btn-text">Reset</span>
+        <button id="btnReset" class="btn-reset" onclick="paksaGetarTeks(this); resetData();">
+            <span class="btn-text-wrapper" id="txtReset">Reset</span>
         </button>
     </div>
 
@@ -291,18 +252,34 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    function picuGetarTeks(tombol) {
-        const spanTeks = tombol.querySelector('.btn-text');
-        if (!spanTeks) return;
+    // EFEK GETAR TEKS PAKSAAN DIRECT VIA JAVASCRIPT
+    function paksaGetarTeks(tombol) {
+        const targetText = tombol.querySelector('.btn-text-wrapper');
+        if(!targetText) return;
 
-        // Paksa reset animasi
-        spanTeks.classList.remove('efek-getar-teks');
-        void spanTeks.offsetWidth; // Force Reflow Browser
-        spanTeks.classList.add('efek-getar-teks');
-        
-        setTimeout(() => {
-            spanTeks.classList.remove('efek-getar-teks');
-        }, 500);
+        let frame = 0;
+        const totalFrames = 15;
+        const colors = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#dfa855'];
+
+        const interval = setInterval(() => {
+            frame++;
+            
+            // Randomize koordinat posisi teks langsung di atribut Inline Style
+            const offsetX = (Math.random() * 16 - 8).toFixed(1); 
+            const offsetY = (Math.random() * 10 - 5).toFixed(1);
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+            targetText.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${1 + (Math.random() * 0.1)})`;
+            targetText.style.color = randomColor;
+            targetText.style.textShadow = `${-offsetX}px ${-offsetY}px 0px rgba(255,255,255,0.8)`;
+
+            if (frame >= totalFrames) {
+                clearInterval(interval);
+                targetText.style.transform = 'translate(0px, 0px) scale(1)';
+                targetText.style.color = '';
+                targetText.style.textShadow = '';
+            }
+        }, 20); // Bergetar setiap 20ms
     }
 
     function konversiLog() {
@@ -399,18 +376,17 @@
     }
 
     function salinHasil() {
-        const btnText = document.querySelector('#btnCopy .btn-text');
+        const txt = document.getElementById('txtCopy');
         
         if (!hasilTeksUntukDisalin) {
-            const teksAwal = btnText.innerText;
-            btnText.innerText = "DATA KOSONG!";
-            setTimeout(() => { btnText.innerText = teksAwal; }, 1000);
+            txt.innerText = "DATA KOSONG!";
+            setTimeout(() => { txt.innerText = "Salin Data"; }, 1000);
             return;
         }
         
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            btnText.innerText = "BERHASIL DISALIN";
-            setTimeout(() => { btnText.innerText = "SALIN DATA"; }, 1200);
+            txt.innerText = "BERHASIL DISALIN";
+            setTimeout(() => { txt.innerText = "Salin Data"; }, 1200);
         }).catch(err => {
             console.error("Error: ", err);
         });
