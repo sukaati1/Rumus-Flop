@@ -21,30 +21,32 @@
         user-select: none;
     }
 
-    html, body {
-        margin: 0;
-        padding: 0;
+    /* Pengaturan Fullscreen untuk Latar Belakang */
+    html {
+        height: 100%;
         width: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        width: 100vw;
         min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #0b0f17 !important;
         
-        /* Sudah disesuaikan dengan nama file di GitHub: ANIME.JPG.gif */
+        /* Gambar diset FULL COVER ke seluruh viewport */
         background-image: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(5, 7, 10, 0.75) 100%), 
                           url('ANIME.JPG.gif') !important;
         
         background-size: cover !important;
-        background-position: center !important;
+        background-position: center center !important;
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
         font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
         color: #f8fafc !important;
-    }
-
-    body {
-        padding: 40px 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .container {
