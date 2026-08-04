@@ -21,32 +21,36 @@
         user-select: none;
     }
 
-    /* Pengaturan Fullscreen untuk Latar Belakang */
-    html {
-        height: 100%;
+    html, body {
+        margin: 0;
+        padding: 0;
         width: 100%;
+        min-height: 100vh;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        color: #f8fafc !important;
+        background-color: #0b0f17 !important;
+    }
+
+    /* === ELEMEN BACKGROUND FULLSCREEN DINAMIS (ANTI ZOOM-PROBLEM) === */
+    .bg-fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1; /* Berada di paling belakang */
+        background-image: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(5, 7, 10, 0.75) 100%), 
+                          url('ANIME.JPG.gif');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     body {
-        margin: 0;
         padding: 40px 20px;
-        width: 100vw;
-        min-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #0b0f17 !important;
-        
-        /* Gambar diset FULL COVER ke seluruh viewport */
-        background-image: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(5, 7, 10, 0.75) 100%), 
-                          url('ANIME.JPG.gif') !important;
-        
-        background-size: cover !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        background-attachment: fixed !important;
-        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        color: #f8fafc !important;
     }
 
     .container {
@@ -222,6 +226,9 @@
 </style>
 </head>
 <body>
+
+<!-- WIDGET LATAR BELAKANG TERPISAH (Full Layar & Mengunci Layar Penuh) -->
+<div class="bg-fullscreen"></div>
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
