@@ -31,7 +31,7 @@
         background-color: #0b0f17 !important;
     }
 
-    /* === VIDEO BACKGROUND (KITA BIKIN TERANG) === */
+    /* Panggil Video Background Langsung */
     .bg-video {
         position: fixed;
         top: 0;
@@ -39,18 +39,6 @@
         width: 100vw;
         height: 100vh;
         object-fit: cover;
-        z-index: -2;
-        filter: brightness(0.9) contrast(1.05); /* Menjaga video tetap terang dan tajam */
-    }
-
-    /* Overlay dibuat sangat tipis transparan agar video terlihat jelas */
-    .bg-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(11, 15, 23, 0.35); 
         z-index: -1;
     }
 
@@ -235,12 +223,10 @@
 </head>
 <body>
 
-<!-- Video Element dengan penanganan Autoplay paksa -->
-<video id="bgVideo" class="bg-video" autoplay loop muted playsinline preload="auto">
+<!-- Panggil Video 'voll.jgp.mp4' Langsung -->
+<video class="bg-video" autoplay loop muted playsinline>
     <source src="voll.jgp.mp4" type="video/mp4">
 </video>
-
-<div class="bg-overlay"></div>
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
@@ -282,19 +268,6 @@
 </div>
 
 <script>
-    // FIX UNTUK BROWSER: Paksa video play saat halaman selesai di-load / disentuh
-    document.addEventListener("DOMContentLoaded", function() {
-        const video = document.getElementById("bgVideo");
-        if (video) {
-            video.muted = true; // Paksa Mute agar diizinkan Autoplay oleh Chrome
-            video.play().catch(error => {
-                console.log("Autoplay terhalang browser, menunggu interaksi user:", error);
-                // Jika terhalang, jalankan begitu user klik/sentuh layar di mana saja
-                document.body.addEventListener('click', () => { video.play(); }, { once: true });
-            });
-        }
-    });
-
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
 
