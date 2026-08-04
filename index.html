@@ -26,7 +26,9 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background: radial-gradient(circle at center, rgba(15, 23, 42, 0.3) 0%, rgba(5, 7, 10, 0.85) 100%), #0b0f17 url('mobil.gif') !important;
+        /* Ganti URL di bawah jika ingin menggunakan wallpaper anime lain */
+        background: radial-gradient(circle at center, rgba(15, 23, 42, 0.3) 0%, rgba(5, 7, 10, 0.85) 100%), 
+                    url('https://i.pinimg.com/originals/9f/37/82/9f37825b78b67efc4e209ed2a806037c.gif') !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
@@ -224,7 +226,6 @@
     <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group">
-        <!-- Event ditempel ke onmouseenter (saat kursor masuk) & onmouseleave (saat kursor keluar) -->
         <button id="btnCopy" class="btn-copy" 
                 onmouseenter="mulaiGetar('txtCopy')" 
                 onmouseleave="stopGetar('txtCopy')" 
@@ -260,18 +261,15 @@
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
 
-    // FUNGSI MULAI GETAR PAS KURSOR DI ATAS TOMBOL
     function mulaiGetar(elementId) {
         const el = document.getElementById(elementId);
         if (!el) return;
 
-        // Cegah tabrakan timer jika kursor keluar masuk dengan cepat
         if (timerGetar[elementId]) clearInterval(timerGetar[elementId]);
 
         const warnaGlitch = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#ff9900'];
 
         timerGetar[elementId] = setInterval(() => {
-            // Gerak acak X (-10px s/d 10px) dan Y (-5px s/d 5px)
             const randomX = (Math.random() * 20 - 10).toFixed(1);
             const randomY = (Math.random() * 10 - 5).toFixed(1);
             const color = warnaGlitch[Math.floor(Math.random() * warnaGlitch.length)];
@@ -279,10 +277,9 @@
             el.style.transform = `translate(${randomX}px, ${randomY}px)`;
             el.style.color = color;
             el.style.textShadow = `${-randomX}px 0 #00ffff, ${randomX}px 0 #ff0055`;
-        }, 20); // Mengacak koordinat tiap 20 milidetik
+        }, 20);
     }
 
-    // FUNGSI STOP GETAR PAS KURSOR KELUAR
     function stopGetar(elementId) {
         if (timerGetar[elementId]) {
             clearInterval(timerGetar[elementId]);
