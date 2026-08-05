@@ -312,56 +312,80 @@
 
         if (!input) return;
 
-        // 1. Memisah setiap baris log transaksi berdasarkan kata kunci ACCEPT/REJECT/PENDING
-        let rawChunk = input.replace(/(ACCEPT|REJECT|PENDING|SUCCESS|FAILED)[a-zA-Z0-9]*/gi, "$&\n");
-        let lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
-
         let parsedLogList = [];
 
+        // OPSI A: Jika data log berupa baris-baris terpisah (seperti log mentah ber-Tab yang Anda paste)
+        let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
+
+        // Cek apakah ada multiple lines atau nempel
+        if (lines.length === 1 && !lines[0].includes('\t')) {
+            // OPSI B: Jika data terdempet dalam 1 baris panjang
+            let rawChunk = lines[0].replace(/(ACCEPT|REJECT|PENDING|SUCCESS|FAILED)[a-zA-Z0-9]*/gi, "$&\n");
+            lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
+        }
+
         lines.forEach(line => {
-            // Cari posisi Jam:Menit:Detik
+            // 1. Ekstrak Waktu (HH:MM:SS)
             let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
             if (!matchTime) return;
+            let waktu = matchTime[1];
 
-            let waktu = matchTime[1]; // Mengambil HH:MM:SS saja
-
-            // Potong teks setelah Jam:Menit:Detik
-            let timeIndex = line.indexOf(waktu);
-            let textAfterTime = line.substring(timeIndex + waktu.length);
-
-            // Cari kata kunci Withdraw / Deposit
-            let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
-            if (!matchType) return;
-
-            let typeIndex = textAfterTime.search(/(Withdraw|Deposit)/i);
-
-            // User ID berada di antara Waktu dan Jenis Transaksi
-            let userId = textAfterTime.substring(0, typeIndex).trim();
-
-            // Sisa teks setelah Withdraw/Deposit
-            let textAfterType = textAfterTime.substring(typeIndex + matchType[0].length);
-
-            // Ambil nominal jumlah (Format: -50,000 / 50,000 / -220,000)
-            let matchAmount = textAfterType.match(/-?([0-9.,]+)(?:ACCEPT|REJECT|PENDING|SUCCESS|FAILED)/i);
+            // 2. Ekstrak Nominal Jumlah (Angka paling kanan yang berupa uang)
+            let parts = line.split(/\t|\s{2,}/).map(p => p.trim()).filter(p => p !== '');
             
-            let jumlah = "0";
-            let bankSection = textAfterType;
+            // Jika parsing tab rapi
+            if (parts.length >= 5) {
+                let userId = parts[2] || "-";
+                let bankInfo = parts[4] || "-";
+                let jumlah = parts[6] || parts[5] || "0";
+                
+                // Bersihkan jumlah dari tanda minus
+                jumlah = jumlah.replace(/^-/, '').trim();
 
-            if (matchAmount) {
-                jumlah = matchAmount[1].replace(/^-/, ''); // Bersihkan tanda minus
-                // Bank berada di antara jenis transaksi dan jumlah
-                let amountIndex = textAfterType.indexOf(matchAmount[0]);
-                bankSection = textAfterType.substring(0, amountIndex).trim();
+                parsedLogList.push({
+                    waktu: waktu,
+                    userId: userId,
+                    tujuanBank: bankInfo,
+                    creditStatus: "0",
+                    jumlah: jumlah
+                });
+            } else {
+                // Jika parsing string kontinu / fleksibel
+                let timeIndex = line.indexOf(waktu);
+                let textAfterTime = line.substring(timeIndex + waktu.length);
+                let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
+
+                if (matchType) {
+                    let typeIndex = textAfterTime.search(/(Withdraw|Deposit)/i);
+                    let userId = textAfterTime.substring(0, typeIndex).trim();
+                    let textAfterType = textAfterTime.substring(typeIndex + matchType[0].length);
+
+                    let matchAmount = textAfterType.match(/-?([0-9.,]+)(?:\s|\t|ACCEPT|REJECT|PENDING|SUCCESS|FAILED|$)/i);
+                    let jumlah = "0";
+                    let bankSection = textAfterType;
+
+                    if (matchAmount) {
+                        jumlah = matchAmount[1].replace(/^-/, '');
+                        let amountIndex = textAfterType.indexOf(matchAmount[0]);
+                        bankSection = textAfterType.substring(0, amountIndex).trim();
+                    }
+
+                    // Hapus karakter pemisah '-' di akhir nama bank jika ada
+                    bankSection = bankSection.replace(/-\s*$/, '').trim();
+
+                    parsedLogList.push({
+                        waktu: waktu,
+                        userId: userId,
+                        tujuanBank: bankSection,
+                        creditStatus: "0",
+                        jumlah: jumlah
+                    });
+                }
             }
-
-            parsedLogList.push({
-                waktu: waktu,
-                userId: userId,
-                tujuanBank: bankSection,
-                creditStatus: "0",
-                jumlah: jumlah
-            });
         });
+
+        // Balik urutan log agar yang paling bawah dari mentah berada di atas (sesuai urutan waktu paling lama)
+        parsedLogList.reverse();
 
         let barisDataDisalin = [];
 
@@ -370,7 +394,8 @@
             tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
             tbody.appendChild(tr);
 
-            barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t0\t${item.jumlah}`);
+            // Format copy menggunakan double tab di antara BANK dan JUMLAH (agar kolom CREDIT kosong)
+            barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
