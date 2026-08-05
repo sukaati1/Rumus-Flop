@@ -312,46 +312,56 @@
 
         if (!input) return;
 
-        // 1. PISAHKAN LOG YANG TERSAMBUNG TANPA ENTER BASED ON PATTERN TANGGAL (202x-xx-xx)
-        let cleanedInput = input.replace(/(\d{4}-\d{2}-\d{2})/g, '\n$1');
-        let rawLines = cleanedInput.split('\n');
+        // 1. Memisah setiap baris log transaksi berdasarkan kata kunci ACCEPT/REJECT/PENDING
+        let rawChunk = input.replace(/(ACCEPT|REJECT|PENDING|SUCCESS|FAILED)[a-zA-Z0-9]*/gi, "$&\n");
+        let lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
 
         let parsedLogList = [];
 
-        rawLines.forEach(line => {
-            let str = line.trim();
-            if (!str) return;
+        lines.forEach(line => {
+            // Cari posisi Jam:Menit:Detik
+            let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
+            if (!matchTime) return;
 
-            // Bersihkan nomor urut di awal jika ada yang nempel (Contoh: 12026-08-05 -> 2026-08-05)
-            str = str.replace(/^\d+(\d{4}-\d{2}-\d{2})/, '$1');
+            let waktu = matchTime[1]; // Mengambil HH:MM:SS saja
 
-            // Regex pola transaksi Kasir
-            // Contoh string: 2026-08-05 15:14:25leosi2WithdrawLeo sitohang, 085371997464, DANA-50,000ACCEPTwzgaaautowd
-            let regex = /(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})([a-zA-Z0-9_.@-]+?)(?:Withdraw|Deposit)(.+?)-([0-9.,]+)(?:ACCEPT|REJECT|PENDING|SUCCESS|FAILED).*/i;
+            // Potong teks setelah Jam:Menit:Detik
+            let timeIndex = line.indexOf(waktu);
+            let textAfterTime = line.substring(timeIndex + waktu.length);
+
+            // Cari kata kunci Withdraw / Deposit
+            let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
+            if (!matchType) return;
+
+            let typeIndex = textAfterTime.search(/(Withdraw|Deposit)/i);
+
+            // User ID berada di antara Waktu dan Jenis Transaksi
+            let userId = textAfterTime.substring(0, typeIndex).trim();
+
+            // Sisa teks setelah Withdraw/Deposit
+            let textAfterType = textAfterTime.substring(typeIndex + matchType[0].length);
+
+            // Ambil nominal jumlah (Format: -50,000 / 50,000 / -220,000)
+            let matchAmount = textAfterType.match(/-?([0-9.,]+)(?:ACCEPT|REJECT|PENDING|SUCCESS|FAILED)/i);
             
-            let match = str.match(regex);
+            let jumlah = "0";
+            let bankSection = textAfterType;
 
-            if (match) {
-                let fullDateTime = match[1];
-                let userId = match[2].trim();
-                let tujuanBank = match[3].trim();
-                let jumlah = match[4].trim();
-
-                // Ambil Waktu saja (Jam:Menit:Detik)
-                let waktuOnly = fullDateTime.split(/\s+/)[1] || fullDateTime;
-
-                parsedLogList.push({
-                    waktu: waktuOnly,
-                    userId: userId,
-                    tujuanBank: tujuanBank,
-                    creditStatus: "0", // Ditentukan 0
-                    jumlah: jumlah
-                });
+            if (matchAmount) {
+                jumlah = matchAmount[1].replace(/^-/, ''); // Bersihkan tanda minus
+                // Bank berada di antara jenis transaksi dan jumlah
+                let amountIndex = textAfterType.indexOf(matchAmount[0]);
+                bankSection = textAfterType.substring(0, amountIndex).trim();
             }
-        });
 
-        // Balik urutan jika ingin log terbaru paling atas
-        parsedLogList.reverse();
+            parsedLogList.push({
+                waktu: waktu,
+                userId: userId,
+                tujuanBank: bankSection,
+                creditStatus: "0",
+                jumlah: jumlah
+            });
+        });
 
         let barisDataDisalin = [];
 
@@ -360,7 +370,6 @@
             tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
             tbody.appendChild(tr);
 
-            // Teks untuk disalin (format Tab Separated untuk Excel/Spreadsheet)
             barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t0\t${item.jumlah}`);
         });
 
