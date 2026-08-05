@@ -62,7 +62,7 @@
         border: 1px solid rgba(223, 168, 85, 0.25) !important; 
         border-radius: 24px; 
         width: 100%;
-        max-width: 900px;
+        max-width: 950px;
         padding: 48px;
         box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9),
                     0 0 40px rgba(223, 168, 85, 0.08);
@@ -278,7 +278,6 @@
         if (!el) return;
 
         if (timerGetar[elementId]) clearInterval(timerGetar[elementId]);
-
         const warnaGlitch = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#ff9900'];
 
         timerGetar[elementId] = setInterval(() => {
@@ -297,7 +296,6 @@
             clearInterval(timerGetar[elementId]);
             delete timerGetar[elementId];
         }
-
         const el = document.getElementById(elementId);
         if (el) {
             el.style.transform = 'translate(0, 0)';
@@ -314,101 +312,56 @@
 
         if (!input) return;
 
-        let baris = input.split('\n'); 
-        baris.reverse(); 
+        // 1. PISAHKAN LOG YANG TERSAMBUNG TANPA ENTER BASED ON PATTERN TANGGAL (202x-xx-xx)
+        let cleanedInput = input.replace(/(\d{4}-\d{2}-\d{2})/g, '\n$1');
+        let rawLines = cleanedInput.split('\n');
+
+        let parsedLogList = [];
+
+        rawLines.forEach(line => {
+            let str = line.trim();
+            if (!str) return;
+
+            // Bersihkan nomor urut di awal jika ada yang nempel (Contoh: 12026-08-05 -> 2026-08-05)
+            str = str.replace(/^\d+(\d{4}-\d{2}-\d{2})/, '$1');
+
+            // Regex pola transaksi Kasir
+            // Contoh string: 2026-08-05 15:14:25leosi2WithdrawLeo sitohang, 085371997464, DANA-50,000ACCEPTwzgaaautowd
+            let regex = /(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})([a-zA-Z0-9_.@-]+?)(?:Withdraw|Deposit)(.+?)-([0-9.,]+)(?:ACCEPT|REJECT|PENDING|SUCCESS|FAILED).*/i;
+            
+            let match = str.match(regex);
+
+            if (match) {
+                let fullDateTime = match[1];
+                let userId = match[2].trim();
+                let tujuanBank = match[3].trim();
+                let jumlah = match[4].trim();
+
+                // Ambil Waktu saja (Jam:Menit:Detik)
+                let waktuOnly = fullDateTime.split(/\s+/)[1] || fullDateTime;
+
+                parsedLogList.push({
+                    waktu: waktuOnly,
+                    userId: userId,
+                    tujuanBank: tujuanBank,
+                    creditStatus: "0", // Ditentukan 0
+                    jumlah: jumlah
+                });
+            }
+        });
+
+        // Balik urutan jika ingin log terbaru paling atas
+        parsedLogList.reverse();
 
         let barisDataDisalin = [];
 
-        const bankKeywords = [
-            'ALLOBANK', 'ALLO BANK', 'BANK ALLO', 'ALLO',
-            'BCA', 'MANDIRI', 'BRI', 'BNI', 'CIMB', 'DANAMON', 'PERMATA', 
-            'DANA', 'OVO', 'GOPAY', 'SEABANK', 'NEO', 'SHOPEEPAY', 'BSI', 
-            'JAGO', 'BANKJAGO', 'BANK JAGO', 'BANK BSI', 'BLU', 'ALADIN',
-            'LINEBANK', 'LINE BANK', 'SUPERBANK', 'PANIN', 'OCBC', 'MAYBANK'
-        ];
-
-        baris.forEach(line => {
-            let rawLine = line.trim();
-            if (rawLine === '') return;
-
-            let waktu = "00:00:00";
-            let userId = "-";
-            let tujuanBank = "-";
-            let creditStatus = ""; 
-            let jumlah = "0";
-
-            // 1. EXTRACTION WAKTU (HH:MM:SS)
-            let matchWaktu = rawLine.match(/\d{2}:\d{2}(?::\d{2})?/);
-            if (matchWaktu) {
-                waktu = matchWaktu[0];
-            }
-
-            // 2. EXTRACTION JUMLAH / NOMINAL (Format: -8,500,000 / 8.500.000 / 8500000)
-            let matchJumlah = rawLine.match(/(?:-|\b)(\d{1,3}(?:[.,]\d{3})+|\d{4,10})(?=[A-Za-z]|$)/);
-            if (matchJumlah) {
-                jumlah = matchJumlah[1];
-            }
-
-            // 3. EXTRACTION USER ID (Mendukung Teks Terdempet Seperti ACCEPTwzgaaautowd)
-            let matchUserAfterStatus = rawLine.match(/(?:ACCEPT|REJECT|PENDING|SUCCESS|FAILED)\s*([a-zA-Z0-9_.@-]+)$/i);
-            if (matchUserAfterStatus && matchUserAfterStatus[1]) {
-                userId = matchUserAfterStatus[1];
-            }
-
-            // 4. EXTRACTION BANK TUJUAN
-            // Cari bank yang berada persis sebelum nominal transfer (misal: BRI-8,500,000)
-            let matchBankBeforeAmount = rawLine.match(/([A-Za-z0-9]+)\s*-\s*\d{1,3}(?:[.,]\d{3})+/);
-            if (matchBankBeforeAmount) {
-                let candidateBank = matchBankBeforeAmount[1].toUpperCase();
-                let foundBank = bankKeywords.find(kw => candidateBank.includes(kw));
-                if (foundBank) {
-                    tujuanBank = foundBank;
-                }
-            }
-
-            // Jika belum ketemu Bank Tujuan dari pola terdempet, gunakan pencarian kata kunci baku
-            if (tujuanBank === "-") {
-                let foundBanks = [];
-                bankKeywords.forEach(kw => {
-                    if (rawLine.toUpperCase().includes(kw)) {
-                        foundBanks.push(kw);
-                    }
-                });
-                if (foundBanks.length > 0) {
-                    // Pilih bank terakhir jika ada lebih dari 1 (karena bank asal kasir biasanya di depan)
-                    tujuanBank = foundBanks[foundBanks.length - 1];
-                }
-            }
-
-            // 5. FALLBACK UNTUK LOG DENGAN SPASI (JIKA BUKAN MODEL TERDEMPET)
-            if (userId === "-" || tujuanBank === "-") {
-                let kolom = rawLine.split(/\t|\s{2,}/).map(item => item.trim()).filter(item => item !== '');
-                if (kolom.length < 4) {
-                    kolom = rawLine.split(/\s+/).map(item => item.trim()).filter(item => item !== '');
-                }
-
-                if (userId === "-") {
-                    let kandidatUser = kolom.filter(k => {
-                        let text = k.toUpperCase();
-                        let isTime = text.includes(':') || text.match(/\d{4}-\d{2}-\d{2}/);
-                        let isAmount = (k === jumlah);
-                        let isBank = bankKeywords.some(kw => text.includes(kw));
-                        let isNumeric = !isNaN(k.replace(/[,.-]/g, ''));
-                        let isTypeOrStatus = ['WITHDRAW', 'DEPOSIT', 'ACCEPT', 'REJECT', 'PENDING', 'SUCCESS', 'FAILED', '-'].includes(text);
-
-                        return !isTime && !isAmount && !isBank && !isNumeric && !isTypeOrStatus;
-                    });
-                    if (kandidatUser.length > 0) {
-                        userId = kandidatUser[0];
-                    }
-                }
-            }
-
+        parsedLogList.forEach(item => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
+            tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
             tbody.appendChild(tr);
 
-            barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
+            // Teks untuk disalin (format Tab Separated untuk Excel/Spreadsheet)
+            barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t0\t${item.jumlah}`);
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
