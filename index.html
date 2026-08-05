@@ -319,7 +319,6 @@
 
         let barisDataDisalin = [];
 
-        // Daftar Lengkap Kata Kunci Bank & E-Wallet
         const bankKeywords = [
             'ALLOBANK', 'ALLO BANK', 'BANK ALLO', 'ALLO',
             'BCA', 'MANDIRI', 'BRI', 'BNI', 'CIMB', 'DANAMON', 'PERMATA', 
@@ -329,79 +328,87 @@
         ];
 
         baris.forEach(line => {
-            if (line.trim() === '') return;
+            let rawLine = line.trim();
+            if (rawLine === '') return;
 
-            let kolom = line.split(/\t|\s{2,}/).map(item => item.trim()).filter(item => item !== '');
+            let waktu = "00:00:00";
+            let userId = "-";
+            let tujuanBank = "-";
+            let creditStatus = ""; 
+            let jumlah = "0";
 
-            if (kolom.length < 4) {
-                kolom = line.split(/\s+/).map(item => item.trim()).filter(item => item !== '');
+            // 1. EXTRACTION WAKTU (HH:MM:SS)
+            let matchWaktu = rawLine.match(/\d{2}:\d{2}(?::\d{2})?/);
+            if (matchWaktu) {
+                waktu = matchWaktu[0];
             }
 
-            if (kolom.length >= 3) {
-                let waktu = "00:00:00";
-                let userId = "-";
-                let tujuanBank = "-";
-                let creditStatus = ""; 
-                let jumlah = "0";
+            // 2. EXTRACTION JUMLAH / NOMINAL (Format: -8,500,000 / 8.500.000 / 8500000)
+            let matchJumlah = rawLine.match(/(?:-|\b)(\d{1,3}(?:[.,]\d{3})+|\d{4,10})(?=[A-Za-z]|$)/);
+            if (matchJumlah) {
+                jumlah = matchJumlah[1];
+            }
 
-                // Ekstraksi Waktu
-                let waktuDitemukan = kolom.find(k => k.includes(':'));
-                if (waktuDitemukan) {
-                    let matchWaktu = waktuDitemukan.match(/\d{2}:\d{2}(:\d{2})?/);
-                    if (matchWaktu) waktu = matchWaktu[0];
+            // 3. EXTRACTION USER ID (Mendukung Teks Terdempet Seperti ACCEPTwzgaaautowd)
+            let matchUserAfterStatus = rawLine.match(/(?:ACCEPT|REJECT|PENDING|SUCCESS|FAILED)\s*([a-zA-Z0-9_.@-]+)$/i);
+            if (matchUserAfterStatus && matchUserAfterStatus[1]) {
+                userId = matchUserAfterStatus[1];
+            }
+
+            // 4. EXTRACTION BANK TUJUAN
+            // Cari bank yang berada persis sebelum nominal transfer (misal: BRI-8,500,000)
+            let matchBankBeforeAmount = rawLine.match(/([A-Za-z0-9]+)\s*-\s*\d{1,3}(?:[.,]\d{3})+/);
+            if (matchBankBeforeAmount) {
+                let candidateBank = matchBankBeforeAmount[1].toUpperCase();
+                let foundBank = bankKeywords.find(kw => candidateBank.includes(kw));
+                if (foundBank) {
+                    tujuanBank = foundBank;
+                }
+            }
+
+            // Jika belum ketemu Bank Tujuan dari pola terdempet, gunakan pencarian kata kunci baku
+            if (tujuanBank === "-") {
+                let foundBanks = [];
+                bankKeywords.forEach(kw => {
+                    if (rawLine.toUpperCase().includes(kw)) {
+                        foundBanks.push(kw);
+                    }
+                });
+                if (foundBanks.length > 0) {
+                    // Pilih bank terakhir jika ada lebih dari 1 (karena bank asal kasir biasanya di depan)
+                    tujuanBank = foundBanks[foundBanks.length - 1];
+                }
+            }
+
+            // 5. FALLBACK UNTUK LOG DENGAN SPASI (JIKA BUKAN MODEL TERDEMPET)
+            if (userId === "-" || tujuanBank === "-") {
+                let kolom = rawLine.split(/\t|\s{2,}/).map(item => item.trim()).filter(item => item !== '');
+                if (kolom.length < 4) {
+                    kolom = rawLine.split(/\s+/).map(item => item.trim()).filter(item => item !== '');
                 }
 
-                // Ekstraksi Jumlah Nominal
-                for (let i = kolom.length - 1; i >= 0; i--) {
-                    let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
-                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3 && !kolom[i].includes(':')) {
-                        jumlah = kolom[i];
-                        break;
+                if (userId === "-") {
+                    let kandidatUser = kolom.filter(k => {
+                        let text = k.toUpperCase();
+                        let isTime = text.includes(':') || text.match(/\d{4}-\d{2}-\d{2}/);
+                        let isAmount = (k === jumlah);
+                        let isBank = bankKeywords.some(kw => text.includes(kw));
+                        let isNumeric = !isNaN(k.replace(/[,.-]/g, ''));
+                        let isTypeOrStatus = ['WITHDRAW', 'DEPOSIT', 'ACCEPT', 'REJECT', 'PENDING', 'SUCCESS', 'FAILED', '-'].includes(text);
+
+                        return !isTime && !isAmount && !isBank && !isNumeric && !isTypeOrStatus;
+                    });
+                    if (kandidatUser.length > 0) {
+                        userId = kandidatUser[0];
                     }
                 }
-
-                // Ekstraksi Bank Tujuan
-                let kolomBankUtuh = kolom.find(k => {
-                    let textUpper = k.toUpperCase().replace(/[^A-Z0-9]/g, '');
-                    return bankKeywords.some(kw => {
-                        let kwClean = kw.replace(/[^A-Z0-9]/g, '');
-                        return textUpper.includes(kwClean);
-                    });
-                });
-
-                if (kolomBankUtuh) {
-                    tujuanBank = kolomBankUtuh;
-                }
-
-                // Ekstraksi User ID yang Ditingkatkan
-                let kandidatUser = kolom.filter(k => {
-                    let text = k.toUpperCase();
-                    let textClean = text.replace(/[^A-Z0-9]/g, '');
-                    
-                    let isTime = text.includes(':') || text.match(/\d{4}-\d{2}-\d{2}/);
-                    let isAmount = (k === jumlah);
-                    let isBankFull = (k === tujuanBank) || bankKeywords.some(kw => {
-                        let kwClean = kw.replace(/[^A-Z0-9]/g, '');
-                        return textClean === kwClean || textClean.includes(kwClean);
-                    });
-                    let isNumeric = !isNaN(k.replace(/[,.-]/g, ''));
-                    let isTypeOrStatus = ['WITHDRAW', 'DEPOSIT', 'ACCEPT', 'REJECT', 'PENDING', 'SUCCESS', 'FAILED', '-'].includes(text);
-
-                    return !isTime && !isAmount && !isBankFull && !isNumeric && !isTypeOrStatus;
-                });
-
-                if (kandidatUser.length > 0) {
-                    userId = kandidatUser[0]; 
-                } else {
-                    userId = kolom[2] || kolom[1] || "-";
-                }
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
-                tbody.appendChild(tr);
-
-                barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
             }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>${creditStatus}</td><td>${jumlah}</td>`;
+            tbody.appendChild(tr);
+
+            barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
