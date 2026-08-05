@@ -1,4 +1,312 @@
-function konversiLog() {
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="only dark">
+    <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    
+<style>
+    :root {
+        color-scheme: only dark !important;
+        --gold-primary: #dfa855;
+        --gold-light: #fbe3b5;
+        --gold-dark: #996e29;
+        --bg-glass: rgba(13, 17, 23, 0.75);
+    }
+
+    * {
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    html {
+        width: 100%;
+        height: 100%;
+        background-color: #0b0f17 !important;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        width: 100%;
+        min-height: 100vh;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        color: #f8fafc !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    #bg-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('gif.jgp.gif');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .container {
+        position: relative;
+        background: var(--bg-glass) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(223, 168, 85, 0.25) !important; 
+        border-radius: 24px; 
+        width: 100%;
+        max-width: 900px;
+        padding: 48px;
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9),
+                    0 0 40px rgba(223, 168, 85, 0.08);
+        margin: auto;
+    }
+
+    @keyframes goldShimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+
+    h1 {
+        text-align: center;
+        font-family: 'Cinzel', serif;
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin: 0;
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+        background-size: 200% auto;
+        color: transparent !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        animation: goldShimmer 6s linear infinite;
+        filter: drop-shadow(0 2px 8px rgba(191, 149, 63, 0.3));
+    }
+
+    .sub-title {
+        text-align: center;
+        font-size: 11px;
+        color: #94a3b8 !important;
+        letter-spacing: 5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 6px;
+        margin-bottom: 36px;
+        opacity: 0.8;
+    }
+    
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--gold-light) !important; 
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: 0.9;
+    }
+    
+    textarea {
+        width: 100%;
+        height: 130px;
+        background-color: rgba(5, 7, 10, 0.75) !important;
+        border: 1px solid rgba(223, 168, 85, 0.2) !important; 
+        border-radius: 12px;
+        color: #38bdf8 !important;
+        padding: 16px;
+        box-sizing: border-box;
+        resize: vertical;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        margin-bottom: 28px;
+        user-select: text;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    textarea:focus {
+        outline: none;
+        border-color: var(--gold-primary) !important;
+        box-shadow: 0 0 20px rgba(223, 168, 85, 0.2) !important;
+        background-color: rgba(5, 7, 10, 0.9) !important;
+    }
+
+    textarea::placeholder {
+        color: rgba(148, 163, 184, 0.4);
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 36px;
+    }
+    
+    button {
+        position: relative;
+        flex: 1;
+        padding: 16px; 
+        font-size: 12px;    
+        font-weight: 700;
+        border-radius: 12px; 
+        cursor: pointer;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+        overflow: hidden;
+    }
+
+    .vibrate-text {
+        display: inline-block !important;
+        will-change: transform;
+        transition: color 0.1s;
+    }
+
+    .btn-copy { 
+        background: linear-gradient(135deg, #dfa855 0%, #a87932 100%) !important; 
+        color: #0b0f17 !important; 
+        box-shadow: 0 4px 20px rgba(223, 168, 85, 0.25);
+    }
+
+    .btn-reset { 
+        background-color: rgba(255, 255, 255, 0.03) !important; 
+        color: #94a3b8 !important; 
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .table-container { 
+        overflow-x: auto; 
+        border-radius: 12px;
+        border: 1px solid rgba(223, 168, 85, 0.15) !important;
+        background-color: rgba(5, 7, 10, 0.65) !important;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 13px;
+        white-space: nowrap;
+        user-select: text;
+    }
+    
+    th { 
+        font-weight: 600;
+        background-color: rgba(17, 24, 39, 0.95) !important; 
+        color: var(--gold-primary) !important; 
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(223, 168, 85, 0.2) !important;
+    }
+    
+    td {
+        color: #e2e8f0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+    }
+    
+    tr:last-child td {
+        border-bottom: none !important;
+    }
+
+    tr:hover td {
+        background-color: rgba(223, 168, 85, 0.08) !important;
+        color: #ffffff !important;
+    }
+</style>
+</head>
+<body>
+
+<div id="bg-layer"></div>
+
+<div class="container">
+    <h1>Rumus Flop Kasir</h1>
+    <div class="sub-title">Ultra Luxury Edition</div>
+
+    <label for="rawInput">Tempel Log Transaksi</label>
+    <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+    
+    <div class="btn-group">
+        <button id="btnCopy" class="btn-copy" 
+                onmouseenter="mulaiGetar('txtCopy')" 
+                onmouseleave="stopGetar('txtCopy')" 
+                onclick="salinHasil()">
+            <span class="vibrate-text" id="txtCopy">SALIN DATA</span>
+        </button>
+        <button id="btnReset" class="btn-reset" 
+                onmouseenter="mulaiGetar('txtReset')" 
+                onmouseleave="stopGetar('txtReset')" 
+                onclick="resetData()">
+            <span class="vibrate-text" id="txtReset">RESET</span>
+        </button>
+    </div>
+
+    <label>Hasil Konversi</label>
+    <div class="table-container">
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>WAKTU</th>
+                    <th>USER ID</th>
+                    <th>TUJUAN BANK</th>
+                    <th>CREDIT</th>
+                    <th>JUMLAH</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let hasilTeksUntukDisalin = "";
+    let timerGetar = {};
+
+    function mulaiGetar(elementId) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+
+        if (timerGetar[elementId]) clearInterval(timerGetar[elementId]);
+
+        const warnaGlitch = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#ff9900'];
+
+        timerGetar[elementId] = setInterval(() => {
+            const randomX = (Math.random() * 20 - 10).toFixed(1);
+            const randomY = (Math.random() * 10 - 5).toFixed(1);
+            const color = warnaGlitch[Math.floor(Math.random() * warnaGlitch.length)];
+
+            el.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            el.style.color = color;
+            el.style.textShadow = `${-randomX}px 0 #00ffff, ${randomX}px 0 #ff0055`;
+        }, 20);
+    }
+
+    function stopGetar(elementId) {
+        if (timerGetar[elementId]) {
+            clearInterval(timerGetar[elementId]);
+            delete timerGetar[elementId];
+        }
+
+        const el = document.getElementById(elementId);
+        if (el) {
+            el.style.transform = 'translate(0, 0)';
+            el.style.color = '';
+            el.style.textShadow = '';
+        }
+    }
+
+    function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; 
@@ -11,12 +319,13 @@ function konversiLog() {
 
         let barisDataDisalin = [];
 
-        // Ditambahkan ALLOBANK, ALLO BANK, BANK ALLO, dll.
+        // Daftar Lengkap Kata Kunci Bank & E-Wallet
         const bankKeywords = [
+            'ALLOBANK', 'ALLO BANK', 'BANK ALLO', 'ALLO',
             'BCA', 'MANDIRI', 'BRI', 'BNI', 'CIMB', 'DANAMON', 'PERMATA', 
             'DANA', 'OVO', 'GOPAY', 'SEABANK', 'NEO', 'SHOPEEPAY', 'BSI', 
-            'JAGO', 'BANKJAGO', 'BANK JAGO', 'BANK BSI',
-            'ALLOBANK', 'ALLO BANK', 'BANK ALLO', 'ALADIN', 'BLU'
+            'JAGO', 'BANKJAGO', 'BANK JAGO', 'BANK BSI', 'BLU', 'ALADIN',
+            'LINEBANK', 'LINE BANK', 'SUPERBANK', 'PANIN', 'OCBC', 'MAYBANK'
         ];
 
         baris.forEach(line => {
@@ -35,36 +344,48 @@ function konversiLog() {
                 let creditStatus = ""; 
                 let jumlah = "0";
 
+                // Ekstraksi Waktu
                 let waktuDitemukan = kolom.find(k => k.includes(':'));
                 if (waktuDitemukan) {
                     let matchWaktu = waktuDitemukan.match(/\d{2}:\d{2}(:\d{2})?/);
                     if (matchWaktu) waktu = matchWaktu[0];
                 }
 
+                // Ekstraksi Jumlah Nominal
                 for (let i = kolom.length - 1; i >= 0; i--) {
                     let nilaiBersih = kolom[i].replace(/[,.-]/g, '').trim();
-                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3) {
+                    if (nilaiBersih !== '' && !isNaN(nilaiBersih) && nilaiBersih.length >= 3 && !kolom[i].includes(':')) {
                         jumlah = kolom[i];
                         break;
                     }
                 }
 
+                // Ekstraksi Bank Tujuan
                 let kolomBankUtuh = kolom.find(k => {
-                    let textUpper = k.toUpperCase();
-                    return bankKeywords.some(kw => textUpper.includes(kw));
+                    let textUpper = k.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                    return bankKeywords.some(kw => {
+                        let kwClean = kw.replace(/[^A-Z0-9]/g, '');
+                        return textUpper.includes(kwClean);
+                    });
                 });
 
                 if (kolomBankUtuh) {
                     tujuanBank = kolomBankUtuh;
                 }
 
+                // Ekstraksi User ID yang Ditingkatkan
                 let kandidatUser = kolom.filter(k => {
                     let text = k.toUpperCase();
+                    let textClean = text.replace(/[^A-Z0-9]/g, '');
+                    
                     let isTime = text.includes(':') || text.match(/\d{4}-\d{2}-\d{2}/);
                     let isAmount = (k === jumlah);
-                    let isBankFull = (k === tujuanBank);
+                    let isBankFull = (k === tujuanBank) || bankKeywords.some(kw => {
+                        let kwClean = kw.replace(/[^A-Z0-9]/g, '');
+                        return textClean === kwClean || textClean.includes(kwClean);
+                    });
                     let isNumeric = !isNaN(k.replace(/[,.-]/g, ''));
-                    let isTypeOrStatus = ['WITHDRAW', 'DEPOSIT', 'ACCEPT', 'REJECT', 'PENDING', '-'].includes(text);
+                    let isTypeOrStatus = ['WITHDRAW', 'DEPOSIT', 'ACCEPT', 'REJECT', 'PENDING', 'SUCCESS', 'FAILED', '-'].includes(text);
 
                     return !isTime && !isAmount && !isBankFull && !isNumeric && !isTypeOrStatus;
                 });
@@ -85,3 +406,30 @@ function konversiLog() {
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
     }
+
+    function resetData() {
+        document.getElementById('rawInput').value = '';
+        document.getElementById('tableBody').innerHTML = '';
+        hasilTeksUntukDisalin = "";
+        document.getElementById('rawInput').focus();
+    }
+
+    function salinHasil() {
+        const txt = document.getElementById('txtCopy');
+        
+        if (!hasilTeksUntukDisalin) {
+            txt.innerText = "DATA KOSONG!";
+            setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1000);
+            return;
+        }
+        
+        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
+            txt.innerText = "BERHASIL DISALIN";
+            setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1200);
+        }).catch(err => {
+            console.error("Error: ", err);
+        });
+    }
+</script>
+</body>
+</html>
