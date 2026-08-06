@@ -47,9 +47,10 @@
         width: 100vw;
         height: 100vh;
         background-image: url('gif.jgp.gif');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-size: cover;          /* Mengisi seluruh latar secara proporsional */
+        background-position: center;      /* Menjaga titik fokus gambar di tengah */
+        background-repeat: no-repeat;    /* Mencegah gambar berulang */
+        background-attachment: fixed;   /* Mengunci background terhadap layar */
         z-index: -1;
         pointer-events: none;
     }
@@ -314,32 +315,25 @@
 
         let parsedLogList = [];
 
-        // OPSI A: Jika data log berupa baris-baris terpisah (seperti log mentah ber-Tab yang Anda paste)
         let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
 
-        // Cek apakah ada multiple lines atau nempel
         if (lines.length === 1 && !lines[0].includes('\t')) {
-            // OPSI B: Jika data terdempet dalam 1 baris panjang
             let rawChunk = lines[0].replace(/(ACCEPT|REJECT|PENDING|SUCCESS|FAILED)[a-zA-Z0-9]*/gi, "$&\n");
             lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
         }
 
         lines.forEach(line => {
-            // 1. Ekstrak Waktu (HH:MM:SS)
             let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
             if (!matchTime) return;
             let waktu = matchTime[1];
 
-            // 2. Ekstrak Nominal Jumlah (Angka paling kanan yang berupa uang)
             let parts = line.split(/\t|\s{2,}/).map(p => p.trim()).filter(p => p !== '');
             
-            // Jika parsing tab rapi
             if (parts.length >= 5) {
                 let userId = parts[2] || "-";
                 let bankInfo = parts[4] || "-";
                 let jumlah = parts[6] || parts[5] || "0";
                 
-                // Bersihkan jumlah dari tanda minus
                 jumlah = jumlah.replace(/^-/, '').trim();
 
                 parsedLogList.push({
@@ -350,7 +344,6 @@
                     jumlah: jumlah
                 });
             } else {
-                // Jika parsing string kontinu / fleksibel
                 let timeIndex = line.indexOf(waktu);
                 let textAfterTime = line.substring(timeIndex + waktu.length);
                 let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
@@ -370,7 +363,6 @@
                         bankSection = textAfterType.substring(0, amountIndex).trim();
                     }
 
-                    // Hapus karakter pemisah '-' di akhir nama bank jika ada
                     bankSection = bankSection.replace(/-\s*$/, '').trim();
 
                     parsedLogList.push({
@@ -384,7 +376,6 @@
             }
         });
 
-        // Balik urutan log agar yang paling bawah dari mentah berada di atas (sesuai urutan waktu paling lama)
         parsedLogList.reverse();
 
         let barisDataDisalin = [];
@@ -394,7 +385,6 @@
             tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
             tbody.appendChild(tr);
 
-            // Format copy menggunakan double tab di antara BANK dan JUMLAH (agar kolom CREDIT kosong)
             barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
         });
 
