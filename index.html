@@ -39,22 +39,26 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        overflow-x: hidden;
+    }
 
-        /* PANGGIL GIF.GIF DARI REPOSITORY */
-        background-image: url('Gif.gif');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-attachment: fixed;
-        background-size: cover;
-
-        /* ANTI-BLUR (MENAJAMKAN TEKSTUR SAAT DIRETAK) */
-        image-rendering: -webkit-optimize-contrast;
-        image-rendering: crisp-edges;
-        image-rendering: pixelated;
+    /* CSS VIDEO BACKGROUND FULLSCREEN */
+    #bg-video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
     }
 
     .container {
         position: relative;
+        z-index: 1;
         background: var(--bg-glass) !important;
         -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
         backdrop-filter: blur(20px) saturate(180%) !important;
@@ -226,6 +230,11 @@
 </style>
 </head>
 <body>
+
+<!-- MENGGUNAKAN NAMA FILE mp4 (2).mp4 -->
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="mp4 (2).mp4" type="video/mp4">
+</video>
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
