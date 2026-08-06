@@ -41,6 +41,18 @@
         position: relative;
     }
 
+    /* BACKGROUND FALLBACK JIKA VIDEO GAGAL LOAD */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(circle at center, #1e293b 0%, #0b0f17 100%);
+        z-index: -2;
+    }
+
     /* STYLING VIDEO MP4 FULLSCREEN */
     .bg-video {
         position: fixed;
@@ -228,8 +240,8 @@
 </head>
 <body>
 
-<!-- MEMANGGIL FILE MP4.MP4 UNTUK BACKGROUND -->
-<video autoplay loop muted playsinline class="bg-video">
+<!-- VIDEO BACKGROUND DIPAKSA PLAY PAKAI SCRIPT -->
+<video id="myBgVideo" autoplay loop muted playsinline class="bg-video">
     <source src="mp4.mp4" type="video/mp4">
 </video>
 
@@ -273,6 +285,15 @@
 </div>
 
 <script>
+    // Memaksa video diputar jika terblokir oleh browser
+    window.addEventListener('DOMContentLoaded', () => {
+        const vid = document.getElementById('myBgVideo');
+        if (vid) {
+            vid.muted = true;
+            vid.play().catch(e => console.log("Autoplay dipaksa:", e));
+        }
+    });
+
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
 
