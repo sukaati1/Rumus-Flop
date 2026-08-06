@@ -39,26 +39,17 @@
         justify-content: center;
         align-items: center;
         position: relative;
-        overflow-x: hidden;
-    }
 
-    /* CSS VIDEO BACKGROUND FULLSCREEN */
-    #bg-video {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        z-index: -1;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
+        /* PANGGIL GB.GIF SEBAGAI BACKGROUND FULLSCREEN */
+        background-image: url('gb.gif');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
     }
 
     .container {
         position: relative;
-        z-index: 1;
         background: var(--bg-glass) !important;
         -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
         backdrop-filter: blur(20px) saturate(180%) !important;
@@ -230,10 +221,6 @@
 </style>
 </head>
 <body>
-
-<video autoplay loop muted playsinline id="bg-video">
-    <source src="bg.mp4" type="video/mp4">
-</video>
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
