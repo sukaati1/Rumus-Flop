@@ -40,6 +40,7 @@
         position: relative;
     }
 
+    /* BACKGROUND TERKUNCI & TIDAK MELAR KETIKA TAB DIBESARKAN */
     #bg-layer {
         position: fixed;
         top: 0;
@@ -47,10 +48,9 @@
         width: 100vw;
         height: 100vh;
         background-image: url('gif.jgp.gif');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed; /* MENGUNCI GAMBAR */
+        background-size: contain;       /* Mengunci gambar agar proporsional & tidak pecah */
+        background-position: center;     /* Selalu terkunci di tengah layar */
+        background-repeat: no-repeat;   /* Mencegah gambar berulang */
         z-index: -1;
         pointer-events: none;
     }
