@@ -21,36 +21,33 @@
         user-select: none;
     }
 
-    html {
+    html, body {
+        margin: 0;
+        padding: 0;
         width: 100%;
-        height: 100%;
+        min-height: 100vh;
         background-color: #0b0f17 !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        color: #f8fafc !important;
     }
 
     body {
-        margin: 0;
         padding: 40px 20px;
-        width: 100%;
-        min-height: 100vh;
-        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        color: #f8fafc !important;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
     }
 
-    /* BACKGROUND TERKUNCI & TIDAK MELAR KETIKA TAB DIBESARKAN */
-    #bg-layer {
+    /* KUNCI BACKGROUND FULLSCREEN PROPORSIONAL */
+    .bg-full-screen {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-image: url('gif.jgp.gif');
-        background-size: contain;       /* Mengunci gambar agar proporsional & tidak pecah */
-        background-position: center;     /* Selalu terkunci di tengah layar */
-        background-repeat: no-repeat;   /* Mencegah gambar berulang */
+        object-fit: cover;        /* Mengisi 100% layar tanpa bikin gambar gepeng */
+        object-position: center;   /* Mengunci titik tengah gambar */
         z-index: -1;
         pointer-events: none;
     }
@@ -229,7 +226,8 @@
 </head>
 <body>
 
-<div id="bg-layer"></div>
+<!-- GAMBAR BACKGROUND LANGSUNG TERKUNCI FULLSCREEN -->
+<img src="gif.jgp.gif" class="bg-full-screen" alt="Background">
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
