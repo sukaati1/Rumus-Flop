@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
     <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <!-- LINK FONT SUDAH DIPERBAIKI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
@@ -26,30 +29,23 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
-        background-color: #0b0f17 !important;
         font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
         color: #f8fafc !important;
     }
 
+    /* MENJADIKAN GIF SEBAGAI BACKGROUND CSS SECARA DIRECT */
     body {
         padding: 40px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-    }
-
-    /* BACKGROUND FULLSCREEN PROPORSIONAL */
-    .bg-full-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        object-position: center;
-        z-index: -1;
-        pointer-events: none;
+        background-image: url('Gif.gif');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: #0b0f17;
     }
 
     .container {
@@ -225,9 +221,6 @@
 </style>
 </head>
 <body>
-
-<!-- MENGAMBIL FILE GIF DENGAN NAMA GIF.GIF PERIS S -->
-<img src="Gif.gif" class="bg-full-screen" alt="Background">
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
