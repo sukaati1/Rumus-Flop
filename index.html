@@ -23,29 +23,31 @@
         user-select: none;
     }
 
-    html, body {
-        margin: 0;
-        padding: 0;
+    html {
         width: 100%;
-        min-height: 100vh;
-        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        color: #f8fafc !important;
+        height: 100%;
         background-color: #0b0f17;
     }
 
     body {
+        margin: 0;
         padding: 40px 20px;
+        width: 100%;
+        min-height: 100vh;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        color: #f8fafc !important;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
 
-        /* PANGGIL GB.GIF SEBAGAI BACKGROUND FULLSCREEN */
-        background-image: url('gb.gif');
+        /* PANGGIL GB.GIF SEBAGAI LATAR BELAKANG */
+        background-image: url('./gb.gif');
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
         background-size: cover;
+        background-color: #111827; /* Cadangan latar agar tidak hitam pekat */
     }
 
     .container {
