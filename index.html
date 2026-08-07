@@ -15,7 +15,8 @@
         --gold-primary: #dfa855;
         --gold-light: #fbe3b5;
         --gold-dark: #996e29;
-        --bg-glass: rgba(13, 17, 23, 0.82);
+        --gold-glow: rgba(223, 168, 85, 0.4);
+        --bg-glass: rgba(13, 17, 23, 0.75);
     }
 
     * {
@@ -41,28 +42,77 @@
         align-items: center;
         position: relative;
 
-        /* PANGGIL GB.GIF SEBAGAI LATAR BELAKANG */
+        /* LATAR BELAKANG */
         background-image: url('./gb.gif');
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
         background-size: cover;
-        background-color: #111827; /* Cadangan latar agar tidak hitam pekat */
+        background-color: #0b0f17;
+        overflow-x: hidden;
     }
 
+    /* 1. EFEK AMBIENT LIGHT (Cahaya Masif di Belakang Card) */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60vw;
+        height: 60vh;
+        background: radial-gradient(circle, rgba(223, 168, 85, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+        pointer-events: none;
+        z-index: 0;
+        animation: pulseAmbient 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseAmbient {
+        0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+        100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    }
+
+    /* 2. CONTAINER DENGAN GLOW BORDER & SHIMMER */
     .container {
         position: relative;
+        z-index: 1;
         background: var(--bg-glass) !important;
-        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-        backdrop-filter: blur(20px) saturate(180%) !important;
-        border: 1px solid rgba(223, 168, 85, 0.25) !important; 
+        -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+        backdrop-filter: blur(25px) saturate(200%) !important;
+        border: 1px solid rgba(223, 168, 85, 0.3) !important; 
         border-radius: 24px; 
         width: 100%;
         max-width: 950px;
         padding: 48px;
-        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9),
-                    0 0 40px rgba(223, 168, 85, 0.08);
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.95),
+                    0 0 30px rgba(223, 168, 85, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
         margin: auto;
+        overflow: hidden;
+    }
+
+    /* Garis Efek Kilatan Emas Melintas Di Container */
+    .container::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent 45%,
+            rgba(255, 223, 140, 0.08) 50%,
+            transparent 55%
+        );
+        transform: rotate(30deg);
+        animation: sweepGlint 7s infinite linear;
+        pointer-events: none;
+    }
+
+    @keyframes sweepGlint {
+        0% { transform: translateY(-100%) rotate(30deg); }
+        100% { transform: translateY(100%) rotate(30deg); }
     }
 
     @keyframes goldShimmer {
@@ -75,7 +125,7 @@
         font-family: 'Cinzel', serif;
         font-size: 36px;
         font-weight: 800;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
         margin: 0;
         background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
         background-size: 200% auto;
@@ -83,14 +133,14 @@
         -webkit-background-clip: text !important;
         background-clip: text !important;
         animation: goldShimmer 6s linear infinite;
-        filter: drop-shadow(0 2px 8px rgba(191, 149, 63, 0.3));
+        filter: drop-shadow(0 2px 12px rgba(223, 168, 85, 0.4));
     }
 
     .sub-title {
         text-align: center;
         font-size: 11px;
         color: #94a3b8 !important;
-        letter-spacing: 5px;
+        letter-spacing: 6px;
         font-weight: 600;
         text-transform: uppercase;
         margin-top: 6px;
@@ -112,8 +162,8 @@
     textarea {
         width: 100%;
         height: 130px;
-        background-color: rgba(5, 7, 10, 0.75) !important;
-        border: 1px solid rgba(223, 168, 85, 0.2) !important; 
+        background-color: rgba(5, 7, 10, 0.8) !important;
+        border: 1px solid rgba(223, 168, 85, 0.25) !important; 
         border-radius: 12px;
         color: #38bdf8 !important;
         padding: 16px;
@@ -123,14 +173,14 @@
         font-size: 13px;
         margin-bottom: 28px;
         user-select: text;
-        transition: border-color 0.3s, box-shadow 0.3s;
+        transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
     }
 
     textarea:focus {
         outline: none;
         border-color: var(--gold-primary) !important;
-        box-shadow: 0 0 20px rgba(223, 168, 85, 0.2) !important;
-        background-color: rgba(5, 7, 10, 0.9) !important;
+        box-shadow: 0 0 25px rgba(223, 168, 85, 0.25), inset 0 0 10px rgba(223, 168, 85, 0.05) !important;
+        background-color: rgba(5, 7, 10, 0.95) !important;
     }
 
     textarea::placeholder {
@@ -151,10 +201,26 @@
         font-weight: 700;
         border-radius: 12px; 
         cursor: pointer;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
         border: 1px solid transparent;
         overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+        transition: left 0.5s ease;
+    }
+
+    button:hover::before {
+        left: 100%;
     }
 
     .vibrate-text {
@@ -166,20 +232,34 @@
     .btn-copy { 
         background: linear-gradient(135deg, #dfa855 0%, #a87932 100%) !important; 
         color: #0b0f17 !important; 
-        box-shadow: 0 4px 20px rgba(223, 168, 85, 0.25);
+        box-shadow: 0 4px 20px rgba(223, 168, 85, 0.3);
+    }
+
+    .btn-copy:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 28px rgba(223, 168, 85, 0.5);
     }
 
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.03) !important; 
         color: #94a3b8 !important; 
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .btn-reset:hover {
+        background-color: rgba(239, 68, 68, 0.1) !important;
+        color: #fca5a5 !important;
+        border-color: rgba(239, 68, 68, 0.4) !important;
+        box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+        transform: translateY(-2px);
     }
     
     .table-container { 
         overflow-x: auto; 
         border-radius: 12px;
-        border: 1px solid rgba(223, 168, 85, 0.15) !important;
-        background-color: rgba(5, 7, 10, 0.65) !important;
+        border: 1px solid rgba(223, 168, 85, 0.2) !important;
+        background-color: rgba(5, 7, 10, 0.75) !important;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
     }
     
     table {
@@ -200,9 +280,9 @@
         background-color: rgba(17, 24, 39, 0.95) !important; 
         color: var(--gold-primary) !important; 
         font-size: 11px;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(223, 168, 85, 0.2) !important;
+        border-bottom: 1px solid rgba(223, 168, 85, 0.25) !important;
     }
     
     td {
@@ -210,19 +290,56 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
+        transition: background-color 0.2s ease, color 0.2s ease;
     }
     
     tr:last-child td {
         border-bottom: none !important;
     }
 
+    /* 3. ANIMASI FADE-IN UNTUK BARIS TABEL */
+    tbody tr {
+        animation: fadeInRow 0.3s ease-in-out forwards;
+    }
+
+    @keyframes fadeInRow {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     tr:hover td {
-        background-color: rgba(223, 168, 85, 0.08) !important;
+        background-color: rgba(223, 168, 85, 0.12) !important;
         color: #ffffff !important;
+    }
+
+    /* BARIS PERTAMA (TERBARU) DIBERI AMBIENT HIGHLIGHT EMAS */
+    tbody tr:first-child td {
+        color: var(--gold-light) !important;
+        background-color: rgba(223, 168, 85, 0.05);
+    }
+
+    /* 4. CANVAS PARTIKEL EMAS (BACKGROUND ACCENT) */
+    #goldParticles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
     }
 </style>
 </head>
 <body>
+
+<!-- Canvas untuk efek debu emas melayang -->
+<canvas id="goldParticles"></canvas>
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
@@ -272,17 +389,17 @@
         if (!el) return;
 
         if (timerGetar[elementId]) clearInterval(timerGetar[elementId]);
-        const warnaGlitch = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#ff9900'];
+        const warnaGlitch = ['#ff0055', '#00ffff', '#ffff00', '#ffffff', '#dfa855'];
 
         timerGetar[elementId] = setInterval(() => {
-            const randomX = (Math.random() * 20 - 10).toFixed(1);
-            const randomY = (Math.random() * 10 - 5).toFixed(1);
+            const randomX = (Math.random() * 12 - 6).toFixed(1);
+            const randomY = (Math.random() * 6 - 3).toFixed(1);
             const color = warnaGlitch[Math.floor(Math.random() * warnaGlitch.length)];
 
             el.style.transform = `translate(${randomX}px, ${randomY}px)`;
             el.style.color = color;
             el.style.textShadow = `${-randomX}px 0 #00ffff, ${randomX}px 0 #ff0055`;
-        }, 20);
+        }, 25);
     }
 
     function stopGetar(elementId) {
@@ -307,7 +424,6 @@
         if (!input) return;
 
         let parsedLogList = [];
-
         let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
 
         if (lines.length === 1 && !lines[0].includes('\t')) {
@@ -373,8 +489,10 @@
 
         let barisDataDisalin = [];
 
-        parsedLogList.forEach(item => {
+        parsedLogList.forEach((item, index) => {
             const tr = document.createElement('tr');
+            // Menambahkan delay sedikit demi sedikit agar efek animasi muncul berurutan (stagger)
+            tr.style.animationDelay = `${index * 0.03}s`;
             tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
             tbody.appendChild(tr);
 
@@ -407,6 +525,46 @@
             console.error("Error: ", err);
         });
     }
+
+    /* 5. SCRIPT PARTIKEL EMAS MELAYANG (MENYESUAIKAN TEMA ULTRA LUXURY) */
+    const canvas = document.getElementById('goldParticles');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const particles = Array.from({ length: 35 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedY: -(Math.random() * 0.4 + 0.1),
+        speedX: Math.random() * 0.2 - 0.1,
+        opacity: Math.random() * 0.6 + 0.2,
+    }));
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.y += p.speedY;
+            p.x += p.speedX;
+
+            if (p.y < 0) {
+                p.y = canvas.height;
+                p.x = Math.random() * canvas.width;
+            }
+
+            ctx.fillStyle = `rgba(223, 168, 85, ${p.opacity})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
 </script>
 </body>
 </html>
