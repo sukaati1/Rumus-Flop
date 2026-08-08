@@ -255,10 +255,11 @@
         will-change: transform;
     }
 
-    /* KOTAK TABEL */
+    /* KOTAK TABEL DENGAN LAPISAN AIR (RAIN GLASS CONTAINER) */
     .table-container { 
+        position: relative;
         overflow-x: auto; 
-        max-height: 400px; /* Ditambahkan scrollbar jika data sangat banyak */
+        max-height: 400px;
         border-radius: 14px;
         border: 1px solid rgba(245, 158, 11, 0.35) !important;
         background: rgba(5, 8, 15, 0.35) !important;
@@ -266,8 +267,21 @@
         -webkit-backdrop-filter: blur(10px);
         box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 8px 25px rgba(0, 0, 0, 0.4);
     }
+
+    /* CANVAS AIR DI ATAS TABEL */
+    #rainCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none; /* Agar klik/seleksi teks tabel tetap bisa dilakukan */
+        z-index: 2;
+    }
     
     table {
+        position: relative;
+        z-index: 1; /* Di bawah canvas air namun di atas background */
         width: 100%;
         border-collapse: separate;
         border-spacing: 0;
@@ -359,7 +373,10 @@
         <span class="badge-count" id="dataCounter">0 DATA</span>
     </div>
     
-    <div class="table-container">
+    <div class="table-container" id="tableBox">
+        <!-- CANVAS ANIMASI TETESAN AIR HUJAN DI KACA -->
+        <canvas id="rainCanvas"></canvas>
+
         <table id="resultTable">
             <thead>
                 <tr>
@@ -378,6 +395,73 @@
 <script>
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
+
+    /* EFEK EFEK TETESAN AIR PADA KACA TABEL (CANVAS EFEK) */
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('tableBox');
+
+    function aturUkuranCanvas() {
+        canvas.width = container.scrollWidth;
+        canvas.height = container.scrollHeight;
+    }
+    aturUkuranCanvas();
+    window.addEventListener('resize', aturUkuranCanvas);
+
+    class TetesAir {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * -canvas.height;
+            this.len = Math.random() * 12 + 6;
+            this.speed = Math.random() * 2 + 1;
+            this.radius = Math.random() * 1.8 + 0.8;
+            this.opacity = Math.random() * 0.4 + 0.2;
+        }
+
+        update() {
+            this.y += this.speed;
+            if (this.y > canvas.height) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            // Badan tetesan air (jejak halus)
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x, this.y - this.len);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity * 0.4})`;
+            ctx.lineWidth = this.radius * 0.8;
+            ctx.stroke();
+
+            // Kepala tetesan air berbentuk bulatan jernih
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = "rgba(245, 158, 11, 0.5)"; // Pendar kilau emas transparan
+            ctx.fill();
+            ctx.shadowBlur = 0; // Reset shadow
+        }
+    }
+
+    const daftarTetesAir = Array.from({ length: 40 }, () => new TetesAir());
+
+    function animasiAir() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        daftarTetesAir.forEach(tetes => {
+            tetes.update();
+            tetes.draw();
+        });
+
+        requestAnimationFrame(animasiAir);
+    }
+    animasiAir();
 
     /* EFEK GELOMBANG AIR MENGIKUTI POSISI MOUSE */
     function buatEfekAir(event, btn) {
@@ -452,6 +536,7 @@
 
         if (!input) {
             counter.innerText = "0 DATA";
+            aturUkuranCanvas();
             return;
         }
 
@@ -531,6 +616,9 @@
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         counter.innerText = `${parsedLogList.length} DATA`;
+
+        // Sesuaikan kembali ukuran canvas saat tinggi tabel bertambah
+        setTimeout(aturUkuranCanvas, 50);
     }
 
     /* FUNGSI RESET */
@@ -540,6 +628,7 @@
         document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
+        aturUkuranCanvas();
     }
 
     /* FUNGSI SALIN TEKS KE CLIPBOARD */
@@ -562,11 +651,9 @@
 
     /* SHORTCUT KEYBOARD HARIAN */
     document.addEventListener('keydown', function(e) {
-        // ESC untuk Reset
         if (e.key === 'Escape') {
             resetData();
         }
-        // Ctrl + Shift + C untuk Copy cepat
         if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
             e.preventDefault();
             salinHasil();
