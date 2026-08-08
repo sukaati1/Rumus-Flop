@@ -14,7 +14,6 @@
         color-scheme: only dark !important;
         --gold-primary: #f59e0b;
         --gold-light: #fef08a;
-        --bg-glass: rgba(10, 14, 23, 0.92);
     }
 
     * {
@@ -53,17 +52,19 @@
         pointer-events: none;
     }
 
-    /* CONTAINER OPTIMAL */
+    /* CONTAINER UTAMA: Transparan Kaca dengan Blur */
     .container {
         position: relative;
         z-index: 2;
-        background: var(--bg-glass) !important;
-        border: 1.5px solid rgba(245, 158, 11, 0.6) !important; 
+        background: rgba(10, 14, 23, 0.45) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(245, 158, 11, 0.5) !important; 
         border-radius: 24px; 
         width: 100%;
         max-width: 950px;
         padding: 48px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.2);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(245, 158, 11, 0.2);
         margin: auto;
     }
 
@@ -109,11 +110,14 @@
         text-transform: uppercase;
     }
     
+    /* TEXTAREA: Transparan */
     textarea {
         width: 100%;
         height: 130px;
-        background-color: rgba(3, 7, 18, 0.95) !important;
-        border: 1px solid rgba(245, 158, 11, 0.3) !important; 
+        background-color: rgba(3, 7, 18, 0.4) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(245, 158, 11, 0.4) !important; 
         border-radius: 12px;
         color: #38bdf8 !important;
         padding: 16px;
@@ -129,11 +133,11 @@
     textarea:focus {
         outline: none;
         border-color: #fef08a !important;
-        box-shadow: 0 0 15px rgba(245, 158, 11, 0.3) !important;
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.4) !important;
     }
 
     textarea::placeholder {
-        color: rgba(148, 163, 184, 0.4);
+        color: rgba(248, 250, 252, 0.5);
     }
 
     .btn-group {
@@ -168,13 +172,14 @@
     }
 
     .btn-reset { 
-        background-color: rgba(255, 255, 255, 0.05) !important; 
-        color: #94a3b8 !important; 
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        background-color: rgba(255, 255, 255, 0.08) !important; 
+        color: #cbd5e1 !important; 
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(5px);
     }
 
     .btn-reset:hover {
-        background-color: rgba(225, 29, 72, 0.2) !important;
+        background-color: rgba(225, 29, 72, 0.3) !important;
         color: #fecdd3 !important;
         border-color: #f43f5e !important;
         transform: translateY(-2px);
@@ -185,11 +190,14 @@
         will-change: transform;
     }
 
+    /* TABEL: Transparan */
     .table-container { 
         overflow-x: auto; 
         border-radius: 12px;
         border: 1px solid rgba(245, 158, 11, 0.3) !important;
-        background-color: rgba(3, 7, 18, 0.9) !important;
+        background-color: rgba(3, 7, 18, 0.4) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
     }
     
     table {
@@ -206,7 +214,7 @@
     
     th { 
         font-weight: 700;
-        background-color: #0f172a !important; 
+        background-color: rgba(15, 23, 42, 0.6) !important; 
         color: #fef08a !important; 
         font-size: 11px;
         letter-spacing: 2px;
@@ -216,13 +224,13 @@
     
     td {
         color: #f1f5f9 !important;
-        border-bottom: 1px solid rgba(245, 158, 11, 0.08) !important;
+        border-bottom: 1px solid rgba(245, 158, 11, 0.15) !important;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
     }
 
     tr:hover td {
-        background-color: rgba(245, 158, 11, 0.15) !important;
+        background-color: rgba(245, 158, 11, 0.25) !important;
         color: #ffffff !important;
     }
 </style>
@@ -277,7 +285,7 @@
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
 
-    /* EFEK GETAR TOMBOL TETAP AKTIF & LEBIH HALUS */
+    /* EFEK GETAR TOMBOL */
     function mulaiGetar(elementId) {
         const el = document.getElementById(elementId);
         if (!el) return;
