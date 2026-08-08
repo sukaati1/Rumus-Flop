@@ -110,7 +110,7 @@
         text-transform: uppercase;
     }
     
-    /* TEXTAREA: Transparan Menyatu dengan Video Background */
+    /* TEXTAREA */
     textarea {
         width: 100%;
         height: 130px;
@@ -147,7 +147,20 @@
         gap: 16px;
         margin-bottom: 36px;
     }
+
+    /* ANIMASI LIQUID / GELOMBANG AIR */
+    @keyframes liquidRipple {
+        0% {
+            transform: scale(0);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(3.5);
+            opacity: 0;
+        }
+    }
     
+    /* BASE BUTTON STYLING */
     button {
         position: relative;
         flex: 1;
@@ -159,20 +172,51 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         border: none;
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        overflow: hidden; /* Menjaga efek air tidak meluber keluar dari tombol */
+        outline: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
+    /* EFEK NAIK HALUS & SHADOW SAAT TAB / HOVER */
+    button:hover, button:focus {
+        transform: translateY(-3px);
+    }
+
+    /* BENTUK TUMPASAN AIR (LIQUID LAYER) */
+    button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        pointer-events: none;
+        opacity: 0;
+    }
+
+    /* TRIGGERS ANIMASI AIR SAAT SENTUH (HOVER) ATAU GESER TAB (FOCUS) */
+    button:hover::before, button:focus::before {
+        animation: liquidRipple 1s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+    }
+
+    /* STYLING SPESIFIK TOMBOL COPY (AIR EMAS) */
     .btn-copy { 
         background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%) !important; 
         color: #000000 !important; 
         box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
     }
 
-    .btn-copy:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5) !important;
+    .btn-copy::before {
+        background: rgba(255, 255, 255, 0.6); /* Riak air putih emas */
     }
 
+    .btn-copy:hover, .btn-copy:focus {
+        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6) !important;
+    }
+
+    /* STYLING SPESIFIK TOMBOL RESET (AIR MERAH/KRISTAL) */
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.05) !important; 
         color: #cbd5e1 !important; 
@@ -180,19 +224,25 @@
         backdrop-filter: blur(6px);
     }
 
-    .btn-reset:hover {
+    .btn-reset::before {
+        background: rgba(244, 63, 94, 0.4); /* Riak air neon merah */
+    }
+
+    .btn-reset:hover, .btn-reset:focus {
         background-color: rgba(225, 29, 72, 0.25) !important;
         color: #fecdd3 !important;
         border-color: #f43f5e !important;
-        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(244, 63, 94, 0.4) !important;
     }
 
     .vibrate-text {
+        position: relative;
+        z-index: 2; /* Agar teks berada di atas lapisan air */
         display: inline-block !important;
         will-change: transform;
     }
 
-    /* KOTAK TABEL (CONTAINER TABEL) */
+    /* KOTAK TABEL */
     .table-container { 
         overflow-x: auto; 
         border-radius: 14px;
@@ -216,7 +266,6 @@
         user-select: text;
     }
     
-    /* HEADER TABEL: Transparan Gelap dengan Sentuhan Garis Emas */
     th { 
         font-weight: 700;
         background: rgba(15, 23, 42, 0.65) !important; 
@@ -228,7 +277,6 @@
         text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
     }
     
-    /* ISI ISI BARIS TABEL */
     td {
         color: #f1f5f9 !important;
         border-bottom: 1px solid rgba(245, 158, 11, 0.12) !important;
@@ -237,7 +285,6 @@
         transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    /* EFEK HOVER BARIS TABEL: Glow Emas Kaca Transparan */
     tr {
         transition: transform 0.2s ease;
     }
@@ -269,14 +316,20 @@
     
     <div class="btn-group">
         <button id="btnCopy" class="btn-copy" 
+                tabindex="0"
                 onmouseenter="mulaiGetar('txtCopy')" 
                 onmouseleave="stopGetar('txtCopy')" 
+                onfocus="mulaiGetar('txtCopy')" 
+                onblur="stopGetar('txtCopy')"
                 onclick="salinHasil()">
             <span class="vibrate-text" id="txtCopy">SALIN DATA</span>
         </button>
         <button id="btnReset" class="btn-reset" 
+                tabindex="0"
                 onmouseenter="mulaiGetar('txtReset')" 
                 onmouseleave="stopGetar('txtReset')" 
+                onfocus="mulaiGetar('txtReset')" 
+                onblur="stopGetar('txtReset')"
                 onclick="resetData()">
             <span class="vibrate-text" id="txtReset">RESET</span>
         </button>
@@ -303,7 +356,7 @@
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
 
-    /* EFEK GETAR TOMBOL */
+    /* EFEK GETAR TEKS TOMBOL */
     function mulaiGetar(elementId) {
         const el = document.getElementById(elementId);
         if (!el) return;
