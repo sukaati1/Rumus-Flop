@@ -7,13 +7,15 @@
     <title>Rumus Flop Kasir - Ultra Luxury Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FONT BARU: Orbitron (Futuristic Display) & Rajdhani (Cyber/Modern UI) & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
         color-scheme: only dark !important;
         --gold-primary: #f59e0b;
         --gold-light: #fef08a;
+        --cyan-glow: #00f0ff;
     }
 
     * {
@@ -32,7 +34,7 @@
 
     body {
         padding: 40px 20px;
-        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        font-family: 'Rajdhani', sans-serif;
         color: #f8fafc !important;
         display: flex;
         justify-content: center;
@@ -74,30 +76,35 @@
         100% { background-position: 200% center; }
     }
 
+    /* JUDUL UTAMA - ORBITRON DENGAN GLOW EMAS TEBAL */
     h1 {
         text-align: center;
-        font-family: 'Cinzel', serif;
-        font-size: 38px;
-        font-weight: 800;
-        letter-spacing: 3px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 36px;
+        font-weight: 900;
+        letter-spacing: 4px;
         margin: 0;
-        background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #78350f 100%);
+        background: linear-gradient(135deg, #ffffff 0%, #fef08a 30%, #f59e0b 70%, #b45309 100%);
         background-size: 200% auto;
         color: transparent !important;
         -webkit-background-clip: text !important;
         background-clip: text !important;
         animation: goldShimmer 5s linear infinite;
+        filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.6)) drop-shadow(0 0 30px rgba(245, 158, 11, 0.3));
     }
 
+    /* SUBTITLE BERCAHAYA */
     .sub-title {
         text-align: center;
+        font-family: 'Orbitron', sans-serif;
         font-size: 11px;
-        color: #fbbf24 !important;
-        letter-spacing: 6px;
+        color: #fef08a !important;
+        letter-spacing: 8px;
         font-weight: 700;
         text-transform: uppercase;
-        margin-top: 8px;
+        margin-top: 10px;
         margin-bottom: 36px;
+        text-shadow: 0 0 8px rgba(254, 240, 138, 0.6), 0 0 18px rgba(245, 158, 11, 0.4);
     }
 
     .label-header {
@@ -107,28 +114,34 @@
         margin-bottom: 10px;
     }
     
+    /* LABEL BERCAHAYA HALUS */
     label {
         display: block;
+        font-family: 'Orbitron', sans-serif;
         font-weight: 700;
         color: var(--gold-light) !important; 
-        font-size: 11px;
+        font-size: 12px;
         letter-spacing: 2px;
         text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
     }
 
-    /* BADGE COUNTER HASIL LOG */
+    /* BADGE COUNTER BERCAHAYA */
     .badge-count {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 700;
-        padding: 3px 10px;
+        padding: 4px 12px;
         border-radius: 20px;
         background: rgba(245, 158, 11, 0.15);
         color: #fef08a;
-        border: 1px solid rgba(245, 158, 11, 0.3);
-        font-family: 'JetBrains Mono', monospace;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 1px;
+        box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+        text-shadow: 0 0 8px rgba(254, 240, 138, 0.8);
     }
     
-    /* TEXTAREA */
+    /* TEXTAREA DENGAN EFEK GLOW CYAN */
     textarea {
         width: 100%;
         height: 130px;
@@ -147,6 +160,7 @@
         user-select: text;
         transition: all 0.3s ease;
         box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
     }
 
     textarea:focus {
@@ -158,6 +172,7 @@
 
     textarea::placeholder {
         color: rgba(248, 250, 252, 0.4);
+        text-shadow: none;
     }
 
     .btn-group {
@@ -185,11 +200,12 @@
         position: relative;
         flex: 1;
         padding: 18px; 
+        font-family: 'Orbitron', sans-serif;
         font-size: 13px;    
         font-weight: 800;
         border-radius: 12px; 
         cursor: pointer;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         text-transform: uppercase;
         border: none;
         overflow: hidden;
@@ -205,7 +221,6 @@
         transform: translateY(1px) scale(0.98);
     }
 
-    /* RIPPLE ELEMENT BERGAYA LIQUID */
     .ripple {
         position: absolute;
         border-radius: 50%;
@@ -214,7 +229,7 @@
         animation: liquidRipple 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
     }
 
-    /* STYLING SPESIFIK TOMBOL COPY */
+    /* TOMBOL COPY BERCAHAYA */
     .btn-copy { 
         background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%) !important; 
         color: #000000 !important; 
@@ -226,15 +241,16 @@
     }
 
     .btn-copy:hover, .btn-copy:focus {
-        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6) !important;
+        box-shadow: 0 8px 30px rgba(245, 158, 11, 0.7) !important;
     }
 
-    /* STYLING SPESIFIK TOMBOL RESET */
+    /* TOMBOL RESET BERCAHAYA MERAH */
     .btn-reset { 
         background-color: rgba(255, 255, 255, 0.05) !important; 
         color: #cbd5e1 !important; 
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
         backdrop-filter: blur(6px);
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
     }
 
     .btn-reset .ripple {
@@ -245,7 +261,8 @@
         background-color: rgba(225, 29, 72, 0.25) !important;
         color: #fecdd3 !important;
         border-color: #f43f5e !important;
-        box-shadow: 0 0 20px rgba(244, 63, 94, 0.4) !important;
+        box-shadow: 0 0 25px rgba(244, 63, 94, 0.6) !important;
+        text-shadow: 0 0 12px rgba(244, 63, 94, 0.8);
     }
 
     .vibrate-text {
@@ -255,7 +272,7 @@
         will-change: transform;
     }
 
-    /* KOTAK TABEL DENGAN LAPISAN AIR (RAIN GLASS CONTAINER) */
+    /* KOTAK TABEL CONTAINER */
     .table-container { 
         position: relative;
         overflow-x: auto; 
@@ -275,13 +292,13 @@
         left: 0;
         width: 100%;
         height: 100%;
-        pointer-events: none; /* Agar klik/seleksi teks tabel tetap bisa dilakukan */
+        pointer-events: none;
         z-index: 2;
     }
     
     table {
         position: relative;
-        z-index: 1; /* Di bawah canvas air namun di atas background */
+        z-index: 1;
         width: 100%;
         border-collapse: separate;
         border-spacing: 0;
@@ -294,36 +311,43 @@
         user-select: text;
     }
     
+    /* HEADER TABEL BERCAHAYA EMAS */
     th { 
         position: sticky;
         top: 0;
         z-index: 3;
-        font-weight: 700;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
         background: rgba(15, 23, 42, 0.95) !important; 
         color: #fef08a !important; 
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
         border-bottom: 2px solid rgba(245, 158, 11, 0.5) !important;
-        text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+        text-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
     }
     
+    /* ISI TABEL DENGAN FONT MONOSPACE BERCAHAYA HALUS */
     td {
         color: #f1f5f9 !important;
         border-bottom: 1px solid rgba(245, 158, 11, 0.12) !important;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
-        transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+        font-weight: 500;
+        font-size: 13px;
+        transition: all 0.25s ease;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
     }
 
     tr {
         transition: transform 0.2s ease;
     }
 
+    /* HOVER BARIS DENGAN KILAU TEKS EMAS */
     tr:hover td {
         background-color: rgba(245, 158, 11, 0.18) !important;
         color: #ffffff !important;
         box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.2);
+        text-shadow: 0 0 10px rgba(245, 158, 11, 0.8), 0 0 20px rgba(254, 240, 138, 0.5);
     }
 
     tr:last-child td {
@@ -396,7 +420,7 @@
     let hasilTeksUntukDisalin = "";
     let timerGetar = {};
 
-    /* EFEK EFEK TETESAN AIR PADA KACA TABEL (CANVAS EFEK) */
+    /* EFEK TETESAN AIR PADA KACA TABEL */
     const canvas = document.getElementById('rainCanvas');
     const ctx = canvas.getContext('2d');
     const container = document.getElementById('tableBox');
@@ -430,7 +454,6 @@
         }
 
         draw() {
-            // Badan tetesan air (jejak halus)
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(this.x, this.y - this.len);
@@ -438,14 +461,13 @@
             ctx.lineWidth = this.radius * 0.8;
             ctx.stroke();
 
-            // Kepala tetesan air berbentuk bulatan jernih
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-            ctx.shadowBlur = 4;
-            ctx.shadowColor = "rgba(245, 158, 11, 0.5)"; // Pendar kilau emas transparan
+            ctx.shadowBlur = 6;
+            ctx.shadowColor = "rgba(245, 158, 11, 0.6)";
             ctx.fill();
-            ctx.shadowBlur = 0; // Reset shadow
+            ctx.shadowBlur = 0;
         }
     }
 
@@ -481,7 +503,7 @@
         }, 800);
     }
 
-    /* EFEK GELOMBANG AIR DARI PUSAT (UNTUK NAVIGASI TAB KEYBOARD) */
+    /* EFEK GELOMBANG AIR DARI PUSAT */
     function buatEfekAirPusat(btn) {
         let ripple = document.createElement('span');
         ripple.className = 'ripple';
@@ -617,7 +639,6 @@
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         counter.innerText = `${parsedLogList.length} DATA`;
 
-        // Sesuaikan kembali ukuran canvas saat tinggi tabel bertambah
         setTimeout(aturUkuranCanvas, 50);
     }
 
