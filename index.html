@@ -14,7 +14,7 @@
         color-scheme: only dark !important;
         --gold-primary: #f59e0b;
         --gold-light: #fef08a;
-        --bg-glass: rgba(10, 14, 23, 0.92); /* Gelap transparan tanpa membebankan GPU dengan blur */
+        --bg-glass: rgba(10, 14, 23, 0.92);
     }
 
     * {
@@ -28,6 +28,7 @@
         margin: 0;
         padding: 0;
         background-color: #05070a;
+        overflow-x: hidden;
     }
 
     body {
@@ -38,16 +39,21 @@
         justify-content: center;
         align-items: center;
         position: relative;
-
-        /* LATAR BELAKANG GIF TETAP UTUH */
-        background-image: url('./gb.gif');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-attachment: fixed;
-        background-size: cover;
     }
 
-    /* CONTAINER OPTIMAL: Ringan & Tetap Tembus GIF */
+    /* VIDEO BACKGROUND FULLSCREEN */
+    .bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* CONTAINER OPTIMAL */
     .container {
         position: relative;
         z-index: 2;
@@ -222,6 +228,11 @@
 </style>
 </head>
 <body>
+
+<!-- VIDEO BACKGROUND MP4 -->
+<video class="bg-video" autoplay loop muted playsinline disablepictureinpicture>
+    <source src="./gb.mp4" type="video/mp4">
+</video>
 
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
