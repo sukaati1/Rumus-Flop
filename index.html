@@ -17,6 +17,10 @@
         --purple-bright: #d8b4fe;
         --pink-neon: #ff007f;
         --cyan-neon: #00f0ff;
+        /* VARIABEL WARNA EMAS */
+        --gold-bright: #fcf6ba;
+        --gold-main: #d4af37;
+        --gold-dark: #aa771c;
     }
 
     * {
@@ -59,7 +63,7 @@
         position: relative;
         z-index: 2;
         background: rgba(10, 8, 25, 0.35) !important; 
-        backdrop-filter: blur(8px); /* Blur dipertipis agar video jelas */
+        backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border-radius: 20px; 
         width: 100%;
@@ -215,7 +219,7 @@
         margin-bottom: 28px;
     }
 
-    /* TAMPILAN UMUM TOMBOL */
+    /* TAMPILAN UMUM TOMBOL EMAS */
     button {
         position: relative;
         overflow: hidden;
@@ -231,11 +235,43 @@
         border: 2px solid transparent;
         outline: none;
         transition: transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        
+        /* EMAS METALLIC GRADIENT */
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%) !important;
+        color: #1a1200 !important;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4), inset 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    /* EFEK CAHAYA EMAS MENGKILAU (GLINT / SHINE EFFECT) */
+    button::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -150%;
+        width: 100%;
+        height: 200%;
+        background: linear-gradient(
+            60deg, 
+            transparent 30%, 
+            rgba(255, 255, 255, 0.8) 50%, 
+            transparent 70%
+        );
+        transform: rotate(25deg);
+        animation: goldGlint 3s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes goldGlint {
+        0% { left: -150%; }
+        35% { left: 150%; }
+        100% { left: 150%; }
     }
 
     /* EFEK GETAR SAAT KURSOR MENYENTUH (HOVER) */
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
+        box-shadow: 0 0 20px rgba(252, 246, 186, 0.8), inset 0 0 10px rgba(255, 255, 255, 1);
     }
 
     @keyframes shakeBtn {
@@ -246,15 +282,10 @@
         100% { transform: translate(1px, 1px) rotate(0.5deg); }
     }
 
-    /* BINGKAI SAAT TEKAN TAB (FOCUS-VISIBLE) */
-    .btn-copy:focus-visible {
-        border-color: var(--cyan-neon) !important;
-        box-shadow: 0 0 15px var(--cyan-neon), inset 0 0 10px var(--cyan-neon) !important;
-    }
-
-    .btn-reset:focus-visible {
+    /* BINGKAI EMAS MENYALA SAAT TEKAN TAB (FOCUS-VISIBLE) */
+    button:focus-visible {
         border-color: #ffffff !important;
-        box-shadow: 0 0 15px var(--pink-neon), inset 0 0 10px var(--pink-neon) !important;
+        box-shadow: 0 0 20px #fcf6ba, inset 0 0 10px #ffffff !important;
     }
 
     button:active {
@@ -266,7 +297,7 @@
     .ripple {
         position: absolute;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.8);
         transform: scale(0);
         animation: ripple-animation 0.6s linear;
         pointer-events: none;
@@ -277,20 +308,6 @@
             transform: scale(4);
             opacity: 0;
         }
-    }
-
-    /* TOMBOL COPY */
-    .btn-copy { 
-        background: linear-gradient(135deg, rgba(0, 210, 255, 0.8) 0%, rgba(168, 85, 247, 0.8) 100%) !important; 
-        color: #ffffff !important; 
-        box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
-    }
-
-    /* TOMBOL RESET */
-    .btn-reset { 
-        background-color: rgba(255, 0, 127, 0.2) !important; 
-        color: var(--pink-neon) !important; 
-        border-color: var(--pink-neon) !important;
     }
 
     /* TABLE CONTAINER TRANSPARAN + BLUR TIPIS */
