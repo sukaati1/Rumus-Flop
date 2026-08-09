@@ -18,11 +18,11 @@
         --pink-neon: #ff007f;
         --cyan-neon: #00f0ff;
         
-        /* VARIABEL WARNA LAVENDER TRANSPARAN */
-        --lavender-bg: rgba(230, 230, 250, 0.25);
-        --lavender-border: #e6e6fa;
-        --lavender-text: #f3f0ff;
-        --lavender-glow: rgba(230, 230, 250, 0.6);
+        /* VARIABEL WARNA LAVENDER UNGU TRANSPARAN */
+        --lavender-bg: rgba(147, 112, 219, 0.35); /* Ungu lavender sedang transparan */
+        --lavender-border: #b57edc;               /* Garis tepi ungu lavender terang */
+        --lavender-text: #f3e8ff;                 /* Teks lavender sangat terang */
+        --lavender-glow: rgba(181, 126, 220, 0.7); /* Cahaya ungu lavender */
     }
 
     * {
@@ -221,7 +221,7 @@
         margin-bottom: 28px;
     }
 
-    /* TAMPILAN TOMBOL LAVENDER TRANSPARAN + BLUR */
+    /* TAMPILAN TOMBOL UNGU LAVENDER TRANSPARAN + BLUR */
     button {
         position: relative;
         overflow: hidden;
@@ -237,13 +237,13 @@
         border: 1.5px solid var(--lavender-border) !important;
         outline: none;
         
-        /* WARNA LAVENDER TRANSPARAN & BLUR */
+        /* BACKGROUND UNGU LAVENDER TRANSPARAN & BLUR */
         background: var(--lavender-bg) !important;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         color: var(--lavender-text) !important;
-        text-shadow: 0 0 8px rgba(230, 230, 250, 0.6);
-        box-shadow: 0 4px 15px rgba(230, 230, 250, 0.15);
+        text-shadow: 0 0 8px rgba(181, 126, 220, 0.8);
+        box-shadow: 0 4px 15px rgba(147, 112, 219, 0.3);
         
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
@@ -251,7 +251,7 @@
     /* EFEK GETAR SAAT KURSOR MENYENTUH (HOVER) */
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
-        background: rgba(230, 230, 250, 0.4) !important;
+        background: rgba(147, 112, 219, 0.55) !important;
         box-shadow: 0 0 20px var(--lavender-glow);
     }
 
@@ -263,10 +263,10 @@
         100% { transform: translate(1px, 1px) rotate(0.5deg); }
     }
 
-    /* BINGKAI SAAT TEKAN TAB (FOCUS-VISIBLE) */
+    /* BINGKAI UNGU SAAT TEKAN TAB (FOCUS-VISIBLE) */
     button:focus-visible {
         border-color: #ffffff !important;
-        box-shadow: 0 0 20px var(--lavender-border), inset 0 0 10px #ffffff !important;
+        box-shadow: 0 0 20px var(--lavender-border), inset 0 0 10px var(--lavender-glow) !important;
     }
 
     button:active {
