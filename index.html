@@ -7,7 +7,7 @@
     <title>Rumus Flop Kasir - Ultra Light Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
     
 <style>
     :root {
@@ -19,10 +19,10 @@
         --cyan-neon: #00f0ff;
         
         /* VARIABEL WARNA LAVENDER UNGU TRANSPARAN */
-        --lavender-bg: rgba(147, 112, 219, 0.35); /* Ungu lavender sedang transparan */
-        --lavender-border: #b57edc;               /* Garis tepi ungu lavender terang */
-        --lavender-text: #f3e8ff;                 /* Teks lavender sangat terang */
-        --lavender-glow: rgba(181, 126, 220, 0.7); /* Cahaya ungu lavender */
+        --lavender-bg: rgba(147, 112, 219, 0.35); 
+        --lavender-border: #b57edc;               
+        --lavender-text: #f3e8ff;                 
+        --lavender-glow: rgba(181, 126, 220, 0.7); 
     }
 
     * {
@@ -237,7 +237,6 @@
         border: 1.5px solid var(--lavender-border) !important;
         outline: none;
         
-        /* BACKGROUND UNGU LAVENDER TRANSPARAN & BLUR */
         background: var(--lavender-bg) !important;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
@@ -248,7 +247,22 @@
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    /* EFEK GETAR SAAT KURSOR MENYENTUH (HOVER) */
+    /* TEKS WATERMARK "Fajar" DI KANAN BAWAH TOMBOL */
+    .watermark-fajar {
+        position: absolute;
+        bottom: 3px;
+        right: 8px;
+        font-family: 'Dancing Script', cursive;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0.5px;
+        color: rgba(243, 232, 255, 0.6);
+        text-shadow: 0 0 3px rgba(181, 126, 220, 0.5);
+        pointer-events: none;
+    }
+
+    /* EFEK GETAR SAAT HOVER */
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
         background: rgba(147, 112, 219, 0.55) !important;
@@ -377,9 +391,11 @@
     <div class="btn-group">
         <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
             <span id="txtCopy">SALIN DATA</span>
+            <span class="watermark-fajar">Fajar</span>
         </button>
         <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
             <span id="txtReset">RESET</span>
+            <span class="watermark-fajar">Fajar</span>
         </button>
     </div>
 
