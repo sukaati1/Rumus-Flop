@@ -3,485 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="only dark">
-    <title>Rumus Flop Kasir - Ultra Light Edition</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
-    
-<style>
-    :root {
-        color-scheme: only dark !important;
-        --blue-electric: #00d2ff;
-        --purple-neon: #a855f7;
-        --purple-bright: #d8b4fe;
-        --pink-neon: #ff007f;
-        --cyan-neon: #00f0ff;
-    }
-
-    * {
-        box-sizing: border-box;
-        user-select: none;
-    }
-
-    html, body {
-        width: 100%;
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-        background-color: #030308;
-        overflow-x: hidden;
-    }
-
-    body {
-        padding: 30px 15px;
-        font-family: 'Rajdhani', sans-serif;
-        color: #ffffff !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* VIDEO BACKGROUND FULLSCREEN */
-    .bg-video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    /* CONTAINER UTAMA / PETAK BESAR DENGAN BINGKAI NEON RINGAN */
-    .container {
-        position: relative;
-        z-index: 2;
-        background: rgba(8, 6, 20, 0.75) !important;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-radius: 20px; 
-        width: 100%;
-        max-width: 900px;
-        padding: 35px 30px;
-        margin: auto;
-        border: 2px solid var(--purple-neon);
-        box-shadow: 0 0 15px rgba(168, 85, 247, 0.4), inset 0 0 15px rgba(0, 210, 255, 0.15);
-    }
-
-    /* JUDUL UTAMA */
-    h1 {
-        text-align: center;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 32px;
-        font-weight: 900;
-        letter-spacing: 4px;
-        margin: 0;
-        color: #00d2ff !important;
-        text-shadow: 0 0 12px rgba(0, 210, 255, 0.6), 0 0 25px rgba(168, 85, 247, 0.4);
-    }
-
-    /* SUBTITLE */
-    .sub-title {
-        text-align: center;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 11px;
-        color: var(--purple-bright) !important;
-        letter-spacing: 6px;
-        font-weight: 800;
-        text-transform: uppercase;
-        margin-top: 8px;
-        margin-bottom: 28px;
-    }
-
-    .label-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-    
-    /* LABEL */
-    label {
-        display: block;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 800;
-        color: var(--purple-bright) !important; 
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    /* BADGE COUNTER */
-    .badge-count {
-        font-size: 11px;
-        font-weight: 800;
-        padding: 3px 10px;
-        border-radius: 15px;
-        background: rgba(0, 210, 255, 0.15);
-        color: var(--cyan-neon) !important;
-        border: 1px solid var(--cyan-neon);
-        font-family: 'Orbitron', sans-serif;
-    }
-    
-    /* TEXTAREA */
-    textarea {
-        width: 100%;
-        height: 120px;
-        background: rgba(4, 3, 12, 0.6) !important;
-        border: 1.5px solid rgba(168, 85, 247, 0.5) !important; 
-        border-radius: 10px;
-        color: var(--cyan-neon) !important;
-        padding: 14px;
-        box-sizing: border-box;
-        resize: vertical;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 700;
-        font-size: 13.5px;
-        margin-bottom: 20px;
-        user-select: text;
-        transition: border-color 0.2s ease;
-    }
-
-    textarea:focus {
-        outline: none;
-        border-color: var(--blue-electric) !important;
-        background: rgba(4, 3, 12, 0.8) !important;
-    }
-
-    textarea::placeholder {
-        color: rgba(255, 255, 255, 0.35);
-    }
-
-    .btn-group {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 28px;
-    }
-
-    button {
-        position: relative;
-        overflow: hidden; /* Menjaga efek gelombang tetap dalam area tombol */
-        flex: 1;
-        padding: 14px; 
-        font-family: 'Orbitron', sans-serif;
-        font-size: 12px;    
-        font-weight: 900;
-        border-radius: 10px; 
-        cursor: pointer;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        border: none;
-        outline: none;
-        transition: transform 0.1s ease, background-color 0.2s ease;
-    }
-
-    button:active {
-        transform: scale(0.98);
-    }
-
-    /* EFEK GELOMBANG (RIPPLE EFFECT) */
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.6);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
-    }
-
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
+    <title>Sistem Kasir Neon Boss</title>
+    <style>
+        /* --- CSS Global Boss --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace; /* Pake font monospace biar keliatan jadul koding */
         }
-    }
 
-    /* TOMBOL COPY */
-    .btn-copy { 
-        background: linear-gradient(135deg, #00d2ff 0%, #a855f7 100%) !important; 
-        color: #ffffff !important; 
-        box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
-    }
+        body {
+            background-color: #050505; /* Hitam pekat, biar neonnya nyala */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    .btn-copy:hover {
-        opacity: 0.9;
-    }
+        /* --- Container Utamanya Boss --- */
+        .neon-table-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            background: #0a0a0a;
+            border-radius: 15px;
+            padding: 4px; /* Space buat neon-nya */
+            overflow: hidden; /* Biar neon nggak lari keluar */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
 
-    /* TOMBOL RESET */
-    .btn-reset { 
-        background-color: rgba(255, 0, 127, 0.15) !important; 
-        color: var(--pink-neon) !important; 
-        border: 1.5px solid var(--pink-neon) !important;
-    }
+        /* --- Ini Dia Rahasia Cahaya Neon Jalan-nya Boss! --- */
+        .neon-table-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                0deg, 
+                transparent, 
+                transparent, 
+                #00e676, /* Hijau Neon */
+                #00e676 /* Hijau Neon */
+            );
+            transform-origin: bottom right;
+            animation: light-rotate 4s linear infinite; /* Kecepatan muternya */
+        }
 
-    .btn-reset:hover {
-        background-color: rgba(255, 0, 127, 0.3) !important;
-        color: #ffffff !important;
-    }
+        .neon-table-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                0deg, 
+                transparent, 
+                transparent, 
+                #e91e63, /* Pink/Merah Neon */
+                #e91e63 /* Pink/Merah Neon */
+            );
+            transform-origin: bottom right;
+            animation: light-rotate 4s linear infinite;
+            animation-delay: -2s; /* Jeda biar jadi kayak dua warna jalan bareng */
+        }
 
-    /* TABLE CONTAINER */
-    .table-container { 
-        position: relative;
-        overflow-x: auto; 
-        max-height: 380px;
-        border-radius: 10px;
-        border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
-        background: rgba(6, 4, 18, 0.4) !important;
-    }
-    
-    table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-    
-    th, td {
-        padding: 12px 16px;
-        text-align: left;
-        white-space: nowrap;
-        user-select: text;
-    }
-    
-    /* TH HEADER TABEL */
-    th { 
-        position: sticky;
-        top: 0;
-        z-index: 3;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 800;
-        background: #0d0a1e !important; 
-        color: var(--purple-bright) !important; 
-        font-size: 11px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        border-bottom: 2px solid var(--purple-neon) !important;
-    }
-    
-    /* TD DATA TABEL */
-    td {
-        color: #ffffff !important;
-        border-bottom: 1px solid rgba(168, 85, 247, 0.12) !important;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 700;
-        font-size: 13px;
-    }
+        /* --- Animasi Muter --- */
+        @keyframes light-rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-    /* WARNA KOLOM */
-    td:nth-child(1) { color: var(--blue-electric) !important; }
-    td:nth-child(2) { color: #ffffff !important; }
-    td:nth-child(3) { color: var(--purple-bright) !important; }
-    td:nth-child(4) { color: var(--pink-neon) !important; }
-    td:nth-child(5) { color: var(--cyan-neon) !important; }
+        /* --- Content di dalem biar aman --- */
+        .table-inner {
+            position: relative;
+            background: #111; /* Warna background dalem table */
+            border-radius: 11px;
+            z-index: 10;
+            padding: 20px;
+            overflow: hidden;
+        }
 
-    tr:hover td {
-        background-color: rgba(168, 85, 247, 0.2) !important;
-    }
+        /* --- Header Table --- */
+        .table-header {
+            color: #00e676; /* Warna text header neon */
+            text-shadow: 0 0 10px #00e676, 0 0 20px #00e676; /* Efek glow neon */
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    tr:last-child td { border-bottom: none !important; }
-</style>
+        /* --- List Log Kasir --- */
+        .log-list {
+            list-style: none;
+            height: 300px;
+            overflow-y: auto; /* Biar bisa di-scroll kalo kepanjangan */
+            padding-right: 10px;
+        }
+
+        .log-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .log-time { color: #888; }
+        .log-desc { flex-grow: 1; margin: 0 20px; }
+        .log-price { font-weight: bold; }
+
+        /* --- Footer Buat Total --- */
+        .table-footer {
+            margin-top: 20px;
+            border-top: 2px solid #e91e63; /* Separator neon pink */
+            padding-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .total-label { color: #e91e63; font-weight: bold; margin-right: 20px; }
+        .total-amount { font-size: 22px; font-weight: bold; color: white; text-shadow: 0 0 5px white; }
+
+        /* --- Tombol "Palsu" Buat Nambahin Data (Buat Demo Aja) --- */
+        #addBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00e676;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 10px #00e676;
+        }
+    </style>
 </head>
 <body>
 
-<!-- VIDEO BACKGROUND MP4 -->
-<video class="bg-video" autoplay loop muted playsinline disablepictureinpicture>
-    <source src="./gb.mp4" type="video/mp4">
-</video>
-
-<div class="container">
-    <h1>Rumus Flop Kasir</h1>
-    <div class="sub-title">Ultra Light Edition</div>
-
-    <div class="label-header">
-        <label for="rawInput">Tempel Log Transaksi</label>
-    </div>
-    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
-    
-    <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
-            <span id="txtCopy">SALIN DATA</span>
-        </button>
-        <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
-            <span id="txtReset">RESET</span>
-        </button>
-    </div>
-
-    <div class="label-header">
-        <label>Hasil Konversi</label>
-        <span class="badge-count" id="dataCounter">0 DATA</span>
-    </div>
-    
-    <div class="table-container">
-        <table id="resultTable">
-            <thead>
-                <tr>
-                    <th>WAKTU</th>
-                    <th>USER ID</th>
-                    <th>TUJUAN BANK</th>
-                    <th>CREDIT</th>
-                    <th>JUMLAH</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    let hasilTeksUntukDisalin = "";
-
-    /* FUNGSI EFEK GELOMBANG (RIPPLE) */
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(this.clientWidth, this.clientHeight);
-            const radius = diameter / 2;
-
-            const rect = this.getBoundingClientRect();
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${e.clientX - rect.left - radius}px`;
-            circle.style.top = `${e.clientY - rect.top - radius}px`;
-            circle.classList.add('ripple');
-
-            const ripple = this.querySelector('.ripple');
-            if (ripple) {
-                ripple.remove();
-            }
-
-            this.appendChild(circle);
-        });
-    });
-
-    /* FUNGSI KONVERSI LOG RINGAN */
-    function konversiLog() {
-        const input = document.getElementById('rawInput').value.trim();
-        const tbody = document.getElementById('tableBody');
-        const counter = document.getElementById('dataCounter');
-        
-        tbody.innerHTML = ''; 
-        hasilTeksUntukDisalin = ""; 
-
-        if (!input) {
-            counter.innerText = "0 DATA";
-            return;
-        }
-
-        let parsedLogList = [];
-        let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
-
-        if (lines.length === 1 && !lines[0].includes('\t')) {
-            let rawChunk = lines[0].replace(/(ACCEPT|REJECT|PENDING|SUCCESS|FAILED)[a-zA-Z0-9]*/gi, "$&\n");
-            lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
-        }
-
-        lines.forEach(line => {
-            let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
-            if (!matchTime) return;
-            let waktu = matchTime[1];
-
-            let parts = line.split(/\t|\s{2,}/).map(p => p.trim()).filter(p => p !== '');
+    <!-- Container Utama Boss -->
+    <div class="neon-table-container">
+        <div class="table-inner">
+            <div class="table-header">>> LOG TRANSAKSI KASIR NEON <<</div>
             
-            if (parts.length >= 5) {
-                let userId = parts[2] || "-";
-                let bankInfo = parts[4] || "-";
-                let jumlah = parts[6] || parts[5] || "0";
-                
-                jumlah = jumlah.replace(/^-/, '').trim();
+            <ul class="log-list" id="logList">
+                <li class="log-item">
+                    <span class="log-time">14:02:11</span>
+                    <span class="log-desc">Token Listrik 100k</span>
+                    <span class="log-price text-green">Rp 102.000</span>
+                </li>
+                <li class="log-item">
+                    <span class="log-time">14:02:45</span>
+                    <span class="log-desc">Rokok Marboro Merah</span>
+                    <span class="log-price">Rp 35.500</span>
+                </li>
+                <li class="log-item">
+                    <span class="log-time">14:03:01</span>
+                    <span class="log-desc">Indomie Goreng (x5)</span>
+                    <span class="log-price">Rp 16.000</span>
+                </li>
+                 <li class="log-item">
+                    <span class="log-time">14:03:30</span>
+                    <span class="log-desc">Air Mineral 600ml</span>
+                    <span class="log-price">Rp 5.000</span>
+                </li>
+            </ul>
 
-                parsedLogList.push({
-                    waktu: waktu,
-                    userId: userId,
-                    tujuanBank: bankInfo,
-                    creditStatus: "0",
-                    jumlah: jumlah
-                });
-            } else {
-                let timeIndex = line.indexOf(waktu);
-                let textAfterTime = line.substring(timeIndex + waktu.length);
-                let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
+            <div class="table-footer">
+                <span class="total-label">TOTAL PENDAPATAN:</span>
+                <span class="total-amount">Rp 158.500</span>
+            </div>
+        </div>
+    </div>
 
-                if (matchType) {
-                    let typeIndex = textAfterTime.search(/(Withdraw|Deposit)/i);
-                    let userId = textAfterTime.substring(0, typeIndex).trim();
-                    let textAfterType = textAfterTime.substring(typeIndex + matchType[0].length);
+    <!-- Tombol Demo Boss -->
+    <button id="addBtn">Tambah Transaksi</button>
 
-                    let matchAmount = textAfterType.match(/-?([0-9.,]+)(?:\s|\t|ACCEPT|REJECT|PENDING|SUCCESS|FAILED|$)/i);
-                    let jumlah = "0";
-                    let bankSection = textAfterType;
+    <script>
+        // --- Javascript Boss (Buat Demo Nambahin Data) ---
+        const logList = document.getElementById('logList');
+        const totalAmountSpan = document.querySelector('.total-amount');
+        const addBtn = document.getElementById('addBtn');
+        let currentTotal = 158500;
 
-                    if (matchAmount) {
-                        jumlah = matchAmount[1].replace(/^-/, '');
-                        let amountIndex = textAfterType.indexOf(matchAmount[0]);
-                        bankSection = textAfterType.substring(0, amountIndex).trim();
-                    }
+        const dummyTransactions = [
+            { desc: "Kopi Hitam", price: 8000 },
+            { desc: "Pake Data Telkomsel", price: 55000 },
+            { desc: "Ciki Ring", price: 2500 },
+            { desc: "Minyak Goreng 2L", price: 41000 },
+            { desc: "Es Krim", price: 12000 },
+        ];
 
-                    bankSection = bankSection.replace(/-\s*$/, '').trim();
+        function getCurrentTime() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            return `${h}:${m}:${s}`;
+        }
 
-                    parsedLogList.push({
-                        waktu: waktu,
-                        userId: userId,
-                        tujuanBank: bankSection,
-                        creditStatus: "0",
-                        jumlah: jumlah
-                    });
-                }
-            }
+        function formatRupiah(amount) {
+            return "Rp " + amount.toLocaleString('id-ID');
+        }
+
+        addBtn.addEventListener('click', () => {
+            // Pilih transaksi acak
+            const randIdx = Math.floor(Math.random() * dummyTransactions.length);
+            const trans = dummyTransactions[randIdx];
+            currentTotal += trans.price;
+
+            // Buat element log baru
+            const newLogItem = document.createElement('li');
+            newLogItem.className = 'log-item';
+            newLogItem.innerHTML = `
+                <span class="log-time">${getCurrentTime()}</span>
+                <span class="log-desc">${trans.desc}</span>
+                <span class="log-price">${formatRupiah(trans.price)}</span>
+            `;
+
+            // Tambahin ke list
+            logList.appendChild(newLogItem);
+
+            // Update total
+            totalAmountSpan.textContent = formatRupiah(currentTotal);
+
+            // Auto-scroll ke paling bawah
+            logList.scrollTop = logList.scrollHeight;
         });
 
-        parsedLogList.reverse();
-
-        let barisDataDisalin = [];
-
-        parsedLogList.forEach((item) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
-            tbody.appendChild(tr);
-
-            barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
-        });
-
-        hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        counter.innerText = `${parsedLogList.length} DATA`;
-    }
-
-    /* FUNGSI RESET */
-    function resetData() {
-        document.getElementById('rawInput').value = '';
-        document.getElementById('tableBody').innerHTML = '';
-        document.getElementById('dataCounter').innerText = "0 DATA";
-        hasilTeksUntukDisalin = "";
-        document.getElementById('rawInput').focus();
-    }
-
-    /* FUNGSI SALIN TEKS */
-    function salinHasil() {
-        const txt = document.getElementById('txtCopy');
-        
-        if (!hasilTeksUntukDisalin) {
-            txt.innerText = "DATA KOSONG!";
-            setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1000);
-            return;
-        }
-        
-        navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            txt.innerText = "BERHASIL DISALIN";
-            setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1200);
-        }).catch(err => {
-            console.error("Error: ", err);
-        });
-    }
-
-    /* SHORTCUT KEYBOARD */
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            resetData();
-        }
-        if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
-            e.preventDefault();
-            salinHasil();
-        }
-    });
-</script>
+    </script>
 </body>
 </html>
