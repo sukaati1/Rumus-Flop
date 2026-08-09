@@ -54,53 +54,53 @@
         pointer-events: none;
     }
 
-    /* CONTAINER WRAPPER BINGKAI CAHAYA */
-    .container-wrapper {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        max-width: 900px;
-        margin: auto;
-        border-radius: 20px;
-        padding: 2px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* BINGKAI CAHAYA NEON BERPUTAR */
-    .container-wrapper::before {
-        content: '';
-        position: absolute;
-        width: 150%;
-        height: 500%;
-        background: conic-gradient(
-            transparent 20%, 
-            var(--cyan-neon) 40%, 
-            var(--purple-neon) 60%, 
-            var(--pink-neon) 80%, 
-            transparent 100%
-        );
-        animation: rotateBorder 4s linear infinite;
-    }
-
-    @keyframes rotateBorder {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* MEJA UTAMA / CONTAINER TRANSPARAN */
+    /* MEJA UTAMA / CONTAINER DENGAN CAHAYA HANYA DI GARIS TEPI */
     .container {
         position: relative;
-        z-index: 3;
-        background: rgba(8, 6, 20, 0.25) !important; /* Dibuat lebih transparan */
+        z-index: 2;
+        background: rgba(8, 6, 20, 0.25) !important; /* Latar transparan */
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
-        border-radius: 18px; 
+        border-radius: 20px; 
         width: 100%;
+        max-width: 900px;
         padding: 35px 30px;
-        box-shadow: inset 0 0 15px rgba(0, 210, 255, 0.15);
+        margin: auto;
+    }
+
+    /* BORDER CAHAYA BERJALAN HANYA DI GARIS LUAR (MASKED BORDER) */
+    .container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 20px; 
+        padding: 2.5px; /* Ketebalan garis cahaya */
+        background: conic-gradient(
+            from var(--angle, 0deg),
+            transparent 0%,
+            transparent 70%,
+            var(--cyan-neon) 85%,
+            var(--pink-neon) 100%
+        );
+        -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: spinBorder 3.5s linear infinite;
+        pointer-events: none;
+    }
+
+    @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+    }
+
+    @keyframes spinBorder {
+        to {
+            --angle: 360deg;
+        }
     }
 
     /* JUDUL UTAMA */
@@ -322,45 +322,43 @@
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
-<!-- BINGKAI ANIMASI CAHAYA MEMUTAR -->
-<div class="container-wrapper">
-    <div class="container">
-        <h1>Rumus Flop Kasir</h1>
-        <div class="sub-title">Ultra Light Edition</div>
+<!-- MEJA UTAMA -->
+<div class="container">
+    <h1>Rumus Flop Kasir</h1>
+    <div class="sub-title">Ultra Light Edition</div>
 
-        <div class="label-header">
-            <label for="rawInput">Tempel Log Transaksi</label>
-        </div>
-        <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
-        
-        <div class="btn-group">
-            <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
-                <span id="txtCopy">SALIN DATA</span>
-            </button>
-            <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
-                <span id="txtReset">RESET</span>
-            </button>
-        </div>
+    <div class="label-header">
+        <label for="rawInput">Tempel Log Transaksi</label>
+    </div>
+    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+    
+    <div class="btn-group">
+        <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
+            <span id="txtCopy">SALIN DATA</span>
+        </button>
+        <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
+            <span id="txtReset">RESET</span>
+        </button>
+    </div>
 
-        <div class="label-header">
-            <label>Hasil Konversi</label>
-            <span class="badge-count" id="dataCounter">0 DATA</span>
-        </div>
-        
-        <div class="table-container">
-            <table id="resultTable">
-                <thead>
-                    <tr>
-                        <th>WAKTU</th>
-                        <th>USER ID</th>
-                        <th>TUJUAN BANK</th>
-                        <th>CREDIT</th>
-                        <th>JUMLAH</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
+    <div class="label-header">
+        <label>Hasil Konversi</label>
+        <span class="badge-count" id="dataCounter">0 DATA</span>
+    </div>
+    
+    <div class="table-container">
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>WAKTU</th>
+                    <th>USER ID</th>
+                    <th>TUJUAN BANK</th>
+                    <th>CREDIT</th>
+                    <th>JUMLAH</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
     </div>
 </div>
 
