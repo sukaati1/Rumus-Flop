@@ -229,24 +229,23 @@
 
     .btn-group {
         display: flex;
-        gap: 12px;
+        gap: 16px;
         margin-bottom: 28px;
     }
 
-    /* TAMPILAN TOMBOL UNGU LAVENDER TRANSPARAN + BLUR */
+    /* TOMBOL BENTUK MATA */
     button {
         position: relative;
         overflow: hidden;
         flex: 1;
-        padding: 14px; 
+        padding: 18px 24px; 
         font-family: 'Orbitron', sans-serif;
         font-size: 12px;    
         font-weight: 900;
-        border-radius: 10px; 
         cursor: pointer;
         letter-spacing: 2px;
         text-transform: uppercase;
-        border: 1.5px solid var(--lavender-border) !important;
+        border: none !important;
         outline: none;
         
         background: var(--lavender-bg) !important;
@@ -256,7 +255,9 @@
         text-shadow: 0 0 8px rgba(181, 126, 220, 0.8);
         box-shadow: 0 4px 15px rgba(147, 112, 219, 0.3);
         
-        transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
+        /* CLIP-PATH BENTUK MATA */
+        clip-path: ellipse(50% 45% at 50% 50%);
+        transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease, clip-path 0.2s ease;
     }
 
     /* EFEK GETAR SAAT HOVER */
@@ -274,10 +275,9 @@
         100% { transform: translate(1px, 1px) rotate(0.5deg); }
     }
 
-    /* BINGKAI UNGU SAAT TEKAN TAB (FOCUS-VISIBLE) */
+    /* BINGKAI SAAT TEKAN TAB (FOCUS-VISIBLE) */
     button:focus-visible {
-        border-color: #ffffff !important;
-        box-shadow: 0 0 20px var(--lavender-border), inset 0 0 10px var(--lavender-glow) !important;
+        box-shadow: 0 0 20px var(--lavender-border) !important;
     }
 
     button:active {
