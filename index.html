@@ -18,11 +18,11 @@
         --pink-neon: #ff007f;
         --cyan-neon: #00f0ff;
         
-        /* VARIABEL WARNA LAVENDER UNGU TRANSPARAN */
-        --lavender-bg: rgba(147, 112, 219, 0.4); 
-        --lavender-border: #b57edc;               
-        --lavender-text: #f3e8ff;                 
-        --lavender-glow: rgba(181, 126, 220, 0.8); 
+        /* WARNA LAVENDER REDUP & AGAK TRANSPARAN */
+        --lavender-bg: rgba(147, 112, 219, 0.18); 
+        --lavender-border: rgba(181, 126, 220, 0.5);               
+        --lavender-text: #e8d7ff;                 
+        --lavender-glow: rgba(181, 126, 220, 0.4); 
     }
 
     * {
@@ -40,7 +40,7 @@
     }
 
     body {
-        padding: 30px 15px;
+        padding: 40px 15px;
         font-family: 'Rajdhani', sans-serif;
         color: #ffffff !important;
         display: flex;
@@ -60,54 +60,24 @@
         pointer-events: none;
     }
 
-    /* CONTAINER TRANSPARAN + BLUR TIPIS */
+    /* BINGKAI UTAMA - BENTUK MATA SAMA DENGAN TOMBOL */
     .container {
         position: relative;
         z-index: 2;
-        background: rgba(10, 8, 25, 0.35) !important; 
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-radius: 20px; 
+        background: rgba(10, 8, 25, 0.45) !important; 
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        
+        /* BENTUK MATA SAMA SEPERTI TOMBOL */
+        border-radius: 65px 0px 65px 0px !important;
+        border: 2px solid var(--lavender-border) !important;
+        
         width: 100%;
         max-width: 900px;
-        padding: 35px 30px;
+        padding: 45px 40px;
         margin: auto;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-
-    /* BORDER CAHAYA BERJALAN HANYA DI GARIS LUAR */
-    .container::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 20px; 
-        padding: 2px;
-        background: conic-gradient(
-            from var(--angle, 0deg),
-            transparent 0%,
-            transparent 70%,
-            var(--cyan-neon) 85%,
-            var(--pink-neon) 100%
-        );
-        -webkit-mask: 
-            linear-gradient(#fff 0 0) content-box, 
-            linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        animation: spinBorder 3.5s linear infinite;
-        pointer-events: none;
-    }
-
-    @property --angle {
-        syntax: '<angle>';
-        initial-value: 0deg;
-        inherits: false;
-    }
-
-    @keyframes spinBorder {
-        to {
-            --angle: 360deg;
-        }
+        box-shadow: 0 0 25px rgba(147, 112, 219, 0.15), inset 0 0 15px rgba(147, 112, 219, 0.1);
+        filter: drop-shadow(0 0 10px rgba(147, 112, 219, 0.2));
     }
 
     /* JUDUL UTAMA DENGAN CAHAYA BERJALAN */
@@ -159,8 +129,8 @@
         font-family: 'Dancing Script', cursive;
         font-size: 14px;
         font-weight: 600;
-        color: rgba(243, 232, 255, 0.7);
-        text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
+        color: rgba(243, 232, 255, 0.6);
+        text-shadow: 0 0 6px rgba(181, 126, 220, 0.4);
         margin-bottom: 28px;
         letter-spacing: 1px;
     }
@@ -189,9 +159,9 @@
         font-weight: 800;
         padding: 3px 10px;
         border-radius: 15px;
-        background: rgba(0, 210, 255, 0.2);
+        background: rgba(0, 210, 255, 0.15);
         color: var(--cyan-neon) !important;
-        border: 1px solid var(--cyan-neon);
+        border: 1px solid rgba(0, 240, 255, 0.5);
         font-family: 'Orbitron', sans-serif;
     }
     
@@ -202,8 +172,8 @@
         background: rgba(0, 0, 0, 0.3) !important;
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
-        border: 1.5px solid rgba(168, 85, 247, 0.4) !important; 
-        border-radius: 10px;
+        border: 1.5px solid rgba(168, 85, 247, 0.3) !important; 
+        border-radius: 12px;
         color: var(--cyan-neon) !important;
         padding: 14px;
         box-sizing: border-box;
@@ -224,7 +194,7 @@
     }
 
     textarea::placeholder {
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.3);
     }
 
     .btn-group {
@@ -233,7 +203,7 @@
         margin-bottom: 28px;
     }
 
-    /* TOMBOL BENTUK MATA + BORDER GLOW LAVENDER TEBAL */
+    /* TOMBOL BENTUK MATA - WARNA LEBIH REDUP & TRANSPARAN */
     button {
         position: relative;
         overflow: hidden;
@@ -247,30 +217,30 @@
         text-transform: uppercase;
         outline: none;
         
-        /* BENTUK MATA DENGAN BORDER BORDER RADIUS */
+        /* BENTUK MATA SAMA DENGAN CONTAINER */
         border-radius: 65px 0px 65px 0px !important;
-        border: 2px solid var(--lavender-border) !important;
+        border: 1.5px solid var(--lavender-border) !important;
         
         background: var(--lavender-bg) !important;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         color: var(--lavender-text) !important;
         
-        /* CAHAYA GLOW DAN TULISAN */
-        text-shadow: 0 0 8px rgba(181, 126, 220, 0.8);
-        box-shadow: 0 0 15px rgba(181, 126, 220, 0.4), inset 0 0 10px rgba(181, 126, 220, 0.3);
-        filter: drop-shadow(0 0 8px rgba(181, 126, 220, 0.6));
+        /* CAHAYA GLOW SOFT */
+        text-shadow: 0 0 6px rgba(181, 126, 220, 0.5);
+        box-shadow: 0 0 10px rgba(181, 126, 220, 0.15), inset 0 0 8px rgba(181, 126, 220, 0.1);
+        filter: drop-shadow(0 0 4px rgba(181, 126, 220, 0.3));
         
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease, filter 0.2s ease;
     }
 
-    /* EFEK GETAR DAN GLOW TERANG SAAT HOVER */
+    /* EFEK HOVER & GETAR SAAT DISENTUH */
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
-        background: rgba(147, 112, 219, 0.65) !important;
-        border-color: #ffffff !important;
-        box-shadow: 0 0 25px var(--lavender-glow), inset 0 0 15px rgba(255, 255, 255, 0.5);
-        filter: drop-shadow(0 0 12px var(--lavender-glow));
+        background: rgba(147, 112, 219, 0.35) !important;
+        border-color: rgba(255, 255, 255, 0.8) !important;
+        box-shadow: 0 0 15px var(--lavender-glow), inset 0 0 10px rgba(255, 255, 255, 0.2);
+        filter: drop-shadow(0 0 8px var(--lavender-glow));
     }
 
     @keyframes shakeBtn {
@@ -284,7 +254,7 @@
     /* BINGKAI SAAT TEKAN TAB (FOCUS-VISIBLE) */
     button:focus-visible {
         border-color: #ffffff !important;
-        box-shadow: 0 0 20px #ffffff, inset 0 0 10px var(--lavender-glow) !important;
+        box-shadow: 0 0 15px #ffffff, inset 0 0 8px var(--lavender-glow) !important;
     }
 
     button:active {
@@ -296,7 +266,7 @@
     .ripple {
         position: absolute;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.4);
         transform: scale(0);
         animation: ripple-animation 0.6s linear;
         pointer-events: none;
@@ -314,8 +284,8 @@
         position: relative;
         overflow-x: auto; 
         max-height: 380px;
-        border-radius: 10px;
-        border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+        border-radius: 12px;
+        border: 1.5px solid rgba(168, 85, 247, 0.3) !important;
         background: rgba(0, 0, 0, 0.25) !important;
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
@@ -341,7 +311,7 @@
         z-index: 3;
         font-family: 'Orbitron', sans-serif;
         font-weight: 800;
-        background: rgba(13, 10, 30, 0.7) !important; 
+        background: rgba(13, 10, 30, 0.75) !important; 
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         color: var(--purple-bright) !important; 
@@ -354,7 +324,7 @@
     /* TD DATA TABEL */
     td {
         color: #ffffff !important;
-        border-bottom: 1px solid rgba(168, 85, 247, 0.15) !important;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.12) !important;
         font-family: 'JetBrains Mono', monospace;
         font-weight: 700;
         font-size: 13px;
@@ -369,7 +339,7 @@
     td:nth-child(5) { color: var(--cyan-neon) !important; }
 
     tr:hover td {
-        background-color: rgba(168, 85, 247, 0.3) !important;
+        background-color: rgba(168, 85, 247, 0.25) !important;
     }
 
     tr:last-child td { border-bottom: none !important; }
@@ -382,7 +352,7 @@
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
-<!-- MEJA UTAMA -->
+<!-- MEJA UTAMA (BENTUK MATA) -->
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
