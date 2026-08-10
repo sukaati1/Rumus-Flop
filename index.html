@@ -60,7 +60,53 @@
         pointer-events: none;
     }
 
-    /* BINGKAI UTAMA BENTUK MATA + EFEK CAHAYA MELINGKARI BINGKAI */
+    /* CONTAINER UTAMA BENTUK MATA */
+    .container-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+        z-index: 2;
+    }
+
+    /* SVG BORDER DENGAN EFEK CAHAYA MELINGKARI PENUH (360 DERAJAT) */
+    .border-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3;
+        overflow: visible;
+        filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
+    }
+
+    .border-path-bg {
+        fill: none;
+        stroke: rgba(181, 126, 220, 0.4);
+        stroke-width: 2.5;
+        rx: 65px;
+    }
+
+    .border-path-glow {
+        fill: none;
+        stroke: url(#neonGradient);
+        stroke-width: 3.5;
+        stroke-linecap: round;
+        stroke-dasharray: 250 800;
+        animation: rotateGlow 4s linear infinite;
+    }
+
+    @keyframes rotateGlow {
+        0% {
+            stroke-dashoffset: 0;
+        }
+        100% {
+            stroke-dashoffset: -1050;
+        }
+    }
+
     .container {
         position: relative;
         z-index: 2;
@@ -68,51 +114,13 @@
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         
-        /* BENTUK MATA SAMA DENGAN TOMBOL */
+        /* BENTUK MATA SEPERTI TOMBOL */
         border-radius: 65px 0px 65px 0px !important;
         
         width: 100%;
-        max-width: 900px;
         padding: 45px 40px;
-        margin: auto;
         
-        box-shadow: 0 0 25px rgba(181, 126, 220, 0.3), inset 0 0 15px rgba(181, 126, 220, 0.15);
-    }
-
-    /* BORDER CAHAYA BERJALAN MELINGKARI BINGKAI BENTUK MATA */
-    .container::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        border-radius: 65px 0px 65px 0px !important;
-        padding: 2px;
-        background: conic-gradient(
-            from var(--angle, 0deg),
-            transparent 0%,
-            transparent 65%,
-            var(--cyan-neon) 80%,
-            var(--purple-neon) 90%,
-            var(--pink-neon) 100%
-        );
-        -webkit-mask: 
-            linear-gradient(#fff 0 0) content-box, 
-            linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        animation: spinBorder 3.5s linear infinite;
-        pointer-events: none;
-    }
-
-    @property --angle {
-        syntax: '<angle>';
-        initial-value: 0deg;
-        inherits: false;
-    }
-
-    @keyframes spinBorder {
-        to {
-            --angle: 360deg;
-        }
+        box-shadow: inset 0 0 20px rgba(181, 126, 220, 0.2);
     }
 
     /* JUDUL UTAMA DENGAN CAHAYA BERJALAN */
@@ -385,49 +393,91 @@
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
-<!-- MEJA UTAMA (BENTUK MATA + EFEK CAHAYA MELINGKARI BINGKAI) -->
-<div class="container">
-    <h1>Rumus Flop Kasir</h1>
-    <div class="sub-title">Ultra Light Edition</div>
-    <div class="watermark-fajar-sub">Fajar</div>
+<!-- MEJA UTAMA DENGAN SVG BORDER MELINGKARI PENUH -->
+<div class="container-wrapper">
+    <!-- SVG OVERLAY UNTUK CAHAYA PUTAR 360 DEGREE -->
+    <svg class="border-svg" preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f0ff" />
+                <stop offset="50%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#ff007f" />
+            </linearGradient>
+        </defs>
+        <rect class="border-path-bg" x="1.5" y="1.5" width="calc(100% - 3px)" height="calc(100% - 3px)" />
+        <rect class="border-path-glow" x="1.5" y="1.5" width="calc(100% - 3px)" height="calc(100% - 3px)" />
+    </svg>
 
-    <div class="label-header">
-        <label for="rawInput">Tempel Log Transaksi</label>
-    </div>
-    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
-    
-    <div class="btn-group">
-        <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
-            <span id="txtCopy">SALIN DATA</span>
-        </button>
-        <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
-            <span id="txtReset">RESET</span>
-        </button>
-    </div>
+    <div class="container">
+        <h1>Rumus Flop Kasir</h1>
+        <div class="sub-title">Ultra Light Edition</div>
+        <div class="watermark-fajar-sub">Fajar</div>
 
-    <div class="label-header">
-        <label>Hasil Konversi</label>
-        <span class="badge-count" id="dataCounter">0 DATA</span>
-    </div>
-    
-    <div class="table-container">
-        <table id="resultTable">
-            <thead>
-                <tr>
-                    <th>WAKTU</th>
-                    <th>USER ID</th>
-                    <th>TUJUAN BANK</th>
-                    <th>CREDIT</th>
-                    <th>JUMLAH</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+        <div class="label-header">
+            <label for="rawInput">Tempel Log Transaksi</label>
+        </div>
+        <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+        
+        <div class="btn-group">
+            <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
+                <span id="txtCopy">SALIN DATA</span>
+            </button>
+            <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
+                <span id="txtReset">RESET</span>
+            </button>
+        </div>
+
+        <div class="label-header">
+            <label>Hasil Konversi</label>
+            <span class="badge-count" id="dataCounter">0 DATA</span>
+        </div>
+        
+        <div class="table-container">
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>WAKTU</th>
+                        <th>USER ID</th>
+                        <th>TUJUAN BANK</th>
+                        <th>CREDIT</th>
+                        <th>JUMLAH</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
     let hasilTeksUntukDisalin = "";
+
+    /* MENGATUR SUDUT KUSTOM UNTUK RECT SVG DENGAN BENTUK MATA */
+    function updateSvgShape() {
+        const bgPath = document.querySelector('.border-path-bg');
+        const glowPath = document.querySelector('.border-path-glow');
+        const container = document.querySelector('.container');
+        if (!container || !bgPath) return;
+
+        const w = container.offsetWidth;
+        const h = container.offsetHeight;
+        const r = 65; // Radius sudut bentuk mata
+
+        // Path SVG yang presisi mengikuti radius 65px 0px 65px 0px
+        const pathData = `M ${r},1 L ${w-1},1 L ${w-1},${h-r} Q ${w-1},${h-1} ${w-r},${h-1} L 1,${h-1} L 1,${r} Q 1,1 ${r},1 Z`;
+        
+        bgPath.setAttribute('d', pathData);
+        glowPath.setAttribute('d', pathData);
+
+        // Menyesuaikan keliling border untuk animasi lancar
+        const totalLength = bgPath.getTotalLength();
+        glowPath.style.strokeDasharray = `${totalLength * 0.3} ${totalLength * 0.7}`;
+        glowPath.style.setProperty('--total-length', totalLength);
+    }
+
+    window.addEventListener('resize', updateSvgShape);
+    window.addEventListener('DOMContentLoaded', updateSvgShape);
+    setTimeout(updateSvgShape, 100);
 
     /* FUNGSI EFEK GELOMBANG (RIPPLE) */
     document.querySelectorAll('button').forEach(button => {
@@ -462,6 +512,7 @@
 
         if (!input) {
             counter.innerText = "0 DATA";
+            updateSvgShape();
             return;
         }
 
@@ -541,6 +592,7 @@
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         counter.innerText = `${parsedLogList.length} DATA`;
+        setTimeout(updateSvgShape, 50);
     }
 
     /* FUNGSI RESET */
@@ -550,6 +602,7 @@
         document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
+        setTimeout(updateSvgShape, 50);
     }
 
     /* FUNGSI SALIN TEKS */
