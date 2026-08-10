@@ -60,26 +60,59 @@
         pointer-events: none;
     }
 
-    /* BINGKAI UTAMA - BENTUK MATA DENGAN GLOW MENYALA */
+    /* BINGKAI UTAMA BENTUK MATA + EFEK CAHAYA MELINGKARI BINGKAI */
     .container {
         position: relative;
         z-index: 2;
-        background: rgba(10, 8, 25, 0.45) !important; 
+        background: rgba(10, 8, 25, 0.5) !important; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         
-        /* BENTUK MATA SEPERTI TOMBOL */
+        /* BENTUK MATA SAMA DENGAN TOMBOL */
         border-radius: 65px 0px 65px 0px !important;
-        border: 2px solid var(--lavender-border) !important;
         
         width: 100%;
         max-width: 900px;
         padding: 45px 40px;
         margin: auto;
         
-        /* EFEK GLOW LUAR DAN DALAM KREATIF */
-        box-shadow: 0 0 20px var(--lavender-glow), inset 0 0 15px rgba(181, 126, 220, 0.2);
-        filter: drop-shadow(0 0 12px rgba(181, 126, 220, 0.5));
+        box-shadow: 0 0 25px rgba(181, 126, 220, 0.3), inset 0 0 15px rgba(181, 126, 220, 0.15);
+    }
+
+    /* BORDER CAHAYA BERJALAN MELINGKARI BINGKAI BENTUK MATA */
+    .container::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 65px 0px 65px 0px !important;
+        padding: 2px;
+        background: conic-gradient(
+            from var(--angle, 0deg),
+            transparent 0%,
+            transparent 65%,
+            var(--cyan-neon) 80%,
+            var(--purple-neon) 90%,
+            var(--pink-neon) 100%
+        );
+        -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: spinBorder 3.5s linear infinite;
+        pointer-events: none;
+    }
+
+    @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+    }
+
+    @keyframes spinBorder {
+        to {
+            --angle: 360deg;
+        }
     }
 
     /* JUDUL UTAMA DENGAN CAHAYA BERJALAN */
@@ -231,9 +264,8 @@
         /* CAHAYA GLOW */
         text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
         box-shadow: 0 0 12px var(--lavender-glow), inset 0 0 8px rgba(181, 126, 220, 0.2);
-        filter: drop-shadow(0 0 6px rgba(181, 126, 220, 0.4));
         
-        transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease, filter 0.2s ease;
+        transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     /* EFEK HOVER & GETAR SAAT DISENTUH */
@@ -242,7 +274,6 @@
         background: rgba(147, 112, 219, 0.35) !important;
         border-color: #ffffff !important;
         box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4);
-        filter: drop-shadow(0 0 10px #b57edc);
     }
 
     @keyframes shakeBtn {
@@ -354,7 +385,7 @@
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
-<!-- MEJA UTAMA (BENTUK MATA) -->
+<!-- MEJA UTAMA (BENTUK MATA + EFEK CAHAYA MELINGKARI BINGKAI) -->
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
