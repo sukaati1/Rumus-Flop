@@ -247,18 +247,18 @@
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    /* TEKS WATERMARK "Fajar" DI KANAN BAWAH TOMBOL */
-    .watermark-fajar {
-        position: absolute;
-        bottom: 3px;
-        right: 8px;
+    /* WATERMARK FAJAR DI SUDUT KANAN BAWAH LAYAR */
+    .watermark-fajar-global {
+        position: fixed;
+        bottom: 12px;
+        right: 18px;
+        z-index: 999;
         font-family: 'Dancing Script', cursive;
-        font-size: 11px;
+        font-size: 16px;
         font-weight: 600;
-        text-transform: none;
         letter-spacing: 0.5px;
-        color: rgba(243, 232, 255, 0.6);
-        text-shadow: 0 0 3px rgba(181, 126, 220, 0.5);
+        color: rgba(243, 232, 255, 0.7);
+        text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
         pointer-events: none;
     }
 
@@ -391,11 +391,9 @@
     <div class="btn-group">
         <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
             <span id="txtCopy">SALIN DATA</span>
-            <span class="watermark-fajar">Fajar</span>
         </button>
         <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
             <span id="txtReset">RESET</span>
-            <span class="watermark-fajar">Fajar</span>
         </button>
     </div>
 
@@ -419,6 +417,9 @@
         </table>
     </div>
 </div>
+
+<!-- WATERMARK FAJAR DI SUDUT KANAN BAWAH HALAMAN -->
+<div class="watermark-fajar-global">Fajar</div>
 
 <script>
     let hasilTeksUntukDisalin = "";
