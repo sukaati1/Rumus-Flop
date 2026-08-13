@@ -433,7 +433,7 @@
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        padding: 8px 30px 8px 12px;
+        padding: 8px 12px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.05);
         border-left: 3px solid var(--lavender-border);
@@ -469,45 +469,6 @@
         padding: 2px 6px;
         border-radius: 4px;
         font-size: 12px;
-    }
-
-    .chat-msg .btn-delete-msg {
-        position: absolute;
-        right: 8px;
-        top: 6px;
-        color: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: bold;
-        transition: color 0.2s ease;
-    }
-
-    .chat-msg .btn-delete-msg:hover {
-        color: var(--pink-neon);
-    }
-
-    .chat-quick-actions {
-        display: flex;
-        gap: 8px;
-    }
-
-    .btn-quick-send {
-        background: rgba(0, 210, 255, 0.15) !important;
-        border: 1px solid var(--cyan-neon) !important;
-        color: var(--cyan-neon) !important;
-        font-size: 10px !important;
-        padding: 6px 12px !important;
-        border-radius: 8px !important;
-        font-family: 'Orbitron', sans-serif;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-transform: uppercase;
-    }
-
-    .btn-quick-send:hover {
-        background: rgba(0, 210, 255, 0.35) !important;
-        color: #fff !important;
-        box-shadow: 0 0 10px var(--cyan-neon);
     }
 
     .chat-footer {
@@ -603,9 +564,6 @@
                 <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
         </div>
-        <div class="chat-quick-actions">
-            <button class="btn-quick-send" onclick="sendConvertedDataToChat()">📋 Kirim Log ke Chat</button>
-        </div>
         <div class="chat-body" id="chatLogs"></div>
         <div class="chat-footer">
             <input type="text" id="chatUser" placeholder="Nama..." onchange="saveUserName(this.value)" />
@@ -633,8 +591,8 @@
             gain.connect(ctx.destination);
             
             if (type === 'send') {
-                osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
-                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1); // A5
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
                 gain.gain.setValueAtTime(0.1, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
                 osc.start();
@@ -741,7 +699,6 @@
         const emoji = getUserEmoji(username);
 
         msgDiv.innerHTML = `
-            <span class="btn-delete-msg" title="Hapus Pesan Ini" onclick="deleteSingleMessage('${key}')">&times;</span>
             <span class="time-stamp">[${data.timestamp || ''}]</span>
             <span class="sender" style="color: ${color};">${emoji} ${username}:</span>
             <span class="msg-content">${formatChatMessage(data.msg)}</span>
@@ -751,10 +708,10 @@
         chatLogs.scrollTop = chatLogs.scrollHeight;
     }
 
-    function sendChatMessage(customMsg = null) {
+    function sendChatMessage() {
         const userInput = document.getElementById('chatUser');
         const textInput = document.getElementById('chatText');
-        const messageText = customMsg || textInput.value.trim();
+        const messageText = textInput.value.trim();
 
         if (userInput.value.trim() && messageText) {
             saveUserName(userInput.value);
@@ -767,25 +724,10 @@
 
             dbChat.push(payload);
             playBeepSound('send');
-            if (!customMsg) textInput.value = '';
+            textInput.value = '';
         } else if (!userInput.value.trim()) {
             userInput.focus();
         }
-    }
-
-    /* QUICK ACTION: KIRIM LOG DARI TABEL KE CHAT */
-    function sendConvertedDataToChat() {
-        if (!hasilTeksUntukDisalin) {
-            alert("Data log masih kosong!");
-            return;
-        }
-        const summary = `*SUMMARY LOG TRANSAKSI:*\n\`\`\`\n${hasilTeksUntukDisalin}\n\`\`\``;
-        sendChatMessage(summary);
-    }
-
-    /* FUNGSI HAPUS SATU PESAN INDIVIDU */
-    function deleteSingleMessage(key) {
-        dbChat.child(key).remove();
     }
 
     /* FUNGSI RESET CHAT LANGSUNG HAPUS TANPA POPUP NOTIFIKASI */
