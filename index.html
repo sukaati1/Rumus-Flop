@@ -433,7 +433,7 @@
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        padding: 8px 50px 8px 12px;
+        padding: 8px 65px 8px 12px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.05);
         border-left: 3px solid var(--lavender-border);
@@ -447,11 +447,14 @@
         right: 8px;
         top: 6px;
         display: flex;
-        gap: 6px;
+        gap: 8px;
+        background: rgba(10, 8, 25, 0.6);
+        padding: 2px 6px;
+        border-radius: 10px;
     }
 
     .btn-action-msg {
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.5);
         cursor: pointer;
         font-size: 13px;
         transition: color 0.2s ease, transform 0.1s ease;
@@ -459,7 +462,7 @@
 
     .btn-action-msg:hover {
         color: var(--cyan-neon);
-        transform: scale(1.15);
+        transform: scale(1.2);
     }
 
     /* DESAIN PESAN REPLY / QUOTE */
@@ -839,6 +842,12 @@
         picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
     }
 
+    /* BUKA MENU STIKER DENGAN OTOMATIS MENELUSURI / MEMBALAS PESAN */
+    function triggerStickerForReply(user, text) {
+        setReplyToMessage(user, text);
+        toggleStickerPicker();
+    }
+
     /* FUNGSI SET REPLY PESAN */
     function setReplyToMessage(user, text) {
         selectedReplyData = { user, text };
@@ -889,7 +898,7 @@
 
         msgDiv.innerHTML = `
             <div class="msg-actions">
-                <span class="btn-action-msg" title="Pilih Stiker" onclick="toggleStickerPicker()">😊</span>
+                <span class="btn-action-msg" title="Balas dengan Stiker" onclick="triggerStickerForReply('${safeUser}', '${safeText}')">😊</span>
                 <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
             </div>
             ${replyHTML}
