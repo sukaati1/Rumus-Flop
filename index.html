@@ -60,33 +60,26 @@
         pointer-events: none;
     }
 
-    /* BINGKAI UTAMA - BENTUK MATA DENGAN BORDER & GLOW PENUH */
+    /* BINGKAI UTAMA */
     .container {
         position: relative;
         z-index: 2;
         background: rgba(10, 8, 25, 0.55) !important; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        
-        /* BENTUK MATA SAMA SEPERTI TOMBOL */
         border-radius: 65px 0px 65px 0px !important;
-        
-        /* GARIS BORDER TAJAM 2PX */
         border: 2px solid var(--lavender-border) !important;
-        
         width: 100%;
         max-width: 900px;
         padding: 45px 40px;
         margin: auto;
-        
-        /* CAHAYA GLOW BERLAPIS (LOKAL & SEKELILING CONTAINER) */
         box-shadow: 
             0 0 15px rgba(200, 158, 255, 0.6),
             0 0 35px rgba(168, 85, 247, 0.4),
             inset 0 0 20px rgba(200, 158, 255, 0.25);
     }
 
-    /* JUDUL UTAMA DENGAN CAHAYA BERJALAN */
+    /* JUDUL UTAMA */
     h1 {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -111,9 +104,7 @@
     }
 
     @keyframes shineText {
-        to {
-            background-position: 200% center;
-        }
+        to { background-position: 200% center; }
     }
 
     /* SUBTITLE */
@@ -129,7 +120,7 @@
         margin-bottom: 4px;
     }
 
-    /* WATERMARK FAJAR DI BAWAH SUBTITLE */
+    /* WATERMARK FAJAR */
     .watermark-fajar-sub {
         text-align: center;
         font-family: 'Dancing Script', cursive;
@@ -148,7 +139,6 @@
         margin-bottom: 8px;
     }
     
-    /* LABEL */
     label {
         display: block;
         font-family: 'Orbitron', sans-serif;
@@ -159,7 +149,7 @@
         text-transform: uppercase;
     }
 
-    /* BADGE COUNTER DIJADIKAN TOMBOL CHAT */
+    /* BADGE COUNTER DIJADIKAN TOMBOL OPEN CHAT */
     .badge-count {
         font-size: 11px;
         font-weight: 800;
@@ -220,7 +210,6 @@
         margin-bottom: 28px;
     }
 
-    /* TOMBOL BENTUK MATA - TRANSPARAN DENGAN BORDER & GLOW MENYALA */
     button {
         position: relative;
         overflow: hidden;
@@ -233,24 +222,17 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         outline: none;
-        
-        /* BENTUK MATA SAMA SEPERTI CONTAINER */
         border-radius: 65px 0px 65px 0px !important;
         border: 2px solid var(--lavender-border) !important;
-        
         background: var(--lavender-bg) !important;
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         color: var(--lavender-text) !important;
-        
-        /* CAHAYA GLOW */
         text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
         box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
-        
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    /* EFEK HOVER & GETAR SAAT DISENTUH */
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
         background: rgba(147, 112, 219, 0.35) !important;
@@ -266,18 +248,11 @@
         100% { transform: translate(1px, 1px) rotate(0.5deg); }
     }
 
-    /* BINGKAI SAAT TEKAN TAB (FOCUS-VISIBLE) */
-    button:focus-visible {
-        border-color: #ffffff !important;
-        box-shadow: 0 0 15px #ffffff, inset 0 0 8px rgba(200, 158, 255, 0.8) !important;
-    }
-
     button:active {
         transform: scale(0.96) !important;
         animation: none !important;
     }
 
-    /* EFEK GELOMBANG (RIPPLE EFFECT) */
     .ripple {
         position: absolute;
         border-radius: 50%;
@@ -294,7 +269,7 @@
         }
     }
 
-    /* TABLE CONTAINER TRANSPARAN + BLUR TIPIS */
+    /* TABEL */
     .table-container { 
         position: relative;
         overflow-x: auto; 
@@ -319,7 +294,6 @@
         user-select: text;
     }
     
-    /* TH HEADER TABEL */
     th { 
         position: sticky;
         top: 0;
@@ -336,7 +310,6 @@
         border-bottom: 2px solid var(--purple-neon) !important;
     }
     
-    /* TD DATA TABEL */
     td {
         color: #ffffff !important;
         border-bottom: 1px solid rgba(168, 85, 247, 0.12) !important;
@@ -346,18 +319,125 @@
         text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
-    /* WARNA KOLOM */
     td:nth-child(1) { color: var(--blue-electric) !important; }
     td:nth-child(2) { color: #ffffff !important; }
     td:nth-child(3) { color: var(--purple-bright) !important; }
     td:nth-child(4) { color: var(--pink-neon) !important; }
     td:nth-child(5) { color: var(--cyan-neon) !important; }
 
-    tr:hover td {
-        background-color: rgba(168, 85, 247, 0.25) !important;
+    tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
+    tr:last-child td { border-bottom: none !important; }
+
+    /* MODAL TEAM CHAT NEON */
+    .chat-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        z-index: 999;
+        display: none;
+        justify-content: center;
+        align-items: center;
     }
 
-    tr:last-child td { border-bottom: none !important; }
+    .chat-modal {
+        width: 90%;
+        max-width: 500px;
+        background: rgba(15, 10, 30, 0.95);
+        border: 2px solid var(--cyan-neon);
+        border-radius: 20px;
+        box-shadow: 0 0 25px var(--cyan-neon);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+        padding-bottom: 10px;
+    }
+
+    .chat-header h3 {
+        margin: 0;
+        font-family: 'Orbitron', sans-serif;
+        color: var(--cyan-neon);
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    .btn-close-chat {
+        background: transparent !important;
+        border: none !important;
+        color: var(--pink-neon) !important;
+        font-size: 18px;
+        font-weight: 900;
+        cursor: pointer;
+        padding: 0 8px !important;
+        box-shadow: none !important;
+    }
+
+    .chat-body {
+        height: 280px;
+        overflow-y: auto;
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 10px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .chat-msg {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 3px solid var(--purple-neon);
+        user-select: text;
+    }
+
+    .chat-msg .sender {
+        font-weight: 800;
+        color: var(--cyan-neon);
+        margin-right: 6px;
+    }
+
+    .chat-footer {
+        display: flex;
+        gap: 8px;
+    }
+
+    .chat-footer input {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--purple-neon);
+        color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+    }
+
+    #chatUser { width: 30%; }
+    #chatText { flex: 1; }
+
+    .btn-send-chat {
+        padding: 10px 15px !important;
+        border-radius: 8px !important;
+        border: 1px solid var(--cyan-neon) !important;
+        background: rgba(0, 240, 255, 0.2) !important;
+        color: var(--cyan-neon) !important;
+        font-size: 11px !important;
+        letter-spacing: 1px !important;
+    }
 </style>
 </head>
 <body>
@@ -389,8 +469,7 @@
 
     <div class="label-header">
         <label>Hasil Konversi</label>
-        <!-- BADGE DATA YANG BISA DIKLIK KELUAR MENUT TEAM CHAT -->
-        <span class="badge-count" id="dataCounter" onclick="openTeamChat()">0 DATA</span>
+        <span class="badge-count" id="dataCounter" onclick="openTeamChat()">0 DATA (CHAT)</span>
     </div>
     
     <div class="table-container">
@@ -409,17 +488,75 @@
     </div>
 </div>
 
+<!-- MODAL TEAM CHAT REALTIME -->
+<div class="chat-modal-overlay" id="chatModal">
+    <div class="chat-modal">
+        <div class="chat-header">
+            <h3>TEAM CHAT REALTIME</h3>
+            <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
+        </div>
+        <div class="chat-body" id="chatLogs"></div>
+        <div class="chat-footer">
+            <input type="text" id="chatUser" placeholder="Nama..." />
+            <input type="text" id="chatText" placeholder="Tulis pesan..." onkeypress="handleChatKey(event)" />
+            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM</button>
+        </div>
+    </div>
+</div>
+
+<!-- FIREBASE SDK UNTUK CHAT TANPA SERVER -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <script>
     let hasilTeksUntukDisalin = "";
 
-    /* FUNGSI UNTUK MEMBUKA TEAM CHAT SAAT BADGE DATA DIKLIK */
+    /* FIREBASE REALTIME CHAT SETUP */
+    const firebaseConfig = {
+        databaseURL: "https://testing-chat-simple-default-rtdb.firebaseio.com/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const dbChat = firebase.database().ref("team_chat_messages");
+
     function openTeamChat() {
-        // Ganti URL di bawah ini sesuai alamat Team Chat kamu
-        const chatUrl = 'http://localhost:3000';
-        window.open(chatUrl, '_blank');
+        document.getElementById('chatModal').style.display = 'flex';
+        document.getElementById('chatText').focus();
     }
 
-    /* FUNGSI EFEK GELOMBANG (RIPPLE) */
+    function closeTeamChat() {
+        document.getElementById('chatModal').style.display = 'none';
+    }
+
+    function sendChatMessage() {
+        const userInput = document.getElementById('chatUser');
+        const textInput = document.getElementById('chatText');
+
+        if (userInput.value.trim() && textInput.value.trim()) {
+            dbChat.push({
+                user: userInput.value.trim(),
+                msg: textInput.value.trim(),
+                timestamp: new Date().toLocaleTimeString('id-ID')
+            });
+            textInput.value = '';
+        }
+    }
+
+    function handleChatKey(e) {
+        if (e.key === 'Enter') sendChatMessage();
+    }
+
+    // Mendengarkan pesan baru secara instant (Realtime)
+    dbChat.on('child_added', (snapshot) => {
+        const data = snapshot.val();
+        const chatLogs = document.getElementById('chatLogs');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-msg';
+        msgDiv.innerHTML = `<span class="sender">[${data.timestamp || ''}] ${data.user}:</span> ${data.msg}`;
+        chatLogs.appendChild(msgDiv);
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+    });
+
+    /* EFEK GELOMBANG (RIPPLE) */
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('click', function(e) {
             const circle = document.createElement('span');
@@ -433,15 +570,13 @@
             circle.classList.add('ripple');
 
             const ripple = this.querySelector('.ripple');
-            if (ripple) {
-                ripple.remove();
-            }
+            if (ripple) ripple.remove();
 
             this.appendChild(circle);
         });
     });
 
-    /* FUNGSI KONVERSI LOG RINGAN */
+    /* FUNGSI KONVERSI LOG */
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
@@ -451,7 +586,7 @@
         hasilTeksUntukDisalin = ""; 
 
         if (!input) {
-            counter.innerText = "0 DATA";
+            counter.innerText = "0 DATA (CHAT)";
             return;
         }
 
@@ -530,14 +665,14 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        counter.innerText = `${parsedLogList.length} DATA`;
+        counter.innerText = `${parsedLogList.length} DATA (CHAT)`;
     }
 
     /* FUNGSI RESET */
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        document.getElementById('dataCounter').innerText = "0 DATA";
+        document.getElementById('dataCounter').innerText = "0 DATA (CHAT)";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
     }
@@ -563,6 +698,7 @@
     /* SHORTCUT KEYBOARD */
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
+            closeTeamChat();
             resetData();
         }
         if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
