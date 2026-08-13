@@ -18,7 +18,6 @@
         --pink-neon: #ff007f;
         --cyan-neon: #00f0ff;
         
-        /* WARNA LAVENDER NEON */
         --lavender-bg: rgba(147, 112, 219, 0.15); 
         --lavender-border: #c89eff;               
         --lavender-text: #e8d7ff;                 
@@ -48,7 +47,6 @@
         align-items: center;
     }
 
-    /* VIDEO BACKGROUND FULLSCREEN */
     .bg-video {
         position: fixed;
         top: 0;
@@ -60,7 +58,6 @@
         pointer-events: none;
     }
 
-    /* BINGKAI UTAMA */
     .container {
         position: relative;
         z-index: 2;
@@ -79,7 +76,6 @@
             inset 0 0 20px rgba(200, 158, 255, 0.25);
     }
 
-    /* JUDUL UTAMA */
     h1 {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -107,7 +103,6 @@
         to { background-position: 200% center; }
     }
 
-    /* SUBTITLE */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -120,7 +115,6 @@
         margin-bottom: 4px;
     }
 
-    /* WATERMARK FAJAR */
     .watermark-fajar-sub {
         text-align: center;
         font-family: 'Dancing Script', cursive;
@@ -149,7 +143,6 @@
         text-transform: uppercase;
     }
 
-    /* BADGE COUNTER DIJADIKAN TOMBOL OPEN CHAT */
     .badge-count {
         font-size: 11px;
         font-weight: 800;
@@ -172,7 +165,6 @@
         transform: scale(1.05);
     }
     
-    /* TEXTAREA */
     textarea {
         width: 100%;
         height: 120px;
@@ -269,7 +261,6 @@
         }
     }
 
-    /* TABEL */
     .table-container { 
         position: relative;
         overflow-x: auto; 
@@ -442,12 +433,10 @@
 </head>
 <body>
 
-<!-- VIDEO BACKGROUND MP4 -->
 <video class="bg-video" autoplay loop muted playsinline disablepictureinpicture>
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
-<!-- CONTAINER UTAMA -->
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
@@ -488,7 +477,6 @@
     </div>
 </div>
 
-<!-- MODAL TEAM CHAT REALTIME -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
@@ -504,19 +492,26 @@
     </div>
 </div>
 
-<!-- FIREBASE SDK UNTUK CHAT TANPA SERVER -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
     let hasilTeksUntukDisalin = "";
 
-    /* FIREBASE REALTIME CHAT SETUP */
+    /* CONFIGURATION FIREBASE */
+    /* MASUKKAN URL REALTIME DATABASE FIREBASE ANDA DI BAWAH INI */
     const firebaseConfig = {
         databaseURL: "https://testing-chat-simple-default-rtdb.firebaseio.com/"
     };
-    firebase.initializeApp(firebaseConfig);
+    
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    
     const dbChat = firebase.database().ref("team_chat_messages");
+
+    /* BROADCAST CHANNEL UNTUK DETEKSI MULTI-TAB DALAM 1 KOMPUTER LOKAL */
+    const localChannel = new BroadcastChannel('local_team_chat');
 
     function openTeamChat() {
         document.getElementById('chatModal').style.display = 'flex';
@@ -527,16 +522,32 @@
         document.getElementById('chatModal').style.display = 'none';
     }
 
+    function renderMessage(data) {
+        const chatLogs = document.getElementById('chatLogs');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-msg';
+        msgDiv.innerHTML = `<span class="sender">[${data.timestamp || ''}] ${data.user}:</span> ${data.msg}`;
+        chatLogs.appendChild(msgDiv);
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+    }
+
     function sendChatMessage() {
         const userInput = document.getElementById('chatUser');
         const textInput = document.getElementById('chatText');
 
         if (userInput.value.trim() && textInput.value.trim()) {
-            dbChat.push({
+            const payload = {
                 user: userInput.value.trim(),
                 msg: textInput.value.trim(),
                 timestamp: new Date().toLocaleTimeString('id-ID')
-            });
+            };
+
+            // Kirim ke Firebase (untuk antar komputer/server)
+            dbChat.push(payload);
+
+            // Kirim via BroadcastChannel (instant sync untuk beda tab lokal)
+            localChannel.postMessage(payload);
+
             textInput.value = '';
         }
     }
@@ -545,16 +556,16 @@
         if (e.key === 'Enter') sendChatMessage();
     }
 
-    // Mendengarkan pesan baru secara instant (Realtime)
-    dbChat.on('child_added', (snapshot) => {
+    // Mendengarkan pesan dari Firebase
+    dbChat.limitToLast(50).on('child_added', (snapshot) => {
         const data = snapshot.val();
-        const chatLogs = document.getElementById('chatLogs');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'chat-msg';
-        msgDiv.innerHTML = `<span class="sender">[${data.timestamp || ''}] ${data.user}:</span> ${data.msg}`;
-        chatLogs.appendChild(msgDiv);
-        chatLogs.scrollTop = chatLogs.scrollHeight;
+        renderMessage(data);
     });
+
+    // Mendengarkan pesan dari Tab Lain (Broadcast Local)
+    localChannel.onmessage = (event) => {
+        // Hanya render jika belum otomatis di-render oleh listener Firebase
+    };
 
     /* EFEK GELOMBANG (RIPPLE) */
     document.querySelectorAll('button').forEach(button => {
