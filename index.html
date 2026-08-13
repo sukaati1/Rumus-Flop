@@ -433,12 +433,50 @@
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        padding: 8px 12px;
+        padding: 8px 30px 8px 12px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.05);
         border-left: 3px solid var(--lavender-border);
         user-select: text;
         word-break: break-word;
+    }
+
+    .chat-msg .btn-reply-msg {
+        position: absolute;
+        right: 8px;
+        top: 6px;
+        color: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        font-size: 13px;
+        transition: color 0.2s ease;
+    }
+
+    .chat-msg .btn-reply-msg:hover {
+        color: var(--cyan-neon);
+    }
+
+    /* DESAIN PESAN REPLY / QUOTE */
+    .reply-quote-box {
+        background: rgba(0, 210, 255, 0.1);
+        border-left: 3px solid var(--cyan-neon);
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin-bottom: 6px;
+        font-size: 11px;
+    }
+
+    .reply-quote-box .reply-author {
+        color: var(--cyan-neon);
+        font-weight: bold;
+    }
+
+    .reply-quote-box .reply-text {
+        color: rgba(255, 255, 255, 0.7);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: block;
     }
 
     .chat-msg .sender {
@@ -469,6 +507,34 @@
         padding: 2px 6px;
         border-radius: 4px;
         font-size: 12px;
+    }
+
+    /* KOTAK PREVIEW BALAS PESAN DI ATAS INPUT */
+    .reply-preview-container {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0, 210, 255, 0.15);
+        border-left: 3px solid var(--cyan-neon);
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+    }
+
+    .reply-preview-text {
+        color: #ffffff;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 90%;
+    }
+
+    .btn-cancel-reply {
+        color: var(--pink-neon);
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
     }
 
     .chat-footer {
@@ -565,6 +631,13 @@
             </div>
         </div>
         <div class="chat-body" id="chatLogs"></div>
+
+        <!-- KOTAK PREVIEW BALAS PESAN -->
+        <div class="reply-preview-container" id="replyPreview">
+            <div class="reply-preview-text" id="replyPreviewText">Balas: ...</div>
+            <span class="btn-cancel-reply" onclick="cancelReply()">&times;</span>
+        </div>
+
         <div class="chat-footer">
             <input type="text" id="chatUser" placeholder="Nama..." onchange="saveUserName(this.value)" />
             <input type="text" id="chatText" placeholder="Tulis pesan..." onkeypress="handleChatKey(event)" />
@@ -580,6 +653,7 @@
 <script>
     let hasilTeksUntukDisalin = "";
     let isInitialLoad = true;
+    let selectedReplyData = null; // Menyimpan data pesan yang sedang dibalas
 
     /* AUDIO SYNTHESIZER UNTUK SOUND EFFECT CHAT */
     function playBeepSound(type) {
@@ -688,6 +762,22 @@
         document.getElementById('chatModal').style.display = 'none';
     }
 
+    /* FUNGSI SET REPLY PESAN */
+    function setReplyToMessage(user, text) {
+        selectedReplyData = { user, text };
+        const previewBox = document.getElementById('replyPreview');
+        const previewText = document.getElementById('replyPreviewText');
+        
+        previewText.innerHTML = `Membalas <b>${user}</b>: "${text}"`;
+        previewBox.style.display = 'flex';
+        document.getElementById('chatText').focus();
+    }
+
+    function cancelReply() {
+        selectedReplyData = null;
+        document.getElementById('replyPreview').style.display = 'none';
+    }
+
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
         const msgDiv = document.createElement('div');
@@ -698,7 +788,23 @@
         const color = getUserColor(username);
         const emoji = getUserEmoji(username);
 
+        // Jika ada data balasan (reply)
+        let replyHTML = '';
+        if (data.replyTo) {
+            replyHTML = `
+                <div class="reply-quote-box">
+                    <span class="reply-author">↩️ ${data.replyTo.user}</span>
+                    <span class="reply-text">${formatChatMessage(data.replyTo.text)}</span>
+                </div>
+            `;
+        }
+
+        const safeUser = username.replace(/'/g, "\\'");
+        const safeText = (data.msg || '').replace(/'/g, "\\'").replace(/\n/g, ' ');
+
         msgDiv.innerHTML = `
+            <span class="btn-reply-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
+            ${replyHTML}
             <span class="time-stamp">[${data.timestamp || ''}]</span>
             <span class="sender" style="color: ${color};">${emoji} ${username}:</span>
             <span class="msg-content">${formatChatMessage(data.msg)}</span>
@@ -722,9 +828,15 @@
                 timestamp: new Date().toLocaleTimeString('id-ID')
             };
 
+            // Tambahkan data reply jika sedang membalas pesan lain
+            if (selectedReplyData) {
+                payload.replyTo = selectedReplyData;
+            }
+
             dbChat.push(payload);
             playBeepSound('send');
             textInput.value = '';
+            cancelReply(); // Reset preview balasan setelah terkirim
         } else if (!userInput.value.trim()) {
             userInput.focus();
         }
