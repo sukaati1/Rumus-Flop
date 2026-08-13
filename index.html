@@ -18,7 +18,6 @@
         --pink-neon: #ff007f;
         --cyan-neon: #00f0ff;
         
-        /* WARNA LAVENDER NEON */
         --lavender-bg: rgba(147, 112, 219, 0.15); 
         --lavender-border: #c89eff;               
         --lavender-text: #e8d7ff;                 
@@ -48,7 +47,6 @@
         align-items: center;
     }
 
-    /* VIDEO BACKGROUND FULLSCREEN */
     .bg-video {
         position: fixed;
         top: 0;
@@ -58,35 +56,27 @@
         object-fit: cover;
         z-index: 1;
         pointer-events: none;
+        will-change: transform;
     }
 
-    /* BINGKAI UTAMA - BENTUK MATA DENGAN BORDER & GLOW PENUH */
     .container {
         position: relative;
         z-index: 2;
         background: rgba(10, 8, 25, 0.55) !important; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        
-        /* BENTUK MATA SAMA SEPERTI TOMBOL */
         border-radius: 65px 0px 65px 0px !important;
-        
-        /* GARIS BORDER TAJAM 2PX */
         border: 2px solid var(--lavender-border) !important;
-        
         width: 100%;
         max-width: 900px;
         padding: 45px 40px;
         margin: auto;
-        
-        /* CAHAYA GLOW BERLAPIS (LOKAL & SEKELILING CONTAINER) */
         box-shadow: 
             0 0 15px rgba(200, 158, 255, 0.6),
             0 0 35px rgba(168, 85, 247, 0.4),
             inset 0 0 20px rgba(200, 158, 255, 0.25);
     }
 
-    /* JUDUL UTAMA DENGAN CAHAYA BERJALAN */
     h1 {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -111,12 +101,9 @@
     }
 
     @keyframes shineText {
-        to {
-            background-position: 200% center;
-        }
+        to { background-position: 200% center; }
     }
 
-    /* SUBTITLE */
     .sub-title {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -129,7 +116,6 @@
         margin-bottom: 4px;
     }
 
-    /* WATERMARK FAJAR DI BAWAH SUBTITLE */
     .watermark-fajar-sub {
         text-align: center;
         font-family: 'Dancing Script', cursive;
@@ -148,7 +134,6 @@
         margin-bottom: 8px;
     }
     
-    /* LABEL */
     label {
         display: block;
         font-family: 'Orbitron', sans-serif;
@@ -159,7 +144,6 @@
         text-transform: uppercase;
     }
 
-    /* BADGE COUNTER */
     .badge-count {
         font-size: 11px;
         font-weight: 800;
@@ -171,7 +155,6 @@
         font-family: 'Orbitron', sans-serif;
     }
     
-    /* TEXTAREA */
     textarea {
         width: 100%;
         height: 120px;
@@ -209,7 +192,6 @@
         margin-bottom: 28px;
     }
 
-    /* TOMBOL BENTUK MATA - TRANSPARAN DENGAN BORDER & GLOW MENYALA */
     button {
         position: relative;
         overflow: hidden;
@@ -222,24 +204,17 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         outline: none;
-        
-        /* BENTUK MATA SAMA SEPERTI CONTAINER */
         border-radius: 65px 0px 65px 0px !important;
         border: 2px solid var(--lavender-border) !important;
-        
         background: var(--lavender-bg) !important;
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         color: var(--lavender-text) !important;
-        
-        /* CAHAYA GLOW */
         text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
         box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
-        
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    /* EFEK HOVER & GETAR SAAT DISENTUH */
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
         background: rgba(147, 112, 219, 0.35) !important;
@@ -255,7 +230,6 @@
         100% { transform: translate(1px, 1px) rotate(0.5deg); }
     }
 
-    /* BINGKAI SAAT TEKAN TAB (FOCUS-VISIBLE) */
     button:focus-visible {
         border-color: #ffffff !important;
         box-shadow: 0 0 15px #ffffff, inset 0 0 8px rgba(200, 158, 255, 0.8) !important;
@@ -266,7 +240,6 @@
         animation: none !important;
     }
 
-    /* EFEK GELOMBANG (RIPPLE EFFECT) */
     .ripple {
         position: absolute;
         border-radius: 50%;
@@ -283,7 +256,6 @@
         }
     }
 
-    /* TABLE CONTAINER TRANSPARAN + BLUR TIPIS */
     .table-container { 
         position: relative;
         overflow-x: auto; 
@@ -308,14 +280,13 @@
         user-select: text;
     }
     
-    /* TH HEADER TABEL */
     th { 
         position: sticky;
         top: 0;
         z-index: 3;
         font-family: 'Orbitron', sans-serif;
         font-weight: 800;
-        background: rgba(13, 10, 30, 0.75) !important; 
+        background: rgba(13, 10, 30, 0.85) !important; 
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         color: var(--purple-bright) !important; 
@@ -325,7 +296,6 @@
         border-bottom: 2px solid var(--purple-neon) !important;
     }
     
-    /* TD DATA TABEL */
     td {
         color: #ffffff !important;
         border-bottom: 1px solid rgba(168, 85, 247, 0.12) !important;
@@ -335,7 +305,6 @@
         text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
-    /* WARNA KOLOM */
     td:nth-child(1) { color: var(--blue-electric) !important; }
     td:nth-child(2) { color: #ffffff !important; }
     td:nth-child(3) { color: var(--purple-bright) !important; }
@@ -351,12 +320,10 @@
 </head>
 <body>
 
-<!-- VIDEO BACKGROUND MP4 -->
 <video class="bg-video" autoplay loop muted playsinline disablepictureinpicture>
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
-<!-- CONTAINER UTAMA -->
 <div class="container">
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
@@ -365,7 +332,7 @@
     <div class="label-header">
         <label for="rawInput">Tempel Log Transaksi</label>
     </div>
-    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()"></textarea>
     
     <div class="btn-group">
         <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
@@ -400,35 +367,34 @@
 <script>
     let hasilTeksUntukDisalin = "";
 
-    /* FUNGSI EFEK GELOMBANG (RIPPLE) */
+    /* RIPPLE EFFECT */
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('click', function(e) {
             const circle = document.createElement('span');
             const diameter = Math.max(this.clientWidth, this.clientHeight);
             const radius = diameter / 2;
-
             const rect = this.getBoundingClientRect();
+
             circle.style.width = circle.style.height = `${diameter}px`;
             circle.style.left = `${e.clientX - rect.left - radius}px`;
             circle.style.top = `${e.clientY - rect.top - radius}px`;
             circle.classList.add('ripple');
 
             const ripple = this.querySelector('.ripple');
-            if (ripple) {
-                ripple.remove();
-            }
+            if (ripple) ripple.remove();
 
             this.appendChild(circle);
+            setTimeout(() => circle.remove(), 600);
         });
     });
 
-    /* FUNGSI KONVERSI LOG RINGAN */
+    /* FUNGSI KONVERSI PARSING */
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
         const counter = document.getElementById('dataCounter');
         
-        tbody.innerHTML = ''; 
+        tbody.textContent = ''; 
         hasilTeksUntukDisalin = ""; 
 
         if (!input) {
@@ -436,63 +402,55 @@
             return;
         }
 
-        let parsedLogList = [];
-        let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
-
-        if (lines.length === 1 && !lines[0].includes('\t')) {
-            let rawChunk = lines[0].replace(/(ACCEPT|REJECT|PENDING|SUCCESS|FAILED)[a-zA-Z0-9]*/gi, "$&\n");
-            lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
-        }
+        const parsedLogList = [];
+        const lines = input.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '');
 
         lines.forEach(line => {
-            let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
+            const matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
             if (!matchTime) return;
-            let waktu = matchTime[1];
 
-            let parts = line.split(/\t|\s{2,}/).map(p => p.trim()).filter(p => p !== '');
+            const waktu = matchTime[1];
+            const timeIndex = line.indexOf(waktu);
+            const content = line.substring(timeIndex + waktu.length).trim();
+
+            const parts = content.split(/\t+|\s{2,}/).map(p => p.trim()).filter(p => p !== '');
             
-            if (parts.length >= 5) {
-                let userId = parts[2] || "-";
-                let bankInfo = parts[4] || "-";
-                let jumlah = parts[6] || parts[5] || "0";
+            if (parts.length >= 3) {
+                const userId = parts[0] || "-";
+                const bankInfo = parts[1] || "-";
+                let jumlah = parts[parts.length - 1] || "0";
                 
-                jumlah = jumlah.replace(/^-/, '').trim();
+                jumlah = jumlah.replace(/[^\d.,]/g, '');
 
                 parsedLogList.push({
-                    waktu: waktu,
-                    userId: userId,
+                    waktu,
+                    userId,
                     tujuanBank: bankInfo,
                     creditStatus: "0",
-                    jumlah: jumlah
+                    jumlah
                 });
             } else {
-                let timeIndex = line.indexOf(waktu);
-                let textAfterTime = line.substring(timeIndex + waktu.length);
-                let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
-
+                const matchType = content.match(/(Withdraw|Deposit)/i);
                 if (matchType) {
-                    let typeIndex = textAfterTime.search(/(Withdraw|Deposit)/i);
-                    let userId = textAfterTime.substring(0, typeIndex).trim();
-                    let textAfterType = textAfterTime.substring(typeIndex + matchType[0].length);
+                    const typeIndex = content.search(/(Withdraw|Deposit)/i);
+                    const userId = content.substring(0, typeIndex).trim();
+                    const textAfterType = content.substring(typeIndex + matchType[0].length).trim();
 
-                    let matchAmount = textAfterType.match(/-?([0-9.,]+)(?:\s|\t|ACCEPT|REJECT|PENDING|SUCCESS|FAILED|$)/i);
+                    const matchAmount = textAfterType.match(/(-?[\d.,]+)/);
                     let jumlah = "0";
                     let bankSection = textAfterType;
 
                     if (matchAmount) {
                         jumlah = matchAmount[1].replace(/^-/, '');
-                        let amountIndex = textAfterType.indexOf(matchAmount[0]);
-                        bankSection = textAfterType.substring(0, amountIndex).trim();
+                        bankSection = textAfterType.substring(0, textAfterType.indexOf(matchAmount[0])).trim();
                     }
 
-                    bankSection = bankSection.replace(/-\s*$/, '').trim();
-
                     parsedLogList.push({
-                        waktu: waktu,
-                        userId: userId,
-                        tujuanBank: bankSection,
+                        waktu,
+                        userId: userId || "-",
+                        tujuanBank: bankSection || "-",
                         creditStatus: "0",
-                        jumlah: jumlah
+                        jumlah
                     });
                 }
             }
@@ -500,33 +458,33 @@
 
         parsedLogList.reverse();
 
-        let barisDataDisalin = [];
+        /* OPTIMASI RENDERING DENGAN FRAGMENT */
+        const fragment = document.createDocumentFragment();
+        const barisDataDisalin = [];
 
         parsedLogList.forEach((item) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
-            tbody.appendChild(tr);
+            fragment.appendChild(tr);
 
-            barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
+            barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t0\t${item.jumlah}`);
         });
 
+        tbody.appendChild(fragment);
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         counter.innerText = `${parsedLogList.length} DATA`;
     }
 
-    /* FUNGSI RESET */
     function resetData() {
         document.getElementById('rawInput').value = '';
-        document.getElementById('tableBody').innerHTML = '';
+        document.getElementById('tableBody').textContent = '';
         document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
     }
 
-    /* FUNGSI SALIN TEKS */
     function salinHasil() {
         const txt = document.getElementById('txtCopy');
-        
         if (!hasilTeksUntukDisalin) {
             txt.innerText = "DATA KOSONG!";
             setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1000);
@@ -537,16 +495,13 @@
             txt.innerText = "BERHASIL DISALIN";
             setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1200);
         }).catch(err => {
-            console.error("Error: ", err);
+            console.error("Gagal menyalin: ", err);
         });
     }
 
-    /* SHORTCUT KEYBOARD */
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            resetData();
-        }
-        if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+        if (e.key === 'Escape') resetData();
+        if (e.ctrlKey && e.shiftKey && e.code === 'KeyC') {
             e.preventDefault();
             salinHasil();
         }
