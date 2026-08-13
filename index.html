@@ -386,31 +386,13 @@
         gap: 8px;
     }
 
-    .btn-toggle-blur {
-        background: rgba(0, 210, 255, 0.15) !important;
-        border: 1px solid var(--cyan-neon) !important;
-        color: var(--cyan-neon) !important;
-        font-size: 10px !important;
-        padding: 6px 10px !important;
-        border-radius: 20px !important;
-        font-family: 'Orbitron', sans-serif;
-        cursor: pointer;
-        box-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
-        transition: all 0.2s ease;
-    }
-
-    .btn-toggle-blur:hover {
-        background: rgba(0, 210, 255, 0.35) !important;
-        box-shadow: 0 0 12px var(--cyan-neon) !important;
-    }
-
-    /* TOMBOL RESET CHAT */
+    /* TOMBOL RESET CHAT LANGSUNG HAPUS */
     .btn-reset-chat {
-        background: rgba(255, 0, 127, 0.15) !important;
+        background: rgba(255, 0, 127, 0.2) !important;
         border: 1px solid var(--pink-neon) !important;
         color: var(--pink-neon) !important;
         font-size: 10px !important;
-        padding: 6px 10px !important;
+        padding: 6px 12px !important;
         border-radius: 20px !important;
         font-family: 'Orbitron', sans-serif;
         cursor: pointer;
@@ -419,8 +401,9 @@
     }
 
     .btn-reset-chat:hover {
-        background: rgba(255, 0, 127, 0.35) !important;
-        box-shadow: 0 0 12px var(--pink-neon) !important;
+        background: rgba(255, 0, 127, 0.45) !important;
+        box-shadow: 0 0 14px var(--pink-neon) !important;
+        color: #ffffff !important;
     }
 
     .btn-close-chat {
@@ -436,7 +419,7 @@
     }
 
     .chat-body {
-        height: 260px;
+        height: 270px;
         overflow-y: auto;
         border: 1.5px solid rgba(168, 85, 247, 0.3);
         border-radius: 15px;
@@ -449,31 +432,29 @@
 
     .chat-msg {
         font-family: 'JetBrains Mono', monospace;
-        font-size: 12.5px;
+        font-size: 13px;
         padding: 8px 12px;
         border-radius: 8px;
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.05);
         border-left: 3px solid var(--lavender-border);
         user-select: text;
-        transition: filter 0.2s ease, opacity 0.2s ease;
-    }
-
-    /* PRIVASI SENSOR PESAN */
-    .blur-mode .chat-msg .msg-content {
-        filter: blur(5px);
-        opacity: 0.3;
-        transition: filter 0.2s ease, opacity 0.2s ease;
-    }
-
-    .blur-mode .chat-msg:hover .msg-content {
-        filter: blur(0px);
-        opacity: 1;
+        word-break: break-word;
     }
 
     .chat-msg .sender {
         font-weight: 800;
-        color: var(--cyan-neon);
         margin-right: 6px;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+    }
+
+    .chat-msg .time-stamp {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 10.5px;
+        margin-right: 6px;
+    }
+
+    .chat-msg .msg-content {
+        color: #f1f5f9;
     }
 
     .chat-footer {
@@ -497,7 +478,7 @@
         box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
     }
 
-    #chatUser { width: 110px; }
+    #chatUser { width: 120px; }
     #chatText { flex: 1; }
 
     .btn-send-chat {
@@ -559,22 +540,21 @@
     </div>
 </div>
 
-<!-- MODAL TEAM CHAT DENGAN INPUT NAMA DAN TOMBOL RESET CHAT -->
+<!-- MODAL TEAM CHAT PERBAIKAN -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3>TEAM CHAT</h3>
+            <h3>TEAM CHAT 💬</h3>
             <div class="header-controls">
-                <button class="btn-toggle-blur" id="btnBlurToggle" onclick="togglePrivacyBlur()">🔒 SENSOR</button>
                 <button class="btn-reset-chat" onclick="clearAllChat()">🗑️ RESET CHAT</button>
                 <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
         </div>
-        <div class="chat-body blur-mode" id="chatLogs"></div>
+        <div class="chat-body" id="chatLogs"></div>
         <div class="chat-footer">
             <input type="text" id="chatUser" placeholder="Nama..." onchange="saveUserName(this.value)" />
             <input type="text" id="chatText" placeholder="Tulis pesan..." onkeypress="handleChatKey(event)" />
-            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM</button>
+            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
         </div>
     </div>
 </div>
@@ -585,7 +565,36 @@
 
 <script>
     let hasilTeksUntukDisalin = "";
-    let isPrivacyActive = true;
+
+    /* KOLEKSI WARNA WARNI CYBER DYNAMIC FOR USERNAME */
+    const userColors = [
+        '#00f0ff', '#ff007f', '#00ff88', '#ffb703', 
+        '#a855f7', '#ff4d6d', '#3a86ff', '#fb5607', 
+        '#70e000', '#ff006e', '#8338ec', '#00b4d8'
+    ];
+
+    /* KOLEKSI EMOJI UNIK UNTUK PENGGUNA */
+    const userEmojis = ['⚡', '🔥', '🚀', '👾', '👑', '🐱‍💻', '🎯', '💎', '🦊', '💥', '👻', '🐉'];
+
+    /* ALGORITMA MENENTUKAN WARNA BERDASARKAN STRING NAMA */
+    function getUserColor(name) {
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % userColors.length;
+        return userColors[index];
+    }
+
+    /* ALGORITMA MENENTUKAN EMOJI BERDASARKAN STRING NAMA */
+    function getUserEmoji(name) {
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % userEmojis.length;
+        return userEmojis[index];
+    }
 
     /* URL FIREBASE LENGKAP */
     const firebaseConfig = {
@@ -598,7 +607,7 @@
     
     const dbChat = firebase.database().ref("team_chat_messages");
 
-    /* INGAT NAMA PENGGUNAKAN DARI LOCALSTORAGE */
+    /* SIMPAN & LOAD NAMA DARI LOCALSTORAGE */
     document.addEventListener("DOMContentLoaded", () => {
         const savedUser = localStorage.getItem("chat_username");
         if (savedUser) {
@@ -621,25 +630,21 @@
         document.getElementById('chatModal').style.display = 'none';
     }
 
-    function togglePrivacyBlur() {
-        const chatLogs = document.getElementById('chatLogs');
-        const btnBlur = document.getElementById('btnBlurToggle');
-        isPrivacyActive = !isPrivacyActive;
-
-        if (isPrivacyActive) {
-            chatLogs.classList.add('blur-mode');
-            btnBlur.innerText = '🔒 SENSOR';
-        } else {
-            chatLogs.classList.remove('blur-mode');
-            btnBlur.innerText = '👁️ INTIP';
-        }
-    }
-
     function renderMessage(data) {
         const chatLogs = document.getElementById('chatLogs');
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-msg';
-        msgDiv.innerHTML = `<span class="sender">[${data.timestamp || ''}] ${data.user || 'User'}:</span><span class="msg-content">${data.msg}</span>`;
+        
+        const username = data.user || 'User';
+        const color = getUserColor(username);
+        const emoji = getUserEmoji(username);
+
+        msgDiv.innerHTML = `
+            <span class="time-stamp">[${data.timestamp || ''}]</span>
+            <span class="sender" style="color: ${color};">${emoji} ${username}:</span>
+            <span class="msg-content">${data.msg}</span>
+        `;
+        
         chatLogs.appendChild(msgDiv);
         chatLogs.scrollTop = chatLogs.scrollHeight;
     }
@@ -660,33 +665,27 @@
             dbChat.push(payload);
             textInput.value = '';
         } else if (!userInput.value.trim()) {
-            alert("Harap isi nama Anda terlebih dahulu!");
             userInput.focus();
         }
     }
 
-    /* FUNGSI RESET SEMUA CHAT DI FIREBASE */
+    /* FUNGSI RESET CHAT LANGSUNG HAPUS TANPA POPUP NOTIFIKASI */
     function clearAllChat() {
-        if (confirm("Apakah Anda yakin ingin menghapus SELURUH riwayat pesan chat?")) {
-            dbChat.remove().then(() => {
-                document.getElementById('chatLogs').innerHTML = '';
-            }).catch((err) => {
-                console.error("Gagal menghapus chat: ", err);
-            });
-        }
+        dbChat.remove();
+        document.getElementById('chatLogs').innerHTML = '';
     }
 
     function handleChatKey(e) {
         if (e.key === 'Enter') sendChatMessage();
     }
 
-    // Mendengarkan pesan dari Firebase secara Realtime
+    // Mendengarkan pesan baru dari Firebase secara Realtime
     dbChat.limitToLast(50).on('child_added', (snapshot) => {
         const data = snapshot.val();
         renderMessage(data);
     });
 
-    // Menangani ketika seluruh pesan dihapus dari Firebase
+    // Otomatis bersihkan tampilan saat database direset
     dbChat.on('value', (snapshot) => {
         if (!snapshot.exists()) {
             document.getElementById('chatLogs').innerHTML = '';
