@@ -433,7 +433,7 @@
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        padding: 8px 30px 8px 12px;
+        padding: 8px 50px 8px 12px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.05);
         border-left: 3px solid var(--lavender-border);
@@ -441,18 +441,25 @@
         word-break: break-word;
     }
 
-    .chat-msg .btn-reply-msg {
+    /* WADAH AKSI DI SAMPING PESAN (REPLY & STIKER) */
+    .msg-actions {
         position: absolute;
         right: 8px;
         top: 6px;
+        display: flex;
+        gap: 6px;
+    }
+
+    .btn-action-msg {
         color: rgba(255, 255, 255, 0.4);
         cursor: pointer;
         font-size: 13px;
-        transition: color 0.2s ease;
+        transition: color 0.2s ease, transform 0.1s ease;
     }
 
-    .chat-msg .btn-reply-msg:hover {
+    .btn-action-msg:hover {
         color: var(--cyan-neon);
+        transform: scale(1.15);
     }
 
     /* DESAIN PESAN REPLY / QUOTE */
@@ -496,6 +503,13 @@
         white-space: pre-wrap;
     }
 
+    .chat-msg .msg-sticker {
+        font-size: 38px;
+        display: block;
+        margin-top: 4px;
+        filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+    }
+
     .chat-msg .msg-content a {
         color: var(--cyan-neon);
         text-decoration: underline;
@@ -537,6 +551,34 @@
         font-size: 14px;
     }
 
+    /* POPUP SELEKSI STIKER */
+    .sticker-picker-container {
+        display: none;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        background: rgba(13, 10, 30, 0.95);
+        border: 1.5px solid var(--lavender-border);
+        border-radius: 12px;
+        padding: 10px;
+        max-height: 120px;
+        overflow-y: auto;
+        box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+    }
+
+    .sticker-item {
+        font-size: 24px;
+        text-align: center;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 6px;
+        transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    .sticker-item:hover {
+        background: rgba(0, 210, 255, 0.25);
+        transform: scale(1.2);
+    }
+
     .chat-footer {
         display: flex;
         gap: 8px;
@@ -560,6 +602,16 @@
 
     #chatUser { width: 120px; }
     #chatText { flex: 1; }
+
+    .btn-sticker-toggle {
+        padding: 12px !important;
+        border-radius: 12px !important;
+        border: 1.5px solid var(--lavender-border) !important;
+        background: var(--lavender-bg) !important;
+        color: var(--lavender-text) !important;
+        font-size: 14px !important;
+        cursor: pointer;
+    }
 
     .btn-send-chat {
         padding: 12px 16px !important;
@@ -638,9 +690,27 @@
             <span class="btn-cancel-reply" onclick="cancelReply()">&times;</span>
         </div>
 
+        <!-- POPUP SELEKSI STIKER -->
+        <div class="sticker-picker-container" id="stickerPicker">
+            <!-- PILIHAN STIKER CYBER POPULER -->
+            <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
+            <span class="sticker-item" onclick="sendSticker('⚡')">⚡</span>
+            <span class="sticker-item" onclick="sendSticker('🚀')">🚀</span>
+            <span class="sticker-item" onclick="sendSticker('😎')">😎</span>
+            <span class="sticker-item" onclick="sendSticker('👍')">👍</span>
+            <span class="sticker-item" onclick="sendSticker('🎉')">🎉</span>
+            <span class="sticker-item" onclick="sendSticker('💎')">💎</span>
+            <span class="sticker-item" onclick="sendSticker('👾')">👾</span>
+            <span class="sticker-item" onclick="sendSticker('🤖')">🤖</span>
+            <span class="sticker-item" onclick="sendSticker('💀')">💀</span>
+            <span class="sticker-item" onclick="sendSticker('💯')">💯</span>
+            <span class="sticker-item" onclick="sendSticker('🎯')">🎯</span>
+        </div>
+
         <div class="chat-footer">
             <input type="text" id="chatUser" placeholder="Nama..." onchange="saveUserName(this.value)" />
             <input type="text" id="chatText" placeholder="Tulis pesan..." onkeypress="handleChatKey(event)" />
+            <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
         </div>
     </div>
@@ -760,6 +830,13 @@
 
     function closeTeamChat() {
         document.getElementById('chatModal').style.display = 'none';
+        document.getElementById('stickerPicker').style.display = 'none';
+    }
+
+    /* FUNGSI TOGGLE POPUP STIKER */
+    function toggleStickerPicker() {
+        const picker = document.getElementById('stickerPicker');
+        picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
     }
 
     /* FUNGSI SET REPLY PESAN */
@@ -800,18 +877,56 @@
         }
 
         const safeUser = username.replace(/'/g, "\\'");
-        const safeText = (data.msg || '').replace(/'/g, "\\'").replace(/\n/g, ' ');
+        const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
+
+        // Tampilan pesan teks atau stiker
+        let contentHTML = '';
+        if (data.isSticker) {
+            contentHTML = `<span class="msg-sticker">${data.sticker}</span>`;
+        } else {
+            contentHTML = `<span class="msg-content">${formatChatMessage(data.msg)}</span>`;
+        }
 
         msgDiv.innerHTML = `
-            <span class="btn-reply-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
+            <div class="msg-actions">
+                <span class="btn-action-msg" title="Pilih Stiker" onclick="toggleStickerPicker()">😊</span>
+                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
+            </div>
             ${replyHTML}
             <span class="time-stamp">[${data.timestamp || ''}]</span>
             <span class="sender" style="color: ${color};">${emoji} ${username}:</span>
-            <span class="msg-content">${formatChatMessage(data.msg)}</span>
+            ${contentHTML}
         `;
         
         chatLogs.appendChild(msgDiv);
         chatLogs.scrollTop = chatLogs.scrollHeight;
+    }
+
+    /* KIRIM STIKER */
+    function sendSticker(stickerChar) {
+        const userInput = document.getElementById('chatUser');
+        if (!userInput.value.trim()) {
+            userInput.focus();
+            return;
+        }
+
+        saveUserName(userInput.value);
+
+        const payload = {
+            user: userInput.value.trim(),
+            sticker: stickerChar,
+            isSticker: true,
+            timestamp: new Date().toLocaleTimeString('id-ID')
+        };
+
+        if (selectedReplyData) {
+            payload.replyTo = selectedReplyData;
+        }
+
+        dbChat.push(payload);
+        playBeepSound('send');
+        cancelReply();
+        document.getElementById('stickerPicker').style.display = 'none';
     }
 
     function sendChatMessage() {
@@ -828,7 +943,6 @@
                 timestamp: new Date().toLocaleTimeString('id-ID')
             };
 
-            // Tambahkan data reply jika sedang membalas pesan lain
             if (selectedReplyData) {
                 payload.replyTo = selectedReplyData;
             }
@@ -836,7 +950,8 @@
             dbChat.push(payload);
             playBeepSound('send');
             textInput.value = '';
-            cancelReply(); // Reset preview balasan setelah terkirim
+            cancelReply();
+            document.getElementById('stickerPicker').style.display = 'none';
         } else if (!userInput.value.trim()) {
             userInput.focus();
         }
