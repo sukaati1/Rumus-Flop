@@ -347,6 +347,30 @@
     }
 
     tr:last-child td { border-bottom: none !important; }
+
+    /* TOMBOL WAKTU CHAT DI DALAM TABEL */
+    .btn-time-chat {
+        background: transparent !important;
+        border: 1px solid rgba(0, 210, 255, 0.4) !important;
+        color: var(--blue-electric) !important;
+        padding: 4px 10px !important;
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 6px !important;
+        cursor: pointer;
+        box-shadow: none !important;
+        text-shadow: 0 0 5px rgba(0, 210, 255, 0.5) !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .btn-time-chat:hover {
+        background: rgba(0, 210, 255, 0.2) !important;
+        border-color: var(--cyan-neon) !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.8) !important;
+        animation: none !important;
+    }
 </style>
 </head>
 <body>
@@ -385,7 +409,7 @@
         <table id="resultTable">
             <thead>
                 <tr>
-                    <th>WAKTU</th>
+                    <th>WAKTU (CHAT)</th>
                     <th>USER ID</th>
                     <th>TUJUAN BANK</th>
                     <th>CREDIT</th>
@@ -504,7 +528,17 @@
 
         parsedLogList.forEach((item) => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
+            tr.innerHTML = `
+                <td>
+                    <button class="btn-time-chat" onclick="openTeamChat('${item.userId}', '${item.waktu}')">
+                        ${item.waktu}
+                    </button>
+                </td>
+                <td>${item.userId}</td>
+                <td>${item.tujuanBank}</td>
+                <td>${item.creditStatus}</td>
+                <td>${item.jumlah}</td>
+            `;
             tbody.appendChild(tr);
 
             barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
@@ -512,6 +546,15 @@
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         counter.innerText = `${parsedLogList.length} DATA`;
+    }
+
+    /* FUNGSI UNTUK MEMBUKA TEAM CHAT SAAT TOMBOL WAKTU DIKLIK */
+    function openTeamChat(userId, waktu) {
+        // Sesuaikan URL ini dengan alamat Team Chat kamu (misal domain Netlify, Replit, dsb)
+        const chatUrl = `http://localhost:3000?user=${encodeURIComponent(userId)}&time=${encodeURIComponent(waktu)}`;
+        
+        // Membuka Team Chat di tab baru
+        window.open(chatUrl, '_blank');
     }
 
     /* FUNGSI RESET */
