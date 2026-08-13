@@ -39,7 +39,7 @@
     }
 
     body {
-        padding: 40px 15px;
+        padding: 30px 15px;
         font-family: 'Rajdhani', sans-serif;
         color: #ffffff !important;
         display: flex;
@@ -63,14 +63,14 @@
     .container {
         position: relative;
         z-index: 2;
-        background: rgba(10, 8, 25, 0.55) !important; 
+        background: rgba(10, 8, 25, 0.65) !important; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-radius: 65px 0px 65px 0px !important;
+        border-radius: 40px !important;
         border: 2px solid var(--lavender-border) !important;
         width: 100%;
         max-width: 900px;
-        padding: 45px 40px;
+        padding: 40px;
         margin: auto;
         box-shadow: 
             0 0 15px rgba(200, 158, 255, 0.6),
@@ -221,7 +221,7 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         outline: none;
-        border-radius: 65px 0px 65px 0px !important;
+        border-radius: 35px !important;
         border: 2px solid var(--lavender-border) !important;
         background: var(--lavender-bg) !important;
         backdrop-filter: blur(6px);
@@ -327,14 +327,14 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* MODAL TEAM CHAT */
+    /* MODAL TEAM CHAT (BINGKAI DIKUNCI FULL) */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(3, 3, 8, 0.82);
+        background: rgba(3, 3, 8, 0.85);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         z-index: 999;
@@ -347,20 +347,23 @@
     .chat-modal {
         position: relative;
         width: 100%;
-        max-width: 580px;
-        background: rgba(10, 8, 25, 0.85) !important;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-radius: 65px 0px 65px 0px !important;
+        max-width: 650px;
+        height: 85vh; /* DIKUNCI TINGGINYA */
+        max-height: 700px;
+        background: rgba(10, 8, 25, 0.9) !important;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-radius: 28px !important;
         border: 2px solid var(--lavender-border) !important;
         box-shadow: 
-            0 0 15px rgba(200, 158, 255, 0.6),
-            0 0 35px rgba(168, 85, 247, 0.4),
-            inset 0 0 20px rgba(200, 158, 255, 0.25);
-        padding: 35px 30px;
+            0 0 20px rgba(200, 158, 255, 0.6),
+            0 0 45px rgba(168, 85, 247, 0.45),
+            inset 0 0 25px rgba(200, 158, 255, 0.2);
+        padding: 25px;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
+        overflow: hidden;
     }
 
     .chat-header {
@@ -369,6 +372,7 @@
         align-items: center;
         border-bottom: 1.5px solid rgba(200, 158, 255, 0.3);
         padding-bottom: 12px;
+        flex-shrink: 0;
     }
 
     .chat-header h3 {
@@ -417,59 +421,100 @@
         text-shadow: 0 0 8px var(--pink-neon);
     }
 
+    /* AREA PESAN CHAT (RESPONSIVE FULL FIT) */
     .chat-body {
-        height: 280px;
+        flex: 1;
         overflow-y: auto;
         border: 1.5px solid rgba(168, 85, 247, 0.3);
-        border-radius: 15px;
-        padding: 12px;
-        background: rgba(0, 0, 0, 0.45);
+        border-radius: 16px;
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
+    }
+
+    /* PESAN DASAR STYLING */
+    .chat-msg-wrapper {
+        display: flex;
+        width: 100%;
+        margin-bottom: 2px;
+    }
+
+    /* CHAT ORANG LAIN (KIRI) */
+    .chat-msg-wrapper.other-msg {
+        justify-content: flex-start;
+    }
+
+    /* CHAT SENDIRI (KANAN) */
+    .chat-msg-wrapper.own-msg {
+        justify-content: flex-end;
     }
 
     .chat-msg {
         position: relative;
+        max-width: 78%;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        padding: 8px 65px 8px 12px;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        border-left: 3px solid var(--lavender-border);
+        padding: 10px 14px;
+        border-radius: 14px;
         user-select: text;
         word-break: break-word;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
-    /* WADAH AKSI DI SAMPING PESAN (REPLY & STIKER) */
+    /* STYLE BUBBLE KIRI (ORANG LAIN) */
+    .chat-msg-wrapper.other-msg .chat-msg {
+        background: rgba(30, 20, 50, 0.85);
+        border: 1px solid rgba(168, 85, 247, 0.4);
+        border-top-left-radius: 2px;
+    }
+
+    /* STYLE BUBBLE KANAN (SENDIRI) */
+    .chat-msg-wrapper.own-msg .chat-msg {
+        background: rgba(0, 150, 200, 0.25);
+        border: 1px solid var(--cyan-neon);
+        border-top-right-radius: 2px;
+    }
+
+    /* WADAH AKSI REAKSI / BALAS PESAN */
     .msg-actions {
         position: absolute;
-        right: 8px;
-        top: 6px;
-        display: flex;
-        gap: 8px;
-        background: rgba(10, 8, 25, 0.6);
-        padding: 2px 6px;
-        border-radius: 10px;
+        top: -10px;
+        display: none;
+        gap: 6px;
+        background: rgba(10, 8, 25, 0.95);
+        border: 1px solid var(--lavender-border);
+        padding: 2px 8px;
+        border-radius: 12px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.8);
+        z-index: 5;
     }
 
+    .chat-msg:hover .msg-actions {
+        display: flex;
+    }
+
+    .chat-msg-wrapper.other-msg .msg-actions { right: 8px; }
+    .chat-msg-wrapper.own-msg .msg-actions { left: 8px; }
+
     .btn-action-msg {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.7);
         cursor: pointer;
-        font-size: 13px;
+        font-size: 12px;
         transition: color 0.2s ease, transform 0.1s ease;
     }
 
     .btn-action-msg:hover {
         color: var(--cyan-neon);
-        transform: scale(1.2);
+        transform: scale(1.25);
     }
 
     /* DESAIN PESAN REPLY / QUOTE */
     .reply-quote-box {
-        background: rgba(0, 210, 255, 0.1);
+        background: rgba(0, 0, 0, 0.4);
         border-left: 3px solid var(--cyan-neon);
-        padding: 4px 8px;
+        padding: 5px 8px;
         border-radius: 4px;
         margin-bottom: 6px;
         font-size: 11px;
@@ -481,7 +526,7 @@
     }
 
     .reply-quote-box .reply-text {
-        color: rgba(255, 255, 255, 0.7);
+        color: rgba(255, 255, 255, 0.8);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -489,28 +534,37 @@
         display: block;
     }
 
+    .msg-header-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+        font-size: 11px;
+    }
+
     .chat-msg .sender {
         font-weight: 800;
-        margin-right: 6px;
         text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
     }
 
     .chat-msg .time-stamp {
         color: rgba(255, 255, 255, 0.4);
-        font-size: 10.5px;
-        margin-right: 6px;
+        font-size: 10px;
     }
 
     .chat-msg .msg-content {
         color: #f1f5f9;
         white-space: pre-wrap;
+        line-height: 1.4;
     }
 
     .chat-msg .msg-sticker {
-        font-size: 38px;
+        font-size: 42px;
         display: block;
-        margin-top: 4px;
+        margin-top: 2px;
         filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+        text-align: center;
     }
 
     .chat-msg .msg-content a {
@@ -537,6 +591,7 @@
         border-radius: 8px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
+        flex-shrink: 0;
     }
 
     .reply-preview-text {
@@ -563,9 +618,10 @@
         border: 1.5px solid var(--lavender-border);
         border-radius: 12px;
         padding: 10px;
-        max-height: 120px;
+        max-height: 110px;
         overflow-y: auto;
         box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+        flex-shrink: 0;
     }
 
     .sticker-item {
@@ -585,6 +641,7 @@
     .chat-footer {
         display: flex;
         gap: 8px;
+        flex-shrink: 0;
     }
 
     .chat-footer input {
@@ -603,7 +660,7 @@
         box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
     }
 
-    #chatUser { width: 120px; }
+    #chatUser { width: 110px; }
     #chatText { flex: 1; }
 
     .btn-sticker-toggle {
@@ -685,6 +742,7 @@
                 <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
         </div>
+
         <div class="chat-body" id="chatLogs"></div>
 
         <!-- KOTAK PREVIEW BALAS PESAN -->
@@ -695,7 +753,6 @@
 
         <!-- POPUP SELEKSI STIKER -->
         <div class="sticker-picker-container" id="stickerPicker">
-            <!-- PILIHAN STIKER CYBER POPULER -->
             <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
             <span class="sticker-item" onclick="sendSticker('⚡')">⚡</span>
             <span class="sticker-item" onclick="sendSticker('🚀')">🚀</span>
@@ -726,7 +783,7 @@
 <script>
     let hasilTeksUntukDisalin = "";
     let isInitialLoad = true;
-    let selectedReplyData = null; // Menyimpan data pesan yang sedang dibalas
+    let selectedReplyData = null; 
 
     /* AUDIO SYNTHESIZER UNTUK SOUND EFFECT CHAT */
     function playBeepSound(type) {
@@ -755,14 +812,13 @@
         } catch(e) {}
     }
 
-    /* KOLEKSI WARNA WARNI CYBER DYNAMIC FOR USERNAME */
+    /* KOLEKSI WARNA DYNAMIS USER */
     const userColors = [
         '#00f0ff', '#ff007f', '#00ff88', '#ffb703', 
         '#a855f7', '#ff4d6d', '#3a86ff', '#fb5607', 
         '#70e000', '#ff006e', '#8338ec', '#00b4d8'
     ];
 
-    /* KOLEKSI EMOJI UNIK UNTUK PENGGUNA */
     const userEmojis = ['⚡', '🔥', '🚀', '👾', '👑', '🐱‍💻', '🎯', '💎', '🦊', '💥', '👻', '🐉'];
 
     function getUserColor(name) {
@@ -789,12 +845,10 @@
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
 
-        // Format Markdown Sederhana
         formatted = formatted.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
         formatted = formatted.replace(/_(.*?)_/g, '<em>$1</em>');
         formatted = formatted.replace(/`(.*?)`/g, '<code>$1</code>');
 
-        // Auto-link URL
         const urlPattern = /(https?:\/\/[^\s]+)/g;
         formatted = formatted.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
@@ -812,7 +866,7 @@
     
     const dbChat = firebase.database().ref("team_chat_messages");
 
-    /* SIMPAN & LOAD NAMA DARI LOCALSTORAGE */
+    /* LOCALSTORAGE NAME HANDLER */
     document.addEventListener("DOMContentLoaded", () => {
         const savedUser = localStorage.getItem("chat_username");
         if (savedUser) {
@@ -836,19 +890,16 @@
         document.getElementById('stickerPicker').style.display = 'none';
     }
 
-    /* FUNGSI TOGGLE POPUP STIKER */
     function toggleStickerPicker() {
         const picker = document.getElementById('stickerPicker');
         picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
     }
 
-    /* BUKA MENU STIKER DENGAN OTOMATIS MENELUSURI / MEMBALAS PESAN */
     function triggerStickerForReply(user, text) {
         setReplyToMessage(user, text);
         toggleStickerPicker();
     }
 
-    /* FUNGSI SET REPLY PESAN */
     function setReplyToMessage(user, text) {
         selectedReplyData = { user, text };
         const previewBox = document.getElementById('replyPreview');
@@ -864,17 +915,24 @@
         document.getElementById('replyPreview').style.display = 'none';
     }
 
+    /* FUNGSI RENDER PESAN CHAT DENGAN TATA LEAK KANAN/KIRI */
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'chat-msg';
-        msgDiv.id = `msg-${key}`;
+        const currentUser = (document.getElementById('chatUser').value || '').trim().toLowerCase();
         
         const username = data.user || 'User';
+        const isSelf = (username.toLowerCase() === currentUser && currentUser !== '');
+
+        const wrapperDiv = document.createElement('div');
+        wrapperDiv.className = `chat-msg-wrapper ${isSelf ? 'own-msg' : 'other-msg'}`;
+        wrapperDiv.id = `msg-${key}`;
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-msg';
+        
         const color = getUserColor(username);
         const emoji = getUserEmoji(username);
 
-        // Jika ada data balasan (reply)
         let replyHTML = '';
         if (data.replyTo) {
             replyHTML = `
@@ -888,7 +946,6 @@
         const safeUser = username.replace(/'/g, "\\'");
         const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
-        // Tampilan pesan teks atau stiker
         let contentHTML = '';
         if (data.isSticker) {
             contentHTML = `<span class="msg-sticker">${data.sticker}</span>`;
@@ -902,12 +959,15 @@
                 <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
             </div>
             ${replyHTML}
-            <span class="time-stamp">[${data.timestamp || ''}]</span>
-            <span class="sender" style="color: ${color};">${emoji} ${username}:</span>
+            <div class="msg-header-info">
+                <span class="sender" style="color: ${color};">${emoji} ${username}</span>
+                <span class="time-stamp">${data.timestamp || ''}</span>
+            </div>
             ${contentHTML}
         `;
         
-        chatLogs.appendChild(msgDiv);
+        wrapperDiv.appendChild(msgDiv);
+        chatLogs.appendChild(wrapperDiv);
         chatLogs.scrollTop = chatLogs.scrollHeight;
     }
 
@@ -925,7 +985,7 @@
             user: userInput.value.trim(),
             sticker: stickerChar,
             isSticker: true,
-            timestamp: new Date().toLocaleTimeString('id-ID')
+            timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
         };
 
         if (selectedReplyData) {
@@ -949,7 +1009,7 @@
             const payload = {
                 user: userInput.value.trim(),
                 msg: messageText,
-                timestamp: new Date().toLocaleTimeString('id-ID')
+                timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
             };
 
             if (selectedReplyData) {
@@ -966,7 +1026,6 @@
         }
     }
 
-    /* FUNGSI RESET CHAT LANGSUNG HAPUS TANPA POPUP NOTIFIKASI */
     function clearAllChat() {
         dbChat.remove();
         document.getElementById('chatLogs').innerHTML = '';
@@ -977,7 +1036,7 @@
     }
 
     // Mendengarkan pesan baru dari Firebase secara Realtime
-    dbChat.limitToLast(50).on('child_added', (snapshot) => {
+    dbChat.limitToLast(60).on('child_added', (snapshot) => {
         const data = snapshot.val();
         renderMessage(snapshot.key, data);
         
@@ -991,7 +1050,6 @@
         if (el) el.remove();
     });
 
-    // Otomatis bersihkan tampilan saat database direset & update counter
     dbChat.on('value', (snapshot) => {
         isInitialLoad = false;
         const chatLogs = document.getElementById('chatLogs');
@@ -1004,7 +1062,7 @@
         }
     });
 
-    /* EFEK GELOMBANG (RIPPLE) */
+    /* EFEK RIPPLE */
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('click', function(e) {
             const circle = document.createElement('span');
@@ -1024,7 +1082,7 @@
         });
     });
 
-    /* FUNGSI KONVERSI LOG RINGAN */
+    /* FUNGSI KONVERSI LOG */
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
@@ -1116,7 +1174,6 @@
         counter.innerText = `${parsedLogList.length} DATA (CHAT)`;
     }
 
-    /* FUNGSI RESET DATA TABLE */
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
@@ -1125,7 +1182,6 @@
         document.getElementById('rawInput').focus();
     }
 
-    /* FUNGSI SALIN TEKS */
     function salinHasil() {
         const txt = document.getElementById('txtCopy');
         
@@ -1143,7 +1199,6 @@
         });
     }
 
-    /* SHORTCUT KEYBOARD */
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeTeamChat();
