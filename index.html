@@ -432,18 +432,44 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         margin-top: 5px;
         margin-bottom: 5px;
     }
 
     .avatar-preview-img {
-        width: 80px;
-        height: 80px;
+        width: 75px;
+        height: 75px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid var(--cyan-neon);
         box-shadow: 0 0 12px var(--cyan-neon);
+    }
+
+    /* OPSI AVATAR EMOTIKON LENGKAP DI MODAL PROFIL */
+    .avatar-presets-grid {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 2px;
+        margin-bottom: 6px;
+    }
+
+    .preset-avatar-option {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        object-fit: cover;
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    .preset-avatar-option:hover {
+        transform: scale(1.15);
+        border-color: var(--cyan-neon);
+        box-shadow: 0 0 10px var(--cyan-neon);
     }
 
     .btn-upload-avatar {
@@ -725,6 +751,36 @@
         display: block;
     }
 
+    /* CONTAINER EMOTIKON/REAKSI DI DALAM CHAT ( DI BAWAH NAMA/PESAN ) */
+    .msg-reactions-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 6px;
+    }
+
+    .chat-msg-wrapper.own-msg .msg-reactions-container {
+        justify-content: flex-end;
+    }
+
+    .reaction-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 240, 255, 0.4);
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+    }
+
+    .reaction-badge:hover {
+        transform: scale(1.1);
+        border-color: var(--cyan-neon);
+    }
+
     .chat-msg .msg-sticker {
         font-size: 32px;
         display: block;
@@ -1001,7 +1057,7 @@
     </div>
 </div>
 
-<!-- MODAL EDIT PROFIL (4 AVATAR/EMOTIKON BAWAAN DIHAPUS) -->
+<!-- MODAL EDIT PROFIL (4 OPSI AVATAR EMOTIKON DIKEMBALIKAN & LENGKAP) -->
 <div class="chat-modal-overlay" id="profileModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeProfileModal()">X</button>
@@ -1010,6 +1066,15 @@
         <div class="auth-form">
             <div class="avatar-selection-box">
                 <img id="editAvatarPreview" class="avatar-preview-img" src="" alt="Preview">
+                
+                <!-- OPSI AVATAR EMOTIKON BAWAAN -->
+                <div class="avatar-presets-grid">
+                    <img class="preset-avatar-option" src="https://api.dicebear.com/7.x/bottts/svg?seed=Robot1" onclick="selectPresetAvatar('https://api.dicebear.com/7.x/bottts/svg?seed=Robot1')" title="Robot">
+                    <img class="preset-avatar-option" src="https://api.dicebear.com/7.x/adventurer/svg?seed=Ninja" onclick="selectPresetAvatar('https://api.dicebear.com/7.x/adventurer/svg?seed=Ninja')" title="Ninja">
+                    <img class="preset-avatar-option" src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cool" onclick="selectPresetAvatar('https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cool')" title="Cool Emoji">
+                    <img class="preset-avatar-option" src="https://api.dicebear.com/7.x/big-smile/svg?seed=Star" onclick="selectPresetAvatar('https://api.dicebear.com/7.x/big-smile/svg?seed=Star')" title="Smile">
+                </div>
+
                 <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PC/HP 📷</button>
                 <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
             </div>
@@ -1049,18 +1114,18 @@
         </div>
 
         <div class="sticker-picker-container" id="stickerPicker">
-            <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
-            <span class="sticker-item" onclick="sendSticker('⚡')">⚡</span>
-            <span class="sticker-item" onclick="sendSticker('🚀')">🚀</span>
-            <span class="sticker-item" onclick="sendSticker('😎')">😎</span>
-            <span class="sticker-item" onclick="sendSticker('👍')">👍</span>
-            <span class="sticker-item" onclick="sendSticker('🎉')">🎉</span>
-            <span class="sticker-item" onclick="sendSticker('💎')">💎</span>
-            <span class="sticker-item" onclick="sendSticker('👾')">👾</span>
-            <span class="sticker-item" onclick="sendSticker('🤖')">🤖</span>
-            <span class="sticker-item" onclick="sendSticker('💀')">💀</span>
-            <span class="sticker-item" onclick="sendSticker('💯')">💯</span>
-            <span class="sticker-item" onclick="sendSticker('🎯')">🎯</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('🔥')">🔥</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('⚡')">⚡</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('🚀')">🚀</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('😎')">😎</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('👍')">👍</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('🎉')">🎉</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('💎')">💎</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('👾')">👾</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('🤖')">🤖</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('💀')">💀</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('💯')">💯</span>
+            <span class="sticker-item" onclick="sendStickerOrReaction('🎯')">🎯</span>
         </div>
 
         <div class="chat-footer">
@@ -1086,6 +1151,7 @@
     let hasilTeksUntukDisalin = "";
     let isInitialLoad = true;
     let selectedReplyData = null; 
+    let selectedReactionMsgKey = null; // KEY DARI PESAN YANG INGIN DIBERI REAKSI EMOTIKON
     let currentDataCount = 0;
 
     let chatClickCount = 0;
@@ -1242,6 +1308,11 @@
 
     function closeProfileModal() {
         document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function selectPresetAvatar(url) {
+        tempEditAvatar = url;
+        document.getElementById('editAvatarPreview').src = url;
     }
 
     function handleEditAvatarUpload(event) {
@@ -1424,12 +1495,16 @@
         picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
     }
 
-    function triggerStickerForReply(user, text) {
-        setReplyToMessage(user, text);
-        toggleStickerPicker();
+    // PILIH EMOTIKON UNTUK DITEMPELKAN SEBAGAI REAKSI DI PESAN ORANG LAIN
+    function openReactionPickerForMsg(msgKey) {
+        selectedReactionMsgKey = msgKey;
+        cancelReply(); 
+        const picker = document.getElementById('stickerPicker');
+        picker.style.display = 'grid';
     }
 
     function setReplyToMessage(user, text) {
+        selectedReactionMsgKey = null;
         selectedReplyData = { user: user.toUpperCase(), text };
         const previewBox = document.getElementById('replyPreview');
         const previewText = document.getElementById('replyPreviewText');
@@ -1452,9 +1527,17 @@
         const isSelf = (username === currentUser && currentUser !== '');
         const avatarUrl = data.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username);
 
-        const wrapperDiv = document.createElement('div');
-        wrapperDiv.className = `chat-msg-wrapper ${isSelf ? 'own-msg' : 'other-msg'}`;
-        wrapperDiv.id = `msg-${key}`;
+        let wrapperDiv = document.getElementById(`msg-${key}`);
+        let isUpdate = true;
+
+        if (!wrapperDiv) {
+            isUpdate = false;
+            wrapperDiv = document.createElement('div');
+            wrapperDiv.className = `chat-msg-wrapper ${isSelf ? 'own-msg' : 'other-msg'}`;
+            wrapperDiv.id = `msg-${key}`;
+        } else {
+            wrapperDiv.innerHTML = '';
+        }
 
         const color = getUserColor(username);
 
@@ -1476,7 +1559,7 @@
             <span class="sender" style="color: ${color};">${username}</span>
             <span class="time-stamp">${data.timestamp || ''}</span>
             <div class="msg-actions">
-                <span class="btn-action-msg" title="Balas dengan Stiker" onclick="triggerStickerForReply('${safeUser}', '${safeText}')">😊</span>
+                <span class="btn-action-msg" title="Beri Reaksi Emotikon" onclick="openReactionPickerForMsg('${key}')">😊</span>
                 <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
             </div>
         `;
@@ -1501,9 +1584,30 @@
             contentHTML = `<span class="msg-content">${formatChatMessage(data.msg)}</span>`;
         }
 
+        // MEMPROSES DAFTAR REAKSI EMOTIKON DI BAWAH NAMA/PESAN
+        let reactionsHTML = '';
+        if (data.reactions) {
+            const reactionCounts = {};
+            Object.values(data.reactions).forEach(r => {
+                if (r.emoji) {
+                    reactionCounts[r.emoji] = (reactionCounts[r.emoji] || 0) + 1;
+                }
+            });
+
+            let badges = '';
+            for (const [emoji, count] of Object.entries(reactionCounts)) {
+                badges += `<span class="reaction-badge">${emoji} <b>${count}</b></span>`;
+            }
+
+            if (badges) {
+                reactionsHTML = `<div class="msg-reactions-container">${badges}</div>`;
+            }
+        }
+
         msgDiv.innerHTML = `
             ${replyHTML}
             ${contentHTML}
+            ${reactionsHTML}
         `;
         
         contentContainer.appendChild(headerInfoDiv);
@@ -1512,13 +1616,29 @@
         wrapperDiv.appendChild(avatarImg);
         wrapperDiv.appendChild(contentContainer);
 
-        chatLogs.appendChild(wrapperDiv);
+        if (!isUpdate) {
+            chatLogs.appendChild(wrapperDiv);
+        }
         chatLogs.scrollTop = chatLogs.scrollHeight;
     }
 
-    function sendSticker(stickerChar) {
+    function sendStickerOrReaction(stickerChar) {
         if (!activeUser) return;
 
+        // JIKA SEDANG MEMILIH REAKSI UNTUK PESAN TERTENTU
+        if (selectedReactionMsgKey) {
+            const reactionRef = dbChat.child(selectedReactionMsgKey).child('reactions');
+            reactionRef.push({
+                user: activeUser.username,
+                emoji: stickerChar
+            });
+            playBeepSound('send');
+            selectedReactionMsgKey = null;
+            document.getElementById('stickerPicker').style.display = 'none';
+            return;
+        }
+
+        // JIKA DIKIRIM SEBAGAI PESAN STIKER UTAMA
         const payload = {
             user: activeUser.username,
             avatar: activeUser.avatar,
@@ -1586,6 +1706,11 @@
         if (!isInitialLoad) {
             playBeepSound('receive');
         }
+    });
+
+    dbChat.on('child_changed', (snapshot) => {
+        const data = snapshot.val();
+        renderMessage(snapshot.key, data);
     });
 
     dbChat.on('child_removed', (snapshot) => {
