@@ -352,7 +352,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: transparent;
+        background: rgba(0, 0, 0, 0.7);
         z-index: 999;
         display: none;
         justify-content: center;
@@ -430,7 +430,7 @@
         box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
     }
 
-    /* PREVIEW & PILIH FOTO PROFIL DENGAN AVATAR DEFAULT */
+    /* EDIT PROFIL MODAL STYLES */
     .avatar-selection-box {
         display: flex;
         flex-direction: column;
@@ -441,8 +441,8 @@
     }
 
     .avatar-preview-img {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid var(--cyan-neon);
@@ -496,7 +496,7 @@
         box-shadow: none !important;
     }
 
-    /* KOTAK CHAT DENGAN BACKGROUND HITAM PEKAT DAN BORDER TEGAS/TAJAM */
+    /* KOTAK CHAT */
     .chat-modal {
         position: relative;
         width: 100%;
@@ -554,12 +554,10 @@
         gap: 8px;
     }
 
-    .btn-reset-chat, .btn-logout-chat {
-        background: rgba(255, 0, 127, 0.15) !important;
-        border: 1px solid rgba(255, 0, 127, 0.4) !important;
-        color: var(--pink-neon) !important;
+    /* TOMBOL DENGAN UKURAN SERAGAM (RESET, LOGOUT, PROFIL) */
+    .btn-hdr-action {
         font-size: 9.5px !important;
-        padding: 6px 12px !important;
+        padding: 6px 14px !important;
         border-radius: 15px !important;
         font-family: 'Orbitron', sans-serif;
         font-weight: 800;
@@ -567,6 +565,13 @@
         cursor: pointer;
         box-shadow: none !important;
         transition: all 0.2s ease;
+        flex: none !important;
+    }
+
+    .btn-reset-chat {
+        background: rgba(255, 0, 127, 0.15) !important;
+        border: 1px solid rgba(255, 0, 127, 0.4) !important;
+        color: var(--pink-neon) !important;
     }
 
     .btn-logout-chat {
@@ -575,10 +580,15 @@
         color: var(--cyan-neon) !important;
     }
 
-    .btn-reset-chat:hover, .btn-logout-chat:hover {
-        background: rgba(255, 0, 127, 0.35) !important;
-        color: #ffffff !important;
+    .btn-profile-chat {
+        background: rgba(168, 85, 247, 0.15) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        color: var(--purple-bright) !important;
     }
+
+    .btn-reset-chat:hover { background: rgba(255, 0, 127, 0.35) !important; color: #ffffff !important; }
+    .btn-logout-chat:hover { background: rgba(0, 210, 255, 0.35) !important; color: #ffffff !important; }
+    .btn-profile-chat:hover { background: rgba(168, 85, 247, 0.35) !important; color: #ffffff !important; }
 
     .btn-close-chat {
         background: transparent !important;
@@ -611,15 +621,10 @@
         align-items: flex-start;
     }
 
-    .chat-msg-wrapper.other-msg { 
-        flex-direction: row; 
-    }
-    
-    .chat-msg-wrapper.own-msg { 
-        flex-direction: row-reverse; 
-    }
+    .chat-msg-wrapper.other-msg { flex-direction: row; }
+    .chat-msg-wrapper.own-msg { flex-direction: row-reverse; }
 
-    /* FOTO PROFIL CHAT */
+    /* FOTO PROFIL CHAT DENGAN EFFECT KLIK */
     .msg-avatar {
         width: 36px;
         height: 36px;
@@ -628,6 +633,13 @@
         border: 1.5px solid var(--purple-bright);
         flex-shrink: 0;
         margin-top: 2px;
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .msg-avatar:hover {
+        transform: scale(1.1);
+        border-color: var(--cyan-neon);
     }
 
     .msg-content-container {
@@ -684,7 +696,7 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT WARNA ABU-ABU */
+    /* GELEMBUNG CHAT */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -830,6 +842,7 @@
         border-radius: 50%;
         object-fit: cover;
         border: 1.5px solid var(--cyan-neon);
+        cursor: pointer;
     }
 
     .chat-footer input#chatUser {
@@ -897,6 +910,38 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    /* MODAL VIEW FOTO PROFIL (FULLSIZE) */
+    .image-viewer-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 1000;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .image-viewer-modal img {
+        max-width: 85vw;
+        max-height: 80vh;
+        border-radius: 15px;
+        border: 2px solid var(--cyan-neon);
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        object-fit: contain;
+    }
+
+    .image-viewer-username {
+        margin-top: 15px;
+        font-family: 'Orbitron', sans-serif;
+        color: #ffffff;
+        font-size: 16px;
+        letter-spacing: 2px;
     }
 </style>
 </head>
@@ -973,7 +1018,7 @@
             <button class="btn-auth-submit" onclick="submitLogin()">LOGIN SEKARANG 🔥</button>
         </div>
 
-        <!-- FORM REGISTER -->
+        <!-- FORM REGISTER (TANPA OPTION AVATAR/UPLOAD FOTO) -->
         <div class="auth-form" id="formRegister" style="display: none;">
             <div class="auth-input-group">
                 <label>NAMA USER BARU</label>
@@ -983,24 +1028,40 @@
                 <label>PASSWORD BARU</label>
                 <input type="password" id="regPass" placeholder="Buat password...">
             </div>
+            <button class="btn-auth-submit" onclick="submitRegister()">DAFTAR AKUN 🔥</button>
+        </div>
+    </div>
+</div>
 
-            <!-- DENGAN FITUR FOTO PROFIL (AVATAR) -->
-            <div class="auth-input-group">
-                <label>PILIH FOTO PROFIL</label>
-                <div class="avatar-selection-box">
-                    <img id="avatarPreview" class="avatar-preview-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=Kasir1" alt="Preview">
-                    <div class="avatar-options">
-                        <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Kasir1" onclick="selectPresetAvatar(this.src)">
-                        <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Fajar2" onclick="selectPresetAvatar(this.src)">
-                        <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Neon3" onclick="selectPresetAvatar(this.src)">
-                        <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Cyber4" onclick="selectPresetAvatar(this.src)">
-                    </div>
-                    <button class="btn-upload-avatar" onclick="document.getElementById('avatarFileInput').click()">UPLOAD FOTO PC/HP 📷</button>
-                    <input type="file" id="avatarFileInput" accept="image/*" style="display: none;" onchange="handleCustomAvatarUpload(event)">
+<!-- MODAL EDIT PROFIL -->
+<div class="chat-modal-overlay" id="profileModal">
+    <div class="auth-modal">
+        <button class="auth-close-btn" onclick="closeProfileModal()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--purple-bright); font-size: 16px;">EDIT PROFIL AKUN</h3>
+        
+        <div class="auth-form">
+            <div class="avatar-selection-box">
+                <img id="editAvatarPreview" class="avatar-preview-img" src="" alt="Preview">
+                <div class="avatar-options">
+                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Kasir1" onclick="selectEditAvatar(this.src)">
+                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Fajar2" onclick="selectEditAvatar(this.src)">
+                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Neon3" onclick="selectEditAvatar(this.src)">
+                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Cyber4" onclick="selectEditAvatar(this.src)">
                 </div>
+                <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PC/HP 📷</button>
+                <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
             </div>
 
-            <button class="btn-auth-submit" onclick="submitRegister()">DAFTAR AKUN 🔥</button>
+            <div class="auth-input-group">
+                <label>NAMA USER</label>
+                <input type="text" id="editUserName" placeholder="Nama User..." oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <div class="auth-input-group">
+                <label>PASSWORD BARU (OPSIONAL)</label>
+                <input type="password" id="editUserPass" placeholder="Isi jika ingin ganti password...">
+            </div>
+
+            <button class="btn-auth-submit" onclick="saveProfileChanges()">SIMPAN PERUBAHAN 💾</button>
         </div>
     </div>
 </div>
@@ -1011,8 +1072,9 @@
         <div class="chat-header">
             <h3>T'chat</h3>
             <div class="header-controls">
-                <button class="btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
-                <button class="btn-reset-chat" onclick="clearAllChat()">RESET CHAT</button>
+                <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
+                <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
+                <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
                 <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
         </div>
@@ -1040,13 +1102,19 @@
         </div>
 
         <div class="chat-footer">
-            <img id="myChatAvatar" class="user-profile-thumb" src="" alt="Avatar" />
+            <img id="myChatAvatar" class="user-profile-thumb" src="" alt="Avatar" onclick="openProfileModal()" />
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
             <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
             <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
         </div>
     </div>
+</div>
+
+<!-- VIEW FOTO FULLSIZE MODAL -->
+<div class="image-viewer-modal" id="imageViewerModal" onclick="closeImageViewer()">
+    <img id="fullsizeImage" src="" alt="Fullsize Avatar">
+    <div class="image-viewer-username" id="fullsizeUsername">USERNAME</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -1061,7 +1129,7 @@
     let chatClickCount = 0;
     let chatClickTimer = null;
     let activeUser = null; 
-    let selectedAvatarBase64 = "https://api.dicebear.com/7.x/bottts/svg?seed=Kasir1";
+    let tempEditAvatar = "";
 
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -1080,27 +1148,6 @@
             activeUser = JSON.parse(savedAccount);
         }
     });
-
-    function selectPresetAvatar(srcUrl) {
-        selectedAvatarBase64 = srcUrl;
-        document.getElementById('avatarPreview').src = srcUrl;
-    }
-
-    function handleCustomAvatarUpload(event) {
-        const file = event.target.files[0];
-        if (file) {
-            if (file.size > 500 * 1024) { 
-                alert("Ukuran foto terlalu besar! Maksimal 500 KB.");
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                selectedAvatarBase64 = e.target.result;
-                document.getElementById('avatarPreview').src = selectedAvatarBase64;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
 
     function handleChatClick() {
         chatClickCount++;
@@ -1144,6 +1191,7 @@
         }
     }
 
+    /* PENDAFTARAN TANPA UPLOAD FOTO (MENGGUNAKAN AVATAR DEFAULT) */
     function submitRegister() {
         const user = document.getElementById('regUser').value.trim().toUpperCase();
         const pass = document.getElementById('regPass').value.trim();
@@ -1157,9 +1205,10 @@
             if (snapshot.exists()) {
                 alert("Nama User ini sudah terdaftar! Silakan gunakan nama lain atau Login.");
             } else {
+                const defaultAvatar = "https://api.dicebear.com/7.x/bottts/svg?seed=" + user;
                 dbAccounts.child(user).set({
                     password: pass,
-                    avatar: selectedAvatarBase64,
+                    avatar: defaultAvatar,
                     createdAt: new Date().toISOString()
                 }, (error) => {
                     if (!error) {
@@ -1192,7 +1241,7 @@
                 if (accData.password === pass) {
                     activeUser = { 
                         username: user,
-                        avatar: accData.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + user
+                        avatar: accData.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user)
                     };
                     localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
                     
@@ -1210,6 +1259,114 @@
         });
     }
 
+    /* FUNGSI PROFIL & EDIT DATA */
+    function openProfileModal() {
+        if (!activeUser) return;
+        tempEditAvatar = activeUser.avatar;
+        document.getElementById('editAvatarPreview').src = tempEditAvatar;
+        document.getElementById('editUserName').value = activeUser.username;
+        document.getElementById('editUserPass').value = '';
+        document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function selectEditAvatar(srcUrl) {
+        tempEditAvatar = srcUrl;
+        document.getElementById('editAvatarPreview').src = srcUrl;
+    }
+
+    function handleEditAvatarUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            if (file.size > 500 * 1024) { 
+                alert("Ukuran foto terlalu besar! Maksimal 500 KB.");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                tempEditAvatar = e.target.result;
+                document.getElementById('editAvatarPreview').src = tempEditAvatar;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function saveProfileChanges() {
+        if (!activeUser) return;
+        const newName = document.getElementById('editUserName').value.trim().toUpperCase();
+        const newPass = document.getElementById('editUserPass').value.trim();
+
+        if (!newName) {
+            alert("Nama User tidak boleh kosong!");
+            return;
+        }
+
+        const oldName = activeUser.username;
+
+        dbAccounts.child(oldName).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                const currentData = snapshot.val();
+                const updatedPass = newPass ? newPass : currentData.password;
+
+                if (newName !== oldName) {
+                    dbAccounts.child(newName).once('value', (checkSnap) => {
+                        if (checkSnap.exists()) {
+                            alert("Nama baru sudah digunakan pengguna lain!");
+                        } else {
+                            dbAccounts.child(newName).set({
+                                password: updatedPass,
+                                avatar: tempEditAvatar,
+                                createdAt: currentData.createdAt || new Date().toISOString()
+                            });
+                            dbAccounts.child(oldName).remove();
+                            
+                            activeUser.username = newName;
+                            activeUser.avatar = tempEditAvatar;
+                            localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
+                            
+                            updateChatHeaderProfile();
+                            closeProfileModal();
+                            alert("Profil berhasil diperbarui!");
+                        }
+                    });
+                } else {
+                    dbAccounts.child(oldName).update({
+                        password: updatedPass,
+                        avatar: tempEditAvatar
+                    });
+                    
+                    activeUser.avatar = tempEditAvatar;
+                    localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
+                    
+                    updateChatHeaderProfile();
+                    closeProfileModal();
+                    alert("Profil berhasil diperbarui!");
+                }
+            }
+        });
+    }
+
+    function updateChatHeaderProfile() {
+        if (activeUser) {
+            document.getElementById('chatUser').value = activeUser.username;
+            document.getElementById('myChatAvatar').src = activeUser.avatar;
+        }
+    }
+
+    /* VIEW FOTO UKURAN ASLI */
+    function viewFullsizeImage(avatarUrl, username) {
+        document.getElementById('fullsizeImage').src = avatarUrl;
+        document.getElementById('fullsizeUsername').innerText = username;
+        document.getElementById('imageViewerModal').style.display = 'flex';
+    }
+
+    function closeImageViewer() {
+        document.getElementById('imageViewerModal').style.display = 'none';
+    }
+
     function logoutChat() {
         if (confirm("Yakin ingin logout dari akun chat?")) {
             activeUser = null;
@@ -1224,8 +1381,7 @@
             return;
         }
         document.getElementById('mainContainer').classList.add('hidden-for-chat');
-        document.getElementById('chatUser').value = activeUser.username;
-        document.getElementById('myChatAvatar').src = activeUser.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + activeUser.username;
+        updateChatHeaderProfile();
         document.getElementById('chatModal').style.display = 'flex';
         document.getElementById('chatText').focus();
     }
@@ -1329,7 +1485,7 @@
         
         const username = (data.user || 'USER').toUpperCase();
         const isSelf = (username === currentUser && currentUser !== '');
-        const avatarUrl = data.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + username;
+        const avatarUrl = data.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username);
 
         const wrapperDiv = document.createElement('div');
         wrapperDiv.className = `chat-msg-wrapper ${isSelf ? 'own-msg' : 'other-msg'}`;
@@ -1340,11 +1496,12 @@
         const safeUser = username.replace(/'/g, "\\'");
         const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
-        // HTML Foto Profil
+        // FOTO PROFIL (BISA DIKLIK UNTUK LIHAT UKURAN ASLI)
         const avatarImg = document.createElement('img');
         avatarImg.className = 'msg-avatar';
         avatarImg.src = avatarUrl;
         avatarImg.alt = username;
+        avatarImg.onclick = () => viewFullsizeImage(avatarUrl, username);
 
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
@@ -1400,7 +1557,7 @@
 
         const payload = {
             user: activeUser.username,
-            avatar: activeUser.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + activeUser.username,
+            avatar: activeUser.avatar,
             sticker: stickerChar,
             isSticker: true,
             timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
@@ -1424,7 +1581,7 @@
         if (messageText) {
             const payload = {
                 user: activeUser.username,
-                avatar: activeUser.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + activeUser.username,
+                avatar: activeUser.avatar,
                 msg: messageText,
                 timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
             };
@@ -1442,11 +1599,10 @@
         }
     }
 
+    /* FUNGSI RESET CHAT TANPA NOTIFIKASI POP-UP */
     function clearAllChat() {
-        if (confirm("Hapus seluruh histori chat?")) {
-            dbChat.remove();
-            document.getElementById('chatLogs').innerHTML = '';
-        }
+        dbChat.remove();
+        document.getElementById('chatLogs').innerHTML = '';
     }
 
     function handleChatKey(e) {
@@ -1622,6 +1778,8 @@
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
+            closeImageViewer();
+            closeProfileModal();
             closeTeamChat();
             closeAuthModal();
             resetData();
