@@ -439,6 +439,7 @@
         justify-content: flex-end;
     }
 
+    /* KOTAK CHAT ABU-ABU NEUTRAL */
     .chat-msg {
         position: relative;
         max-width: 78%;
@@ -451,15 +452,17 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
+    /* Warna gelembung pesan orang lain (Abu-abu Gelap) */
     .chat-msg-wrapper.other-msg .chat-msg {
-        background: rgba(30, 20, 50, 0.85);
-        border: 1px solid rgba(168, 85, 247, 0.4);
+        background: #2a2a35;
+        border: 1px solid #444455;
         border-top-left-radius: 2px;
     }
 
+    /* Warna gelembung pesan sendiri (Abu-abu Sedikit Lebih Terang) */
     .chat-msg-wrapper.own-msg .chat-msg {
-        background: rgba(0, 150, 200, 0.25);
-        border: 1px solid var(--cyan-neon);
+        background: #383848;
+        border: 1px solid #555566;
         border-top-right-radius: 2px;
     }
 
@@ -527,7 +530,7 @@
         font-size: 11px;
     }
 
-    /* TAMPILAN TERPISAH WARNA NAMA DENGAN PESAN */
+    /* WARNA NAMA PENGGUNA BERBEDAN BERDASARKAN SYSTEM HASH */
     .chat-msg .sender {
         font-weight: 800;
         text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
@@ -539,7 +542,7 @@
     }
 
     .chat-msg .msg-content {
-        color: #ffffff !important; /* DIPISAHKAN: PESAN SELALU WARNA PUTIH NEUTRAL */
+        color: #e0e0e0 !important;
         white-space: pre-wrap;
         line-height: 1.4;
         display: block;
@@ -560,7 +563,7 @@
     }
 
     .chat-msg .msg-content code {
-        background: rgba(0, 210, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
         color: var(--cyan-neon);
         padding: 2px 6px;
         border-radius: 4px;
@@ -643,7 +646,7 @@
         height: 42px;
     }
 
-    /* INPUT TEXTAREA CHAT UNTUK DUKUNGAN MULTILINE SHIFT+ENTER */
+    /* PLACEHOLDER BERSIH "Tulis pesan..." */
     .chat-footer textarea#chatText {
         flex: 1;
         background: rgba(0, 0, 0, 0.4) !important;
@@ -774,8 +777,8 @@
 
         <div class="chat-footer">
             <input type="text" id="chatUser" placeholder="Nama..." onchange="saveUserName(this.value)" />
-            <!-- TEXTAREA DENGAN FEATURE ENTER BISA TURUN DENGAN SHIFT+ENTER -->
-            <textarea id="chatText" placeholder="Tulis pesan... (Enter = Kirim, Shift+Enter = Baris Baru)" onkeydown="handleChatKey(event)"></textarea>
+            <!-- PLACEHOLDER BERSIH "Tulis pesan..." -->
+            <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
             <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
         </div>
@@ -816,6 +819,7 @@
         } catch(e) {}
     }
 
+    /* PALET WARNA UNTUK TIAP NAMA PENGGUNA BERBEDA */
     const userColors = [
         '#00f0ff', '#ff007f', '#00ff88', '#ffb703', 
         '#a855f7', '#ff4d6d', '#3a86ff', '#fb5607', 
@@ -1017,7 +1021,7 @@
             dbChat.push(payload);
             playBeepSound('send');
             textInput.value = '';
-            textInput.style.height = '42px'; // Reset tinggi input
+            textInput.style.height = '42px';
             cancelReply();
             document.getElementById('stickerPicker').style.display = 'none';
         } else if (!userInput.value.trim()) {
@@ -1030,14 +1034,11 @@
         document.getElementById('chatLogs').innerHTML = '';
     }
 
-    /* FITUR DETEKSI ENTER (KIRIM) DAN SHIFT+ENTER (SPASI BARRIS BARU) */
     function handleChatKey(e) {
         if (e.key === 'Enter') {
             if (e.shiftKey) {
-                // Biarkan Enter + Shift berfungsi membuat baris baru
                 return;
             } else {
-                // Enter saja langsung kirim pesan
                 e.preventDefault();
                 sendChatMessage();
             }
