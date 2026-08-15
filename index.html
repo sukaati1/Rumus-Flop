@@ -76,6 +76,7 @@
             inset 0 0 20px rgba(200, 158, 255, 0.25);
     }
 
+    /* GAYA UTAMA & SHINE ANIMATION */
     h1 {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -132,6 +133,12 @@
         align-items: center;
         margin-bottom: 8px;
     }
+
+    .label-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
     
     label {
         display: block;
@@ -143,7 +150,7 @@
         text-transform: uppercase;
     }
 
-    .badge-count {
+    .badge-count, .btn-swap-pos {
         font-size: 11px;
         font-weight: 800;
         padding: 4px 12px;
@@ -157,12 +164,22 @@
         display: inline-block;
     }
 
-    .badge-count:hover {
+    .btn-swap-pos {
+        background: rgba(168, 85, 247, 0.15);
+        color: var(--purple-bright) !important;
+        border: 1px solid rgba(168, 85, 247, 0.5);
+    }
+
+    .badge-count:hover, .btn-swap-pos:hover {
         background: rgba(0, 210, 255, 0.35);
         border-color: #ffffff;
         color: #ffffff !important;
         box-shadow: 0 0 12px var(--cyan-neon);
         transform: scale(1.05);
+    }
+
+    .btn-swap-pos:hover {
+        box-shadow: 0 0 12px var(--purple-neon);
     }
     
     textarea#rawInput {
@@ -200,6 +217,11 @@
         display: flex;
         gap: 16px;
         margin-bottom: 28px;
+    }
+
+    /* KELOMPOK TOMBOL FLEKSIBEL (SWAP POSISI) */
+    .btn-group.swapped {
+        flex-direction: row-reverse;
     }
 
     button {
@@ -320,7 +342,7 @@
     tr:last-child td { border-bottom: none !important; }
 
     /* ========================================================= */
-    /* MODAL TEAM CHAT - RINGKAS & AREA CHAT DITINGKATKAN        */
+    /* MODAL TEAM CHAT                                           */
     /* ========================================================= */
     .chat-modal-overlay {
         position: fixed;
@@ -350,7 +372,7 @@
         border-radius: 20px !important;
         border: 1px solid #22222a !important;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-        padding: 12px 16px 16px 16px; /* Padding dipangkas agar area atas tidak boros tempat */
+        padding: 12px 16px 16px 16px;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -366,20 +388,28 @@
         flex-shrink: 0;
     }
 
-    /* JUDUL T'CHAT DENGAN FONT ORBITRON */
+    /* JUDUL T'CHAT - FONT & GLOW SAMA DENGAN RUMUS FLOP KASIR */
     .chat-header h3 {
         margin: 0;
         font-family: 'Orbitron', sans-serif;
         font-weight: 900;
-        color: var(--cyan-neon);
-        font-size: 16px;
-        letter-spacing: 2.5px;
+        font-size: 20px;
+        letter-spacing: 3px;
         text-transform: uppercase;
-        background: linear-gradient(90deg, #00f0ff, #00d2ff);
+        background: linear-gradient(
+            90deg, 
+            var(--cyan-neon), 
+            var(--blue-electric), 
+            var(--pink-neon), 
+            var(--purple-neon), 
+            var(--cyan-neon)
+        );
+        background-size: 200% auto;
+        color: transparent !important;
         -webkit-background-clip: text;
         background-clip: text;
-        color: transparent;
-        filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.4));
+        animation: shineText 3s linear infinite;
+        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
     }
 
     .header-controls {
@@ -388,7 +418,6 @@
         gap: 8px;
     }
 
-    /* TOMBOL RESET CHAT TANPA EMOTIKON */
     .btn-reset-chat {
         background: rgba(255, 0, 127, 0.15) !important;
         border: 1px solid rgba(255, 0, 127, 0.4) !important;
@@ -432,7 +461,6 @@
         gap: 8px;
     }
 
-    /* WRAPPER TIAP PESAN */
     .chat-msg-wrapper {
         display: flex;
         flex-direction: column;
@@ -459,7 +487,7 @@
     .sender {
         font-weight: 800;
         font-family: 'JetBrains Mono', monospace;
-        text-transform: uppercase; /* Nama pengirim di obrolan otomatis uppercase */
+        text-transform: uppercase;
     }
 
     .time-stamp {
@@ -633,7 +661,6 @@
         flex-shrink: 0;
     }
 
-    /* INPUT NAMA DENGAN TEKS OTOMATIS UPPERCASE */
     .chat-footer input#chatUser {
         width: 100px;
         background: #101018 !important;
@@ -716,7 +743,7 @@
     </div>
     <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
-    <div class="btn-group">
+    <div class="btn-group" id="btnGroup">
         <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
             <span id="txtCopy">SALIN DATA</span>
         </button>
@@ -727,7 +754,12 @@
 
     <div class="label-header">
         <label>Hasil Konversi</label>
-        <span class="badge-count" id="dataCounter" onclick="openTeamChat()">0 DATA (CHAT)</span>
+        <div class="label-actions">
+            <!-- TOMBOL UNTUK TUKAR POSISI (SWAP) -->
+            <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
+            <!-- TOMBOL CHAT (HARUS CLICK 3 KALI) -->
+            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">0 DATA (CHAT)</span>
+        </div>
     </div>
     
     <div class="table-container">
@@ -794,6 +826,41 @@
     let hasilTeksUntukDisalin = "";
     let isInitialLoad = true;
     let selectedReplyData = null; 
+    let currentDataCount = 0;
+
+    /* LOGIKA TRIPLE CLICK CHAT */
+    let chatClickCount = 0;
+    let chatClickTimer = null;
+
+    function handleChatClick() {
+        chatClickCount++;
+        const counter = document.getElementById('dataCounter');
+
+        if (chatClickCount === 1) {
+            counter.innerText = `KLIK 2 KALIMA LAGI`;
+        } else if (chatClickCount === 2) {
+            counter.innerText = `KLIK 1 KALI LAGI`;
+        }
+
+        if (chatClickTimer) clearTimeout(chatClickTimer);
+
+        if (chatClickCount >= 3) {
+            openTeamChat();
+            chatClickCount = 0;
+            counter.innerText = `${currentDataCount} DATA (CHAT)`;
+        } else {
+            chatClickTimer = setTimeout(() => {
+                chatClickCount = 0;
+                counter.innerText = `${currentDataCount} DATA (CHAT)`;
+            }, 1000); 
+        }
+    }
+
+    /* TUKAR POSISI TOMBOL (SALIN DATA / RESET) */
+    function toggleBtnPosition() {
+        const btnGroup = document.getElementById('btnGroup');
+        btnGroup.classList.toggle('swapped');
+    }
 
     function playBeepSound(type) {
         try {
@@ -1102,6 +1169,7 @@
         hasilTeksUntukDisalin = ""; 
 
         if (!input) {
+            currentDataCount = 0;
             counter.innerText = "0 DATA (CHAT)";
             return;
         }
@@ -1181,12 +1249,14 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        counter.innerText = `${parsedLogList.length} DATA (CHAT)`;
+        currentDataCount = parsedLogList.length;
+        counter.innerText = `${currentDataCount} DATA (CHAT)`;
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
+        currentDataCount = 0;
         document.getElementById('dataCounter').innerText = "0 DATA (CHAT)";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
