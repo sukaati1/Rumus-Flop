@@ -360,7 +360,6 @@
         padding: 15px;
     }
 
-    /* SPECIFIC MODAL Z-INDEX FIXES */
     #profileModal {
         z-index: 1002 !important;
     }
@@ -563,7 +562,6 @@
         gap: 8px;
     }
 
-    /* TOMBOL DENGAN UKURAN SERAGAM (RESET, LOGOUT, PROFIL) */
     .btn-hdr-action {
         font-size: 9.5px !important;
         padding: 6px 14px !important;
@@ -633,7 +631,6 @@
     .chat-msg-wrapper.other-msg { flex-direction: row; }
     .chat-msg-wrapper.own-msg { flex-direction: row-reverse; }
 
-    /* FOTO PROFIL CHAT DENGAN EFFECT KLIK */
     .msg-avatar {
         width: 36px;
         height: 36px;
@@ -661,13 +658,18 @@
         align-items: flex-end;
     }
 
+    /* HEADER INFO (NAMA, JAM, TOMBOL BALAS) PERKECIL & RAPI */
     .msg-header-info {
         display: flex;
         align-items: center;
         gap: 6px;
-        margin-bottom: 2px;
+        margin-bottom: 3px;
         font-size: 10.5px;
         padding: 0 2px;
+    }
+
+    .chat-msg-wrapper.own-msg .msg-header-info {
+        flex-direction: row-reverse;
     }
 
     .sender {
@@ -687,6 +689,7 @@
         align-items: center;
         gap: 6px;
         margin-left: 4px;
+        margin-right: 4px;
         opacity: 0.6;
         transition: opacity 0.2s ease;
     }
@@ -705,7 +708,7 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT */
+    /* GELEMBUNG CHAT FIX URUTAN */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -716,7 +719,8 @@
         word-break: break-word;
         box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         width: fit-content;
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
         line-height: 1.35;
     }
 
@@ -737,7 +741,7 @@
         border-left: 3px solid var(--cyan-neon);
         padding: 3px 6px;
         border-radius: 4px;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         font-size: 10px;
     }
 
@@ -759,15 +763,15 @@
     .chat-msg .msg-content {
         color: #f0f0f5 !important;
         white-space: pre-wrap;
-        display: inline-block;
+        display: block;
     }
 
     .chat-msg .msg-sticker {
-        font-size: 26px;
+        font-size: 32px;
         display: block;
-        margin-top: 1px;
-        filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
         text-align: center;
+        filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+        padding: 2px 6px;
     }
 
     .chat-msg .msg-content a {
@@ -921,7 +925,6 @@
         justify-content: center;
     }
 
-    /* MODAL VIEW FOTO PROFIL (FULLSIZE) */
     .image-viewer-modal {
         position: fixed;
         top: 0;
@@ -1003,7 +1006,7 @@
     </div>
 </div>
 
-<!-- AUTH MODAL OVERLAY (LOGIN / REGISTER) -->
+<!-- AUTH MODAL OVERLAY -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeAuthModal()">X</button>
@@ -1013,7 +1016,6 @@
             <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">DAFTAR BARU</div>
         </div>
 
-        <!-- FORM LOGIN -->
         <div class="auth-form" id="formLogin">
             <div class="auth-input-group">
                 <label>NAMA USER</label>
@@ -1026,7 +1028,6 @@
             <button class="btn-auth-submit" onclick="submitLogin()">LOGIN SEKARANG 🔥</button>
         </div>
 
-        <!-- FORM REGISTER (TANPA OPTION AVATAR/UPLOAD FOTO) -->
         <div class="auth-form" id="formRegister" style="display: none;">
             <div class="auth-input-group">
                 <label>NAMA USER BARU</label>
@@ -1199,7 +1200,6 @@
         }
     }
 
-    /* PENDAFTARAN TANPA UPLOAD FOTO (MENGGUNAKAN AVATAR DEFAULT) */
     function submitRegister() {
         const user = document.getElementById('regUser').value.trim().toUpperCase();
         const pass = document.getElementById('regPass').value.trim();
@@ -1267,7 +1267,6 @@
         });
     }
 
-    /* FUNGSI PROFIL & EDIT DATA */
     function openProfileModal() {
         if (!activeUser) return;
         tempEditAvatar = activeUser.avatar;
@@ -1364,7 +1363,6 @@
         }
     }
 
-    /* VIEW FOTO UKURAN ASLI */
     function viewFullsizeImage(avatarUrl, username) {
         document.getElementById('fullsizeImage').src = avatarUrl;
         document.getElementById('fullsizeUsername').innerText = username;
@@ -1487,6 +1485,7 @@
         document.getElementById('replyPreview').style.display = 'none';
     }
 
+    /* RENDER PESAN DENGAN STRUCTURING YANG FIX TERATUR */
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
         const currentUser = activeUser ? activeUser.username : '';
@@ -1504,7 +1503,6 @@
         const safeUser = username.replace(/'/g, "\\'");
         const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
-        // FOTO PROFIL (BISA DIKLIK UNTUK LIHAT UKURAN ASLI)
         const avatarImg = document.createElement('img');
         avatarImg.className = 'msg-avatar';
         avatarImg.src = avatarUrl;
@@ -1514,6 +1512,7 @@
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
 
+        // HEADER: NAMA, JAM, TOMBOL AKSI (SELALU DI ATAS PESAN)
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
@@ -1525,6 +1524,7 @@
             </div>
         `;
 
+        // GELEMBUNG PESAN
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-msg';
 
@@ -1607,7 +1607,6 @@
         }
     }
 
-    /* FUNGSI RESET CHAT TANPA NOTIFIKASI POP-UP */
     function clearAllChat() {
         dbChat.remove();
         document.getElementById('chatLogs').innerHTML = '';
