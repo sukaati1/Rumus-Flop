@@ -58,7 +58,7 @@
         pointer-events: none;
     }
 
-    /* CONTAINER UTAMA DENGAN BLUR RINGAN */
+    /* CONTAINER UTAMA */
     .container {
         position: relative;
         z-index: 2;
@@ -78,7 +78,6 @@
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    /* SEMBUNYIKAN KONTEN UTAMA SAAT CHAT DIBUKA */
     .container.hidden-for-chat {
         display: none !important;
     }
@@ -346,7 +345,7 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* OVERLAY CHAT TRANSPARAN */
+    /* MODAL OVERLAY UMUM */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
@@ -361,19 +360,108 @@
         padding: 15px;
     }
 
-    /* KOTAK CHAT DENGAN BACKGROUND HITAM PEKAT DAN BORDER TEGAS/TAJAM (TIDAK BLUR) */
+    /* MODAL AUTH (LOGIN / REGISTER) */
+    .auth-modal {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        background: rgba(5, 5, 8, 0.95) !important;
+        border-radius: 20px !important;
+        border: 2px solid var(--lavender-border) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .auth-tabs {
+        display: flex;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        margin-bottom: 10px;
+    }
+
+    .auth-tab {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 12px;
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .auth-tab.active {
+        color: var(--cyan-neon);
+        border-bottom: 2px solid var(--cyan-neon);
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .auth-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .auth-input-group label {
+        font-size: 9.5px;
+    }
+
+    .auth-input-group input {
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        color: #fff !important;
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        outline: none;
+    }
+
+    .auth-input-group input:focus {
+        border-color: var(--cyan-neon) !important;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    .btn-auth-submit {
+        padding: 12px !important;
+        border-radius: 15px !important;
+        margin-top: 10px;
+    }
+
+    .auth-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: transparent !important;
+        border: none !important;
+        color: var(--pink-neon) !important;
+        font-size: 18px;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: none !important;
+    }
+
+    /* KOTAK CHAT DENGAN BACKGROUND HITAM PEKAT DAN BORDER TEGAS/TAJAM */
     .chat-modal {
         position: relative;
         width: 100%;
         max-width: 650px;
         height: 90vh;
         max-height: 720px;
-        background: rgba(5, 5, 8, 0.95) !important; /* Warna Hitam Pekat Elegan */
-        backdrop-filter: none !important; /* Hapus blur agar border tajam */
+        background: rgba(5, 5, 8, 0.95) !important;
+        backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         border-radius: 20px !important;
-        border: 2px solid var(--lavender-border) !important; /* Border Garis Tajam */
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9); /* Bayangan Hitam Pekat */
+        border: 2px solid var(--lavender-border) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
         padding: 20px;
         display: flex;
         flex-direction: column;
@@ -419,7 +507,7 @@
         gap: 8px;
     }
 
-    .btn-reset-chat {
+    .btn-reset-chat, .btn-logout-chat {
         background: rgba(255, 0, 127, 0.15) !important;
         border: 1px solid rgba(255, 0, 127, 0.4) !important;
         color: var(--pink-neon) !important;
@@ -434,7 +522,13 @@
         transition: all 0.2s ease;
     }
 
-    .btn-reset-chat:hover {
+    .btn-logout-chat {
+        background: rgba(0, 210, 255, 0.15) !important;
+        border: 1px solid rgba(0, 210, 255, 0.4) !important;
+        color: var(--cyan-neon) !important;
+    }
+
+    .btn-reset-chat:hover, .btn-logout-chat:hover {
         background: rgba(255, 0, 127, 0.35) !important;
         color: #ffffff !important;
     }
@@ -450,7 +544,7 @@
         box-shadow: none !important;
     }
 
-    /* AREA PESAN DENGAN BACKGROUND HITAM GELAP PEKAT */
+    /* AREA PESAN */
     .chat-body {
         flex: 1;
         overflow-y: auto;
@@ -469,13 +563,8 @@
         width: 100%;
     }
 
-    .chat-msg-wrapper.other-msg {
-        align-items: flex-start;
-    }
-
-    .chat-msg-wrapper.own-msg {
-        align-items: flex-end;
-    }
+    .chat-msg-wrapper.other-msg { align-items: flex-start; }
+    .chat-msg-wrapper.own-msg { align-items: flex-end; }
 
     .msg-header-info {
         display: flex;
@@ -507,9 +596,7 @@
         transition: opacity 0.2s ease;
     }
 
-    .chat-msg-wrapper:hover .msg-actions {
-        opacity: 1;
-    }
+    .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
 
     .btn-action-msg {
         color: rgba(255, 255, 255, 0.7);
@@ -523,7 +610,7 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT WARNA ABU-ABU UNTUK KEDUA TIPE PESAN */
+    /* GELEMBUNG CHAT WARNA ABU-ABU */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -539,14 +626,12 @@
         line-height: 1.35;
     }
 
-    /* CHAT ORANG LAIN: ABU-ABU GELAP */
     .chat-msg-wrapper.other-msg .chat-msg {
         background: rgba(45, 45, 50, 0.9) !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
         border-top-left-radius: 2px;
     }
 
-    /* CHAT SENDIRI: ABU-ABU SEDIKIT LEBIH TERANG */
     .chat-msg-wrapper.own-msg .chat-msg {
         background: rgba(65, 65, 72, 0.95) !important;
         border: 1px solid rgba(255, 255, 255, 0.25) !important;
@@ -670,7 +755,7 @@
         width: 110px;
         background: rgba(20, 20, 28, 0.9) !important;
         border: 1px solid rgba(168, 85, 247, 0.4) !important;
-        color: #fff !important;
+        color: var(--cyan-neon) !important;
         padding: 8px 10px;
         border-radius: 12px;
         font-family: 'JetBrains Mono', monospace;
@@ -678,6 +763,7 @@
         outline: none;
         height: 40px;
         text-transform: uppercase;
+        font-weight: bold;
     }
 
     .chat-footer textarea#chatText {
@@ -783,12 +869,51 @@
     </div>
 </div>
 
+<!-- AUTH MODAL OVERLAY (LOGIN / REGISTER) -->
+<div class="chat-modal-overlay" id="authModal">
+    <div class="auth-modal">
+        <button class="auth-close-btn" onclick="closeAuthModal()">X</button>
+        
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">MASUK (LOGIN)</div>
+            <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">DAFTAR BARU</div>
+        </div>
+
+        <!-- FORM LOGIN -->
+        <div class="auth-form" id="formLogin">
+            <div class="auth-input-group">
+                <label>NAMA USER</label>
+                <input type="text" id="loginUser" placeholder="Masukkan nama..." oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <div class="auth-input-group">
+                <label>PASSWORD</label>
+                <input type="password" id="loginPass" placeholder="Masukkan password...">
+            </div>
+            <button class="btn-auth-submit" onclick="submitLogin()">LOGIN SEKARANG 🔥</button>
+        </div>
+
+        <!-- FORM REGISTER -->
+        <div class="auth-form" id="formRegister" style="display: none;">
+            <div class="auth-input-group">
+                <label>NAMA USER BARU</label>
+                <input type="text" id="regUser" placeholder="Buat nama..." oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <div class="auth-input-group">
+                <label>PASSWORD BARU</label>
+                <input type="password" id="regPass" placeholder="Buat password...">
+            </div>
+            <button class="btn-auth-submit" onclick="submitRegister()">DAFTAR AKUN 🔥</button>
+        </div>
+    </div>
+</div>
+
 <!-- CHAT MODAL OVERLAY -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
             <h3>T'chat</h3>
             <div class="header-controls">
+                <button class="btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
                 <button class="btn-reset-chat" onclick="clearAllChat()">RESET CHAT</button>
                 <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
@@ -817,7 +942,7 @@
         </div>
 
         <div class="chat-footer">
-            <input type="text" id="chatUser" placeholder="NAMA..." oninput="this.value = this.value.toUpperCase();" onchange="saveUserName(this.value)" />
+            <input type="text" id="chatUser" readonly title="Akun Terkunci" />
             <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
             <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
@@ -836,20 +961,153 @@
 
     let chatClickCount = 0;
     let chatClickTimer = null;
+    let activeUser = null; 
+
+    const firebaseConfig = {
+        databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    const dbChat = firebase.database().ref("team_chat_messages");
+    const dbAccounts = firebase.database().ref("chat_accounts");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedAccount = localStorage.getItem("chat_active_account");
+        if (savedAccount) {
+            activeUser = JSON.parse(savedAccount);
+        }
+    });
 
     function handleChatClick() {
         chatClickCount++;
-
         if (chatClickTimer) clearTimeout(chatClickTimer);
 
         if (chatClickCount >= 3) {
-            openTeamChat();
+            if (activeUser) {
+                openTeamChat();
+            } else {
+                openAuthModal();
+            }
             chatClickCount = 0;
         } else {
             chatClickTimer = setTimeout(() => {
                 chatClickCount = 0;
             }, 1000); 
         }
+    }
+
+    function openAuthModal() {
+        document.getElementById('mainContainer').classList.add('hidden-for-chat');
+        document.getElementById('authModal').style.display = 'flex';
+    }
+
+    function closeAuthModal() {
+        document.getElementById('authModal').style.display = 'none';
+        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
+    }
+
+    function switchAuthTab(type) {
+        if (type === 'login') {
+            document.getElementById('tabLogin').classList.add('active');
+            document.getElementById('tabRegister').classList.remove('active');
+            document.getElementById('formLogin').style.display = 'flex';
+            document.getElementById('formRegister').style.display = 'none';
+        } else {
+            document.getElementById('tabRegister').classList.add('active');
+            document.getElementById('tabLogin').classList.remove('active');
+            document.getElementById('formRegister').style.display = 'flex';
+            document.getElementById('formLogin').style.display = 'none';
+        }
+    }
+
+    function submitRegister() {
+        const user = document.getElementById('regUser').value.trim().toUpperCase();
+        const pass = document.getElementById('regPass').value.trim();
+
+        if (!user || !pass) {
+            alert("Nama dan Password wajib diisi!");
+            return;
+        }
+
+        dbAccounts.child(user).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                alert("Nama User ini sudah terdaftar! Silakan gunakan nama lain atau Login.");
+            } else {
+                dbAccounts.child(user).set({
+                    password: pass,
+                    createdAt: new Date().toISOString()
+                }, (error) => {
+                    if (!error) {
+                        alert("🎉 Pendaftaran Berhasil! Silakan Login.");
+                        switchAuthTab('login');
+                        document.getElementById('loginUser').value = user;
+                        document.getElementById('loginPass').value = pass;
+                        document.getElementById('regUser').value = '';
+                        document.getElementById('regPass').value = '';
+                    } else {
+                        alert("Gagal mendaftar: " + error.message);
+                    }
+                });
+            }
+        });
+    }
+
+    function submitLogin() {
+        const user = document.getElementById('loginUser').value.trim().toUpperCase();
+        const pass = document.getElementById('loginPass').value.trim();
+
+        if (!user || !pass) {
+            alert("Nama dan Password wajib diisi!");
+            return;
+        }
+
+        dbAccounts.child(user).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                const accData = snapshot.val();
+                if (accData.password === pass) {
+                    activeUser = { username: user };
+                    localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
+                    
+                    document.getElementById('loginUser').value = '';
+                    document.getElementById('loginPass').value = '';
+                    
+                    closeAuthModal();
+                    openTeamChat();
+                } else {
+                    alert("❌ Password salah!");
+                }
+            } else {
+                alert("❌ Nama User tidak ditemukan! Silakan daftar dahulu.");
+            }
+        });
+    }
+
+    function logoutChat() {
+        if (confirm("Yakin ingin logout dari akun chat?")) {
+            activeUser = null;
+            localStorage.removeItem("chat_active_account");
+            closeTeamChat();
+        }
+    }
+
+    function openTeamChat() {
+        if (!activeUser) {
+            openAuthModal();
+            return;
+        }
+        document.getElementById('mainContainer').classList.add('hidden-for-chat');
+        document.getElementById('chatUser').value = activeUser.username;
+        document.getElementById('chatModal').style.display = 'flex';
+        document.getElementById('chatText').focus();
+    }
+
+    function closeTeamChat() {
+        document.getElementById('chatModal').style.display = 'none';
+        document.getElementById('stickerPicker').style.display = 'none';
+        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
     }
 
     function toggleBtnPosition() {
@@ -924,41 +1182,6 @@
         return formatted;
     }
 
-    const firebaseConfig = {
-        databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    };
-    
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-    
-    const dbChat = firebase.database().ref("team_chat_messages");
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const savedUser = localStorage.getItem("chat_username");
-        if (savedUser) {
-            document.getElementById('chatUser').value = savedUser.toUpperCase();
-        }
-    });
-
-    function saveUserName(val) {
-        if (val.trim()) {
-            localStorage.setItem("chat_username", val.trim().toUpperCase());
-        }
-    }
-
-    function openTeamChat() {
-        document.getElementById('mainContainer').classList.add('hidden-for-chat');
-        document.getElementById('chatModal').style.display = 'flex';
-        document.getElementById('chatText').focus();
-    }
-
-    function closeTeamChat() {
-        document.getElementById('chatModal').style.display = 'none';
-        document.getElementById('stickerPicker').style.display = 'none';
-        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
-    }
-
     function toggleStickerPicker() {
         const picker = document.getElementById('stickerPicker');
         picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
@@ -986,7 +1209,7 @@
 
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
-        const currentUser = (document.getElementById('chatUser').value || '').trim().toUpperCase();
+        const currentUser = activeUser ? activeUser.username : '';
         
         const username = (data.user || 'USER').toUpperCase();
         const isSelf = (username === currentUser && currentUser !== '');
@@ -1044,17 +1267,10 @@
     }
 
     function sendSticker(stickerChar) {
-        const userInput = document.getElementById('chatUser');
-        if (!userInput.value.trim()) {
-            userInput.focus();
-            return;
-        }
-
-        const uppercaseName = userInput.value.trim().toUpperCase();
-        saveUserName(uppercaseName);
+        if (!activeUser) return;
 
         const payload = {
-            user: uppercaseName,
+            user: activeUser.username,
             sticker: stickerChar,
             isSticker: true,
             timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
@@ -1071,16 +1287,13 @@
     }
 
     function sendChatMessage() {
-        const userInput = document.getElementById('chatUser');
+        if (!activeUser) return;
         const textInput = document.getElementById('chatText');
         const messageText = textInput.value.trim();
 
-        if (userInput.value.trim() && messageText) {
-            const uppercaseName = userInput.value.trim().toUpperCase();
-            saveUserName(uppercaseName);
-            
+        if (messageText) {
             const payload = {
-                user: uppercaseName,
+                user: activeUser.username,
                 msg: messageText,
                 timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
             };
@@ -1095,14 +1308,14 @@
             textInput.style.height = '40px';
             cancelReply();
             document.getElementById('stickerPicker').style.display = 'none';
-        } else if (!userInput.value.trim()) {
-            userInput.focus();
         }
     }
 
     function clearAllChat() {
-        dbChat.remove();
-        document.getElementById('chatLogs').innerHTML = '';
+        if (confirm("Hapus seluruh histori chat?")) {
+            dbChat.remove();
+            document.getElementById('chatLogs').innerHTML = '';
+        }
     }
 
     function handleChatKey(e) {
@@ -1279,6 +1492,7 @@
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeTeamChat();
+            closeAuthModal();
             resetData();
         }
         if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
