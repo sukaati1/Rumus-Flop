@@ -432,46 +432,24 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         margin-top: 5px;
         margin-bottom: 5px;
     }
 
     .avatar-preview-img {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid var(--cyan-neon);
-        box-shadow: 0 0 10px var(--cyan-neon);
-    }
-
-    .avatar-options {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-    }
-
-    .avatar-opt-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        cursor: pointer;
-        object-fit: cover;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .avatar-opt-btn:hover {
-        transform: scale(1.15);
-        border-color: var(--cyan-neon);
+        box-shadow: 0 0 12px var(--cyan-neon);
     }
 
     .btn-upload-avatar {
         font-size: 10px !important;
-        padding: 6px 12px !important;
-        border-radius: 10px !important;
-        margin-top: 2px;
+        padding: 8px 16px !important;
+        border-radius: 12px !important;
     }
 
     .btn-auth-submit {
@@ -1023,7 +1001,7 @@
     </div>
 </div>
 
-<!-- MODAL EDIT PROFIL -->
+<!-- MODAL EDIT PROFIL (4 AVATAR/EMOTIKON BAWAAN DIHAPUS) -->
 <div class="chat-modal-overlay" id="profileModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeProfileModal()">X</button>
@@ -1032,12 +1010,6 @@
         <div class="auth-form">
             <div class="avatar-selection-box">
                 <img id="editAvatarPreview" class="avatar-preview-img" src="" alt="Preview">
-                <div class="avatar-options">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Kasir1" onclick="selectEditAvatar(this.src)">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Fajar2" onclick="selectEditAvatar(this.src)">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Neon3" onclick="selectEditAvatar(this.src)">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Cyber4" onclick="selectEditAvatar(this.src)">
-                </div>
                 <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PC/HP 📷</button>
                 <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
             </div>
@@ -1139,7 +1111,6 @@
             activeUser = JSON.parse(savedAccount);
         }
 
-        // Optimized Input Listener (Debounce)
         const rawInput = document.getElementById('rawInput');
         rawInput.addEventListener('input', () => {
             clearTimeout(parseDebounceTimer);
@@ -1271,11 +1242,6 @@
 
     function closeProfileModal() {
         document.getElementById('profileModal').style.display = 'none';
-    }
-
-    function selectEditAvatar(srcUrl) {
-        tempEditAvatar = srcUrl;
-        document.getElementById('editAvatarPreview').src = srcUrl;
     }
 
     function handleEditAvatarUpload(event) {
@@ -1736,7 +1702,6 @@
 
         parsedLogList.reverse();
 
-        // Peningkatan Performa: Memakai DocumentFragment untuk manipulasi DOM instan
         const fragment = document.createDocumentFragment();
         let barisDataDisalin = [];
 
