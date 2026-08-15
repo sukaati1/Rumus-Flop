@@ -28,7 +28,7 @@
       align-items: flex-start;
     }
 
-    /* Gelembung Pesan - Hanya Teks Murni */
+    /* Gelembung Pesan - Murni Teks */
     .message-bubble {
       background-color: #0084ff;
       color: white;
@@ -40,7 +40,7 @@
       word-wrap: break-word;
     }
 
-    /* Wadah Reaksi yang Dipilih - Terpisah di Luar Gelembung */
+    /* Reaksi Dipisah di Luar Gelembung */
     .active-reactions {
       display: none;
       margin-top: -10px;
@@ -59,7 +59,7 @@
       animation: pop 0.15s ease-out;
     }
 
-    /* Menu Pilihan Emoticon (Expanded List) */
+    /* Pilihan Emot Lengkap */
     .reaction-picker {
       display: flex;
       gap: 6px;
@@ -84,13 +84,8 @@
       transform: scale(1.3);
     }
 
-    .reaction-picker span:active {
-      transform: scale(0.9);
-    }
-
     @keyframes pop {
       0% { transform: scale(0.5); }
-      80% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
   </style>
@@ -98,14 +93,13 @@
 <body>
 
   <div class="chat-container">
-    
-    <!-- Pesan 1 -->
     <div class="message-wrapper">
       <div class="message-bubble">
-        Halo! Ini contoh pesan pertama. Cobalah klik reaksi di bawah.
+        Halo! Klik emot untuk pasang reaksi. Klik lagi emot yang sama untuk hapus.
       </div>
       <div class="active-reactions" id="reaction-display-1"></div>
       
+      <!-- List Emot yang Lebih Banyak -->
       <div class="reaction-picker">
         <span onclick="toggleReaction(1, '👍')">👍</span>
         <span onclick="toggleReaction(1, '❤️')">❤️</span>
@@ -121,50 +115,23 @@
         <span onclick="toggleReaction(1, '💯')">💯</span>
       </div>
     </div>
-
-    <!-- Pesan 2 -->
-    <div class="message-wrapper">
-      <div class="message-bubble">
-        Jika kamu mengklik emoji yang sama dua kali, reaksinya otomatis terhapus!
-      </div>
-      <div class="active-reactions" id="reaction-display-2"></div>
-      
-      <div class="reaction-picker">
-        <span onclick="toggleReaction(2, '👍')">👍</span>
-        <span onclick="toggleReaction(2, '❤️')">❤️</span>
-        <span onclick="toggleReaction(2, '😂')">😂</span>
-        <span onclick="toggleReaction(2, '😮')">😮</span>
-        <span onclick="toggleReaction(2, '😢')">😢</span>
-        <span onclick="toggleReaction(2, '😡')">😡</span>
-        <span onclick="toggleReaction(2, '🔥')">🔥</span>
-        <span onclick="toggleReaction(2, '🎉')">🎉</span>
-        <span onclick="toggleReaction(2, '🙏')">🙏</span>
-        <span onclick="toggleReaction(2, '💩')">💩</span>
-        <span onclick="toggleReaction(2, '👀')">👀</span>
-        <span onclick="toggleReaction(2, '💯')">💯</span>
-      </div>
-    </div>
-
   </div>
 
   <script>
-    // Menyimpan state reaksi per id pesan
     const messageReactions = {};
 
     function toggleReaction(messageId, emoji) {
-      // Inisialisasi jika pesan belum memiliki reaksi
       if (!messageReactions[messageId]) {
         messageReactions[messageId] = null;
       }
 
-      // Logika Toggle: Klik emot yang sama -> Hapus reaksi
+      // Hapus jika emot yang diklik sama (Klik 2x)
       if (messageReactions[messageId] === emoji) {
         messageReactions[messageId] = null;
       } else {
         messageReactions[messageId] = emoji;
       }
 
-      // Render ulang tampilan reaksi
       renderReaction(messageId);
     }
 
