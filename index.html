@@ -418,27 +418,25 @@
         overflow-y: auto;
         border: 1.5px solid rgba(168, 85, 247, 0.3);
         border-radius: 16px;
-        padding: 16px;
+        padding: 12px;
         background: rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 8px;
     }
 
     /* WRAPPER TIAP PESAN */
     .chat-msg-wrapper {
         display: flex;
         flex-direction: column;
-        max-width: 78%;
+        width: 100%;
     }
 
     .chat-msg-wrapper.other-msg {
-        align-self: flex-start;
         align-items: flex-start;
     }
 
     .chat-msg-wrapper.own-msg {
-        align-self: flex-end;
         align-items: flex-end;
     }
 
@@ -446,10 +444,10 @@
     .msg-header-info {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 4px;
-        font-size: 11px;
-        padding: 0 4px;
+        gap: 6px;
+        margin-bottom: 2px;
+        font-size: 10.5px;
+        padding: 0 2px;
     }
 
     .sender {
@@ -459,21 +457,24 @@
 
     .time-stamp {
         color: rgba(255, 255, 255, 0.4);
-        font-size: 10px;
+        font-size: 9.5px;
         font-family: 'JetBrains Mono', monospace;
     }
 
-    /* GELEMBUNG CHAT ABU-ABU (HANYA MEMBUNGKUS PESAN) */
+    /* GELEMBUNG CHAT PAS DENGAN TEKS (HANYA BEBERAPA MILI JARAK) */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 13px;
-        padding: 10px 14px;
-        border-radius: 14px;
+        font-size: 12px;
+        padding: 3px 8px; /* Padding sangat rapat */
+        border-radius: 8px;
         user-select: text;
         word-break: break-word;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         width: fit-content;
+        max-width: 85%;
+        display: inline-block;
+        line-height: 1.25;
     }
 
     /* Pesan orang lain: Abu-abu Gelap */
@@ -525,10 +526,10 @@
     .reply-quote-box {
         background: rgba(0, 0, 0, 0.4);
         border-left: 3px solid var(--cyan-neon);
-        padding: 5px 8px;
+        padding: 2px 6px;
         border-radius: 4px;
-        margin-bottom: 6px;
-        font-size: 11px;
+        margin-bottom: 4px;
+        font-size: 10px;
     }
 
     .reply-quote-box .reply-author {
@@ -548,14 +549,13 @@
     .chat-msg .msg-content {
         color: #e0e0e0 !important;
         white-space: pre-wrap;
-        line-height: 1.4;
-        display: block;
+        display: inline-block;
     }
 
     .chat-msg .msg-sticker {
-        font-size: 42px;
+        font-size: 26px;
         display: block;
-        margin-top: 2px;
+        margin-top: 1px;
         filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
         text-align: center;
     }
@@ -568,9 +568,9 @@
     .chat-msg .msg-content code {
         background: rgba(255, 255, 255, 0.1);
         color: var(--cyan-neon);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 12px;
+        padding: 1px 4px;
+        border-radius: 3px;
+        font-size: 11px;
     }
 
     .reply-preview-container {
@@ -629,28 +629,29 @@
         transform: scale(1.2);
     }
 
+    /* CHAT FOOTER DIMODIFIKASI AGAR INPUT KETIK LEBIH LEBAR */
     .chat-footer {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         align-items: center;
         flex-shrink: 0;
     }
 
     .chat-footer input#chatUser {
-        width: 110px;
+        width: 90px; /* Diperkecil dari 110px */
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
-        padding: 12px;
+        padding: 10px 8px;
         border-radius: 12px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
+        font-size: 11.5px;
         outline: none;
         height: 42px;
     }
 
     .chat-footer textarea#chatText {
-        flex: 1;
+        flex: 1; /* Memanfaatkan semua sisa ruang yang luas */
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
@@ -662,7 +663,7 @@
         resize: none;
         height: 42px;
         max-height: 100px;
-        line-height: 1.4;
+        line-height: 1.3;
     }
 
     .chat-footer input:focus, .chat-footer textarea:focus {
@@ -670,13 +671,16 @@
         box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
     }
 
+    /* TOMBOL EMOJI/STIKER RINGKAS */
     .btn-sticker-toggle {
-        padding: 12px !important;
+        width: 38px !important;
+        padding: 0 !important;
+        flex: none !important;
         border-radius: 12px !important;
         border: 1.5px solid var(--lavender-border) !important;
         background: var(--lavender-bg) !important;
         color: var(--lavender-text) !important;
-        font-size: 14px !important;
+        font-size: 16px !important;
         cursor: pointer;
         height: 42px;
         display: flex;
@@ -685,13 +689,14 @@
     }
 
     .btn-send-chat {
-        padding: 12px 16px !important;
+        padding: 0 14px !important;
+        flex: none !important;
         border-radius: 12px !important;
         border: 1.5px solid var(--lavender-border) !important;
         background: var(--lavender-bg) !important;
         color: var(--lavender-text) !important;
         font-size: 11px !important;
-        letter-spacing: 1.5px !important;
+        letter-spacing: 1px !important;
         height: 42px;
         display: flex;
         align-items: center;
@@ -933,7 +938,6 @@
         const color = getUserColor(username);
         const emoji = getUserEmoji(username);
 
-        // Header (Nama & Jam) di luar gelembung chat
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
@@ -941,7 +945,6 @@
             <span class="time-stamp">${data.timestamp || ''}</span>
         `;
 
-        // Kotak Gelembung Chat
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-msg';
 
