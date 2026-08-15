@@ -1779,7 +1779,7 @@
 
         if (!input) {
             currentDataCount = 0;
-            counter.innerText = "0 DATA (CHAT)";
+            counter.innerText = "DATA";
             return;
         }
 
@@ -1859,14 +1859,14 @@
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         currentDataCount = parsedLogList.length;
-        counter.innerText = `${currentDataCount} DATA (CHAT)`;
+        counter.innerText = `${currentDataCount} DATA`;
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
         currentDataCount = 0;
-        document.getElementById('dataCounter').innerText = "0 DATA (CHAT)";
+        document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
     }
