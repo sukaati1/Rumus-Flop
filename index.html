@@ -319,14 +319,16 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* MODAL TEAM CHAT */
+    /* ========================================================= */
+    /* MODAL TEAM CHAT - WARNA UNGU BINGKAI DIHILANGKAN (HITAM) */
+    /* ========================================================= */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(3, 3, 8, 0.85);
+        background: rgba(0, 0, 0, 0.88);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         z-index: 999;
@@ -342,15 +344,12 @@
         max-width: 650px;
         height: 85vh;
         max-height: 700px;
-        background: rgba(10, 8, 25, 0.9) !important;
+        background: #0a0a0f !important; /* Latar belakang hitam gelap */
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
         border-radius: 28px !important;
-        border: 2px solid var(--lavender-border) !important;
-        box-shadow: 
-            0 0 20px rgba(200, 158, 255, 0.6),
-            0 0 45px rgba(168, 85, 247, 0.45),
-            inset 0 0 25px rgba(200, 158, 255, 0.2);
+        border: 1px solid #22222a !important; /* Bingkai ungu diganti ke abu-abu gelap/hitam */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* Glow lavender/ungu dihapus */
         padding: 25px;
         display: flex;
         flex-direction: column;
@@ -362,7 +361,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1.5px solid rgba(200, 158, 255, 0.3);
+        border-bottom: 1px solid #1a1a24;
         padding-bottom: 12px;
         flex-shrink: 0;
     }
@@ -370,10 +369,10 @@
     .chat-header h3 {
         margin: 0;
         font-family: 'Orbitron', sans-serif;
-        color: var(--lavender-text);
+        color: #ffffff;
         font-size: 15px;
         letter-spacing: 3px;
-        text-shadow: 0 0 8px var(--lavender-glow);
+        text-shadow: none;
     }
 
     .header-controls {
@@ -383,21 +382,20 @@
     }
 
     .btn-reset-chat {
-        background: rgba(255, 0, 127, 0.2) !important;
-        border: 1px solid var(--pink-neon) !important;
+        background: rgba(255, 0, 127, 0.15) !important;
+        border: 1px solid rgba(255, 0, 127, 0.4) !important;
         color: var(--pink-neon) !important;
         font-size: 10px !important;
         padding: 6px 12px !important;
         border-radius: 20px !important;
         font-family: 'Orbitron', sans-serif;
         cursor: pointer;
-        box-shadow: 0 0 8px rgba(255, 0, 127, 0.3) !important;
+        box-shadow: none !important;
         transition: all 0.2s ease;
     }
 
     .btn-reset-chat:hover {
-        background: rgba(255, 0, 127, 0.45) !important;
-        box-shadow: 0 0 14px var(--pink-neon) !important;
+        background: rgba(255, 0, 127, 0.35) !important;
         color: #ffffff !important;
     }
 
@@ -410,16 +408,15 @@
         cursor: pointer;
         padding: 0 6px !important;
         box-shadow: none !important;
-        text-shadow: 0 0 8px var(--pink-neon);
     }
 
     .chat-body {
         flex: 1;
         overflow-y: auto;
-        border: 1.5px solid rgba(168, 85, 247, 0.3);
+        border: 1px solid #1c1c26; /* Bingkai ungu di dalam chat diganti ke hitam/gelap */
         border-radius: 16px;
         padding: 12px;
-        background: rgba(0, 0, 0, 0.5);
+        background: #040406;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -487,7 +484,7 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT PAS DENGAN TEKS (HANYA BEBERAPA MILI JARAK) */
+    /* GELEMBUNG CHAT PAS DENGAN TEKS (JARAK PRESISI) */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -505,15 +502,15 @@
 
     /* Pesan orang lain: Abu-abu Gelap */
     .chat-msg-wrapper.other-msg .chat-msg {
-        background: #2a2a35;
-        border: 1px solid #444455;
+        background: #1e1e26;
+        border: 1px solid #2d2d38;
         border-top-left-radius: 2px;
     }
 
     /* Pesan sendiri: Abu-abu Terang */
     .chat-msg-wrapper.own-msg .chat-msg {
-        background: #383848;
-        border: 1px solid #555566;
+        background: #2a2a36;
+        border: 1px solid #3d3d4e;
         border-top-right-radius: 2px;
     }
 
@@ -599,13 +596,12 @@
         display: none;
         grid-template-columns: repeat(6, 1fr);
         gap: 8px;
-        background: rgba(13, 10, 30, 0.95);
-        border: 1.5px solid var(--lavender-border);
+        background: #101018;
+        border: 1px solid #222230;
         border-radius: 12px;
         padding: 10px;
         max-height: 110px;
         overflow-y: auto;
-        box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
         flex-shrink: 0;
     }
 
@@ -632,8 +628,8 @@
 
     .chat-footer input#chatUser {
         width: 90px;
-        background: rgba(0, 0, 0, 0.4) !important;
-        border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+        background: #101018 !important;
+        border: 1px solid #222230 !important;
         color: #fff !important;
         padding: 10px 8px;
         border-radius: 12px;
@@ -645,8 +641,8 @@
 
     .chat-footer textarea#chatText {
         flex: 1;
-        background: rgba(0, 0, 0, 0.4) !important;
-        border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+        background: #101018 !important;
+        border: 1px solid #222230 !important;
         color: #fff !important;
         padding: 10px 12px;
         border-radius: 12px;
@@ -661,7 +657,6 @@
 
     .chat-footer input:focus, .chat-footer textarea:focus {
         border-color: var(--cyan-neon) !important;
-        box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
     }
 
     .btn-sticker-toggle {
@@ -669,9 +664,9 @@
         padding: 0 !important;
         flex: none !important;
         border-radius: 12px !important;
-        border: 1.5px solid var(--lavender-border) !important;
-        background: var(--lavender-bg) !important;
-        color: var(--lavender-text) !important;
+        border: 1px solid #222230 !important;
+        background: #101018 !important;
+        color: #ffffff !important;
         font-size: 16px !important;
         cursor: pointer;
         height: 42px;
@@ -684,9 +679,9 @@
         padding: 0 14px !important;
         flex: none !important;
         border-radius: 12px !important;
-        border: 1.5px solid var(--lavender-border) !important;
-        background: var(--lavender-bg) !important;
-        color: var(--lavender-text) !important;
+        border: 1px solid #222230 !important;
+        background: #181824 !important;
+        color: #ffffff !important;
         font-size: 11px !important;
         letter-spacing: 1px !important;
         height: 42px;
