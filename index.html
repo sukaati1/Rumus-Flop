@@ -422,27 +422,50 @@
         background: rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 14px;
     }
 
+    /* WRAPPER TIAP PESAN */
     .chat-msg-wrapper {
         display: flex;
-        width: 100%;
-        margin-bottom: 2px;
+        flex-direction: column;
+        max-width: 78%;
     }
 
     .chat-msg-wrapper.other-msg {
-        justify-content: flex-start;
+        align-self: flex-start;
+        align-items: flex-start;
     }
 
     .chat-msg-wrapper.own-msg {
-        justify-content: flex-end;
+        align-self: flex-end;
+        align-items: flex-end;
     }
 
-    /* KOTAK CHAT ABU-ABU NEUTRAL */
+    /* NAMA & JAM DI LUAR GELEMBUNG */
+    .msg-header-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+        font-size: 11px;
+        padding: 0 4px;
+    }
+
+    .sender {
+        font-weight: 800;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .time-stamp {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 10px;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* GELEMBUNG CHAT ABU-ABU (HANYA MEMBUNGKUS PESAN) */
     .chat-msg {
         position: relative;
-        max-width: 78%;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
         padding: 10px 14px;
@@ -450,16 +473,17 @@
         user-select: text;
         word-break: break-word;
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        width: fit-content;
     }
 
-    /* Warna gelembung pesan orang lain (Abu-abu Gelap) */
+    /* Pesan orang lain: Abu-abu Gelap */
     .chat-msg-wrapper.other-msg .chat-msg {
         background: #2a2a35;
         border: 1px solid #444455;
         border-top-left-radius: 2px;
     }
 
-    /* Warna gelembung pesan sendiri (Abu-abu Sedikit Lebih Terang) */
+    /* Pesan sendiri: Abu-abu Terang */
     .chat-msg-wrapper.own-msg .chat-msg {
         background: #383848;
         border: 1px solid #555566;
@@ -521,32 +545,11 @@
         display: block;
     }
 
-    .msg-header-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 4px;
-        font-size: 11px;
-    }
-
-    /* WARNA NAMA PENGGUNA BERBEDAN BERDASARKAN SYSTEM HASH */
-    .chat-msg .sender {
-        font-weight: 800;
-        text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-    }
-
-    .chat-msg .time-stamp {
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 10px;
-    }
-
     .chat-msg .msg-content {
         color: #e0e0e0 !important;
         white-space: pre-wrap;
         line-height: 1.4;
         display: block;
-        text-shadow: none;
     }
 
     .chat-msg .msg-sticker {
@@ -646,7 +649,6 @@
         height: 42px;
     }
 
-    /* PLACEHOLDER BERSIH "Tulis pesan..." */
     .chat-footer textarea#chatText {
         flex: 1;
         background: rgba(0, 0, 0, 0.4) !important;
@@ -777,7 +779,6 @@
 
         <div class="chat-footer">
             <input type="text" id="chatUser" placeholder="Nama..." onchange="saveUserName(this.value)" />
-            <!-- PLACEHOLDER BERSIH "Tulis pesan..." -->
             <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
             <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
@@ -819,7 +820,6 @@
         } catch(e) {}
     }
 
-    /* PALET WARNA UNTUK TIAP NAMA PENGGUNA BERBEDA */
     const userColors = [
         '#00f0ff', '#ff007f', '#00ff88', '#ffb703', 
         '#a855f7', '#ff4d6d', '#3a86ff', '#fb5607', 
@@ -930,11 +930,20 @@
         wrapperDiv.className = `chat-msg-wrapper ${isSelf ? 'own-msg' : 'other-msg'}`;
         wrapperDiv.id = `msg-${key}`;
 
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'chat-msg';
-        
         const color = getUserColor(username);
         const emoji = getUserEmoji(username);
+
+        // Header (Nama & Jam) di luar gelembung chat
+        const headerInfoDiv = document.createElement('div');
+        headerInfoDiv.className = 'msg-header-info';
+        headerInfoDiv.innerHTML = `
+            <span class="sender" style="color: ${color};">${emoji} ${username}</span>
+            <span class="time-stamp">${data.timestamp || ''}</span>
+        `;
+
+        // Kotak Gelembung Chat
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-msg';
 
         let replyHTML = '';
         if (data.replyTo) {
@@ -962,13 +971,10 @@
                 <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
             </div>
             ${replyHTML}
-            <div class="msg-header-info">
-                <span class="sender" style="color: ${color};">${emoji} ${username}</span>
-                <span class="time-stamp">${data.timestamp || ''}</span>
-            </div>
             ${contentHTML}
         `;
         
+        wrapperDiv.appendChild(headerInfoDiv);
         wrapperDiv.appendChild(msgDiv);
         chatLogs.appendChild(wrapperDiv);
         chatLogs.scrollTop = chatLogs.scrollHeight;
