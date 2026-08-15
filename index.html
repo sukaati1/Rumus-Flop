@@ -3,234 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aplikasi Chat Lengkap</title>
+  <title>Chat Reaction</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .chat-card {
-      width: 100%;
-      max-width: 420px;
-      height: 600px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Header Chat */
-    .chat-header {
-      padding: 16px;
-      background: #0084ff;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    /* Area Pesan (Scrollable) */
-    .chat-body {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
     .message-wrapper {
-      display: flex;
-      flex-direction: column;
-      max-width: 80%;
       position: relative;
+      margin-bottom: 15px;
+      max-width: 300px;
+      font-family: sans-serif;
     }
 
-    .message-wrapper.outgoing {
-      align-self: flex-end;
-      align-items: flex-end;
-    }
-
-    .message-wrapper.incoming {
-      align-self: flex-start;
-      align-items: flex-start;
-    }
-
-    /* Gelembung Teks Murni */
+    /* 1. Gelembung hanya untuk teks murni */
     .message-bubble {
+      background-color: #e9effd;
       padding: 10px 14px;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.4;
-      word-wrap: break-word;
+      border-radius: 12px;
+      color: #333;
     }
 
-    .outgoing .message-bubble {
-      background-color: #0084ff;
-      color: white;
-      border-bottom-right-radius: 4px;
-    }
-
-    .incoming .message-bubble {
-      background-color: #e4e6eb;
-      color: #050505;
-      border-bottom-left-radius: 4px;
-    }
-
-    /* Timestamp Pesan */
-    .time-stamp {
-      font-size: 10px;
-      color: #8a8d91;
-      margin-top: 4px;
-      padding: 0 4px;
-    }
-
-    /* Reaksi Dipisah di Luar Gelembung */
+    /* 2. Reaksi dipisah di luar/bawah gelembung */
     .active-reactions {
       display: none;
-      margin-top: -12px;
+      margin-top: -8px;
+      margin-left: 10px;
+      position: relative;
       z-index: 2;
     }
 
-    .outgoing .active-reactions { margin-right: 10px; }
-    .incoming .active-reactions { margin-left: 10px; }
-
     .reaction-badge {
-      background-color: #ffffff;
-      border: 1px solid #e0e0e0;
+      background: #ffffff;
+      border: 1px solid #ddd;
       border-radius: 12px;
       padding: 2px 6px;
       font-size: 12px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: inline-block;
-      animation: pop 0.15s ease-out;
     }
 
-    /* Menu Popover Emoji (Bar Reaksi) */
+    /* 3. Pilihan emoticon diperbanyak */
     .reaction-picker {
       display: flex;
       gap: 6px;
-      background: #ffffff;
-      border: 1px solid #e0e0e0;
+      background: #fff;
+      border: 1px solid #ccc;
       padding: 4px 8px;
       border-radius: 20px;
-      margin-top: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow-x: auto;
-      max-width: 100%;
+      margin-top: 5px;
+      width: fit-content;
     }
 
     .reaction-picker span {
-      font-size: 16px;
       cursor: pointer;
       user-select: none;
-      transition: transform 0.15s ease;
+      transition: transform 0.1s;
     }
 
     .reaction-picker span:hover {
-      transform: scale(1.3);
-    }
-
-    /* Form Input Kirim Pesan */
-    .chat-footer {
-      padding: 12px;
-      border-top: 1px solid #eee;
-      display: flex;
-      gap: 8px;
-      background: #fff;
-    }
-
-    .chat-footer input {
-      flex: 1;
-      padding: 10px 14px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .chat-footer button {
-      background: #0084ff;
-      color: white;
-      border: none;
-      padding: 0 16px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .chat-footer button:hover {
-      background: #006bce;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0.5); }
-      100% { transform: scale(1); }
+      transform: scale(1.2);
     }
   </style>
 </head>
 <body>
 
-  <div class="chat-card">
-    <div class="chat-header">Ruang Obrolan</div>
-    
-    <!-- Body Tempat Pesan Muncul -->
-    <div class="chat-body" id="chat-body">
+  <div id="chat-container">
+    <div class="message-wrapper" id="msg-1">
       
-      <!-- Pesan Masuk (Contoh Default) -->
-      <div class="message-wrapper incoming" id="msg-1">
-        <div class="message-bubble">
-          Halo! Cobalah beri reaksi pada pesan ini atau kirim pesan baru di bawah.
-        </div>
-        <div class="active-reactions" id="reaction-display-1"></div>
-        
-        <div class="reaction-picker">
-          <span onclick="toggleReaction(1, '👍')">👍</span>
-          <span onclick="toggleReaction(1, '❤️')">❤️</span>
-          <span onclick="toggleReaction(1, '😂')">😂</span>
-          <span onclick="toggleReaction(1, '😮')">😮</span>
-          <span onclick="toggleReaction(1, '😢')">😢</span>
-          <span onclick="toggleReaction(1, '😡')">😡</span>
-          <span onclick="toggleReaction(1, '🔥')">🔥</span>
-          <span onclick="toggleReaction(1, '🎉')">🎉</span>
-          <span onclick="toggleReaction(1, '🙏')">🙏</span>
-          <span onclick="toggleReaction(1, '💩')">💩</span>
-          <span onclick="toggleReaction(1, '👀')">👀</span>
-          <span onclick="toggleReaction(1, '💯')">💯</span>
-        </div>
-        <div class="time-stamp">10:00 AM</div>
+      <!-- Gelembung Teks Murni -->
+      <div class="message-bubble">
+        Halo! Ini contoh pesan teks.
+      </div>
+      
+      <!-- Reaksi Terpisah Di Luar Gelembung -->
+      <div class="active-reactions" id="reaction-display-1"></div>
+
+      <!-- Pilihan Emoticon Tambahan -->
+      <div class="reaction-picker">
+        <span onclick="toggleReaction(1, '👍')">👍</span>
+        <span onclick="toggleReaction(1, '❤️')">❤️</span>
+        <span onclick="toggleReaction(1, '😂')">😂</span>
+        <span onclick="toggleReaction(1, '😮')">😮</span>
+        <span onclick="toggleReaction(1, '😢')">😢</span>
+        <span onclick="toggleReaction(1, '😡')">😡</span>
+        <span onclick="toggleReaction(1, '🔥')">🔥</span>
+        <span onclick="toggleReaction(1, '🎉')">🎉</span>
+        <span onclick="toggleReaction(1, '🙏')">🙏</span>
+        <span onclick="toggleReaction(1, '💩')">💩</span>
+        <span onclick="toggleReaction(1, '👀')">👀</span>
+        <span onclick="toggleReaction(1, '💯')">💯</span>
       </div>
 
-    </div>
-
-    <!-- Form Kirim Pesan Baru -->
-    <div class="chat-footer">
-      <input type="text" id="message-input" placeholder="Tulis pesan..." onkeypress="handleKeyPress(event)">
-      <button onclick="sendMessage()">Kirim</button>
     </div>
   </div>
 
   <script>
     const messageReactions = {};
-    let messageCounter = 1;
 
-    // 1. FUNGSI REAKSI (Toggle: Klik 2x untuk hapus)
     function toggleReaction(messageId, emoji) {
       if (!messageReactions[messageId]) {
         messageReactions[messageId] = null;
       }
 
+      // Klik 2x / Klik emot yang sama -> Otomatis Hapus
       if (messageReactions[messageId] === emoji) {
-        messageReactions[messageId] = null; // Hapus jika diklik lagi
+        messageReactions[messageId] = null;
       } else {
-        messageReactions[messageId] = emoji; // Pasang/Ganti reaksi
+        messageReactions[messageId] = emoji;
       }
 
       renderReaction(messageId);
@@ -247,60 +122,6 @@
         displayElement.innerHTML = '';
         displayElement.style.display = 'none';
       }
-    }
-
-    // 2. FUNGSI KIRIM PESAN BARU
-    function sendMessage() {
-      const input = document.getElementById('message-input');
-      const text = input.value.trim();
-
-      if (text === '') return;
-
-      messageCounter++;
-      const currentId = messageCounter;
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      const chatBody = document.getElementById('chat-body');
-      
-      const msgWrapper = document.createElement('div');
-      msgWrapper.className = 'message-wrapper outgoing';
-      msgWrapper.id = `msg-${currentId}`;
-
-      msgWrapper.innerHTML = `
-        <div class="message-bubble">${escapeHtml(text)}</div>
-        <div class="active-reactions" id="reaction-display-${currentId}"></div>
-        <div class="reaction-picker">
-          <span onclick="toggleReaction(${currentId}, '👍')">👍</span>
-          <span onclick="toggleReaction(${currentId}, '❤️')">❤️</span>
-          <span onclick="toggleReaction(${currentId}, '😂')">😂</span>
-          <span onclick="toggleReaction(${currentId}, '😮')">😮</span>
-          <span onclick="toggleReaction(${currentId}, '😢')">😢</span>
-          <span onclick="toggleReaction(${currentId}, '😡')">😡</span>
-          <span onclick="toggleReaction(${currentId}, '🔥')">🔥</span>
-          <span onclick="toggleReaction(${currentId}, '🎉')">🎉</span>
-          <span onclick="toggleReaction(${currentId}, '🙏')">🙏</span>
-          <span onclick="toggleReaction(${currentId}, '💩')">💩</span>
-          <span onclick="toggleReaction(${currentId}, '👀')">👀</span>
-          <span onclick="toggleReaction(${currentId}, '💯')">💯</span>
-        </div>
-        <div class="time-stamp">${time}</div>
-      `;
-
-      chatBody.appendChild(msgWrapper);
-      input.value = '';
-      chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll ke bawah
-    }
-
-    // 3. FUNGSI TEKAN ENTER UNTUK KIRIM
-    function handleKeyPress(event) {
-      if (event.key === 'Enter') {
-        sendMessage();
-      }
-    }
-
-    // Keamanan input teks
-    function escapeHtml(text) {
-      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
   </script>
 
