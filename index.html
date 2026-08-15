@@ -58,12 +58,13 @@
         pointer-events: none;
     }
 
+    /* CONTAINER UTAMA DENGAN BLUR DIKURANGI (5px) */
     .container {
         position: relative;
         z-index: 2;
-        background: rgba(10, 8, 25, 0.65) !important; 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(10, 8, 25, 0.55) !important; 
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
         border-radius: 40px !important;
         border: 2px solid var(--lavender-border) !important;
         width: 100%;
@@ -339,15 +340,16 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
+    /* OVERLAY CHAT TRANSPARAN AGAR LATAR BELAKANG TETAP TERLIHAT */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.88);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        background: rgba(0, 0, 0, 0.35); /* Transparan lembut */
+        backdrop-filter: blur(3px); /* Blur tipis agar tidak menghalangi pemandangan */
+        -webkit-backdrop-filter: blur(3px);
         z-index: 999;
         display: none;
         justify-content: center;
@@ -355,18 +357,19 @@
         padding: 15px;
     }
 
+    /* KOTAK CHAT LEBIH TRANSPARAN / GLASSMORPHISM */
     .chat-modal {
         position: relative;
         width: 100%;
         max-width: 650px;
         height: 90vh;
         max-height: 720px;
-        background: #0a0a0f !important;
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
+        background: rgba(10, 10, 18, 0.75) !important; /* Semi transparan */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border-radius: 20px !important;
-        border: 1px solid #22222a !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(168, 85, 247, 0.3);
         padding: 12px 16px 16px 16px;
         display: flex;
         flex-direction: column;
@@ -378,19 +381,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #1a1a24;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding-bottom: 6px;
         flex-shrink: 0;
     }
 
-    /* JUDUL T'chat DENGAN HURUF BESAR/KECIL PRESISI & NEON SHINE */
     .chat-header h3 {
         margin: 0;
         font-family: 'Orbitron', sans-serif;
         font-weight: 900;
         font-size: 20px;
         letter-spacing: 3px;
-        text-transform: none !important; /* MENCEGAH MENGUBAH HURUF MENJADI KAPITAL SEMUA */
+        text-transform: none !important;
         background: linear-gradient(
             90deg, 
             var(--cyan-neon), 
@@ -447,10 +449,10 @@
     .chat-body {
         flex: 1;
         overflow-y: auto;
-        border: 1px solid #1c1c26;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 10px;
-        background: #040406;
+        background: rgba(0, 0, 0, 0.4);
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -532,14 +534,14 @@
     }
 
     .chat-msg-wrapper.other-msg .chat-msg {
-        background: #1e1e26;
-        border: 1px solid #2d2d38;
+        background: rgba(30, 30, 38, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-top-left-radius: 2px;
     }
 
     .chat-msg-wrapper.own-msg .chat-msg {
-        background: #2a2a36;
-        border: 1px solid #3d3d4e;
+        background: rgba(42, 42, 54, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-top-right-radius: 2px;
     }
 
@@ -626,8 +628,8 @@
         display: none;
         grid-template-columns: repeat(6, 1fr);
         gap: 8px;
-        background: #101018;
-        border: 1px solid #222230;
+        background: rgba(16, 16, 24, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         padding: 8px;
         max-height: 100px;
@@ -658,8 +660,8 @@
 
     .chat-footer input#chatUser {
         width: 100px;
-        background: #101018 !important;
-        border: 1px solid #222230 !important;
+        background: rgba(16, 16, 24, 0.7) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         color: #fff !important;
         padding: 8px 8px;
         border-radius: 10px;
@@ -672,8 +674,8 @@
 
     .chat-footer textarea#chatText {
         flex: 1;
-        background: #101018 !important;
-        border: 1px solid #222230 !important;
+        background: rgba(16, 16, 24, 0.7) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         color: #fff !important;
         padding: 8px 10px;
         border-radius: 10px;
@@ -695,8 +697,8 @@
         padding: 0 !important;
         flex: none !important;
         border-radius: 10px !important;
-        border: 1px solid #222230 !important;
-        background: #101018 !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(16, 16, 24, 0.7) !important;
         color: #ffffff !important;
         font-size: 15px !important;
         cursor: pointer;
@@ -710,8 +712,8 @@
         padding: 0 12px !important;
         flex: none !important;
         border-radius: 10px !important;
-        border: 1px solid #222230 !important;
-        background: #181824 !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(24, 24, 36, 0.8) !important;
         color: #ffffff !important;
         font-size: 10.5px !important;
         letter-spacing: 1px !important;
@@ -821,7 +823,6 @@
     let selectedReplyData = null; 
     let currentDataCount = 0;
 
-    /* LOGIKA TRIPLE CLICK CHAT (SILENT) */
     let chatClickCount = 0;
     let chatClickTimer = null;
 
