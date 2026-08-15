@@ -383,13 +383,14 @@
         flex-shrink: 0;
     }
 
+    /* JUDUL T'chat DENGAN HURUF BESAR/KECIL PRESISI & NEON SHINE */
     .chat-header h3 {
         margin: 0;
         font-family: 'Orbitron', sans-serif;
         font-weight: 900;
         font-size: 20px;
         letter-spacing: 3px;
-        text-transform: uppercase;
+        text-transform: none !important; /* MENCEGAH MENGUBAH HURUF MENJADI KAPITAL SEMUA */
         background: linear-gradient(
             90deg, 
             var(--cyan-neon), 
@@ -773,7 +774,7 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3>T'Chat</h3>
+            <h3>T'chat</h3>
             <div class="header-controls">
                 <button class="btn-reset-chat" onclick="clearAllChat()">RESET CHAT</button>
                 <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
@@ -820,7 +821,7 @@
     let selectedReplyData = null; 
     let currentDataCount = 0;
 
-    /* LOGIKA TRIPLE CLICK CHAT (SILENT / TANPA TEKS SARAN) */
+    /* LOGIKA TRIPLE CLICK CHAT (SILENT) */
     let chatClickCount = 0;
     let chatClickTimer = null;
 
