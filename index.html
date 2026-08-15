@@ -8,17 +8,17 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f6f8;
-      padding: 20px;
+      padding: 30px;
       display: flex;
       justify-content: center;
     }
 
     .chat-container {
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
     }
 
     .message-wrapper {
@@ -28,23 +28,23 @@
       align-items: flex-start;
     }
 
-    /* Gelembung Pesan - Murni Teks */
+    /* 1. Gelembung Teks Murni (Tanpa Emot di Dalamnya) */
     .message-bubble {
       background-color: #0084ff;
       color: white;
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-radius: 18px;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.4;
-      max-width: 80%;
+      max-width: 85%;
       word-wrap: break-word;
     }
 
-    /* Reaksi Dipisah di Luar Gelembung */
+    /* 2. Reaksi Muncul Di Luar/Di Bawah Gelembung */
     .active-reactions {
       display: none;
       margin-top: -10px;
-      margin-left: 12px;
+      margin-left: 14px;
       z-index: 2;
     }
 
@@ -52,29 +52,29 @@
       background-color: #ffffff;
       border: 1px solid #e0e0e0;
       border-radius: 12px;
-      padding: 2px 6px;
-      font-size: 13px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+      padding: 2px 8px;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
       display: inline-block;
       animation: pop 0.15s ease-out;
     }
 
-    /* Pilihan Emot Lengkap */
+    /* 3. Pilihan Emoticon Tambahan (Lengkap) */
     .reaction-picker {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       background: #ffffff;
       border: 1px solid #e0e0e0;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 20px;
-      margin-top: 6px;
+      margin-top: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       overflow-x: auto;
       max-width: 100%;
     }
 
     .reaction-picker span {
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
       user-select: none;
       transition: transform 0.15s ease;
@@ -93,13 +93,17 @@
 <body>
 
   <div class="chat-container">
+    
+    <!-- Contoh Pesan 1 -->
     <div class="message-wrapper">
       <div class="message-bubble">
-        Halo! Klik emot untuk pasang reaksi. Klik lagi emot yang sama untuk hapus.
+        Halo! Ini contoh pesan teks murni. Reaksi emot ada di luar gelembung.
       </div>
-      <div class="active-reactions" id="reaction-display-1"></div>
       
-      <!-- List Emot yang Lebih Banyak -->
+      <!-- Wadah Reaksi yang Dipilih -->
+      <div class="active-reactions" id="reaction-display-1"></div>
+
+      <!-- Menu Pilihan Emoticon -->
       <div class="reaction-picker">
         <span onclick="toggleReaction(1, '👍')">👍</span>
         <span onclick="toggleReaction(1, '❤️')">❤️</span>
@@ -115,9 +119,11 @@
         <span onclick="toggleReaction(1, '💯')">💯</span>
       </div>
     </div>
+
   </div>
 
   <script>
+    // Object penyimpan state reaksi
     const messageReactions = {};
 
     function toggleReaction(messageId, emoji) {
@@ -125,7 +131,7 @@
         messageReactions[messageId] = null;
       }
 
-      // Hapus jika emot yang diklik sama (Klik 2x)
+      // Fitur Klik 2x (Kembali ke emot yang sama untuk menghapus)
       if (messageReactions[messageId] === emoji) {
         messageReactions[messageId] = null;
       } else {
