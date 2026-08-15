@@ -58,7 +58,6 @@
         pointer-events: none;
     }
 
-    /* CONTAINER UTAMA */
     .container {
         position: relative;
         z-index: 2;
@@ -345,7 +344,6 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* MODAL OVERLAY UMUM */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
@@ -360,15 +358,9 @@
         padding: 15px;
     }
 
-    #profileModal {
-        z-index: 1002 !important;
-    }
+    #profileModal { z-index: 1002 !important; }
+    #imageViewerModal { z-index: 1003 !important; }
 
-    #imageViewerModal {
-        z-index: 1003 !important;
-    }
-
-    /* MODAL AUTH (LOGIN / REGISTER) */
     .auth-modal {
         position: relative;
         width: 100%;
@@ -418,9 +410,7 @@
         gap: 5px;
     }
 
-    .auth-input-group label {
-        font-size: 9.5px;
-    }
+    .auth-input-group label { font-size: 9.5px; }
 
     .auth-input-group input {
         background: rgba(20, 20, 28, 0.9) !important;
@@ -438,7 +428,6 @@
         box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
     }
 
-    /* EDIT PROFIL MODAL STYLES */
     .avatar-selection-box {
         display: flex;
         flex-direction: column;
@@ -504,7 +493,6 @@
         box-shadow: none !important;
     }
 
-    /* KOTAK CHAT */
     .chat-modal {
         position: relative;
         width: 100%;
@@ -608,7 +596,6 @@
         box-shadow: none !important;
     }
 
-    /* AREA PESAN */
     .chat-body {
         flex: 1;
         overflow-y: auto;
@@ -654,11 +641,8 @@
         max-width: 80%;
     }
 
-    .chat-msg-wrapper.own-msg .msg-content-container {
-        align-items: flex-end;
-    }
+    .chat-msg-wrapper.own-msg .msg-content-container { align-items: flex-end; }
 
-    /* HEADER INFO (NAMA, JAM, TOMBOL BALAS) PERKECIL & RAPI */
     .msg-header-info {
         display: flex;
         align-items: center;
@@ -668,9 +652,7 @@
         padding: 0 2px;
     }
 
-    .chat-msg-wrapper.own-msg .msg-header-info {
-        flex-direction: row-reverse;
-    }
+    .chat-msg-wrapper.own-msg .msg-header-info { flex-direction: row-reverse; }
 
     .sender {
         font-weight: 800;
@@ -708,7 +690,6 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT FIX URUTAN */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -971,7 +952,7 @@
     <div class="label-header">
         <label for="rawInput">Tempel Log Transaksi</label>
     </div>
-    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..."></textarea>
     
     <div class="btn-group" id="btnGroup">
         <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
@@ -1139,6 +1120,7 @@
     let chatClickTimer = null;
     let activeUser = null; 
     let tempEditAvatar = "";
+    let parseDebounceTimer = null;
 
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -1156,6 +1138,17 @@
         if (savedAccount) {
             activeUser = JSON.parse(savedAccount);
         }
+
+        // Optimized Input Listener (Debounce)
+        const rawInput = document.getElementById('rawInput');
+        rawInput.addEventListener('input', () => {
+            clearTimeout(parseDebounceTimer);
+            parseDebounceTimer = setTimeout(konversiLog, 120);
+        });
+        rawInput.addEventListener('paste', () => {
+            clearTimeout(parseDebounceTimer);
+            parseDebounceTimer = setTimeout(konversiLog, 50);
+        });
     });
 
     function handleChatClick() {
@@ -1485,7 +1478,6 @@
         document.getElementById('replyPreview').style.display = 'none';
     }
 
-    /* RENDER PESAN DENGAN STRUCTURING YANG FIX TERATUR */
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
         const currentUser = activeUser ? activeUser.username : '';
@@ -1512,7 +1504,6 @@
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
 
-        // HEADER: NAMA, JAM, TOMBOL AKSI (SELALU DI ATAS PESAN)
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
@@ -1524,7 +1515,6 @@
             </div>
         `;
 
-        // GELEMBUNG PESAN
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-msg';
 
@@ -1686,9 +1676,13 @@
             lines = rawChunk.split('\n').map(l => l.trim()).filter(l => l !== '');
         }
 
-        lines.forEach(line => {
-            let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
-            if (!matchTime) return;
+        const timeRegex = /(\d{2}:\d{2}:\d{2})/;
+        const typeRegex = /(Withdraw|Deposit)/i;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            let matchTime = line.match(timeRegex);
+            if (!matchTime) continue;
             let waktu = matchTime[1];
 
             let parts = line.split(/\t|\s{2,}/).map(p => p.trim()).filter(p => p !== '');
@@ -1710,10 +1704,10 @@
             } else {
                 let timeIndex = line.indexOf(waktu);
                 let textAfterTime = line.substring(timeIndex + waktu.length);
-                let matchType = textAfterTime.match(/(Withdraw|Deposit)/i);
+                let matchType = textAfterTime.match(typeRegex);
 
                 if (matchType) {
-                    let typeIndex = textAfterTime.search(/(Withdraw|Deposit)/i);
+                    let typeIndex = textAfterTime.search(typeRegex);
                     let userId = textAfterTime.substring(0, typeIndex).trim();
                     let textAfterType = textAfterTime.substring(typeIndex + matchType[0].length);
 
@@ -1738,19 +1732,24 @@
                     });
                 }
             }
-        });
+        }
 
         parsedLogList.reverse();
 
+        // Peningkatan Performa: Memakai DocumentFragment untuk manipulasi DOM instan
+        const fragment = document.createDocumentFragment();
         let barisDataDisalin = [];
 
-        parsedLogList.forEach((item) => {
+        for (let i = 0; i < parsedLogList.length; i++) {
+            const item = parsedLogList[i];
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td>`;
-            tbody.appendChild(tr);
+            fragment.appendChild(tr);
 
             barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
-        });
+        }
+
+        tbody.appendChild(fragment);
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
         currentDataCount = parsedLogList.length;
