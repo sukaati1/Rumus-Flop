@@ -58,7 +58,7 @@
         pointer-events: none;
     }
 
-    /* CONTAINER UTAMA DENGAN BLUR RINGAN (5px) */
+    /* CONTAINER UTAMA DENGAN BLUR RINGAN */
     .container {
         position: relative;
         z-index: 2;
@@ -78,7 +78,7 @@
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    /* KELAS UNTUK MENYEMBUNYIKAN CONTAINER SAAT CHAT DIBUKA */
+    /* SEMBUNYIKAN KONTEN UTAMA SAAT CHAT DIBUKA */
     .container.hidden-for-chat {
         display: none !important;
     }
@@ -346,7 +346,7 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* OVERLAY CHAT TRANSPARAN AGAR VIDEO LATAR BELAKANG DIRECT TERLIHAT */
+    /* OVERLAY CHAT TRANSPARAN */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
@@ -361,22 +361,19 @@
         padding: 15px;
     }
 
-    /* KOTAK CHAT ELEGAN & ELEGAN DENGAN NEON GLOW */
+    /* KOTAK CHAT DENGAN BACKGROUND HITAM PEKAT DAN BORDER TEGAS/TAJAM (TIDAK BLUR) */
     .chat-modal {
         position: relative;
         width: 100%;
         max-width: 650px;
         height: 90vh;
         max-height: 720px;
-        background: rgba(10, 8, 25, 0.7) !important;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 30px !important;
-        border: 2px solid var(--lavender-border) !important;
-        box-shadow: 
-            0 0 20px rgba(200, 158, 255, 0.5),
-            0 0 40px rgba(168, 85, 247, 0.3),
-            inset 0 0 15px rgba(200, 158, 255, 0.2);
+        background: rgba(5, 5, 8, 0.95) !important; /* Warna Hitam Pekat Elegan */
+        backdrop-filter: none !important; /* Hapus blur agar border tajam */
+        -webkit-backdrop-filter: none !important;
+        border-radius: 20px !important;
+        border: 2px solid var(--lavender-border) !important; /* Border Garis Tajam */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9); /* Bayangan Hitam Pekat */
         padding: 20px;
         display: flex;
         flex-direction: column;
@@ -453,13 +450,14 @@
         box-shadow: none !important;
     }
 
+    /* AREA PESAN DENGAN BACKGROUND HITAM GELAP PEKAT */
     .chat-body {
         flex: 1;
         overflow-y: auto;
-        border: 1px solid rgba(168, 85, 247, 0.25);
-        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
         padding: 12px;
-        background: rgba(0, 0, 0, 0.4);
+        background: #09090d !important;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -525,30 +523,33 @@
         transform: scale(1.2);
     }
 
+    /* GELEMBUNG CHAT WARNA ABU-ABU UNTUK KEDUA TIPE PESAN */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
-        padding: 6px 12px;
+        padding: 8px 12px;
         border-radius: 12px;
         user-select: text;
         word-break: break-word;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         width: fit-content;
         max-width: 85%;
         display: inline-block;
         line-height: 1.35;
     }
 
+    /* CHAT ORANG LAIN: ABU-ABU GELAP */
     .chat-msg-wrapper.other-msg .chat-msg {
-        background: rgba(25, 20, 45, 0.85);
-        border: 1px solid rgba(200, 158, 255, 0.25);
+        background: rgba(45, 45, 50, 0.9) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
         border-top-left-radius: 2px;
     }
 
+    /* CHAT SENDIRI: ABU-ABU SEDIKIT LEBIH TERANG */
     .chat-msg-wrapper.own-msg .chat-msg {
-        background: rgba(45, 25, 60, 0.85);
-        border: 1px solid rgba(168, 85, 247, 0.4);
+        background: rgba(65, 65, 72, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
         border-top-right-radius: 2px;
     }
 
@@ -577,7 +578,7 @@
     }
 
     .chat-msg .msg-content {
-        color: #e0e0e0 !important;
+        color: #f0f0f5 !important;
         white-space: pre-wrap;
         display: inline-block;
     }
@@ -596,7 +597,7 @@
     }
 
     .chat-msg .msg-content code {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
         color: var(--cyan-neon);
         padding: 1px 4px;
         border-radius: 3px;
@@ -635,8 +636,8 @@
         display: none;
         grid-template-columns: repeat(6, 1fr);
         gap: 8px;
-        background: rgba(16, 16, 24, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(16, 16, 24, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 12px;
         padding: 8px;
         max-height: 100px;
@@ -667,8 +668,8 @@
 
     .chat-footer input#chatUser {
         width: 110px;
-        background: rgba(16, 14, 30, 0.7) !important;
-        border: 1px solid rgba(168, 85, 247, 0.3) !important;
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
         padding: 8px 10px;
         border-radius: 12px;
@@ -681,8 +682,8 @@
 
     .chat-footer textarea#chatText {
         flex: 1;
-        background: rgba(16, 14, 30, 0.7) !important;
-        border: 1px solid rgba(168, 85, 247, 0.3) !important;
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
         padding: 8px 12px;
         border-radius: 12px;
@@ -705,8 +706,8 @@
         padding: 0 !important;
         flex: none !important;
         border-radius: 12px !important;
-        border: 1px solid rgba(168, 85, 247, 0.3) !important;
-        background: rgba(16, 14, 30, 0.7) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        background: rgba(20, 20, 28, 0.9) !important;
         color: #ffffff !important;
         font-size: 16px !important;
         cursor: pointer;
@@ -946,14 +947,12 @@
         }
     }
 
-    /* BUKA CHAT & SEMBUNYIKAN CONTAINER UTAMA RUMUS FLOP */
     function openTeamChat() {
         document.getElementById('mainContainer').classList.add('hidden-for-chat');
         document.getElementById('chatModal').style.display = 'flex';
         document.getElementById('chatText').focus();
     }
 
-    /* TUTUP CHAT & TAMPILKAN KEMBALI CONTAINER UTAMA RUMUS FLOP */
     function closeTeamChat() {
         document.getElementById('chatModal').style.display = 'none';
         document.getElementById('stickerPicker').style.display = 'none';
