@@ -76,7 +76,6 @@
             inset 0 0 20px rgba(200, 158, 255, 0.25);
     }
 
-    /* GAYA UTAMA & SHINE ANIMATION */
     h1 {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
@@ -219,7 +218,6 @@
         margin-bottom: 28px;
     }
 
-    /* KELOMPOK TOMBOL FLEKSIBEL (SWAP POSISI) */
     .btn-group.swapped {
         flex-direction: row-reverse;
     }
@@ -341,9 +339,6 @@
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* ========================================================= */
-    /* MODAL TEAM CHAT                                           */
-    /* ========================================================= */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
@@ -388,7 +383,6 @@
         flex-shrink: 0;
     }
 
-    /* JUDUL T'CHAT - FONT & GLOW SAMA DENGAN RUMUS FLOP KASIR */
     .chat-header h3 {
         margin: 0;
         font-family: 'Orbitron', sans-serif;
@@ -755,9 +749,7 @@
     <div class="label-header">
         <label>Hasil Konversi</label>
         <div class="label-actions">
-            <!-- TOMBOL UNTUK TUKAR POSISI (SWAP) -->
             <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
-            <!-- TOMBOL CHAT (HARUS CLICK 3 KALI) -->
             <span class="badge-count" id="dataCounter" onclick="handleChatClick()">0 DATA (CHAT)</span>
         </div>
     </div>
@@ -828,35 +820,25 @@
     let selectedReplyData = null; 
     let currentDataCount = 0;
 
-    /* LOGIKA TRIPLE CLICK CHAT */
+    /* LOGIKA TRIPLE CLICK CHAT (SILENT / TANPA TEKS SARAN) */
     let chatClickCount = 0;
     let chatClickTimer = null;
 
     function handleChatClick() {
         chatClickCount++;
-        const counter = document.getElementById('dataCounter');
-
-        if (chatClickCount === 1) {
-            counter.innerText = `KLIK 2 KALIMA LAGI`;
-        } else if (chatClickCount === 2) {
-            counter.innerText = `KLIK 1 KALI LAGI`;
-        }
 
         if (chatClickTimer) clearTimeout(chatClickTimer);
 
         if (chatClickCount >= 3) {
             openTeamChat();
             chatClickCount = 0;
-            counter.innerText = `${currentDataCount} DATA (CHAT)`;
         } else {
             chatClickTimer = setTimeout(() => {
                 chatClickCount = 0;
-                counter.innerText = `${currentDataCount} DATA (CHAT)`;
             }, 1000); 
         }
     }
 
-    /* TUKAR POSISI TOMBOL (SALIN DATA / RESET) */
     function toggleBtnPosition() {
         const btnGroup = document.getElementById('btnGroup');
         btnGroup.classList.toggle('swapped');
