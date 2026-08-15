@@ -440,7 +440,7 @@
         align-items: flex-end;
     }
 
-    /* NAMA & JAM DI LUAR GELEMBUNG */
+    /* BARIS NAMA & JAM BERSIFAT FLEX AGAR AKSI BISA DI SEBELAH JAM */
     .msg-header-info {
         display: flex;
         align-items: center;
@@ -461,12 +461,38 @@
         font-family: 'JetBrains Mono', monospace;
     }
 
+    /* TOMBOL EMOT & BALAS DI SEBELAH JAM */
+    .msg-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 4px;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+    }
+
+    .chat-msg-wrapper:hover .msg-actions {
+        opacity: 1;
+    }
+
+    .btn-action-msg {
+        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        font-size: 11px;
+        transition: color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-action-msg:hover {
+        color: var(--cyan-neon);
+        transform: scale(1.2);
+    }
+
     /* GELEMBUNG CHAT PAS DENGAN TEKS (HANYA BEBERAPA MILI JARAK) */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
-        padding: 3px 8px; /* Padding sangat rapat */
+        padding: 3px 8px;
         border-radius: 8px;
         user-select: text;
         word-break: break-word;
@@ -489,38 +515,6 @@
         background: #383848;
         border: 1px solid #555566;
         border-top-right-radius: 2px;
-    }
-
-    .msg-actions {
-        position: absolute;
-        top: -10px;
-        display: none;
-        gap: 6px;
-        background: rgba(10, 8, 25, 0.95);
-        border: 1px solid var(--lavender-border);
-        padding: 2px 8px;
-        border-radius: 12px;
-        box-shadow: 0 0 8px rgba(0,0,0,0.8);
-        z-index: 5;
-    }
-
-    .chat-msg:hover .msg-actions {
-        display: flex;
-    }
-
-    .chat-msg-wrapper.other-msg .msg-actions { right: 8px; }
-    .chat-msg-wrapper.own-msg .msg-actions { left: 8px; }
-
-    .btn-action-msg {
-        color: rgba(255, 255, 255, 0.7);
-        cursor: pointer;
-        font-size: 12px;
-        transition: color 0.2s ease, transform 0.1s ease;
-    }
-
-    .btn-action-msg:hover {
-        color: var(--cyan-neon);
-        transform: scale(1.25);
     }
 
     .reply-quote-box {
@@ -629,7 +623,6 @@
         transform: scale(1.2);
     }
 
-    /* CHAT FOOTER DIMODIFIKASI AGAR INPUT KETIK LEBIH LEBAR */
     .chat-footer {
         display: flex;
         gap: 6px;
@@ -638,7 +631,7 @@
     }
 
     .chat-footer input#chatUser {
-        width: 90px; /* Diperkecil dari 110px */
+        width: 90px;
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
@@ -651,7 +644,7 @@
     }
 
     .chat-footer textarea#chatText {
-        flex: 1; /* Memanfaatkan semua sisa ruang yang luas */
+        flex: 1;
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
@@ -671,7 +664,6 @@
         box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
     }
 
-    /* TOMBOL EMOJI/STIKER RINGKAS */
     .btn-sticker-toggle {
         width: 38px !important;
         padding: 0 !important;
@@ -938,11 +930,18 @@
         const color = getUserColor(username);
         const emoji = getUserEmoji(username);
 
+        const safeUser = username.replace(/'/g, "\\'");
+        const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
+
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
             <span class="sender" style="color: ${color};">${emoji} ${username}</span>
             <span class="time-stamp">${data.timestamp || ''}</span>
+            <div class="msg-actions">
+                <span class="btn-action-msg" title="Balas dengan Stiker" onclick="triggerStickerForReply('${safeUser}', '${safeText}')">😊</span>
+                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
+            </div>
         `;
 
         const msgDiv = document.createElement('div');
@@ -958,9 +957,6 @@
             `;
         }
 
-        const safeUser = username.replace(/'/g, "\\'");
-        const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
-
         let contentHTML = '';
         if (data.isSticker) {
             contentHTML = `<span class="msg-sticker">${data.sticker}</span>`;
@@ -969,10 +965,6 @@
         }
 
         msgDiv.innerHTML = `
-            <div class="msg-actions">
-                <span class="btn-action-msg" title="Balas dengan Stiker" onclick="triggerStickerForReply('${safeUser}', '${safeText}')">😊</span>
-                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
-            </div>
             ${replyHTML}
             ${contentHTML}
         `;
