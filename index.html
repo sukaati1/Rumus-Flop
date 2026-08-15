@@ -1,3 +1,4 @@
+Conversation with Gemini
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -658,7 +659,7 @@
         align-items: flex-end;
     }
 
-    /* HEADER INFO (NAMA, JAM, TOMBOL BALAS) */
+    /* HEADER INFO (NAMA, JAM, TOMBOL BALAS) PERKECIL & RAPI */
     .msg-header-info {
         display: flex;
         align-items: center;
@@ -708,7 +709,7 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT & REAKSI TERPISAH */
+    /* GELEMBUNG CHAT FIX URUTAN */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -734,51 +735,6 @@
         background: rgba(65, 65, 72, 0.95) !important;
         border: 1px solid rgba(255, 255, 255, 0.25) !important;
         border-top-right-radius: 2px;
-    }
-
-    /* Reaksi Dipisah di Luar Gelembung */
-    .active-reactions {
-        display: none;
-        margin-top: -6px;
-        z-index: 2;
-    }
-
-    .chat-msg-wrapper.own-msg .active-reactions { margin-right: 6px; }
-    .chat-msg-wrapper.other-msg .active-reactions { margin-left: 6px; }
-
-    .reaction-badge {
-        background-color: #121218;
-        border: 1px solid var(--purple-neon);
-        color: #ffffff;
-        border-radius: 12px;
-        padding: 1px 6px;
-        font-size: 11px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        display: inline-block;
-    }
-
-    /* Popover/Bar Pilihan Emoji per Pesan */
-    .inline-reaction-picker {
-        display: flex;
-        gap: 4px;
-        background: rgba(15, 15, 22, 0.95);
-        border: 1px solid rgba(168, 85, 247, 0.4);
-        padding: 3px 6px;
-        border-radius: 15px;
-        margin-top: 4px;
-        overflow-x: auto;
-        max-width: 100%;
-    }
-
-    .inline-reaction-picker span {
-        font-size: 13px;
-        cursor: pointer;
-        user-select: none;
-        transition: transform 0.15s ease;
-    }
-
-    .inline-reaction-picker span:hover {
-        transform: scale(1.3);
     }
 
     .reply-quote-box {
@@ -1185,9 +1141,6 @@
     let activeUser = null; 
     let tempEditAvatar = "";
 
-    // Objek State Reaksi Per Pesan
-    const messageReactions = {};
-
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
     };
@@ -1533,38 +1486,7 @@
         document.getElementById('replyPreview').style.display = 'none';
     }
 
-    /* LOGIKA REAKSI (KLIK 2X UNTUK HAPUS) */
-    function toggleReaction(msgKey, emoji) {
-        if (!messageReactions[msgKey]) {
-            messageReactions[msgKey] = null;
-        }
-
-        // Klik 2x pada emoji sama -> Hapus
-        if (messageReactions[msgKey] === emoji) {
-            messageReactions[msgKey] = null;
-        } else {
-            messageReactions[msgKey] = emoji;
-        }
-
-        renderReactionDisplay(msgKey);
-    }
-
-    function renderReactionDisplay(msgKey) {
-        const displayElement = document.getElementById(`reaction-display-${msgKey}`);
-        if (!displayElement) return;
-
-        const currentEmoji = messageReactions[msgKey];
-
-        if (currentEmoji) {
-            displayElement.innerHTML = `<span class="reaction-badge">${currentEmoji}</span>`;
-            displayElement.style.display = 'block';
-        } else {
-            displayElement.innerHTML = '';
-            displayElement.style.display = 'none';
-        }
-    }
-
-    /* RENDER PESAN LENGKAP */
+    /* RENDER PESAN DENGAN STRUCTURING YANG FIX TERATUR */
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
         const currentUser = activeUser ? activeUser.username : '';
@@ -1591,7 +1513,7 @@
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
 
-        // HEADER: NAMA, JAM, TOMBOL AKSI
+        // HEADER: NAMA, JAM, TOMBOL AKSI (SELALU DI ATAS PESAN)
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
@@ -1629,27 +1551,8 @@
             ${contentHTML}
         `;
         
-        // REAKSI DI LUAR GELEMBUNG
-        const reactionDisplayDiv = document.createElement('div');
-        reactionDisplayDiv.className = 'active-reactions';
-        reactionDisplayDiv.id = `reaction-display-${key}`;
-
-        // POPOVER PILIHAN REAKSI EMOJI
-        const pickerDiv = document.createElement('div');
-        pickerDiv.className = 'inline-reaction-picker';
-        
-        const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡', '🔥', '🎉', '🙏', '💩', '👀', '💯'];
-        emojis.forEach(e => {
-            const span = document.createElement('span');
-            span.innerText = e;
-            span.onclick = () => toggleReaction(key, e);
-            pickerDiv.appendChild(span);
-        });
-
         contentContainer.appendChild(headerInfoDiv);
         contentContainer.appendChild(msgDiv);
-        contentContainer.appendChild(reactionDisplayDiv);
-        contentContainer.appendChild(pickerDiv);
 
         wrapperDiv.appendChild(avatarImg);
         wrapperDiv.appendChild(contentContainer);
