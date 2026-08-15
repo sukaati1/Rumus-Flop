@@ -360,6 +360,15 @@
         padding: 15px;
     }
 
+    /* SPECIFIC MODAL Z-INDEX FIXES */
+    #profileModal {
+        z-index: 1002 !important;
+    }
+
+    #imageViewerModal {
+        z-index: 1003 !important;
+    }
+
     /* MODAL AUTH (LOGIN / REGISTER) */
     .auth-modal {
         position: relative;
@@ -920,7 +929,6 @@
         width: 100vw;
         height: 100vh;
         background: rgba(0, 0, 0, 0.85);
-        z-index: 1000;
         display: none;
         justify-content: center;
         align-items: center;
@@ -1778,11 +1786,17 @@
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            closeImageViewer();
-            closeProfileModal();
-            closeTeamChat();
-            closeAuthModal();
-            resetData();
+            if (document.getElementById('imageViewerModal').style.display === 'flex') {
+                closeImageViewer();
+            } else if (document.getElementById('profileModal').style.display === 'flex') {
+                closeProfileModal();
+            } else if (document.getElementById('chatModal').style.display === 'flex') {
+                closeTeamChat();
+            } else if (document.getElementById('authModal').style.display === 'flex') {
+                closeAuthModal();
+            } else {
+                resetData();
+            }
         }
         if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
             e.preventDefault();
