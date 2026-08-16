@@ -349,7 +349,7 @@
         padding: 15px;
     }
 
-    #profileModal {
+    #profileModal, #registerModal {
         z-index: 1002 !important;
     }
 
@@ -455,6 +455,13 @@
         padding: 12px !important;
         border-radius: 15px !important;
         margin-top: 10px;
+    }
+
+    .btn-admin-reg {
+        background: rgba(255, 0, 127, 0.2) !important;
+        border: 1px solid var(--pink-neon) !important;
+        color: #ffffff !important;
+        margin-top: 5px;
     }
 
     .auth-close-btn {
@@ -1034,6 +1041,26 @@
     </div>
 </div>
 
+<!-- MODAL REGISTRASI AKUN BARU (KHUSUS ADMIN) -->
+<div class="chat-modal-overlay" id="registerModal">
+    <div class="auth-modal">
+        <button class="auth-close-btn" onclick="closeRegisterModal()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--pink-neon); font-size: 16px;">REGISTRASI USER BARU</h3>
+        
+        <div class="auth-form">
+            <div class="auth-input-group">
+                <label>USERNAME BARU</label>
+                <input type="text" id="regUser" placeholder="Masukkan User ID Baru..." oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <div class="auth-input-group">
+                <label>PASSWORD BARU</label>
+                <input type="password" id="regPass" placeholder="Masukkan Password Baru...">
+            </div>
+            <button class="btn-auth-submit btn-admin-reg" onclick="submitRegisterNewUser()">BUAT AKUN BARU 👑</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL EDIT PROFIL -->
 <div class="chat-modal-overlay" id="profileModal">
     <div class="auth-modal">
@@ -1063,6 +1090,7 @@
             </div>
 
             <button class="btn-auth-submit" onclick="saveProfileChanges()">SIMPAN PERUBAHAN 💾</button>
+            <button id="btnAdminOpenReg" class="btn-auth-submit btn-admin-reg" style="display: none;" onclick="openRegisterModal()">+ REGISTRASI AKUN BARU (ADMIN)</button>
         </div>
     </div>
 </div>
@@ -1214,12 +1242,68 @@
         });
     }
 
+    function openRegisterModal() {
+        if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
+            alert("❌ Akses ditolak! Hanya " + NAMA_ADMIN_RESMI + " yang bisa menambahkan pengguna baru.");
+            return;
+        }
+        document.getElementById('regUser').value = '';
+        document.getElementById('regPass').value = '';
+        document.getElementById('registerModal').style.display = 'flex';
+    }
+
+    function closeRegisterModal() {
+        document.getElementById('registerModal').style.display = 'none';
+    }
+
+    function submitRegisterNewUser() {
+        if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
+            alert("❌ Hanya Admin yang berhak memproses pendaftaran baru!");
+            return;
+        }
+
+        const newUser = document.getElementById('regUser').value.trim().toUpperCase();
+        const newPass = document.getElementById('regPass').value.trim();
+
+        if (!newUser || !newPass) {
+            alert("Username dan Password baru tidak boleh kosong!");
+            return;
+        }
+
+        dbAccounts.child(newUser).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                alert("❌ Username tersebut sudah digunakan!");
+            } else {
+                dbAccounts.child(newUser).set({
+                    password: newPass,
+                    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=" + newUser,
+                    createdAt: new Date().toISOString()
+                }, (error) => {
+                    if (error) {
+                        alert("Gagal membuat akun: " + error.message);
+                    } else {
+                        alert("✅ Berhasil membuat akun baru untuk: " + newUser);
+                        closeRegisterModal();
+                    }
+                });
+            }
+        });
+    }
+
     function openProfileModal() {
         if (!activeUser) return;
         tempEditAvatar = activeUser.avatar;
         document.getElementById('editAvatarPreview').src = tempEditAvatar;
         document.getElementById('editUserName').value = activeUser.username;
         document.getElementById('editUserPass').value = '';
+        
+        const regBtn = document.getElementById('btnAdminOpenReg');
+        if (activeUser.username === NAMA_ADMIN_RESMI) {
+            regBtn.style.display = 'block';
+        } else {
+            regBtn.style.display = 'none';
+        }
+
         document.getElementById('profileModal').style.display = 'flex';
     }
 
@@ -1613,7 +1697,7 @@
 
     function clearAllChat() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("❌ Akses ditolak! Hanya ADMIN (JAKA SEMBUNG) yang berhak menghapus semua pesan.");
+            alert("❌ Akses ditolak! Hanya ADMIN (" + NAMA_ADMIN_RESMI + ") yang berhak menghapus semua pesan.");
             return;
         }
 
@@ -1802,6 +1886,8 @@
         if (e.key === 'Escape') {
             if (document.getElementById('imageViewerModal').style.display === 'flex') {
                 closeImageViewer();
+            } else if (document.getElementById('registerModal').style.display === 'flex') {
+                closeRegisterModal();
             } else if (document.getElementById('profileModal').style.display === 'flex') {
                 closeProfileModal();
             } else if (document.getElementById('chatModal').style.display === 'flex') {
