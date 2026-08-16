@@ -423,27 +423,6 @@
         box-shadow: 0 0 10px var(--cyan-neon);
     }
 
-    .avatar-options {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-    }
-
-    .avatar-opt-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        cursor: pointer;
-        object-fit: cover;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .avatar-opt-btn:hover {
-        transform: scale(1.15);
-        border-color: var(--cyan-neon);
-    }
-
     .btn-upload-avatar {
         font-size: 10px !important;
         padding: 6px 12px !important;
@@ -631,7 +610,6 @@
         align-items: flex-end;
     }
 
-    /* HEADER INFO PERKECIL & RAPI */
     .msg-header-info {
         display: flex;
         align-items: center;
@@ -709,7 +687,6 @@
         border-top-right-radius: 2px;
     }
 
-    /* REAKSI EMOTICON DI LUAR GELEMBUNG */
     .msg-reactions-container {
         display: flex;
         flex-wrap: wrap;
@@ -1070,12 +1047,6 @@
         <div class="auth-form">
             <div class="avatar-selection-box">
                 <img id="editAvatarPreview" class="avatar-preview-img" src="" alt="Preview">
-                <div class="avatar-options">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Kasir1" onclick="selectEditAvatar(this.src)">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Kasir2" onclick="selectEditAvatar(this.src)">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Neon3" onclick="selectEditAvatar(this.src)">
-                    <img class="avatar-opt-btn" src="https://api.dicebear.com/7.x/bottts/svg?seed=Cyber4" onclick="selectEditAvatar(this.src)">
-                </div>
                 <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PC/HP 📷</button>
                 <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
             </div>
@@ -1247,6 +1218,11 @@
             alert("❌ Akses ditolak! Hanya " + NAMA_ADMIN_RESMI + " yang bisa menambahkan pengguna baru.");
             return;
         }
+        
+        // Tutup modal profil secara otomatis
+        closeProfileModal();
+
+        // Reset input dan tampilkan modal registrasi langsung
         document.getElementById('regUser').value = '';
         document.getElementById('regPass').value = '';
         document.getElementById('registerModal').style.display = 'flex';
@@ -1309,11 +1285,6 @@
 
     function closeProfileModal() {
         document.getElementById('profileModal').style.display = 'none';
-    }
-
-    function selectEditAvatar(srcUrl) {
-        tempEditAvatar = srcUrl;
-        document.getElementById('editAvatarPreview').src = srcUrl;
     }
 
     function handleEditAvatarUpload(event) {
