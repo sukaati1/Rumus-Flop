@@ -368,7 +368,7 @@
         z-index: 1003 !important;
     }
 
-    /* MODAL AUTH (LOGIN / REGISTER) */
+    /* MODAL AUTH (LOGIN KHUSUS) */
     .auth-modal {
         position: relative;
         width: 100%;
@@ -381,29 +381,6 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-    }
-
-    .auth-tabs {
-        display: flex;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        margin-bottom: 10px;
-    }
-
-    .auth-tab {
-        flex: 1;
-        padding: 10px;
-        text-align: center;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 12px;
-        font-weight: 800;
-        color: rgba(255, 255, 255, 0.5);
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .auth-tab.active {
-        color: var(--cyan-neon);
-        border-bottom: 2px solid var(--cyan-neon);
     }
 
     .auth-form {
@@ -1048,38 +1025,23 @@
     </div>
 </div>
 
-<!-- AUTH MODAL OVERLAY -->
+<!-- AUTH MODAL OVERLAY (KHUSUS LOGIN) -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeAuthModal()">X</button>
         
-        <div class="auth-tabs">
-            <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">MASUK (LOGIN)</div>
-            <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">DAFTAR BARU</div>
-        </div>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--cyan-neon); font-size: 16px; letter-spacing: 2px;">MASUK AKUN</h3>
 
         <div class="auth-form" id="formLogin">
             <div class="auth-input-group">
-                <label>NAMA USER</label>
-                <input type="text" id="loginUser" placeholder="Masukkan nama..." oninput="this.value = this.value.toUpperCase()">
+                <label>NAMA USER ID</label>
+                <input type="text" id="loginUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
             </div>
             <div class="auth-input-group">
                 <label>PASSWORD</label>
                 <input type="password" id="loginPass" placeholder="Masukkan password...">
             </div>
             <button class="btn-auth-submit" onclick="submitLogin()">LOGIN SEKARANG 🔥</button>
-        </div>
-
-        <div class="auth-form" id="formRegister" style="display: none;">
-            <div class="auth-input-group">
-                <label>NAMA USER BARU</label>
-                <input type="text" id="regUser" placeholder="Buat nama..." oninput="this.value = this.value.toUpperCase()">
-            </div>
-            <div class="auth-input-group">
-                <label>PASSWORD BARU</label>
-                <input type="password" id="regPass" placeholder="Buat password...">
-            </div>
-            <button class="btn-auth-submit" onclick="submitRegister()">DAFTAR AKUN 🔥</button>
         </div>
     </div>
 </div>
@@ -1172,6 +1134,8 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
+    const NAMA_ADMIN_RESMI = "JAKA SEMBUNG"; // 👈 User ID Admin
+
     let hasilTeksUntukDisalin = "";
     let isInitialLoad = true;
     let selectedReplyData = null; 
@@ -1229,54 +1193,6 @@
         document.getElementById('mainContainer').classList.remove('hidden-for-chat');
     }
 
-    function switchAuthTab(type) {
-        if (type === 'login') {
-            document.getElementById('tabLogin').classList.add('active');
-            document.getElementById('tabRegister').classList.remove('active');
-            document.getElementById('formLogin').style.display = 'flex';
-            document.getElementById('formRegister').style.display = 'none';
-        } else {
-            document.getElementById('tabRegister').classList.add('active');
-            document.getElementById('tabLogin').classList.remove('active');
-            document.getElementById('formRegister').style.display = 'flex';
-            document.getElementById('formLogin').style.display = 'none';
-        }
-    }
-
-    function submitRegister() {
-        const user = document.getElementById('regUser').value.trim().toUpperCase();
-        const pass = document.getElementById('regPass').value.trim();
-
-        if (!user || !pass) {
-            alert("Nama dan Password wajib diisi!");
-            return;
-        }
-
-        dbAccounts.child(user).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                alert("Nama User ini sudah terdaftar! Silakan gunakan nama lain atau Login.");
-            } else {
-                const defaultAvatar = "https://api.dicebear.com/7.x/bottts/svg?seed=" + user;
-                dbAccounts.child(user).set({
-                    password: pass,
-                    avatar: defaultAvatar,
-                    createdAt: new Date().toISOString()
-                }, (error) => {
-                    if (!error) {
-                        alert("🎉 Pendaftaran Berhasil! Silakan Login.");
-                        switchAuthTab('login');
-                        document.getElementById('loginUser').value = user;
-                        document.getElementById('loginPass').value = pass;
-                        document.getElementById('regUser').value = '';
-                        document.getElementById('regPass').value = '';
-                    } else {
-                        alert("Gagal mendaftar: " + error.message);
-                    }
-                });
-            }
-        });
-    }
-
     function submitLogin() {
         const user = document.getElementById('loginUser').value.trim().toUpperCase();
         const pass = document.getElementById('loginPass').value.trim();
@@ -1305,7 +1221,7 @@
                     alert("❌ Password salah!");
                 }
             } else {
-                alert("❌ Nama User tidak ditemukan! Silakan daftar dahulu.");
+                alert("❌ Nama User ID tidak ditemukan!");
             }
         });
     }
@@ -1570,6 +1486,11 @@
         }
 
         const color = getUserColor(username);
+        const isAdmin = (username === NAMA_ADMIN_RESMI);
+        const badgeAdmin = isAdmin 
+            ? `<span style="background: #ff007f; color: #ffffff; font-size: 8px; padding: 1px 6px; border-radius: 4px; margin-left: 5px; font-weight: 900; letter-spacing: 1px; box-shadow: 0 0 6px var(--pink-neon);">ADMIN</span>` 
+            : '';
+
         const safeUser = username.replace(/'/g, "\\'");
         const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
@@ -1585,7 +1506,7 @@
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
-            <span class="sender" style="color: ${color};">${username}</span>
+            <span class="sender" style="color: ${color};">${username}${badgeAdmin}</span>
             <span class="time-stamp">${data.timestamp || ''}</span>
             <div class="msg-actions">
                 <span class="btn-action-msg" title="Beri Reaksi" onclick="openReactionPicker('${key}')">😊</span>
@@ -1703,8 +1624,15 @@
     }
 
     function clearAllChat() {
-        dbChat.remove();
-        document.getElementById('chatLogs').innerHTML = '';
+        if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
+            alert("❌ Akses ditolak! Hanya ADMIN (JAKA SEMBUNG) yang berhak menghapus semua pesan.");
+            return;
+        }
+
+        if (confirm("Yakin ingin menghapus seluruh obrolan chat?")) {
+            dbChat.remove();
+            document.getElementById('chatLogs').innerHTML = '';
+        }
     }
 
     function handleChatKey(e) {
