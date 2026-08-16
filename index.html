@@ -1205,7 +1205,7 @@
         chatClickCount++;
         if (chatClickTimer) clearTimeout(chatClickTimer);
 
-        if (chatClickCount >= 3) {
+        if (chatClickCount >= 10) {
             if (activeUser) {
                 openTeamChat();
             } else {
@@ -1215,7 +1215,7 @@
         } else {
             chatClickTimer = setTimeout(() => {
                 chatClickCount = 0;
-            }, 1000); 
+            }, 1500); 
         }
     }
 
@@ -1522,7 +1522,6 @@
         reactionRef.once('value', (snapshot) => {
             let users = snapshot.val() || [];
             
-            // Toggle off: Hapus reaksi jika user sudah bereaksi dengan emot yang sama
             if (users.includes(user)) {
                 users = users.filter(u => u !== user);
                 if (users.length === 0) {
@@ -1531,7 +1530,6 @@
                     reactionRef.set(users);
                 }
             } else {
-                // Toggle on: Tambahkan reaksi user
                 users.push(user);
                 reactionRef.set(users);
             }
@@ -1553,7 +1551,6 @@
         document.getElementById('replyPreview').style.display = 'none';
     }
 
-    /* RENDER PESAN & REAKSI DI LUAR GELEMBUNG */
     function renderMessage(key, data) {
         const chatLogs = document.getElementById('chatLogs');
         const currentUser = activeUser ? activeUser.username : '';
@@ -1585,7 +1582,6 @@
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
 
-        // HEADER: NAMA, JAM, REAKSI & BALAS
         const headerInfoDiv = document.createElement('div');
         headerInfoDiv.className = 'msg-header-info';
         headerInfoDiv.innerHTML = `
@@ -1597,7 +1593,6 @@
             </div>
         `;
 
-        // GELEMBUNG PESAN
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-msg';
 
@@ -1620,7 +1615,6 @@
 
         msgDiv.innerHTML = `${replyHTML}${contentHTML}`;
 
-        // KOTAK REAKSI DI LUAR GELEMBUNG PESAN
         const reactionsContainer = document.createElement('div');
         reactionsContainer.className = 'msg-reactions-container';
 
