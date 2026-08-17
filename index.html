@@ -164,7 +164,6 @@
         border: 1px solid rgba(168, 85, 247, 0.5);
     }
 
-    /* TOMBOL TYPING TEST BARU */
     .btn-typing-test {
         background: rgba(255, 0, 127, 0.15);
         color: var(--pink-neon) !important;
@@ -322,8 +321,8 @@
     td:nth-child(4) { color: var(--pink-neon) !important; }
     td:nth-child(5) { color: var(--cyan-neon) !important; }
 
-    /* STYLE MODAL TYPING TEST */
-    .typing-modal-overlay {
+    /* STYLE MODAL (TYPING & CHAT) */
+    .modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -338,13 +337,13 @@
         padding: 20px;
     }
 
-    .typing-card {
+    .modal-card {
         position: relative;
         background: rgba(10, 8, 25, 0.95);
-        border: 2px solid var(--pink-neon);
-        box-shadow: 0 0 30px rgba(255, 0, 127, 0.4);
+        border: 2px solid var(--purple-neon);
+        box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
         border-radius: 24px;
-        padding: 30px;
+        padding: 25px;
         width: 100%;
         max-width: 750px;
         display: flex;
@@ -352,7 +351,7 @@
         gap: 15px;
     }
 
-    .typing-card-header {
+    .modal-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -360,7 +359,7 @@
         padding-bottom: 10px;
     }
 
-    .typing-card-title {
+    .modal-card-title {
         font-family: 'Orbitron', sans-serif;
         font-size: 18px;
         font-weight: 900;
@@ -368,6 +367,7 @@
         letter-spacing: 2px;
     }
 
+    /* TYPING TEST SPECIFIC */
     .typing-controls {
         display: flex;
         justify-content: space-between;
@@ -387,10 +387,7 @@
         cursor: pointer;
     }
 
-    .typing-stats {
-        display: flex;
-        gap: 10px;
-    }
+    .typing-stats { display: flex; gap: 10px; }
 
     .t-stat-box {
         background: rgba(255, 255, 255, 0.05);
@@ -400,18 +397,8 @@
         text-align: center;
     }
 
-    .t-stat-box .t-label {
-        font-size: 9px;
-        color: var(--purple-bright);
-        font-family: 'Orbitron', sans-serif;
-    }
-
-    .t-stat-box .t-value {
-        font-size: 14px;
-        font-weight: bold;
-        color: #fff;
-        font-family: 'JetBrains Mono', monospace;
-    }
+    .t-stat-box .t-label { font-size: 9px; color: var(--purple-bright); font-family: 'Orbitron', sans-serif; }
+    .t-stat-box .t-value { font-size: 14px; font-weight: bold; color: #fff; font-family: 'JetBrains Mono', monospace; }
 
     .typing-text-display {
         background: rgba(0, 0, 0, 0.4);
@@ -447,6 +434,59 @@
         font-size: 16px;
         outline: none;
         resize: none;
+    }
+
+    /* CHAT MODAL SPECIFIC */
+    .chat-box {
+        height: 250px;
+        overflow-y: auto;
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .chat-msg {
+        max-width: 80%;
+        padding: 8px 14px;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 13px;
+        word-break: break-word;
+    }
+
+    .chat-msg.sent {
+        align-self: flex-end;
+        background: rgba(0, 210, 255, 0.2);
+        border: 1px solid var(--cyan-neon);
+        color: #fff;
+    }
+
+    .chat-msg.received {
+        align-self: flex-start;
+        background: rgba(168, 85, 247, 0.2);
+        border: 1px solid var(--purple-neon);
+        color: #fff;
+    }
+
+    .chat-input-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .chat-input {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(168, 85, 247, 0.4);
+        border-radius: 12px;
+        padding: 10px;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        outline: none;
     }
 
     .auth-close-btn {
@@ -491,10 +531,9 @@
     <div class="label-header">
         <label>Hasil Konversi</label>
         <div class="label-actions">
-            <!-- TOMBOL BARU TYPING TEST DI SEBELAH SWAP -->
             <span class="btn-typing-test" onclick="openTypingModal()">TYPING TEST ⌨️</span>
             <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
-            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
+            <span class="badge-count" id="dataCounter" onclick="handleDataClick()">DATA</span>
         </div>
     </div>
     
@@ -514,13 +553,13 @@
     </div>
 </div>
 
-<!-- MODAL TYPING TEST BAHASA INDONESIA & KHMER -->
-<div class="typing-modal-overlay" id="typingModal">
-    <div class="typing-card">
+<!-- MODAL TYPING TEST -->
+<div class="modal-overlay" id="typingModal">
+    <div class="modal-card" style="border-color: var(--pink-neon); box-shadow: 0 0 30px rgba(255, 0, 127, 0.4);">
         <button class="auth-close-btn" onclick="closeTypingModal()">X</button>
         
-        <div class="typing-card-header">
-            <div class="typing-card-title">TYPING TEST (1 MENIT)</div>
+        <div class="modal-card-header">
+            <div class="modal-card-title" style="color: var(--pink-neon);">TYPING TEST (1 MENIT)</div>
         </div>
 
         <div class="typing-controls">
@@ -553,8 +592,50 @@
     </div>
 </div>
 
+<!-- MODAL CHAT -->
+<div class="modal-overlay" id="chatModal">
+    <div class="modal-card">
+        <button class="auth-close-btn" onclick="closeChatModal()">X</button>
+        
+        <div class="modal-card-header">
+            <div class="modal-card-title">RUANG CHAT 💬</div>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="chat-msg received">Halo! Ada yang bisa dibantu dengan konversi log kasir?</div>
+        </div>
+
+        <div class="chat-input-group">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Tulis pesan..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendChatMessage()" style="flex: 0 0 100px; border-radius: 12px; padding: 0;">KIRIM</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // LOGIKA BAHASA & TYPING TEST
+    // --- LOGIKA HITUNG KLIK 10X UNTUK CHAT ---
+    let dataClickCount = 0;
+    let dataClickTimer = null;
+
+    function handleDataClick() {
+        dataClickCount++;
+
+        // Jika diklik 10 kali dengan cepat, buka Ruang Chat
+        if (dataClickCount >= 10) {
+            openChatModal();
+            dataClickCount = 0;
+            clearTimeout(dataClickTimer);
+            return;
+        }
+
+        // Reset hitungan jika pengguna berhenti mengklik lebih dari 1.5 detik
+        clearTimeout(dataClickTimer);
+        dataClickTimer = setTimeout(() => {
+            dataClickCount = 0;
+        }, 1500);
+    }
+
+    // --- LOGIKA TYPING TEST ---
     const typingTexts = {
         id: [
             "teknologi informasi berkembang sangat pesat di era digital saat ini. setiap orang dituntut untuk dapat beradaptasi dengan perubahan yang terjadi. keterampilan mengetik cepat dan akurat menjadi salah satu kemampuan dasar yang sangat berguna.",
@@ -693,18 +774,48 @@
         initTypingText();
     }
 
-    // LOGIKA LAINNYA
-    let hasilTeksUntukDisalin = "";
-    let chatClickCount = 0;
-    let chatClickTimer = null;
-
-    function handleChatClick() {
-        chatClickCount++;
-        clearTimeout(chatClickTimer);
-        chatClickTimer = setTimeout(() => {
-            chatClickCount = 0;
-        }, 400);
+    // --- LOGIKA CHAT ---
+    function openChatModal() {
+        document.getElementById('mainContainer').classList.add('hidden-for-chat');
+        document.getElementById('chatModal').style.display = 'flex';
+        document.getElementById('chatInput').focus();
     }
+
+    function closeChatModal() {
+        document.getElementById('chatModal').style.display = 'none';
+        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
+    }
+
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        const chatBox = document.getElementById('chatBox');
+        
+        const userMsg = document.createElement('div');
+        userMsg.className = 'chat-msg sent';
+        userMsg.innerText = msg;
+        chatBox.appendChild(userMsg);
+
+        input.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        setTimeout(() => {
+            const botMsg = document.createElement('div');
+            botMsg.className = 'chat-msg received';
+            botMsg.innerText = "Pesan diterima! Sistem siap digunakan.";
+            chatBox.appendChild(botMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 600);
+    }
+
+    function handleChatKeyPress(e) {
+        if (e.key === 'Enter') sendChatMessage();
+    }
+
+    // --- LOGIKA UTAMA FLOP KASIR ---
+    let hasilTeksUntukDisalin = "";
 
     function toggleBtnPosition() {
         document.getElementById('btnGroup').classList.toggle('swapped');
@@ -713,15 +824,11 @@
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
-        const counter = document.getElementById('dataCounter');
         
         tbody.innerHTML = ''; 
         hasilTeksUntukDisalin = ""; 
 
-        if (!input) {
-            counter.innerText = "0 DATA";
-            return;
-        }
+        if (!input) return;
 
         let parsedLogList = [];
         let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
@@ -753,13 +860,11 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        counter.innerText = `${parsedLogList.length} DATA`;
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
         document.getElementById('rawInput').focus();
     }
@@ -777,10 +882,13 @@
         });
     }
 
+    // Tombol ESC untuk tutup modal
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             if (document.getElementById('typingModal').style.display === 'flex') {
                 closeTypingModal();
+            } else if (document.getElementById('chatModal').style.display === 'flex') {
+                closeChatModal();
             } else {
                 resetData();
             }
