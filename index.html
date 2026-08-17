@@ -7,7 +7,7 @@
     <title>Rumus Flop Kasir - Ultra Light Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&family=Kantumruy+Pro:wght@500;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
@@ -144,7 +144,7 @@
         text-transform: uppercase;
     }
 
-    .badge-count, .btn-swap-pos {
+    .badge-count, .btn-swap-pos, .btn-typing-test {
         font-size: 11px;
         font-weight: 800;
         padding: 4px 12px;
@@ -164,7 +164,13 @@
         border: 1px solid rgba(168, 85, 247, 0.5);
     }
 
-    .badge-count:hover, .btn-swap-pos:hover {
+    .btn-typing-test {
+        background: rgba(255, 0, 127, 0.15);
+        color: var(--pink-neon) !important;
+        border: 1px solid rgba(255, 0, 127, 0.5);
+    }
+
+    .badge-count:hover, .btn-swap-pos:hover, .btn-typing-test:hover {
         background: rgba(0, 210, 255, 0.35);
         border-color: #ffffff;
         color: #ffffff !important;
@@ -174,6 +180,10 @@
 
     .btn-swap-pos:hover {
         box-shadow: 0 0 12px var(--purple-neon);
+    }
+
+    .btn-typing-test:hover {
+        box-shadow: 0 0 12px var(--pink-neon);
     }
     
     textarea#rawInput {
@@ -995,6 +1005,164 @@
         font-size: 16px;
         letter-spacing: 2px;
     }
+
+    /* STYLES MODAL TYPING TEST */
+    .typing-modal-card {
+        position: relative;
+        width: 100%;
+        max-width: 680px;
+        background: rgba(10, 8, 20, 0.95);
+        border: 2px solid var(--pink-neon);
+        box-shadow: 0 0 30px rgba(255, 0, 127, 0.4);
+        border-radius: 25px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .typing-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 0, 127, 0.3);
+        padding-bottom: 10px;
+    }
+
+    .typing-header-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--pink-neon);
+        letter-spacing: 2px;
+    }
+
+    .typing-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .lang-selector {
+        background: rgba(20, 20, 30, 0.9);
+        border: 1px solid var(--purple-bright);
+        color: var(--cyan-neon);
+        padding: 5px 12px;
+        border-radius: 10px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 11px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .timer-badge {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: 18px;
+        color: var(--cyan-neon);
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid var(--cyan-neon);
+        padding: 4px 12px;
+        border-radius: 12px;
+    }
+
+    .typing-box-container {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1.5px solid rgba(168, 85, 247, 0.4);
+        border-radius: 15px;
+        padding: 15px;
+        height: 90px;
+        overflow: hidden;
+    }
+
+    .typing-text-display {
+        font-family: 'JetBrains Mono', 'Kantumruy Pro', monospace;
+        font-size: 18px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.4);
+        word-break: break-word;
+        white-space: normal;
+        position: relative;
+        top: 0;
+        transition: top 0.25s ease-in-out;
+    }
+
+    .typing-text-display span.correct {
+        color: var(--cyan-neon);
+        text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+    }
+
+    .typing-text-display span.incorrect {
+        color: var(--pink-neon);
+        background: rgba(255, 0, 127, 0.2);
+        border-radius: 3px;
+        text-decoration: underline;
+    }
+
+    .typing-text-display span.current {
+        background: rgba(168, 85, 247, 0.4);
+        border-left: 2px solid var(--blue-electric);
+        border-radius: 2px;
+        color: #ffffff;
+    }
+
+    textarea#typingInput {
+        width: 100%;
+        height: 50px;
+        background: rgba(20, 20, 30, 0.8);
+        border: 1.5px solid var(--lavender-border);
+        border-radius: 12px;
+        color: #ffffff;
+        font-family: 'JetBrains Mono', 'Kantumruy Pro', monospace;
+        font-size: 16px;
+        padding: 12px;
+        outline: none;
+        resize: none;
+    }
+
+    textarea#typingInput:focus {
+        border-color: var(--cyan-neon);
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    .typing-results {
+        display: none;
+        flex-direction: row;
+        justify-content: space-around;
+        background: rgba(0, 210, 255, 0.1);
+        border: 1px solid var(--cyan-neon);
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .result-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .result-val {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
+        font-weight: 900;
+        color: var(--cyan-neon);
+    }
+
+    .result-lbl {
+        font-size: 10px;
+        font-family: 'Orbitron', sans-serif;
+        color: var(--purple-bright);
+        letter-spacing: 1px;
+    }
+
+    .btn-restart-typing {
+        padding: 10px 20px !important;
+        border-radius: 15px !important;
+        font-size: 11px !important;
+        margin-top: 5px;
+    }
 </style>
 </head>
 <body>
@@ -1026,6 +1194,7 @@
         <label>Hasil Konversi</label>
         <div class="label-actions">
             <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
+            <span class="btn-typing-test" onclick="openTypingTest()">TYPING TEST ⌨️</span>
             <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
         </div>
     </div>
@@ -1046,11 +1215,51 @@
     </div>
 </div>
 
+<!-- MODAL TYPING TEST -->
+<div class="chat-modal-overlay" id="typingTestModal">
+    <div class="typing-modal-card">
+        <button class="auth-close-btn" onclick="closeTypingTest()">X</button>
+        
+        <div class="typing-header">
+            <div class="typing-header-title">TYPING TEST</div>
+            <div class="typing-controls">
+                <select id="typingLang" class="lang-selector" onchange="initTypingTest()">
+                    <option value="id">🇮🇩 INDONESIA</option>
+                    <option value="km">🇰🇭 KHMER</option>
+                </select>
+                <div class="timer-badge" id="typingTimer">60s</div>
+            </div>
+        </div>
+
+        <div class="typing-box-container">
+            <div class="typing-text-display" id="typingTextDisplay"></div>
+        </div>
+
+        <textarea id="typingInput" placeholder="Mulai mengetik di sini..." oninput="handleTypingInput()"></textarea>
+
+        <div class="typing-results" id="typingResults">
+            <div class="result-item">
+                <div class="result-val" id="resWpm">0</div>
+                <div class="result-lbl">KECEPATAN (WPM)</div>
+            </div>
+            <div class="result-item">
+                <div class="result-val" id="resAccuracy">100%</div>
+                <div class="result-lbl">AKURASI</div>
+            </div>
+            <div class="result-item">
+                <div class="result-val" id="resCorrect">0</div>
+                <div class="result-lbl">KATA BENAR</div>
+            </div>
+        </div>
+
+        <button class="btn-restart-typing" onclick="initTypingTest()">ULANGI TEST 🔄</button>
+    </div>
+</div>
+
 <!-- MODAL POP-UP FOTO SECRET (KLIK 1X) -->
 <div class="secret-photo-modal" id="secretPhotoModal" onclick="closeSecretPhoto()">
     <div class="secret-photo-content" onclick="event.stopPropagation()">
         <button class="auth-close-btn" onclick="closeSecretPhoto()">X</button>
-        <!-- Ganti URL src gambar jika ingin memakai foto sendiri -->
         <img id="secretImg" src="https://dummyimage.com/600x400/0d0a1e/ff007f.png&text=SUDAH+DIHAPUS" alt="Sudah Dihapus">
         <div class="secret-photo-title">SUDAH DIHAPUS</div>
     </div>
@@ -1211,6 +1420,156 @@
         }
     });
 
+    // --- LOGIKA TYPING TEST ---
+    const typingWordsID = [
+        "saya", "mau", "makan", "nasi", "goreng", "di", "warung", "dekat", "rumah", "bersama",
+        "teman", "mereka", "sangat", "senang", "bisa", "berkumpul", "setiap", "malam", "minggu",
+        "sambil", "minum", "kopi", "dan", "diskusi", "tentang", "pekerjaan", "yang", "belum",
+        "selesai", "hari", "ini", "kasir", "sedang", "hitung", "uang", "transaksi", "bank",
+        "deposit", "penarikan", "proses", "cepat", "dan", "aman", "sistem", "otomatis"
+    ];
+
+    const typingWordsKM = [
+        "ខ្ញុំ", "ស្រឡាញ់", "ការងារ", "នេះ", "ណាស់", "ព្រោះ", "វា", "ផ្តល់", "បទពិសោធន៍", "ល្អ",
+        "ប្រព័ន្ធ", "ប្រតិបត្តិការ", "លឿន", "និង", "សុវត្ថិភាព", "សម្រាប់", "អ្នក", "ប្រើប្រាស់",
+        "ទាំងអស់", "ថ្ងៃនេះ", "អាកាសធាតុ", "ល្អ", "ណាស់", "យើង", "ត្រូវ", "ធ្វើការ", "ឱ្យ",
+        "បាន", "ល្អ", "បំផុត", "ដើម្បី", "ទទួលបាន", "លទ្ធផល", "គាប់ចិត្ត"
+    ];
+
+    let typingWordList = [];
+    let currentWordIdx = 0;
+    let typingTimerVal = 60;
+    let typingTimerInterval = null;
+    let isTypingStarted = false;
+    let correctWordsCount = 0;
+    let totalTypedChars = 0;
+
+    function openTypingTest() {
+        document.getElementById('mainContainer').classList.add('hidden-for-chat');
+        document.getElementById('typingTestModal').style.display = 'flex';
+        initTypingTest();
+    }
+
+    function closeTypingTest() {
+        if (typingTimerInterval) clearInterval(typingTimerInterval);
+        document.getElementById('typingTestModal').style.display = 'none';
+        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
+    }
+
+    function shuffleArray(array) {
+        return array.sort(() => Math.random() - 0.5);
+    }
+
+    function initTypingTest() {
+        if (typingTimerInterval) clearInterval(typingTimerInterval);
+        
+        const lang = document.getElementById('typingLang').value;
+        const sourceWords = (lang === 'km') ? typingWordsKM : typingWordsID;
+        
+        typingWordList = shuffleArray([...sourceWords, ...sourceWords, ...sourceWords, ...sourceWords]);
+        currentWordIdx = 0;
+        typingTimerVal = 60;
+        isTypingStarted = false;
+        correctWordsCount = 0;
+        totalTypedChars = 0;
+
+        document.getElementById('typingTimer').innerText = '60s';
+        document.getElementById('typingInput').value = '';
+        document.getElementById('typingInput').disabled = false;
+        document.getElementById('typingResults').style.display = 'none';
+        
+        renderTypingText();
+        document.getElementById('typingInput').focus();
+    }
+
+    function renderTypingText() {
+        const display = document.getElementById('typingTextDisplay');
+        display.innerHTML = '';
+        display.style.top = '0px';
+
+        typingWordList.forEach((word, index) => {
+            const span = document.createElement('span');
+            span.innerText = word + ' ';
+            span.id = `word-${index}`;
+            if (index === 0) span.className = 'current';
+            display.appendChild(span);
+        });
+    }
+
+    function handleTypingInput() {
+        const inputField = document.getElementById('typingInput');
+        const typedVal = inputField.value;
+
+        if (!isTypingStarted && typedVal.length > 0) {
+            isTypingStarted = true;
+            typingTimerInterval = setInterval(() => {
+                typingTimerVal--;
+                document.getElementById('typingTimer').innerText = typingTimerVal + 's';
+
+                if (typingTimerVal <= 0) {
+                    endTypingTest();
+                }
+            }, 1000);
+        }
+
+        const currentWordSpan = document.getElementById(`word-${currentWordIdx}`);
+        const currentTargetWord = typingWordList[currentWordIdx];
+
+        if (typedVal.endsWith(' ')) {
+            const cleanTyped = typedVal.trim();
+            totalTypedChars += cleanTyped.length;
+
+            if (cleanTyped === currentTargetWord) {
+                currentWordSpan.className = 'correct';
+                correctWordsCount++;
+            } else {
+                currentWordSpan.className = 'incorrect';
+            }
+
+            currentWordIdx++;
+            inputField.value = '';
+
+            const nextWordSpan = document.getElementById(`word-${currentWordIdx}`);
+            if (nextWordSpan) {
+                nextWordSpan.className = 'current';
+
+                // LOGIKA AUTO-SCROLL 2 BARIS (Naiikkan teks saat melebihi baris ke-2)
+                const containerTop = document.querySelector('.typing-box-container').getBoundingClientRect().top;
+                const nextTop = nextWordSpan.getBoundingClientRect().top;
+                const diff = nextTop - containerTop;
+
+                // Jika posisi kata melebihi batas baris ke-2 (sekitar > 50px)
+                if (diff > 50) {
+                    const currentTopOffset = parseInt(document.getElementById('typingTextDisplay').style.top || '0');
+                    document.getElementById('typingTextDisplay').style.top = (currentTopOffset - 30) + 'px';
+                }
+            } else {
+                endTypingTest();
+            }
+        } else {
+            if (currentTargetWord.startsWith(typedVal)) {
+                currentWordSpan.className = 'current';
+            } else {
+                currentWordSpan.className = 'incorrect';
+            }
+        }
+    }
+
+    function endTypingTest() {
+        clearInterval(typingTimerInterval);
+        document.getElementById('typingInput').disabled = true;
+        
+        const wpm = correctWordsCount; 
+        const totalAttempted = currentWordIdx;
+        const accuracy = totalAttempted > 0 ? Math.round((correctWordsCount / totalAttempted) * 100) : 0;
+
+        document.getElementById('resWpm').innerText = wpm;
+        document.getElementById('resAccuracy').innerText = accuracy + '%';
+        document.getElementById('resCorrect').innerText = correctWordsCount;
+
+        document.getElementById('typingResults').style.display = 'flex';
+    }
+
     // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU (1x Klik = Foto Secret, 10x Klik = T'chat)
     function handleChatClick() {
         chatClickCount++;
@@ -1219,7 +1578,6 @@
 
         // BUKA T'CHAT/LOGIN JIKA MENCAPAI 10 KLIK
         if (chatClickCount >= 10) {
-            // Tutup modal foto secret jika sedang terbuka
             closeSecretPhoto();
             
             if (activeUser) {
@@ -1227,7 +1585,7 @@
             } else {
                 openAuthModal();
             }
-            chatClickCount = 0; // Reset hitungan setelah berhasil
+            chatClickCount = 0; 
             return;
         }
 
@@ -1236,7 +1594,6 @@
             showSecretPhoto();
         }
 
-        // Reset hitungan jika tidak ada aktivitas klik selama lebih dari 2 detik
         chatClickTimer = setTimeout(() => {
             chatClickCount = 0;
         }, 2000); 
@@ -1934,7 +2291,9 @@
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (document.getElementById('secretPhotoModal').style.display === 'flex') {
+            if (document.getElementById('typingTestModal').style.display === 'flex') {
+                closeTypingTest();
+            } else if (document.getElementById('secretPhotoModal').style.display === 'flex') {
                 closeSecretPhoto();
             } else if (document.getElementById('imageViewerModal').style.display === 'flex') {
                 closeImageViewer();
