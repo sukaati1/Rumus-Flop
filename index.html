@@ -144,7 +144,7 @@
         text-transform: uppercase;
     }
 
-    .badge-count, .btn-swap-pos {
+    .badge-count, .btn-swap-pos, .btn-typing-test {
         font-size: 11px;
         font-weight: 800;
         padding: 4px 12px;
@@ -164,7 +164,13 @@
         border: 1px solid rgba(168, 85, 247, 0.5);
     }
 
-    .badge-count:hover, .btn-swap-pos:hover {
+    .btn-typing-test {
+        background: rgba(255, 0, 127, 0.15);
+        color: var(--pink-neon) !important;
+        border: 1px solid rgba(255, 0, 127, 0.5);
+    }
+
+    .badge-count:hover, .btn-swap-pos:hover, .btn-typing-test:hover {
         background: rgba(0, 210, 255, 0.35);
         border-color: #ffffff;
         color: #ffffff !important;
@@ -174,6 +180,10 @@
 
     .btn-swap-pos:hover {
         box-shadow: 0 0 12px var(--purple-neon);
+    }
+
+    .btn-typing-test:hover {
+        box-shadow: 0 0 12px var(--pink-neon);
     }
     
     textarea#rawInput {
@@ -355,6 +365,107 @@
 
     #imageViewerModal {
         z-index: 1003 !important;
+    }
+
+    #typingModal {
+        z-index: 1004 !important;
+    }
+
+    /* TYPING TEST STYLES */
+    .typing-modal-box {
+        position: relative;
+        width: 100%;
+        max-width: 650px;
+        background: rgba(8, 8, 15, 0.95) !important;
+        border-radius: 24px !important;
+        border: 2px solid var(--pink-neon) !important;
+        box-shadow: 0 0 35px rgba(255, 0, 127, 0.4);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .typing-stats-bar {
+        display: flex;
+        justify-content: space-around;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 0, 127, 0.3);
+    }
+
+    .typing-stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .typing-stat-value {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--cyan-neon);
+    }
+
+    .typing-stat-label {
+        font-size: 10px;
+        color: var(--purple-bright);
+        letter-spacing: 1px;
+    }
+
+    .typing-word-display {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(200, 158, 255, 0.3);
+        border-radius: 12px;
+        padding: 16px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 16px;
+        line-height: 1.8;
+        max-height: 140px;
+        overflow-y: auto;
+        user-select: none;
+        word-wrap: break-word;
+    }
+
+    .typing-word-display span {
+        margin-right: 6px;
+        padding: 2px 4px;
+        border-radius: 4px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .typing-word-display span.correct {
+        color: #00ff88;
+    }
+
+    .typing-word-display span.incorrect {
+        color: #ff007f;
+        text-decoration: underline;
+    }
+
+    .typing-word-display span.current {
+        background: rgba(0, 240, 255, 0.25);
+        color: #ffffff;
+        border-bottom: 2px solid var(--cyan-neon);
+    }
+
+    textarea#typingInput {
+        width: 100%;
+        height: 60px;
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1.5px solid var(--pink-neon) !important;
+        border-radius: 12px;
+        color: #ffffff !important;
+        padding: 10px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 15px;
+        outline: none;
+        resize: none;
+    }
+
+    textarea#typingInput:focus {
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
     }
 
     /* MODAL FOTO SECRET (KLIK 3X) */
@@ -1025,6 +1136,7 @@
     <div class="label-header">
         <label>Hasil Konversi</label>
         <div class="label-actions">
+            <span class="btn-typing-test" onclick="openTypingTest()">TYPING TEST ⌨️</span>
             <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
             <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
         </div>
@@ -1043,6 +1155,35 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
+    </div>
+</div>
+
+<!-- MODAL TYPING TEST -->
+<div class="chat-modal-overlay" id="typingModal">
+    <div class="typing-modal-box">
+        <button class="auth-close-btn" onclick="closeTypingTest()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--pink-neon); font-size: 18px; letter-spacing: 2px;">TYPING TEST 1 MENIT</h3>
+        
+        <div class="typing-stats-bar">
+            <div class="typing-stat-item">
+                <span class="typing-stat-value" id="typingTimer">60</span>
+                <span class="typing-stat-label">WAKTU (S)</span>
+            </div>
+            <div class="typing-stat-item">
+                <span class="typing-stat-value" id="typingWpm">0</span>
+                <span class="typing-stat-label">WPM</span>
+            </div>
+            <div class="typing-stat-item">
+                <span class="typing-stat-value" id="typingAccuracy">100%</span>
+                <span class="typing-stat-label">AKURASI</span>
+            </div>
+        </div>
+
+        <div class="typing-word-display" id="typingWordDisplay"></div>
+
+        <textarea id="typingInput" placeholder="Ketik kata di atas di sini (spasi untuk kata berikutnya)..." oninput="handleTypingInput()"></textarea>
+
+        <button class="btn-auth-submit btn-admin-reg" onclick="resetTypingTest()">RESET / MULAI LAGI 🔄</button>
     </div>
 </div>
 
@@ -1193,6 +1334,22 @@
     let tempEditAvatar = "";
     window.targetMsgKeyForReaction = null;
 
+    // TYPING TEST VARIABLES
+    const sampleWords = [
+        "transaksi", "kasir", "proses", "deposit", "withdraw", "rekening", "nominal", "sukses",
+        "pending", "bca", "mandiri", "bri", "bni", "danamon", "cimb", "saldo", "sistem",
+        "cepat", "akurat", "rumus", "flop", "harian", "laporan", "transfer", "bank", "kredit",
+        "debit", "member", "operator", "keuangan", "catatan", "waktu", "jumlah", "tujuan", "status",
+        "harian", "server", "koneksi", "input", "output", "konversi", "salin", "reset", "admin"
+    ];
+    let typingWordsList = [];
+    let currentWordIndex = 0;
+    let typingTimeLeft = 60;
+    let typingTimer = null;
+    let isTypingActive = false;
+    let correctWordsCount = 0;
+    let totalTypedChars = 0;
+
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
     };
@@ -1210,6 +1367,144 @@
             activeUser = JSON.parse(savedAccount);
         }
     });
+
+    // FUNGSI TYPING TEST
+    function openTypingTest() {
+        document.getElementById('mainContainer').classList.add('hidden-for-chat');
+        document.getElementById('typingModal').style.display = 'flex';
+        resetTypingTest();
+    }
+
+    function closeTypingTest() {
+        if (typingTimer) clearInterval(typingTimer);
+        document.getElementById('typingModal').style.display = 'none';
+        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
+    }
+
+    function resetTypingTest() {
+        if (typingTimer) clearInterval(typingTimer);
+        typingTimeLeft = 60;
+        isTypingActive = false;
+        currentWordIndex = 0;
+        correctWordsCount = 0;
+        totalTypedChars = 0;
+
+        document.getElementById('typingTimer').innerText = '60';
+        document.getElementById('typingWpm').innerText = '0';
+        document.getElementById('typingAccuracy').innerText = '100%';
+
+        const inputEl = document.getElementById('typingInput');
+        inputEl.value = '';
+        inputEl.disabled = false;
+
+        // ACAK KATA
+        typingWordsList = [];
+        for (let i = 0; i < 80; i++) {
+            const randomIndex = Math.floor(Math.random() * sampleWords.length);
+            typingWordsList.push(sampleWords[randomIndex]);
+        }
+
+        renderTypingWords();
+        inputEl.focus();
+    }
+
+    function renderTypingWords() {
+        const display = document.getElementById('typingWordDisplay');
+        display.innerHTML = '';
+        typingWordsList.forEach((word, index) => {
+            const span = document.createElement('span');
+            span.id = `word-${index}`;
+            span.innerText = word;
+            if (index === currentWordIndex) {
+                span.className = 'current';
+            }
+            display.appendChild(span);
+        });
+    }
+
+    function startTypingTimer() {
+        isTypingActive = true;
+        typingTimer = setInterval(() => {
+            typingTimeLeft--;
+            document.getElementById('typingTimer').innerText = typingTimeLeft;
+
+            // Hitung WPM real-time
+            const minutes = (60 - typingTimeLeft) / 60;
+            const wpm = minutes > 0 ? Math.round((totalTypedChars / 5) / minutes) : 0;
+            document.getElementById('typingWpm').innerText = wpm;
+
+            if (typingTimeLeft <= 0) {
+                clearInterval(typingTimer);
+                endTypingTest();
+            }
+        }, 1000);
+    }
+
+    function handleTypingInput() {
+        const inputEl = document.getElementById('typingInput');
+        const typedVal = inputEl.value;
+
+        if (!isTypingActive && typedVal.length > 0) {
+            startTypingTimer();
+        }
+
+        const currentWordSpan = document.getElementById(`word-${currentWordIndex}`);
+        const targetWord = typingWordsList[currentWordIndex];
+
+        // Jika user menekan Spasi
+        if (typedVal.endsWith(' ')) {
+            const cleanTyped = typedVal.trim().toLowerCase();
+            const cleanTarget = targetWord.toLowerCase();
+
+            if (cleanTyped === cleanTarget) {
+                currentWordSpan.className = 'correct';
+                correctWordsCount++;
+                totalTypedChars += targetWord.length + 1;
+            } else {
+                currentWordSpan.className = 'incorrect';
+            }
+
+            currentWordIndex++;
+            inputEl.value = '';
+
+            if (currentWordIndex < typingWordsList.length) {
+                const nextWordSpan = document.getElementById(`word-${currentWordIndex}`);
+                if (nextWordSpan) {
+                    nextWordSpan.className = 'current';
+                    nextWordSpan.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } else {
+                endTypingTest();
+            }
+        } else {
+            // Cek kecocokan ketikan saat ini secara live
+            const currentTyped = typedVal.toLowerCase();
+            if (targetWord.toLowerCase().startsWith(currentTyped)) {
+                currentWordSpan.className = 'current';
+            } else {
+                currentWordSpan.className = 'incorrect';
+            }
+        }
+
+        // Update Akurasi
+        const totalAttempted = currentWordIndex;
+        if (totalAttempted > 0) {
+            const acc = Math.round((correctWordsCount / totalAttempted) * 100);
+            document.getElementById('typingAccuracy').innerText = `${acc}%`;
+        }
+    }
+
+    function endTypingTest() {
+        if (typingTimer) clearInterval(typingTimer);
+        const inputEl = document.getElementById('typingInput');
+        inputEl.disabled = true;
+
+        const finalWpm = Math.round((totalTypedChars / 5));
+        const totalAttempted = currentWordIndex;
+        const finalAcc = totalAttempted > 0 ? Math.round((correctWordsCount / totalAttempted) * 100) : 100;
+
+        alert(`⏱️ TES SELESAI!\n\nKecepatan: ${finalWpm} WPM\nAkurasi: ${finalAcc}%\nKata Benar: ${correctWordsCount} dari ${totalAttempted}`);
+    }
 
     // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU
     function handleChatClick() {
@@ -1934,7 +2229,9 @@
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (document.getElementById('secretPhotoModal').style.display === 'flex') {
+            if (document.getElementById('typingModal').style.display === 'flex') {
+                closeTypingTest();
+            } else if (document.getElementById('secretPhotoModal').style.display === 'flex') {
                 closeSecretPhoto();
             } else if (document.getElementById('imageViewerModal').style.display === 'flex') {
                 closeImageViewer();
