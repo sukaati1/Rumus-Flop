@@ -357,6 +357,55 @@
         z-index: 1003 !important;
     }
 
+    /* MODAL FOTO SECRET (KLIK 3X) */
+    .secret-photo-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        z-index: 1005;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .secret-photo-content {
+        position: relative;
+        background: rgba(15, 10, 25, 0.95);
+        border: 2px solid var(--pink-neon);
+        box-shadow: 0 0 30px rgba(255, 0, 127, 0.5);
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 90%;
+        max-height: 85vh;
+    }
+
+    .secret-photo-content img {
+        max-width: 100%;
+        max-height: 60vh;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        object-fit: contain;
+    }
+
+    .secret-photo-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--pink-neon);
+        margin-top: 15px;
+        letter-spacing: 3px;
+        text-shadow: 0 0 10px rgba(255, 0, 127, 0.7);
+        text-align: center;
+    }
+
     /* MODAL AUTH (LOGIN KHUSUS) */
     .auth-modal {
         position: relative;
@@ -997,6 +1046,15 @@
     </div>
 </div>
 
+<!-- MODAL POP-UP FOTO SECRET (KLIK 3X) -->
+<div class="secret-photo-modal" id="secretPhotoModal" onclick="closeSecretPhoto()">
+    <div class="secret-photo-content" onclick="event.stopPropagation()">
+        <button class="auth-close-btn" onclick="closeSecretPhoto()">X</button>
+        <img id="secretImg" src="https://dummyimage.com/600x400/0d0a1e/ff007f.png&text=SUDAH+DIHAPUS" alt="Sudah Dihapus">
+        <div class="secret-photo-title">SUDAH DIHAPUS</div>
+    </div>
+</div>
+
 <!-- AUTH MODAL OVERLAY (KHUSUS LOGIN) -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
@@ -1154,8 +1212,17 @@
 
     function handleChatClick() {
         chatClickCount++;
+        
         if (chatClickTimer) clearTimeout(chatClickTimer);
 
+        // KLIK 3 KALI: Munculkan foto secret, lalu reset counter
+        if (chatClickCount === 3) {
+            showSecretPhoto();
+            chatClickCount = 0;
+            return;
+        }
+
+        // KLIK 10 KALI: Buka fitur T'chat
         if (chatClickCount >= 10) {
             if (activeUser) {
                 openTeamChat();
@@ -1166,8 +1233,18 @@
         } else {
             chatClickTimer = setTimeout(() => {
                 chatClickCount = 0;
-            }, 1500); 
+            }, 2000); 
         }
+    }
+
+    function showSecretPhoto() {
+        document.getElementById('mainContainer').classList.add('hidden-for-chat');
+        document.getElementById('secretPhotoModal').style.display = 'flex';
+    }
+
+    function closeSecretPhoto() {
+        document.getElementById('secretPhotoModal').style.display = 'none';
+        document.getElementById('mainContainer').classList.remove('hidden-for-chat');
     }
 
     function openAuthModal() {
@@ -1219,10 +1296,7 @@
             return;
         }
         
-        // Tutup modal profil secara otomatis
         closeProfileModal();
-
-        // Reset input dan tampilkan modal registrasi langsung
         document.getElementById('regUser').value = '';
         document.getElementById('regPass').value = '';
         document.getElementById('registerModal').style.display = 'flex';
@@ -1855,7 +1929,9 @@
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (document.getElementById('imageViewerModal').style.display === 'flex') {
+            if (document.getElementById('secretPhotoModal').style.display === 'flex') {
+                closeSecretPhoto();
+            } else if (document.getElementById('imageViewerModal').style.display === 'flex') {
                 closeImageViewer();
             } else if (document.getElementById('registerModal').style.display === 'flex') {
                 closeRegisterModal();
