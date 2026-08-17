@@ -1050,6 +1050,7 @@
 <div class="secret-photo-modal" id="secretPhotoModal" onclick="closeSecretPhoto()">
     <div class="secret-photo-content" onclick="event.stopPropagation()">
         <button class="auth-close-btn" onclick="closeSecretPhoto()">X</button>
+        <!-- Ganti URL src gambar jika ingin memakai foto sendiri -->
         <img id="secretImg" src="https://dummyimage.com/600x400/0d0a1e/ff007f.png&text=SUDAH+DIHAPUS" alt="Sudah Dihapus">
         <div class="secret-photo-title">SUDAH DIHAPUS</div>
     </div>
@@ -1210,31 +1211,35 @@
         }
     });
 
+    // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU
     function handleChatClick() {
         chatClickCount++;
         
         if (chatClickTimer) clearTimeout(chatClickTimer);
 
-        // KLIK 3 KALI: Munculkan foto secret, lalu reset counter
-        if (chatClickCount === 3) {
-            showSecretPhoto();
-            chatClickCount = 0;
-            return;
-        }
-
-        // KLIK 10 KALI: Buka fitur T'chat
+        // BUKA T'CHAT/LOGIN JIKA MENCAPAI 10 KLIK
         if (chatClickCount >= 10) {
+            // Tutup modal foto secret jika sedang terbuka di latar belakang
+            closeSecretPhoto();
+            
             if (activeUser) {
                 openTeamChat();
             } else {
                 openAuthModal();
             }
-            chatClickCount = 0;
-        } else {
-            chatClickTimer = setTimeout(() => {
-                chatClickCount = 0;
-            }, 2000); 
+            chatClickCount = 0; // Reset hitungan setelah berhasil
+            return;
         }
+
+        // TAMPILKAN FOTO SECRET HANYA PADA KLIK KE-3 (Hitungan TIDAK di-reset)
+        if (chatClickCount === 3) {
+            showSecretPhoto();
+        }
+
+        // Reset hitungan jika tidak ada aktivitas klik selama lebih dari 2 detik
+        chatClickTimer = setTimeout(() => {
+            chatClickCount = 0;
+        }, 2000); 
     }
 
     function showSecretPhoto() {
