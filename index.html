@@ -357,7 +357,7 @@
         z-index: 1003 !important;
     }
 
-    /* MODAL FOTO SECRET (KLIK 3X) */
+    /* MODAL FOTO SECRET (KLIK 1X) */
     .secret-photo-modal {
         position: fixed;
         top: 0;
@@ -1046,7 +1046,7 @@
     </div>
 </div>
 
-<!-- MODAL POP-UP FOTO SECRET (KLIK 3X) -->
+<!-- MODAL POP-UP FOTO SECRET (KLIK 1X) -->
 <div class="secret-photo-modal" id="secretPhotoModal" onclick="closeSecretPhoto()">
     <div class="secret-photo-content" onclick="event.stopPropagation()">
         <button class="auth-close-btn" onclick="closeSecretPhoto()">X</button>
@@ -1211,7 +1211,7 @@
         }
     });
 
-    // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU
+    // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU (1x Klik = Foto Secret, 10x Klik = T'chat)
     function handleChatClick() {
         chatClickCount++;
         
@@ -1219,7 +1219,7 @@
 
         // BUKA T'CHAT/LOGIN JIKA MENCAPAI 10 KLIK
         if (chatClickCount >= 10) {
-            // Tutup modal foto secret jika sedang terbuka di latar belakang
+            // Tutup modal foto secret jika sedang terbuka
             closeSecretPhoto();
             
             if (activeUser) {
@@ -1231,8 +1231,8 @@
             return;
         }
 
-        // TAMPILKAN FOTO SECRET HANYA PADA KLIK KE-3 (Hitungan TIDAK di-reset)
-        if (chatClickCount === 3) {
+        // TAMPILKAN FOTO SECRET PADA KLIK PERTAMA (1X KLIK)
+        if (chatClickCount === 1) {
             showSecretPhoto();
         }
 
