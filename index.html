@@ -418,21 +418,22 @@
         background: rgba(0, 0, 0, 0.5);
         border: 1px solid rgba(200, 158, 255, 0.3);
         border-radius: 12px;
-        padding: 16px;
+        padding: 12px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 16px;
-        line-height: 1.8;
-        max-height: 140px;
-        overflow-y: auto;
+        font-size: 18px;
+        line-height: 2.1;
+        height: 88px; /* TEPAT 2 BARIS TEKS */
+        overflow-y: hidden;
         user-select: none;
         word-wrap: break-word;
     }
 
     .typing-word-display span {
-        margin-right: 6px;
-        padding: 2px 4px;
-        border-radius: 4px;
-        color: rgba(255, 255, 255, 0.5);
+        margin-right: 8px;
+        padding: 2px 6px;
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.4);
+        display: inline-block;
     }
 
     .typing-word-display span.correct {
@@ -452,14 +453,14 @@
 
     textarea#typingInput {
         width: 100%;
-        height: 60px;
+        height: 55px;
         background: rgba(20, 20, 28, 0.9) !important;
         border: 1.5px solid var(--pink-neon) !important;
         border-radius: 12px;
         color: #ffffff !important;
         padding: 10px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 15px;
+        font-size: 16px;
         outline: none;
         resize: none;
     }
@@ -1191,7 +1192,6 @@
 <div class="secret-photo-modal" id="secretPhotoModal" onclick="closeSecretPhoto()">
     <div class="secret-photo-content" onclick="event.stopPropagation()">
         <button class="auth-close-btn" onclick="closeSecretPhoto()">X</button>
-        <!-- Ganti URL src gambar jika ingin memakai foto sendiri -->
         <img id="secretImg" src="https://dummyimage.com/600x400/0d0a1e/ff007f.png&text=SUDAH+DIHAPUS" alt="Sudah Dihapus">
         <div class="secret-photo-title">SUDAH DIHAPUS</div>
     </div>
@@ -1334,13 +1334,14 @@
     let tempEditAvatar = "";
     window.targetMsgKeyForReaction = null;
 
-    // TYPING TEST VARIABLES
+    // TYPING TEST VARIABLES - KATA MUDAH DAN SEDERHANA
     const sampleWords = [
-        "transaksi", "kasir", "proses", "deposit", "withdraw", "rekening", "nominal", "sukses",
-        "pending", "bca", "mandiri", "bri", "bni", "danamon", "cimb", "saldo", "sistem",
-        "cepat", "akurat", "rumus", "flop", "harian", "laporan", "transfer", "bank", "kredit",
-        "debit", "member", "operator", "keuangan", "catatan", "waktu", "jumlah", "tujuan", "status",
-        "harian", "server", "koneksi", "input", "output", "konversi", "salin", "reset", "admin"
+        "bisa", "makan", "jalan", "tidur", "minum", "pagi", "siang", "malam",
+        "air", "buku", "pintu", "rumah", "meja", "kursi", "lampu", "baju",
+        "suka", "senang", "cepat", "lama", "besar", "kecil", "bagus", "baru",
+        "ada", "bukan", "sudah", "belum", "kapan", "siapa", "mana", "saja",
+        "hari", "bulan", "tahun", "jam", "menit", "detik", "satu", "dua",
+        "tiga", "lima", "puluh", "ratus", "banyak", "sedikit", "semua", "orang"
     ];
     let typingWordsList = [];
     let currentWordIndex = 0;
@@ -1399,7 +1400,7 @@
 
         // ACAK KATA
         typingWordsList = [];
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 120; i++) {
             const randomIndex = Math.floor(Math.random() * sampleWords.length);
             typingWordsList.push(sampleWords[randomIndex]);
         }
@@ -1411,6 +1412,7 @@
     function renderTypingWords() {
         const display = document.getElementById('typingWordDisplay');
         display.innerHTML = '';
+        display.scrollTop = 0; // RESET SCROLL
         typingWordsList.forEach((word, index) => {
             const span = document.createElement('span');
             span.id = `word-${index}`;
@@ -1471,7 +1473,16 @@
                 const nextWordSpan = document.getElementById(`word-${currentWordIndex}`);
                 if (nextWordSpan) {
                     nextWordSpan.className = 'current';
-                    nextWordSpan.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    
+                    // AUTO TURUN SCROLL UNTUK TETAP DI 2 BARIS
+                    const display = document.getElementById('typingWordDisplay');
+                    const spanTop = nextWordSpan.offsetTop;
+                    const displayTop = display.offsetTop;
+                    
+                    // JIKA KATA LEBIH RENDAH DARI BARIS PERTAMA, SCROLL KE BAWAH OTOMATIS
+                    if (spanTop - displayTop > 35) {
+                        display.scrollTop = spanTop - displayTop - 8;
+                    }
                 }
             } else {
                 endTypingTest();
@@ -1506,15 +1517,13 @@
         alert(`⏱️ TES SELESAI!\n\nKecepatan: ${finalWpm} WPM\nAkurasi: ${finalAcc}%\nKata Benar: ${correctWordsCount} dari ${totalAttempted}`);
     }
 
-    // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU
+    // FUNGSI HANDLE KLIK DATA
     function handleChatClick() {
         chatClickCount++;
         
         if (chatClickTimer) clearTimeout(chatClickTimer);
 
-        // BUKA T'CHAT/LOGIN JIKA MENCAPAI 10 KLIK
         if (chatClickCount >= 10) {
-            // Tutup modal foto secret jika sedang terbuka di latar belakang
             closeSecretPhoto();
             
             if (activeUser) {
@@ -1522,16 +1531,14 @@
             } else {
                 openAuthModal();
             }
-            chatClickCount = 0; // Reset hitungan setelah berhasil
+            chatClickCount = 0;
             return;
         }
 
-        // TAMPILKAN FOTO SECRET HANYA PADA KLIK KE-3 (Hitungan TIDAK di-reset)
         if (chatClickCount === 3) {
             showSecretPhoto();
         }
 
-        // Reset hitungan jika tidak ada aktivitas klik selama lebih dari 2 detik
         chatClickTimer = setTimeout(() => {
             chatClickCount = 0;
         }, 2000); 
