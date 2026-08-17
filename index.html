@@ -357,7 +357,7 @@
         z-index: 1003 !important;
     }
 
-    /* MODAL FOTO SECRET (KLIK 3X) */
+    /* MODAL FOTO SECRET */
     .secret-photo-modal {
         position: fixed;
         top: 0;
@@ -1046,11 +1046,10 @@
     </div>
 </div>
 
-<!-- MODAL POP-UP FOTO SECRET (KLIK 3X) -->
+<!-- MODAL POP-UP FOTO SECRET -->
 <div class="secret-photo-modal" id="secretPhotoModal" onclick="closeSecretPhoto()">
     <div class="secret-photo-content" onclick="event.stopPropagation()">
         <button class="auth-close-btn" onclick="closeSecretPhoto()">X</button>
-        <!-- Ganti URL src gambar jika ingin memakai foto sendiri -->
         <img id="secretImg" src="https://dummyimage.com/600x400/0d0a1e/ff007f.png&text=SUDAH+DIHAPUS" alt="Sudah Dihapus">
         <div class="secret-photo-title">SUDAH DIHAPUS</div>
     </div>
@@ -1187,11 +1186,13 @@
     let selectedReplyData = null; 
     let currentDataCount = 0;
 
-    let chatClickCount = 0;
-    let chatClickTimer = null;
     let activeUser = null; 
     let tempEditAvatar = "";
     window.targetMsgKeyForReaction = null;
+
+    // LOGIKA TIMER & COUNTER KLIK DATA BADGE
+    let chatClickCount = 0;
+    let chatClickTimer = null;
 
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -1211,35 +1212,25 @@
         }
     });
 
-    // FUNGSI HANDLE KLIK DATA BERBAHASAN BARU
+    // FUNGSI GABUNGAN HITUNG KLIK
     function handleChatClick() {
         chatClickCount++;
-        
-        if (chatClickTimer) clearTimeout(chatClickTimer);
 
-        // BUKA T'CHAT/LOGIN JIKA MENCAPAI 10 KLIK
-        if (chatClickCount >= 10) {
-            // Tutup modal foto secret jika sedang terbuka di latar belakang
-            closeSecretPhoto();
-            
-            if (activeUser) {
-                openTeamChat();
-            } else {
-                openAuthModal();
-            }
-            chatClickCount = 0; // Reset hitungan setelah berhasil
-            return;
-        }
-
-        // TAMPILKAN FOTO SECRET HANYA PADA KLIK KE-3 (Hitungan TIDAK di-reset)
-        if (chatClickCount === 3) {
-            showSecretPhoto();
-        }
-
-        // Reset hitungan jika tidak ada aktivitas klik selama lebih dari 2 detik
+        clearTimeout(chatClickTimer);
         chatClickTimer = setTimeout(() => {
+            // Jika diklik 1 s/d 9 kali, tampilkan foto secret
+            if (chatClickCount > 0 && chatClickCount < 10) {
+                showSecretPhoto();
+            }
             chatClickCount = 0;
-        }, 2000); 
+        }, 400); // Batas jeda waktu antar-klik (400 milidetik)
+
+        // Jika diklik 10 kali secara cepat, masuk ke T'chat
+        if (chatClickCount >= 10) {
+            clearTimeout(chatClickTimer);
+            chatClickCount = 0;
+            openTeamChat();
+        }
     }
 
     function showSecretPhoto() {
