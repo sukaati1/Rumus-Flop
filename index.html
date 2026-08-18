@@ -1195,33 +1195,9 @@
         }
 
         if (user !== NAMA_ADMIN_RESMI) {
-            alert("SELURUH AKSES SUDAH DI HAPUS");
+            alert("❌ Hanya Admin " + NAMA_ADMIN_RESMI + " yang diizinkan masuk!");
             return;
         }
-
-        dbAccounts.child(user).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                const accData = snapshot.val();
-                if (accData.password === pass) {
-                    activeUser = { 
-                        username: user,
-                        avatar: accData.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user)
-                    };
-                    localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
-                    
-                    document.getElementById('loginUser').value = '';
-                    document.getElementById('loginPass').value = '';
-                    
-                    closeAuthModal();
-                    openTeamChat();
-                } else {
-                    alert("❌ Password salah!");
-                }
-            } else {
-                alert("SELURUH AKSES SUDAH DI HAPUS");
-            }
-        });
-    }
 
         dbAccounts.child(user).once('value', (snapshot) => {
             if (snapshot.exists()) {
