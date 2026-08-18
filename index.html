@@ -1195,7 +1195,7 @@
         }
 
         if (user !== NAMA_ADMIN_RESMI) {
-            alert("❌ Hanya Admin " + NAMA_ADMIN_RESMI + " yang diizinkan masuk!");
+            alert("🚫 AKSES DI TOLAK");
             return;
         }
 
@@ -1215,17 +1215,17 @@
                     closeAuthModal();
                     openTeamChat();
                 } else {
-                    alert("❌ Password salah!");
+                    alert("🚫 AKSES DI TOLAK");
                 }
             } else {
-                alert("❌ Nama User ID tidak ditemukan!");
+                alert("🚫 AKSES DI TOLAK");
             }
         });
     }
 
     function openRegisterModal() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("❌ Akses ditolak! Hanya " + NAMA_ADMIN_RESMI + " yang bisa menambahkan pengguna baru.");
+            alert("🚫 AKSES DI TOLAK");
             return;
         }
         
@@ -1241,7 +1241,7 @@
 
     function submitRegisterNewUser() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("❌ Hanya Admin yang berhak memproses pendaftaran baru!");
+            alert("🚫 AKSES DI TOLAK");
             return;
         }
 
@@ -1392,6 +1392,7 @@
 
     function openTeamChat() {
         if (!activeUser) {
+            alert("🚫 AKSES DI TOLAK");
             openAuthModal();
             return;
         }
@@ -1675,7 +1676,7 @@
 
     function clearAllChat() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("❌ Akses ditolak! Hanya ADMIN (" + NAMA_ADMIN_RESMI + ") yang berhak menghapus semua pesan.");
+            alert("🚫 AKSES DI TOLAK");
             return;
         }
 
