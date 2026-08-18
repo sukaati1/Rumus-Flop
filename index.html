@@ -997,7 +997,7 @@
     </div>
 </div>
 
-<!-- AUTH MODAL OVERLAY (KHUSUS LOGIN) -->
+<!-- AUTH MODAL OVERLAY (LOGIN KHUSUS) -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeAuthModal()">X</button>
@@ -1147,23 +1147,13 @@
         const savedAccount = localStorage.getItem("chat_active_account");
         if (savedAccount) {
             const parsedAccount = JSON.parse(savedAccount);
-            if (parsedAccount && parsedAccount.username === NAMA_ADMIN_RESMI) {
+            if (parsedAccount && parsedAccount.username) {
                 activeUser = parsedAccount;
             } else {
                 localStorage.removeItem("chat_active_account");
                 activeUser = null;
             }
         }
-
-        dbAccounts.once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                snapshot.forEach((childSnap) => {
-                    if (childSnap.key !== NAMA_ADMIN_RESMI) {
-                        dbAccounts.child(childSnap.key).remove();
-                    }
-                });
-            }
-        });
     });
 
     // FUNGSI HANDLE KLIK DATA (LANGSUNG BUKA CHAT / LOGIN)
@@ -1194,11 +1184,7 @@
             return;
         }
 
-        if (user !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DI TOLAK");
-            return;
-        }
-
+        // Cek pengguna di Firebase (berlaku untuk Admin maupun User Baru)
         dbAccounts.child(user).once('value', (snapshot) => {
             if (snapshot.exists()) {
                 const accData = snapshot.val();
@@ -1215,17 +1201,17 @@
                     closeAuthModal();
                     openTeamChat();
                 } else {
-                    alert("🚫 AKSES DI TOLAK");
+                    alert("🚫 AKSES DITOLAK (Password Salah)");
                 }
             } else {
-                alert("🚫 AKSES DI TOLAK");
+                alert("🚫 AKSES DITOLAK (User ID Tidak Ditemukan)");
             }
         });
     }
 
     function openRegisterModal() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DI TOLAK");
+            alert("🚫 AKSES DITOLAK! Hanya Admin yang dapat mendaftarkan akun baru.");
             return;
         }
         
@@ -1241,7 +1227,7 @@
 
     function submitRegisterNewUser() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DI TOLAK");
+            alert("🚫 AKSES DITOLAK!");
             return;
         }
 
@@ -1265,7 +1251,7 @@
                     if (error) {
                         alert("Gagal membuat akun: " + error.message);
                     } else {
-                        alert("✅ Berhasil membuat akun baru untuk: " + newUser);
+                        alert("✅ Berhasil membuat akun baru untuk: " + newUser + "\nUser tersebut sekarang sudah bisa login ke T'chat!");
                         closeRegisterModal();
                     }
                 });
@@ -1392,7 +1378,7 @@
 
     function openTeamChat() {
         if (!activeUser) {
-            alert("🚫 AKSES DI TOLAK");
+            alert("🚫 AKSES DITOLAK! Silakan login terlebih dahulu.");
             openAuthModal();
             return;
         }
@@ -1676,7 +1662,7 @@
 
     function clearAllChat() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DI TOLAK");
+            alert("🚫 AKSES DITOLAK! Hanya Admin yang bisa mereset obrolan.");
             return;
         }
 
