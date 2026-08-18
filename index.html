@@ -349,7 +349,7 @@
         padding: 15px;
     }
 
-    #profileModal, #registerModal {
+    #profileModal, #registerModal, #friendsModal {
         z-index: 1002 !important;
     }
 
@@ -545,9 +545,16 @@
         color: var(--purple-bright) !important;
     }
 
+    .btn-friends-chat {
+        background: rgba(0, 255, 136, 0.15) !important;
+        border: 1px solid rgba(0, 255, 136, 0.4) !important;
+        color: #00ff88 !important;
+    }
+
     .btn-reset-chat:hover { background: rgba(255, 0, 127, 0.35) !important; color: #ffffff !important; }
     .btn-logout-chat:hover { background: rgba(0, 210, 255, 0.35) !important; color: #ffffff !important; }
     .btn-profile-chat:hover { background: rgba(168, 85, 247, 0.35) !important; color: #ffffff !important; }
+    .btn-friends-chat:hover { background: rgba(0, 255, 136, 0.35) !important; color: #ffffff !important; }
 
     .btn-close-chat {
         background: transparent !important;
@@ -685,6 +692,24 @@
         background: rgba(65, 65, 72, 0.95) !important;
         border: 1px solid rgba(255, 255, 255, 0.25) !important;
         border-top-right-radius: 2px;
+    }
+
+    /* MEDIA PREVIEW DI CHAT */
+    .chat-msg .chat-media-img {
+        max-width: 220px;
+        max-height: 220px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .chat-msg .chat-media-video {
+        max-width: 240px;
+        max-height: 220px;
+        border-radius: 8px;
+        margin-top: 4px;
+        outline: none;
     }
 
     .msg-reactions-container {
@@ -886,7 +911,7 @@
         box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
     }
 
-    .btn-sticker-toggle {
+    .btn-sticker-toggle, .btn-attach-media {
         width: 40px !important;
         padding: 0 !important;
         flex: none !important;
@@ -915,6 +940,72 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    /* MODAL PERTEMANAN & DM */
+    .friends-nav-tabs {
+        display: flex;
+        gap: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 8px !important;
+        font-size: 10px !important;
+        border-radius: 10px !important;
+    }
+
+    .tab-btn.active {
+        background: var(--cyan-neon) !important;
+        color: #000 !important;
+        border-color: #fff !important;
+    }
+
+    .friends-list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 250px;
+        overflow-y: auto;
+    }
+
+    .friend-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(20, 20, 30, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px 12px;
+        border-radius: 10px;
+    }
+
+    .friend-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .friend-info img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .friend-name {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .btn-action-friend {
+        padding: 4px 8px !important;
+        font-size: 9px !important;
+        border-radius: 8px !important;
+        flex: none !important;
     }
 
     .image-viewer-modal {
@@ -1066,12 +1157,42 @@
     </div>
 </div>
 
+<!-- MODAL PERTEMANAN & DM -->
+<div class="chat-modal-overlay" id="friendsModal">
+    <div class="auth-modal">
+        <button class="auth-close-btn" onclick="closeFriendsModal()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: #00ff88; font-size: 16px;">SISTEM PERTEMANAN</h3>
+
+        <div class="friends-nav-tabs">
+            <button class="tab-btn active" id="tabFriendsBtn" onclick="switchFriendsTab('friends')">PERTEMANAN</button>
+            <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">PERMINTAAN</button>
+            <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">CARA TEMAN</button>
+        </div>
+
+        <!-- TAB DAFTAR TEMAN -->
+        <div id="tabFriendsContent" class="friends-list-container"></div>
+
+        <!-- TAB PERMINTAAN MASUK -->
+        <div id="tabRequestsContent" class="friends-list-container" style="display: none;"></div>
+
+        <!-- TAB TAMBAH TEMAN -->
+        <div id="tabAddContent" style="display: none;" class="auth-form">
+            <div class="auth-input-group">
+                <label>CARI USER ID TEMAN</label>
+                <input type="text" id="targetFriendUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <button class="btn-auth-submit" onclick="sendFriendRequest()">KIRIM PERMINTAAN PERTEMANAN 🤝</button>
+        </div>
+    </div>
+</div>
+
 <!-- CHAT MODAL OVERLAY -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3>T'chat</h3>
+            <h3 id="chatTitleHeader">T'chat</h3>
             <div class="header-controls">
+                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN 🤝</button>
                 <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
                 <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
                 <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
@@ -1105,6 +1226,11 @@
             <img id="myChatAvatar" class="user-profile-thumb" src="" alt="Avatar" onclick="openProfileModal()" />
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
             <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
+
+            <!-- MEDIA ATTACHMENT -->
+            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
+            <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
+
             <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
         </div>
@@ -1132,6 +1258,12 @@
     let tempEditAvatar = "";
     window.targetMsgKeyForReaction = null;
 
+    // VARIABLE UNTUK PRIVAT DM CHAT
+    let currentChatMode = "GLOBAL"; // GLOBAL atau PERSONAL
+    let activeDMPartner = "";
+    let activeRefPath = "team_chat_messages";
+    let activeChatListener = null;
+
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
     };
@@ -1140,8 +1272,9 @@
         firebase.initializeApp(firebaseConfig);
     }
     
-    const dbChat = firebase.database().ref("team_chat_messages");
+    let dbChat = firebase.database().ref("team_chat_messages");
     const dbAccounts = firebase.database().ref("chat_accounts");
+    const dbFriends = firebase.database().ref("user_friends");
 
     document.addEventListener("DOMContentLoaded", () => {
         const savedAccount = localStorage.getItem("chat_active_account");
@@ -1184,7 +1317,6 @@
             return;
         }
 
-        // Cek pengguna di Firebase (berlaku untuk Admin maupun User Baru)
         dbAccounts.child(user).once('value', (snapshot) => {
             if (snapshot.exists()) {
                 const accData = snapshot.val();
@@ -1376,6 +1508,196 @@
         }
     }
 
+    /* === LOGIKA SISTEM PERTEMANAN & DM 2 ORANG === */
+    function openFriendsModal() {
+        if (!activeUser) return;
+        document.getElementById('friendsModal').style.display = 'flex';
+        switchFriendsTab('friends');
+    }
+
+    function closeFriendsModal() {
+        document.getElementById('friendsModal').style.display = 'none';
+    }
+
+    function switchFriendsTab(tab) {
+        document.getElementById('tabFriendsBtn').classList.remove('active');
+        document.getElementById('tabRequestsBtn').classList.remove('active');
+        document.getElementById('tabAddBtn').classList.remove('active');
+
+        document.getElementById('tabFriendsContent').style.display = 'none';
+        document.getElementById('tabRequestsContent').style.display = 'none';
+        document.getElementById('tabAddContent').style.display = 'none';
+
+        if (tab === 'friends') {
+            document.getElementById('tabFriendsBtn').classList.add('active');
+            document.getElementById('tabFriendsContent').style.display = 'flex';
+            loadFriendsList();
+        } else if (tab === 'requests') {
+            document.getElementById('tabRequestsBtn').classList.add('active');
+            document.getElementById('tabRequestsContent').style.display = 'flex';
+            loadFriendRequests();
+        } else if (tab === 'add') {
+            document.getElementById('tabAddBtn').classList.add('active');
+            document.getElementById('tabAddContent').style.display = 'flex';
+        }
+    }
+
+    function sendFriendRequest() {
+        const targetUser = document.getElementById('targetFriendUser').value.trim().toUpperCase();
+        if (!targetUser) return alert("Masukkan User ID!");
+        if (targetUser === activeUser.username) return alert("Tidak bisa menambahkan diri sendiri!");
+
+        dbAccounts.child(targetUser).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                dbFriends.child(targetUser).child('requests').child(activeUser.username).set(true, (err) => {
+                    if (!err) {
+                        alert("✅ Permintaan pertemanan terkirim ke " + targetUser);
+                        document.getElementById('targetFriendUser').value = '';
+                    }
+                });
+            } else {
+                alert("❌ User ID tidak ditemukan!");
+            }
+        });
+    }
+
+    function loadFriendsList() {
+        const container = document.getElementById('tabFriendsContent');
+        container.innerHTML = 'Loading...';
+
+        dbFriends.child(activeUser.username).child('list').once('value', (snapshot) => {
+            container.innerHTML = '';
+            if (!snapshot.exists()) {
+                container.innerHTML = '<div style="font-size:11px; text-align:center;">Belum ada teman.</div>';
+                return;
+            }
+
+            snapshot.forEach((child) => {
+                const friendName = child.key;
+                const card = document.createElement('div');
+                card.className = 'friend-card';
+                card.innerHTML = `
+                    <div class="friend-info">
+                        <span class="friend-name">${friendName}</span>
+                    </div>
+                    <button class="btn-action-friend" onclick="startPrivateChat('${friendName}')">CHAT PRIVATE 💬</button>
+                `;
+                container.appendChild(card);
+            });
+        });
+    }
+
+    function loadFriendRequests() {
+        const container = document.getElementById('tabRequestsContent');
+        container.innerHTML = 'Loading...';
+
+        dbFriends.child(activeUser.username).child('requests').once('value', (snapshot) => {
+            container.innerHTML = '';
+            if (!snapshot.exists()) {
+                container.innerHTML = '<div style="font-size:11px; text-align:center;">Tidak ada permintaan.</div>';
+                return;
+            }
+
+            snapshot.forEach((child) => {
+                const requester = child.key;
+                const card = document.createElement('div');
+                card.className = 'friend-card';
+                card.innerHTML = `
+                    <div class="friend-info">
+                        <span class="friend-name">${requester}</span>
+                    </div>
+                    <div style="display:flex; gap:4px;">
+                        <button class="btn-action-friend" style="background:#00ff88; color:#000;" onclick="acceptFriend('${requester}')">TERIMA</button>
+                        <button class="btn-action-friend" style="background:#ff007f;" onclick="rejectFriend('${requester}')">TOLAK</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        });
+    }
+
+    function acceptFriend(requester) {
+        dbFriends.child(activeUser.username).child('list').child(requester).set(true);
+        dbFriends.child(requester).child('list').child(activeUser.username).set(true);
+        dbFriends.child(activeUser.username).child('requests').child(requester).remove();
+        alert("Sekarang Anda berteman dengan " + requester);
+        loadFriendRequests();
+    }
+
+    function rejectFriend(requester) {
+        dbFriends.child(activeUser.username).child('requests').child(requester).remove();
+        loadFriendRequests();
+    }
+
+    function startPrivateChat(targetUser) {
+        closeFriendsModal();
+        currentChatMode = "PERSONAL";
+        activeDMPartner = targetUser;
+
+        const sorted = [activeUser.username, targetUser].sort();
+        const roomId = `${sorted[0]}_${sorted[1]}`;
+        activeRefPath = `direct_messages/${roomId}`;
+
+        document.getElementById('chatTitleHeader').innerText = `DM: ${targetUser}`;
+        switchChatRoom(activeRefPath);
+    }
+
+    function switchChatRoom(path) {
+        if (dbChat) dbChat.off();
+        document.getElementById('chatLogs').innerHTML = '';
+        dbChat = firebase.database().ref(path);
+
+        dbChat.limitToLast(60).on('child_added', (snapshot) => {
+            renderMessage(snapshot.key, snapshot.val());
+        });
+
+        dbChat.limitToLast(60).on('child_changed', (snapshot) => {
+            renderMessage(snapshot.key, snapshot.val());
+        });
+
+        dbChat.on('child_removed', (snapshot) => {
+            const el = document.getElementById(`msg-${snapshot.key}`);
+            if (el) el.remove();
+        });
+    }
+
+    /* === FITUR PENGIRIMAN MEDIA (FOTO & VIDEO) === */
+    function handleMediaUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        if (file.size > 2 * 1024 * 1024) { 
+            alert("File terlalu besar! Maksimal ukuran 2 MB.");
+            return;
+        }
+
+        const isVideo = file.type.startsWith('video/');
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const base64Data = e.target.result;
+            const payload = {
+                user: activeUser.username,
+                avatar: activeUser.avatar,
+                mediaData: base64Data,
+                isMedia: true,
+                mediaType: isVideo ? 'video' : 'image',
+                timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            if (selectedReplyData) {
+                payload.replyTo = selectedReplyData;
+            }
+
+            dbChat.push(payload);
+            playBeepSound('send');
+            cancelReply();
+        };
+
+        reader.readAsDataURL(file);
+        event.target.value = ''; 
+    }
+
     function openTeamChat() {
         if (!activeUser) {
             alert("🚫 AKSES DITOLAK! Silakan login terlebih dahulu.");
@@ -1384,6 +1706,12 @@
         }
         document.getElementById('mainContainer').classList.add('hidden-for-chat');
         updateChatHeaderProfile();
+
+        currentChatMode = "GLOBAL";
+        activeRefPath = "team_chat_messages";
+        document.getElementById('chatTitleHeader').innerText = "T'chat";
+        switchChatRoom(activeRefPath);
+
         document.getElementById('chatModal').style.display = 'flex';
         document.getElementById('chatText').focus();
     }
@@ -1529,7 +1857,7 @@
             : '';
 
         const safeUser = username.replace(/'/g, "\\'");
-        const safeText = (data.msg || (data.isSticker ? data.sticker : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
+        const safeText = (data.msg || (data.isSticker ? data.sticker : (data.isMedia ? '[Media]' : ''))).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
         const avatarImg = document.createElement('img');
         avatarImg.className = 'msg-avatar';
@@ -1567,6 +1895,12 @@
         let contentHTML = '';
         if (data.isSticker) {
             contentHTML = `<span class="msg-sticker">${data.sticker}</span>`;
+        } else if (data.isMedia) {
+            if (data.mediaType === 'image') {
+                contentHTML = `<img class="chat-media-img" src="${data.mediaData}" onclick="viewFullsizeImage('${data.mediaData}', '${username}')" />`;
+            } else if (data.mediaType === 'video') {
+                contentHTML = `<video class="chat-media-video" src="${data.mediaData}" controls></video>`;
+            }
         } else {
             contentHTML = `<span class="msg-content">${formatChatMessage(data.msg)}</span>`;
         }
@@ -1666,7 +2000,7 @@
             return;
         }
 
-        if (confirm("Yakin ingin menghapus seluruh obrolan chat?")) {
+        if (confirm("Yakin ingin menghapus seluruh obrolan chat ini?")) {
             dbChat.remove();
             document.getElementById('chatLogs').innerHTML = '';
         }
@@ -1682,32 +2016,6 @@
             }
         }
     }
-
-    dbChat.limitToLast(60).on('child_added', (snapshot) => {
-        const data = snapshot.val();
-        renderMessage(snapshot.key, data);
-        
-        if (!isInitialLoad) {
-            playBeepSound('receive');
-        }
-    });
-
-    dbChat.limitToLast(60).on('child_changed', (snapshot) => {
-        renderMessage(snapshot.key, snapshot.val());
-    });
-
-    dbChat.on('child_removed', (snapshot) => {
-        const el = document.getElementById(`msg-${snapshot.key}`);
-        if (el) el.remove();
-    });
-
-    dbChat.on('value', (snapshot) => {
-        isInitialLoad = false;
-        const chatLogs = document.getElementById('chatLogs');
-        if (!snapshot.exists()) {
-            chatLogs.innerHTML = '';
-        }
-    });
 
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('click', function(e) {
@@ -1851,6 +2159,8 @@
         if (e.key === 'Escape') {
             if (document.getElementById('imageViewerModal').style.display === 'flex') {
                 closeImageViewer();
+            } else if (document.getElementById('friendsModal').style.display === 'flex') {
+                closeFriendsModal();
             } else if (document.getElementById('registerModal').style.display === 'flex') {
                 closeRegisterModal();
             } else if (document.getElementById('profileModal').style.display === 'flex') {
