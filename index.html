@@ -71,11 +71,10 @@
         }
     }
 
-   /* CONTAINER UTAMA */
+  /* CONTAINER UTAMA */
 .container {
     position: relative;
     z-index: 2;
-    /* Ubah transparansi backdrop dari 0.75 menjadi 0.45 */
     background: rgba(10, 8, 25, 0.45) !important; 
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -84,23 +83,39 @@
     max-width: 900px;
     padding: 40px;
     margin: auto;
-
+    /* Memberikan ruang untuk border melingkar */
     border: 3px solid transparent !important;
-    /* Turunkan nilai alpha linear-gradient dari 0.85 menjadi 0.50 */
-    background-image: 
-        linear-gradient(rgba(10, 8, 25, 0.50), rgba(10, 8, 25, 0.50)), 
-        conic-gradient(
-            from var(--border-angle), 
-            rgba(200, 158, 255, 0.1) 0%, 
-            var(--lavender-border) 25%, 
-            #ffffff 50%, 
-            var(--lavender-glow) 75%, 
-            rgba(200, 158, 255, 0.1) 100%
-        ) !important;
-    background-origin: border-box !important;
-    background-clip: padding-box, border-box !important;
-    
+    box-shadow: 
+        0 0 20px rgba(200, 158, 255, 0.4),
+        0 0 40px rgba(181, 126, 220, 0.25),
+        inset 0 0 15px rgba(200, 158, 255, 0.2);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    overflow: hidden; /* Menjaga agar cahaya border rapi di lekukan */
+}
+
+/* CAHAYA BERPUTAR KHUSUS DI BORDER OUTLINE */
+.container::before {
+    content: '';
+    position: absolute;
+    inset: -3px; /* Menyesuaikan ketebalan border */
+    border-radius: 40px;
+    padding: 3px; /* Ketebalan garis cahaya */
+    background: conic-gradient(
+        from var(--border-angle), 
+        rgba(200, 158, 255, 0.1) 0%, 
+        var(--lavender-border) 25%, 
+        #ffffff 50%, 
+        var(--lavender-glow) 75%, 
+        rgba(200, 158, 255, 0.1) 100%
+    );
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
     animation: spinBorder 4s linear infinite;
+}
     box-shadow: 
         0 0 20px rgba(200, 158, 255, 0.4),
         0 0 40px rgba(181, 126, 220, 0.25),
