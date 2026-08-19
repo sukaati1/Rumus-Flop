@@ -4,26 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
-    <title>Rumus Flop Kasir - Luxe & Cute Edition ✨</title>
+    <title>Rumus Flop Kasir</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
     
 <style>
     :root {
         color-scheme: only dark !important;
-        --sakura-pink: #ff80bf;
-        --sweet-purple: #c084fc;
-        --pastel-lavender: #e9d5ff;
-        --cute-cyan: #70e000;
-        --neon-mint: #00f5d4;
-        --soft-pink-glow: #ff99c8;
-        --peach-glow: #fde2e4;
+        --primary-accent: #00f5d4;
+        --secondary-accent: #7b2cbf;
+        --border-purple: #9d4edd;
+        --text-lavender: #e0aaff;
+        --bright-cyan: #560bad;
         
-        --glass-bg: rgba(20, 12, 35, 0.82); 
-        --lavender-border: #d8b4fe;               
-        --lavender-text: #f3e8ff;                 
-        --lavender-glow: #c084fc; 
+        --glass-bg: rgba(13, 10, 25, 0.88); 
     }
 
     * {
@@ -36,21 +31,20 @@
         min-height: 100vh;
         margin: 0;
         padding: 0;
-        background-color: #080312;
+        background-color: #06040a;
         overflow-x: hidden;
     }
 
     body {
         padding: 30px 15px;
-        font-family: 'Fredoka', 'Rajdhani', sans-serif;
+        font-family: 'Rajdhani', sans-serif;
         color: #ffffff !important;
         display: flex;
         justify-content: center;
         align-items: center;
         background-image: 
-            radial-gradient(circle at 10% 20%, rgba(255, 128, 191, 0.15) 0%, transparent 40%),
-            radial-gradient(circle at 90% 80%, rgba(192, 132, 252, 0.15) 0%, transparent 40%),
-            radial-gradient(circle at 50% 50%, rgba(0, 245, 212, 0.08) 0%, transparent 60%);
+            radial-gradient(circle at 10% 20%, rgba(123, 44, 191, 0.2) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(0, 245, 212, 0.12) 0%, transparent 40%);
     }
 
     .bg-video {
@@ -65,7 +59,6 @@
         opacity: 0.85;
     }
 
-    /* ANIMASI CAHAYA BINGKAI MELINGKARI CONTAINER */
     @property --border-angle {
         syntax: '<angle>';
         inherits: false;
@@ -78,38 +71,32 @@
         }
     }
 
-    /* CONTAINER UTAMA MEWAH & CUTE */
     .container {
         position: relative;
         z-index: 2;
         background: var(--glass-bg) !important; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-radius: 36px !important;
+        border-radius: 20px !important;
         width: 100%;
         max-width: 900px;
         padding: 40px;
         margin: auto;
 
-        border: 3px solid transparent !important;
+        border: 2px solid transparent !important;
         background-image: 
-            linear-gradient(rgba(18, 10, 32, 0.9), rgba(18, 10, 32, 0.9)), 
+            linear-gradient(rgba(13, 10, 25, 0.92), rgba(13, 10, 25, 0.92)), 
             conic-gradient(
                 from var(--border-angle), 
-                rgba(255, 128, 191, 0.3) 0%, 
-                var(--sakura-pink) 25%, 
-                #ffffff 50%, 
-                var(--sweet-purple) 75%, 
-                rgba(255, 128, 191, 0.3) 100%
+                rgba(0, 245, 212, 0.2) 0%, 
+                var(--border-purple) 50%, 
+                rgba(0, 245, 212, 0.2) 100%
             ) !important;
         background-origin: border-box !important;
         background-clip: padding-box, border-box !important;
         
-        animation: spinBorder 5s linear infinite;
-        box-shadow: 
-            0 0 25px rgba(255, 128, 191, 0.35),
-            0 0 50px rgba(192, 132, 252, 0.2),
-            inset 0 0 20px rgba(255, 153, 200, 0.15);
+        animation: spinBorder 6s linear infinite;
+        box-shadow: 0 0 30px rgba(123, 44, 191, 0.25);
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
@@ -119,38 +106,23 @@
 
     h1 {
         text-align: center;
-        font-family: 'Fredoka', 'Orbitron', sans-serif;
-        font-size: 34px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 28px;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         margin: 0;
-        background: linear-gradient(
-            90deg, 
-            var(--neon-mint), 
-            var(--sakura-pink), 
-            var(--sweet-purple), 
-            var(--pastel-lavender), 
-            var(--neon-mint)
-        );
-        background-size: 200% auto;
-        color: transparent !important;
-        -webkit-background-clip: text;
-        background-clip: text;
-        animation: shineText 3.5s linear infinite;
-        filter: drop-shadow(0 0 12px rgba(255, 128, 191, 0.6));
-    }
-
-    @keyframes shineText {
-        to { background-position: 200% center; }
+        color: var(--primary-accent) !important;
+        text-transform: uppercase;
+        filter: drop-shadow(0 0 10px rgba(0, 245, 212, 0.4));
     }
 
     .sub-title {
         text-align: center;
-        font-family: 'Fredoka', sans-serif;
-        font-size: 12px;
-        color: var(--pastel-lavender) !important;
-        letter-spacing: 4px;
-        font-weight: 600;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 13px;
+        color: var(--text-lavender) !important;
+        letter-spacing: 5px;
+        font-weight: 700;
         text-transform: uppercase;
         margin-top: 6px;
         margin-bottom: 28px;
@@ -171,76 +143,72 @@
     
     label {
         display: block;
-        font-family: 'Fredoka', sans-serif;
-        font-weight: 600;
-        color: var(--pastel-lavender) !important; 
-        font-size: 13px;
-        letter-spacing: 1px;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700;
+        color: var(--text-lavender) !important; 
+        font-size: 14px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
     }
 
     .badge-count, .btn-swap-pos {
         font-size: 11px;
         font-weight: 700;
         padding: 5px 14px;
-        border-radius: 20px;
-        background: rgba(0, 245, 212, 0.15);
-        color: var(--neon-mint) !important;
-        border: 1.5px solid rgba(0, 245, 212, 0.5);
-        font-family: 'Fredoka', sans-serif;
+        border-radius: 6px;
+        background: rgba(0, 245, 212, 0.1);
+        color: var(--primary-accent) !important;
+        border: 1px solid rgba(0, 245, 212, 0.4);
+        font-family: 'Rajdhani', sans-serif;
         cursor: pointer;
-        transition: all 0.25 ease;
+        transition: all 0.2s ease;
         display: inline-block;
-        box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
+        letter-spacing: 1px;
     }
 
     .btn-swap-pos {
-        background: rgba(255, 128, 191, 0.15);
-        color: var(--sakura-pink) !important;
-        border: 1.5px solid rgba(255, 128, 191, 0.5);
-        box-shadow: 0 0 10px rgba(255, 128, 191, 0.2);
+        background: rgba(157, 78, 221, 0.15);
+        color: var(--text-lavender) !important;
+        border: 1px solid rgba(157, 78, 221, 0.4);
     }
 
     .badge-count:hover, .btn-swap-pos:hover {
-        background: rgba(0, 245, 212, 0.35);
-        border-color: #ffffff;
+        background: rgba(0, 245, 212, 0.25);
+        border-color: var(--primary-accent);
         color: #ffffff !important;
-        box-shadow: 0 0 16px var(--neon-mint);
-        transform: scale(1.05);
     }
 
     .btn-swap-pos:hover {
-        box-shadow: 0 0 16px var(--sakura-pink);
+        background: rgba(157, 78, 221, 0.3);
+        border-color: var(--border-purple);
     }
     
     textarea#rawInput {
         width: 100%;
         height: 120px;
-        background: rgba(12, 6, 24, 0.6) !important;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        border: 2px solid rgba(192, 132, 252, 0.4) !important; 
-        border-radius: 18px;
-        color: var(--neon-mint) !important;
+        background: rgba(8, 5, 15, 0.8) !important;
+        border: 1.5px solid rgba(157, 78, 221, 0.3) !important; 
+        border-radius: 10px;
+        color: var(--primary-accent) !important;
         padding: 14px 16px;
         box-sizing: border-box;
         resize: vertical;
         font-family: 'JetBrains Mono', monospace;
-        font-weight: 700;
-        font-size: 13.5px;
+        font-weight: 600;
+        font-size: 13px;
         margin-bottom: 20px;
         user-select: text;
-        transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     textarea#rawInput:focus {
         outline: none;
-        border-color: var(--sakura-pink) !important;
-        background: rgba(12, 6, 24, 0.8) !important;
-        box-shadow: 0 0 15px rgba(255, 128, 191, 0.4);
+        border-color: var(--primary-accent) !important;
+        box-shadow: 0 0 12px rgba(0, 245, 212, 0.25);
     }
 
     textarea#rawInput::placeholder {
-        color: rgba(233, 213, 255, 0.35);
+        color: rgba(224, 170, 255, 0.3);
     }
 
     .btn-group {
@@ -257,93 +225,50 @@
         position: relative;
         overflow: hidden;
         flex: 1;
-        padding: 15px 20px; 
-        font-family: 'Fredoka', sans-serif;
-        font-size: 13px;    
+        padding: 14px 20px; 
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 14px;    
         font-weight: 700;
         cursor: pointer;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
         text-transform: uppercase;
         outline: none;
-        border-radius: 25px !important;
-        border: 2px solid var(--sakura-pink) !important;
-        background: rgba(255, 128, 191, 0.15) !important;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        color: var(--peach-glow) !important;
-        text-shadow: 0 0 8px rgba(255, 128, 191, 0.7);
-        box-shadow: 0 0 15px rgba(255, 128, 191, 0.3), inset 0 0 10px rgba(255, 153, 200, 0.2);
-        transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.25s ease;
+        border-radius: 8px !important;
+        border: 1px solid var(--primary-accent) !important;
+        background: rgba(0, 245, 212, 0.1) !important;
+        color: var(--primary-accent) !important;
+        transition: all 0.2s ease;
     }
 
     button#btnReset {
-        border-color: var(--sweet-purple) !important;
-        background: rgba(192, 132, 252, 0.15) !important;
-        color: var(--pastel-lavender) !important;
-        text-shadow: 0 0 8px rgba(192, 132, 252, 0.7);
-        box-shadow: 0 0 15px rgba(192, 132, 252, 0.3), inset 0 0 10px rgba(192, 132, 252, 0.2);
+        border-color: var(--border-purple) !important;
+        background: rgba(157, 78, 221, 0.1) !important;
+        color: var(--text-lavender) !important;
     }
 
     button:hover {
-        animation: pulseCute 0.3s ease-in-out infinite alternate;
-        background: rgba(255, 128, 191, 0.35) !important;
-        border-color: #ffffff !important;
-        box-shadow: 0 0 22px var(--sakura-pink), inset 0 0 14px rgba(255, 255, 255, 0.5);
+        background: rgba(0, 245, 212, 0.25) !important;
+        box-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
+        color: #ffffff !important;
     }
 
     button#btnReset:hover {
-        background: rgba(192, 132, 252, 0.35) !important;
-        box-shadow: 0 0 22px var(--sweet-purple), inset 0 0 14px rgba(255, 255, 255, 0.5);
-    }
-
-    button.btn-copy:focus,
-    button.btn-reset:focus,
-    button.btn-copy:focus-visible,
-    button.btn-reset:focus-visible {
-        outline: none !important;
-        border-color: #ffffff !important;
-        box-shadow: 
-            0 0 0 3px var(--neon-mint), 
-            0 0 20px var(--sakura-pink), 
-            inset 0 0 10px rgba(255, 255, 255, 0.5) !important;
-        transform: scale(1.02);
-    }
-
-    @keyframes pulseCute {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.02); }
+        background: rgba(157, 78, 221, 0.25) !important;
+        box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+        color: #ffffff !important;
     }
 
     button:active {
-        transform: scale(0.96) !important;
-        animation: none !important;
-    }
-
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
-    }
-
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
+        transform: scale(0.98);
     }
 
     .table-container { 
         position: relative;
         overflow-x: auto; 
         max-height: 380px;
-        border-radius: 20px;
-        border: 2px solid rgba(192, 132, 252, 0.3) !important;
-        background: rgba(10, 5, 20, 0.45) !important;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+        border-radius: 10px;
+        border: 1px solid rgba(157, 78, 221, 0.25) !important;
+        background: rgba(8, 5, 15, 0.6) !important;
     }
     
     table {
@@ -353,7 +278,7 @@
     }
     
     th, td {
-        padding: 13px 18px;
+        padding: 12px 16px;
         text-align: left;
         white-space: nowrap;
         user-select: text;
@@ -363,44 +288,41 @@
         position: sticky;
         top: 0;
         z-index: 3;
-        font-family: 'Fredoka', sans-serif;
-        font-weight: 600;
-        background: rgba(22, 12, 38, 0.9) !important; 
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        color: var(--pastel-lavender) !important; 
-        font-size: 12px;
-        letter-spacing: 1px;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700;
+        background: rgba(15, 10, 28, 0.95) !important; 
+        color: var(--text-lavender) !important; 
+        font-size: 13px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        border-bottom: 2px solid var(--sakura-pink) !important;
+        border-bottom: 2px solid var(--border-purple) !important;
     }
     
     td {
         color: #ffffff !important;
-        border-bottom: 1px solid rgba(192, 132, 252, 0.15) !important;
+        border-bottom: 1px solid rgba(157, 78, 221, 0.12) !important;
         font-family: 'JetBrains Mono', monospace;
-        font-weight: 700;
+        font-weight: 600;
         font-size: 13px;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
-    td:nth-child(1) { color: var(--neon-mint) !important; }
+    td:nth-child(1) { color: var(--primary-accent) !important; }
     td:nth-child(2) { color: #ffffff !important; }
-    td:nth-child(3) { color: var(--pastel-lavender) !important; }
-    td:nth-child(4) { color: var(--sakura-pink) !important; }
-    td:nth-child(5) { color: #ffe600 !important; }
+    td:nth-child(3) { color: var(--text-lavender) !important; }
+    td:nth-child(4) { color: rgba(224, 170, 255, 0.7) !important; }
+    td:nth-child(5) { color: #ffb703 !important; }
 
-    tr:hover td { background-color: rgba(255, 128, 191, 0.18) !important; }
+    tr:hover td { background-color: rgba(157, 78, 221, 0.12) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* MODAL OVERLAY UMUM CUTE & GLAM */
+    /* MODALS */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(5, 2, 12, 0.78);
+        background: rgba(4, 2, 8, 0.85);
         backdrop-filter: blur(6px);
         z-index: 999;
         display: none;
@@ -417,15 +339,14 @@
         z-index: 1003 !important;
     }
 
-    /* MODAL AUTH */
     .auth-modal {
         position: relative;
         width: 100%;
-        max-width: 420px;
-        background: rgba(18, 10, 32, 0.95) !important;
-        border-radius: 28px !important;
-        border: 2.5px solid var(--sakura-pink) !important;
-        box-shadow: 0 8px 32px rgba(255, 128, 191, 0.3);
+        max-width: 400px;
+        background: rgba(13, 10, 25, 0.95) !important;
+        border-radius: 12px !important;
+        border: 1.5px solid var(--border-purple) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         padding: 28px;
         display: flex;
         flex-direction: column;
@@ -445,23 +366,22 @@
     }
 
     .auth-input-group label {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     .auth-input-group input {
-        background: rgba(30, 16, 50, 0.9) !important;
-        border: 1.5px solid rgba(192, 132, 252, 0.4) !important;
+        background: rgba(8, 5, 15, 0.9) !important;
+        border: 1px solid rgba(157, 78, 221, 0.4) !important;
         color: #fff !important;
-        padding: 11px 14px;
-        border-radius: 14px;
+        padding: 10px 12px;
+        border-radius: 6px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         outline: none;
     }
 
     .auth-input-group input:focus {
-        border-color: var(--neon-mint) !important;
-        box-shadow: 0 0 12px rgba(0, 245, 212, 0.35);
+        border-color: var(--primary-accent) !important;
     }
 
     .avatar-selection-box {
@@ -478,26 +398,24 @@
         height: 75px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--sakura-pink);
-        box-shadow: 0 0 15px var(--sakura-pink);
+        border: 2px solid var(--primary-accent);
     }
 
     .btn-upload-avatar {
         font-size: 11px !important;
         padding: 8px 14px !important;
-        border-radius: 15px !important;
-        margin-top: 2px;
+        border-radius: 6px !important;
     }
 
     .btn-auth-submit {
-        padding: 13px !important;
-        border-radius: 20px !important;
+        padding: 12px !important;
+        border-radius: 6px !important;
         margin-top: 10px;
     }
 
     .btn-admin-reg {
-        background: rgba(255, 128, 191, 0.25) !important;
-        border: 1.5px solid var(--sakura-pink) !important;
+        background: rgba(157, 78, 221, 0.2) !important;
+        border: 1px solid var(--border-purple) !important;
         color: #ffffff !important;
         margin-top: 5px;
     }
@@ -508,26 +426,22 @@
         right: 15px;
         background: transparent !important;
         border: none !important;
-        color: var(--sakura-pink) !important;
-        font-size: 18px;
-        font-weight: 900;
+        color: var(--text-lavender) !important;
+        font-size: 16px;
+        font-weight: 700;
         cursor: pointer;
-        box-shadow: none !important;
     }
 
-    /* KOTAK CHAT CUTE & LUXE */
     .chat-modal {
         position: relative;
         width: 100%;
         max-width: 650px;
         height: 90vh;
         max-height: 720px;
-        background: rgba(18, 10, 32, 0.96) !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        border-radius: 28px !important;
-        border: 2.5px solid var(--sakura-pink) !important;
-        box-shadow: 0 10px 40px rgba(255, 128, 191, 0.35);
+        background: rgba(13, 10, 25, 0.96) !important;
+        border-radius: 12px !important;
+        border: 1.5px solid var(--border-purple) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         padding: 22px;
         display: flex;
         flex-direction: column;
@@ -539,31 +453,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1.5px solid rgba(255, 128, 191, 0.25);
+        border-bottom: 1px solid rgba(157, 78, 221, 0.25);
         padding-bottom: 12px;
         flex-shrink: 0;
     }
 
     .chat-header h3 {
         margin: 0;
-        font-family: 'Fredoka', sans-serif;
+        font-family: 'Orbitron', sans-serif;
         font-weight: 700;
-        font-size: 22px;
-        letter-spacing: 1.5px;
-        text-transform: none !important;
-        background: linear-gradient(
-            90deg, 
-            var(--neon-mint), 
-            var(--sakura-pink), 
-            var(--sweet-purple), 
-            var(--neon-mint)
-        );
-        background-size: 200% auto;
-        color: transparent !important;
-        -webkit-background-clip: text;
-        background-clip: text;
-        animation: shineText 3s linear infinite;
-        filter: drop-shadow(0 0 10px rgba(255, 128, 191, 0.6));
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: var(--primary-accent) !important;
     }
 
     .header-controls {
@@ -573,66 +474,58 @@
     }
 
     .btn-hdr-action {
-        font-size: 10px !important;
-        padding: 6px 14px !important;
-        border-radius: 16px !important;
-        font-family: 'Fredoka', sans-serif;
-        font-weight: 600;
-        letter-spacing: 0.5px;
+        font-size: 11px !important;
+        padding: 6px 12px !important;
+        border-radius: 6px !important;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700;
+        letter-spacing: 1px;
         cursor: pointer;
-        box-shadow: none !important;
         transition: all 0.2s ease;
         flex: none !important;
     }
 
     .btn-reset-chat {
-        background: rgba(255, 128, 191, 0.18) !important;
-        border: 1px solid rgba(255, 128, 191, 0.5) !important;
-        color: var(--sakura-pink) !important;
+        background: rgba(255, 77, 109, 0.15) !important;
+        border: 1px solid rgba(255, 77, 109, 0.4) !important;
+        color: #ff4d6d !important;
     }
 
     .btn-logout-chat {
-        background: rgba(0, 245, 212, 0.18) !important;
-        border: 1px solid rgba(0, 245, 212, 0.5) !important;
-        color: var(--neon-mint) !important;
+        background: rgba(0, 245, 212, 0.15) !important;
+        border: 1px solid rgba(0, 245, 212, 0.4) !important;
+        color: var(--primary-accent) !important;
     }
 
     .btn-profile-chat {
-        background: rgba(192, 132, 252, 0.18) !important;
-        border: 1px solid rgba(192, 132, 252, 0.5) !important;
-        color: var(--pastel-lavender) !important;
+        background: rgba(157, 78, 221, 0.15) !important;
+        border: 1px solid rgba(157, 78, 221, 0.4) !important;
+        color: var(--text-lavender) !important;
     }
 
     .btn-friends-chat {
-        background: rgba(112, 224, 0, 0.18) !important;
-        border: 1px solid rgba(112, 224, 0, 0.5) !important;
-        color: var(--cute-cyan) !important;
+        background: rgba(224, 170, 255, 0.15) !important;
+        border: 1px solid rgba(224, 170, 255, 0.4) !important;
+        color: var(--text-lavender) !important;
     }
-
-    .btn-reset-chat:hover { background: rgba(255, 128, 191, 0.35) !important; color: #ffffff !important; }
-    .btn-logout-chat:hover { background: rgba(0, 245, 212, 0.35) !important; color: #ffffff !important; }
-    .btn-profile-chat:hover { background: rgba(192, 132, 252, 0.35) !important; color: #ffffff !important; }
-    .btn-friends-chat:hover { background: rgba(112, 224, 0, 0.35) !important; color: #ffffff !important; }
 
     .btn-close-chat {
         background: transparent !important;
         border: none !important;
-        color: var(--sakura-pink) !important;
-        font-size: 20px;
-        font-weight: 900;
+        color: var(--text-lavender) !important;
+        font-size: 18px;
+        font-weight: 700;
         cursor: pointer;
         padding: 0 6px !important;
-        box-shadow: none !important;
     }
 
-    /* AREA PESAN */
     .chat-body {
         flex: 1;
         overflow-y: auto;
-        border: 1.5px solid rgba(192, 132, 252, 0.2);
-        border-radius: 18px;
+        border: 1px solid rgba(157, 78, 221, 0.2);
+        border-radius: 8px;
         padding: 14px;
-        background: rgba(10, 5, 20, 0.8) !important;
+        background: rgba(6, 4, 12, 0.8) !important;
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -649,20 +542,13 @@
     .chat-msg-wrapper.own-msg { flex-direction: row-reverse; }
 
     .msg-avatar {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--sweet-purple);
+        border: 1.5px solid var(--border-purple);
         flex-shrink: 0;
-        margin-top: 2px;
         cursor: pointer;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .msg-avatar:hover {
-        transform: scale(1.1);
-        border-color: var(--sakura-pink);
     }
 
     .msg-content-container {
@@ -681,7 +567,6 @@
         gap: 6px;
         margin-bottom: 3px;
         font-size: 11px;
-        padding: 0 2px;
     }
 
     .chat-msg-wrapper.own-msg .msg-header-info {
@@ -690,11 +575,12 @@
 
     .sender {
         font-weight: 700;
-        font-family: 'Fredoka', sans-serif;
+        font-family: 'Rajdhani', sans-serif;
+        letter-spacing: 0.5px;
     }
 
     .time-stamp {
-        color: rgba(233, 213, 255, 0.45);
+        color: rgba(224, 170, 255, 0.4);
         font-size: 10px;
         font-family: 'JetBrains Mono', monospace;
     }
@@ -703,9 +589,7 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        margin-left: 4px;
-        margin-right: 4px;
-        opacity: 0.6;
+        opacity: 0.5;
         transition: opacity 0.2s ease;
     }
 
@@ -714,25 +598,22 @@
     .btn-action-msg {
         color: rgba(255, 255, 255, 0.7);
         cursor: pointer;
-        font-size: 12px;
-        transition: color 0.2s ease, transform 0.1s ease;
+        font-size: 11px;
+        font-weight: bold;
     }
 
     .btn-action-msg:hover {
-        color: var(--sakura-pink);
-        transform: scale(1.25);
+        color: var(--primary-accent);
     }
 
-    /* GELEMBUNG CHAT CUTE */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
-        padding: 9px 14px;
-        border-radius: 16px;
+        padding: 8px 12px;
+        border-radius: 8px;
         user-select: text;
         word-break: break-word;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.4);
         width: fit-content;
         display: flex;
         flex-direction: column;
@@ -740,30 +621,28 @@
     }
 
     .chat-msg-wrapper.other-msg .chat-msg {
-        background: rgba(35, 20, 50, 0.9) !important;
-        border: 1.5px solid rgba(192, 132, 252, 0.3) !important;
-        border-top-left-radius: 4px;
+        background: rgba(22, 16, 40, 0.9) !important;
+        border: 1px solid rgba(157, 78, 221, 0.3) !important;
     }
 
     .chat-msg-wrapper.own-msg .chat-msg {
-        background: rgba(55, 30, 75, 0.95) !important;
-        border: 1.5px solid rgba(255, 128, 191, 0.4) !important;
-        border-top-right-radius: 4px;
+        background: rgba(35, 20, 58, 0.95) !important;
+        border: 1px solid rgba(0, 245, 212, 0.3) !important;
     }
 
     .chat-msg .chat-media-img {
         max-width: 220px;
         max-height: 220px;
-        border-radius: 12px;
+        border-radius: 6px;
         cursor: pointer;
         margin-top: 4px;
-        border: 1.5px solid rgba(255, 128, 191, 0.3);
+        border: 1px solid rgba(157, 78, 221, 0.3);
     }
 
     .chat-msg .chat-media-video {
         max-width: 240px;
         max-height: 220px;
-        border-radius: 12px;
+        border-radius: 6px;
         margin-top: 4px;
         outline: none;
     }
@@ -783,92 +662,66 @@
         display: inline-flex;
         align-items: center;
         gap: 3px;
-        background: rgba(25, 12, 40, 0.85);
-        border: 1px solid rgba(255, 128, 191, 0.25);
-        border-radius: 14px;
-        padding: 2px 7px;
-        font-size: 11px;
+        background: rgba(18, 12, 32, 0.9);
+        border: 1px solid rgba(157, 78, 221, 0.3);
+        border-radius: 4px;
+        padding: 1px 5px;
+        font-size: 10px;
         cursor: pointer;
-        user-select: none;
-        transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .reaction-badge:hover {
-        transform: scale(1.12);
-        border-color: var(--sakura-pink);
     }
 
     .reaction-badge.active-user {
-        background: rgba(255, 128, 191, 0.2);
-        border-color: var(--sakura-pink);
+        border-color: var(--primary-accent);
     }
 
     .reaction-badge .reaction-count {
         font-size: 10px;
-        color: var(--sakura-pink);
+        color: var(--primary-accent);
         font-weight: bold;
     }
 
     .reply-quote-box {
-        background: rgba(0, 0, 0, 0.35);
-        border-left: 3px solid var(--sakura-pink);
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 2px solid var(--primary-accent);
         padding: 4px 8px;
-        border-radius: 6px;
+        border-radius: 4px;
         margin-bottom: 6px;
         font-size: 10px;
     }
 
     .reply-quote-box .reply-author {
-        color: var(--sakura-pink);
+        color: var(--primary-accent);
         font-weight: bold;
     }
 
     .reply-quote-box .reply-text {
-        color: rgba(255, 255, 255, 0.85);
+        color: rgba(255, 255, 255, 0.8);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 100%;
         display: block;
     }
 
     .chat-msg .msg-content {
-        color: #f8f0ff !important;
+        color: #f0f0f0 !important;
         white-space: pre-wrap;
-        display: block;
-    }
-
-    .chat-msg .msg-sticker {
-        font-size: 34px;
-        display: block;
-        text-align: center;
-        filter: drop-shadow(0 0 10px rgba(255, 128, 191, 0.5));
-        padding: 2px 6px;
     }
 
     .chat-msg .msg-content a {
-        color: var(--neon-mint);
+        color: var(--primary-accent);
         text-decoration: underline;
-    }
-
-    .chat-msg .msg-content code {
-        background: rgba(0, 0, 0, 0.35);
-        color: var(--neon-mint);
-        padding: 1px 5px;
-        border-radius: 4px;
-        font-size: 11px;
     }
 
     .reply-preview-container {
         display: none;
         justify-content: space-between;
         align-items: center;
-        background: rgba(255, 128, 191, 0.18);
-        border-left: 3px solid var(--sakura-pink);
+        background: rgba(157, 78, 221, 0.15);
+        border-left: 3px solid var(--border-purple);
         padding: 6px 12px;
-        border-radius: 10px;
-        font-family: 'Fredoka', sans-serif;
-        font-size: 11px;
+        border-radius: 6px;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 12px;
         flex-shrink: 0;
     }
 
@@ -881,37 +734,9 @@
     }
 
     .btn-cancel-reply {
-        color: var(--sakura-pink);
+        color: var(--text-lavender);
         cursor: pointer;
         font-weight: bold;
-        font-size: 15px;
-    }
-
-    .sticker-picker-container {
-        display: none;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 8px;
-        background: rgba(22, 10, 38, 0.96);
-        border: 1.5px solid rgba(255, 128, 191, 0.3);
-        border-radius: 16px;
-        padding: 10px;
-        max-height: 100px;
-        overflow-y: auto;
-        flex-shrink: 0;
-    }
-
-    .sticker-item {
-        font-size: 22px;
-        text-align: center;
-        cursor: pointer;
-        padding: 3px;
-        border-radius: 8px;
-        transition: background 0.2s ease, transform 0.15s ease;
-    }
-
-    .sticker-item:hover {
-        background: rgba(255, 128, 191, 0.25);
-        transform: scale(1.25);
     }
 
     .chat-footer {
@@ -922,87 +747,86 @@
     }
 
     .user-profile-thumb {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--sakura-pink);
+        border: 1.5px solid var(--primary-accent);
         cursor: pointer;
     }
 
     .chat-footer input#chatUser {
-        width: 105px;
-        background: rgba(30, 16, 50, 0.9) !important;
-        border: 1.5px solid rgba(192, 132, 252, 0.4) !important;
-        color: var(--neon-mint) !important;
+        width: 110px;
+        background: rgba(8, 5, 15, 0.9) !important;
+        border: 1px solid rgba(157, 78, 221, 0.4) !important;
+        color: var(--primary-accent) !important;
         padding: 8px 10px;
-        border-radius: 14px;
-        font-family: 'Fredoka', sans-serif;
-        font-size: 11.5px;
+        border-radius: 6px;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 12px;
         outline: none;
-        height: 40px;
+        height: 38px;
         text-transform: uppercase;
         font-weight: bold;
     }
 
     .chat-footer textarea#chatText {
         flex: 1;
-        background: rgba(30, 16, 50, 0.9) !important;
-        border: 1.5px solid rgba(192, 132, 252, 0.4) !important;
+        background: rgba(8, 5, 15, 0.9) !important;
+        border: 1px solid rgba(157, 78, 221, 0.4) !important;
         color: #fff !important;
-        padding: 10px 12px;
-        border-radius: 14px;
+        padding: 8px 12px;
+        border-radius: 6px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         outline: none;
         resize: none;
-        height: 40px;
-        max-height: 90px;
-        line-height: 1.35;
+        height: 38px;
+        max-height: 80px;
+        line-height: 1.3;
     }
 
     .chat-footer input:focus, .chat-footer textarea:focus {
-        border-color: var(--sakura-pink) !important;
-        box-shadow: 0 0 12px rgba(255, 128, 191, 0.35);
+        border-color: var(--primary-accent) !important;
     }
 
-    .btn-sticker-toggle, .btn-attach-media {
-        width: 40px !important;
+    .btn-attach-media {
+        width: 38px !important;
         padding: 0 !important;
         flex: none !important;
-        border-radius: 14px !important;
-        border: 1.5px solid rgba(192, 132, 252, 0.4) !important;
-        background: rgba(30, 16, 50, 0.9) !important;
-        color: #ffffff !important;
-        font-size: 17px !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(157, 78, 221, 0.4) !important;
+        background: rgba(8, 5, 15, 0.9) !important;
+        color: var(--text-lavender) !important;
+        font-size: 11px !important;
+        font-weight: bold;
         cursor: pointer;
-        height: 40px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     .btn-send-chat {
-        padding: 0 18px !important;
+        padding: 0 16px !important;
         flex: none !important;
-        border-radius: 14px !important;
-        border: 1.5px solid var(--sakura-pink) !important;
-        background: rgba(255, 128, 191, 0.25) !important;
-        color: #ffffff !important;
+        border-radius: 6px !important;
+        border: 1px solid var(--primary-accent) !important;
+        background: rgba(0, 245, 212, 0.15) !important;
+        color: var(--primary-accent) !important;
         font-size: 12px !important;
-        font-family: 'Fredoka', sans-serif !important;
-        letter-spacing: 0.5px !important;
-        height: 40px;
+        font-family: 'Rajdhani', sans-serif !important;
+        letter-spacing: 1px !important;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    /* MODAL PERTEMANAN & DM */
     .friends-nav-tabs {
         display: flex;
-        gap: 8px;
-        border-bottom: 1px solid rgba(255, 128, 191, 0.2);
+        gap: 6px;
+        border-bottom: 1px solid rgba(157, 78, 221, 0.2);
         padding-bottom: 8px;
         margin-bottom: 10px;
     }
@@ -1011,13 +835,13 @@
         flex: 1;
         padding: 8px !important;
         font-size: 11px !important;
-        border-radius: 12px !important;
+        border-radius: 6px !important;
     }
 
     .tab-btn.active {
-        background: var(--sakura-pink) !important;
+        background: var(--border-purple) !important;
         color: #fff !important;
-        border-color: #fff !important;
+        border-color: var(--text-lavender) !important;
     }
 
     .friends-list-container {
@@ -1032,10 +856,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(30, 16, 50, 0.8);
-        border: 1px solid rgba(192, 132, 252, 0.2);
+        background: rgba(8, 5, 15, 0.8);
+        border: 1px solid rgba(157, 78, 221, 0.2);
         padding: 8px 12px;
-        border-radius: 12px;
+        border-radius: 6px;
     }
 
     .friend-info {
@@ -1044,23 +868,16 @@
         gap: 10px;
     }
 
-    .friend-info img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
     .friend-name {
-        font-family: 'Fredoka', sans-serif;
+        font-family: 'Rajdhani', sans-serif;
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .btn-action-friend {
         padding: 5px 10px !important;
         font-size: 10px !important;
-        border-radius: 10px !important;
+        border-radius: 4px !important;
         flex: none !important;
     }
 
@@ -1070,7 +887,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(5, 2, 12, 0.88);
+        background: rgba(4, 2, 8, 0.9);
         display: none;
         justify-content: center;
         align-items: center;
@@ -1080,18 +897,18 @@
     .image-viewer-modal img {
         max-width: 85vw;
         max-height: 80vh;
-        border-radius: 20px;
-        border: 2px solid var(--sakura-pink);
-        box-shadow: 0 0 35px rgba(255, 128, 191, 0.5);
+        border-radius: 10px;
+        border: 1.5px solid var(--primary-accent);
         object-fit: contain;
     }
 
     .image-viewer-username {
         margin-top: 15px;
-        font-family: 'Fredoka', sans-serif;
+        font-family: 'Rajdhani', sans-serif;
         color: #ffffff;
-        font-size: 18px;
+        font-size: 16px;
         letter-spacing: 2px;
+        font-weight: bold;
     }
 </style>
 </head>
@@ -1103,27 +920,27 @@
 
 <!-- CONTAINER UTAMA -->
 <div class="container" id="mainContainer">
-    <h1>Rumus Flop Kasir ✨</h1>
-    <div class="sub-title">🌸 Ultra Luxe & Cute Edition 🌸</div>
+    <h1>Rumus Flop Kasir</h1>
+    <div class="sub-title">System Conversion Tool</div>
 
     <div class="label-header">
-        <label for="rawInput">✨ Tempel Log Transaksi</label>
+        <label for="rawInput">Input Log Transaksi</label>
     </div>
-    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini ya..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
+    <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
     <div class="btn-group" id="btnGroup">
         <button id="btnCopy" class="btn-copy" tabindex="2" onclick="salinHasil()">
-            <span id="txtCopy">💖 SALIN DATA</span>
+            <span id="txtCopy">SALIN DATA</span>
         </button>
         <button id="btnReset" class="btn-reset" tabindex="3" onclick="resetData()">
-            <span id="txtReset">🌸 RESET</span>
+            <span id="txtReset">RESET</span>
         </button>
     </div>
 
     <div class="label-header">
-        <label>✨ Hasil Konversi</label>
+        <label>Hasil Konversi</label>
         <div class="label-actions">
-            <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
+            <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP POSISI</span>
             <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
         </div>
     </div>
@@ -1144,12 +961,12 @@
     </div>
 </div>
 
-<!-- AUTH MODAL OVERLAY (LOGIN KHUSUS) -->
+<!-- AUTH MODAL OVERLAY -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
-        <button class="auth-close-btn" onclick="closeAuthModal()">✕</button>
+        <button class="auth-close-btn" onclick="closeAuthModal()">X</button>
         
-        <h3 style="margin: 0; text-align: center; font-family: 'Fredoka', sans-serif; color: var(--sakura-pink); font-size: 18px; letter-spacing: 1px;">💖 MASUK AKUN T'CHAT</h3>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--primary-accent); font-size: 16px; letter-spacing: 1.5px;">MASUK AKUN T-CHAT</h3>
 
         <div class="auth-form" id="formLogin">
             <div class="auth-input-group">
@@ -1160,16 +977,16 @@
                 <label>PASSWORD</label>
                 <input type="password" id="loginPass" placeholder="Masukkan password...">
             </div>
-            <button class="btn-auth-submit" onclick="submitLogin()">LOGIN SEKARANG ✨</button>
+            <button class="btn-auth-submit" onclick="submitLogin()">LOGIN</button>
         </div>
     </div>
 </div>
 
-<!-- MODAL REGISTRASI AKUN BARU (KHUSUS ADMIN) -->
+<!-- MODAL REGISTRASI USER BARU -->
 <div class="chat-modal-overlay" id="registerModal">
     <div class="auth-modal">
-        <button class="auth-close-btn" onclick="closeRegisterModal()">✕</button>
-        <h3 style="margin: 0; text-align: center; font-family: 'Fredoka', sans-serif; color: var(--sakura-pink); font-size: 18px;">👑 REGISTRASI USER BARU</h3>
+        <button class="auth-close-btn" onclick="closeRegisterModal()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--primary-accent); font-size: 16px;">REGISTRASI USER BARU</h3>
         
         <div class="auth-form">
             <div class="auth-input-group">
@@ -1180,7 +997,7 @@
                 <label>PASSWORD BARU</label>
                 <input type="password" id="regPass" placeholder="Masukkan Password Baru...">
             </div>
-            <button class="btn-auth-submit btn-admin-reg" onclick="submitRegisterNewUser()">BUAT AKUN BARU 🌸</button>
+            <button class="btn-auth-submit btn-admin-reg" onclick="submitRegisterNewUser()">BUAT AKUN BARU</button>
         </div>
     </div>
 </div>
@@ -1188,13 +1005,13 @@
 <!-- MODAL EDIT PROFIL -->
 <div class="chat-modal-overlay" id="profileModal">
     <div class="auth-modal">
-        <button class="auth-close-btn" onclick="closeProfileModal()">✕</button>
-        <h3 style="margin: 0; text-align: center; font-family: 'Fredoka', sans-serif; color: var(--pastel-lavender); font-size: 18px;">✨ EDIT PROFIL AKUN</h3>
+        <button class="auth-close-btn" onclick="closeProfileModal()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--text-lavender); font-size: 16px;">EDIT PROFIL AKUN</h3>
         
         <div class="auth-form">
             <div class="avatar-selection-box">
                 <img id="editAvatarPreview" class="avatar-preview-img" src="" alt="Preview">
-                <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PC/HP 📷</button>
+                <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PROFIL</button>
                 <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
             </div>
 
@@ -1207,7 +1024,7 @@
                 <input type="password" id="editUserPass" placeholder="Isi jika ingin ganti password...">
             </div>
 
-            <button class="btn-auth-submit" onclick="saveProfileChanges()">SIMPAN PERUBAHAN 💾</button>
+            <button class="btn-auth-submit" onclick="saveProfileChanges()">SIMPAN PERUBAHAN</button>
             <button id="btnAdminOpenReg" class="btn-auth-submit btn-admin-reg" style="display: none;" onclick="openRegisterModal()">+ REGISTRASI AKUN BARU (ADMIN)</button>
         </div>
     </div>
@@ -1216,28 +1033,24 @@
 <!-- MODAL PERTEMANAN & DM -->
 <div class="chat-modal-overlay" id="friendsModal">
     <div class="auth-modal">
-        <button class="auth-close-btn" onclick="closeFriendsModal()">✕</button>
-        <h3 style="margin: 0; text-align: center; font-family: 'Fredoka', sans-serif; color: var(--cute-cyan); font-size: 18px;">🤝 SISTEM PERTEMANAN</h3>
+        <button class="auth-close-btn" onclick="closeFriendsModal()">X</button>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--primary-accent); font-size: 16px;">SISTEM PERTEMANAN</h3>
 
         <div class="friends-nav-tabs">
             <button class="tab-btn active" id="tabFriendsBtn" onclick="switchFriendsTab('friends')">TEMAN</button>
             <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">PERMINTAAN</button>
-            <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">CARAI TEMAN</button>
+            <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">CARI TEMAN</button>
         </div>
 
-        <!-- TAB DAFTAR TEMAN -->
         <div id="tabFriendsContent" class="friends-list-container"></div>
-
-        <!-- TAB PERMINTAAN MASUK -->
         <div id="tabRequestsContent" class="friends-list-container" style="display: none;"></div>
 
-        <!-- TAB TAMBAH TEMAN -->
         <div id="tabAddContent" style="display: none;" class="auth-form">
             <div class="auth-input-group">
                 <label>CARI USER ID TEMAN</label>
                 <input type="text" id="targetFriendUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
             </div>
-            <button class="btn-auth-submit" onclick="sendFriendRequest()">KIRIM PERMINTAAN PERTEMANAN 🤝</button>
+            <button class="btn-auth-submit" onclick="sendFriendRequest()">KIRIM PERMINTAAN PERTEMANAN</button>
         </div>
     </div>
 </div>
@@ -1246,49 +1059,32 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3 id="chatTitleHeader">T'chat ✨</h3>
+            <h3 id="chatTitleHeader">T-Chat</h3>
             <div class="header-controls">
-                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN 🤝</button>
+                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN</button>
                 <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
                 <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
                 <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
-                <button class="btn-close-chat" onclick="closeTeamChat()">✕</button>
+                <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
         </div>
 
         <div class="chat-body" id="chatLogs"></div>
 
         <div class="reply-preview-container" id="replyPreview">
-            <div class="reply-preview-text" id="replyPreviewText">Balas: ...</div>
-            <span class="btn-cancel-reply" onclick="cancelReply()">&times;</span>
-        </div>
-
-        <div class="sticker-picker-container" id="stickerPicker">
-            <span class="sticker-item" onclick="sendSticker('🌸')">🌸</span>
-            <span class="sticker-item" onclick="sendSticker('💖')">💖</span>
-            <span class="sticker-item" onclick="sendSticker('✨')">✨</span>
-            <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
-            <span class="sticker-item" onclick="sendSticker('😎')">😎</span>
-            <span class="sticker-item" onclick="sendSticker('👍')">👍</span>
-            <span class="sticker-item" onclick="sendSticker('🎉')">🎉</span>
-            <span class="sticker-item" onclick="sendSticker('💎')">💎</span>
-            <span class="sticker-item" onclick="sendSticker('🤖')">🤖</span>
-            <span class="sticker-item" onclick="sendSticker('💀')">💀</span>
-            <span class="sticker-item" onclick="sendSticker('💯')">💯</span>
-            <span class="sticker-item" onclick="sendSticker('🎯')">🎯</span>
+            <div class="reply-preview-text" id="replyPreviewText">Membalas: ...</div>
+            <span class="btn-cancel-reply" onclick="cancelReply()">X</span>
         </div>
 
         <div class="chat-footer">
             <img id="myChatAvatar" class="user-profile-thumb" src="" alt="Avatar" onclick="openProfileModal()" />
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
-            <textarea id="chatText" placeholder="Tulis pesan manis..." onkeydown="handleChatKey(event)"></textarea>
+            <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
 
-            <!-- MEDIA ATTACHMENT -->
-            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
+            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Media">FILE</button>
             <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
-            <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
-            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM ✨</button>
+            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM</button>
         </div>
     </div>
 </div>
@@ -1312,13 +1108,10 @@
 
     let activeUser = null; 
     let tempEditAvatar = "";
-    window.targetMsgKeyForReaction = null;
 
-    // VARIABLE UNTUK PRIVAT DM CHAT
-    let currentChatMode = "GLOBAL"; // GLOBAL atau PERSONAL
+    let currentChatMode = "GLOBAL"; 
     let activeDMPartner = "";
     let activeRefPath = "team_chat_messages";
-    let activeChatListener = null;
 
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -1345,7 +1138,6 @@
         }
     });
 
-    // FUNGSI HANDLE KLIK DATA (LANGSUNG BUKA CHAT / LOGIN)
     function handleChatClick() {
         if (activeUser) {
             openTeamChat();
@@ -1389,17 +1181,17 @@
                     closeAuthModal();
                     openTeamChat();
                 } else {
-                    alert("🚫 AKSES DITOLAK (Password Salah)");
+                    alert("Akses Ditolak: Password Salah");
                 }
             } else {
-                alert("🚫 AKSES DITOLAK (User ID Tidak Ditemukan)");
+                alert("Akses Ditolak: User ID Tidak Ditemukan");
             }
         });
     }
 
     function openRegisterModal() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DITOLAK! Hanya Admin yang dapat mendaftarkan akun baru.");
+            alert("Akses Ditolak: Hanya Admin yang dapat mendaftarkan akun baru.");
             return;
         }
         
@@ -1415,7 +1207,7 @@
 
     function submitRegisterNewUser() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DITOLAK!");
+            alert("Akses Ditolak!");
             return;
         }
 
@@ -1429,7 +1221,7 @@
 
         dbAccounts.child(newUser).once('value', (snapshot) => {
             if (snapshot.exists()) {
-                alert("❌ Username tersebut sudah digunakan!");
+                alert("Username tersebut sudah digunakan!");
             } else {
                 dbAccounts.child(newUser).set({
                     password: newPass,
@@ -1439,7 +1231,7 @@
                     if (error) {
                         alert("Gagal membuat akun: " + error.message);
                     } else {
-                        alert("✅ Berhasil membuat akun baru untuk: " + newUser + "\nUser tersebut sekarang sudah bisa login ke T'chat!");
+                        alert("Berhasil membuat akun baru untuk: " + newUser);
                         closeRegisterModal();
                     }
                 });
@@ -1564,7 +1356,6 @@
         }
     }
 
-    /* === LOGIKA SISTEM PERTEMANAN & DM 2 ORANG === */
     function openFriendsModal() {
         if (!activeUser) return;
         document.getElementById('friendsModal').style.display = 'flex';
@@ -1607,12 +1398,12 @@
             if (snapshot.exists()) {
                 dbFriends.child(targetUser).child('requests').child(activeUser.username).set(true, (err) => {
                     if (!err) {
-                        alert("✅ Permintaan pertemanan terkirim ke " + targetUser);
+                        alert("Permintaan pertemanan terkirim ke " + targetUser);
                         document.getElementById('targetFriendUser').value = '';
                     }
                 });
             } else {
-                alert("❌ User ID tidak ditemukan!");
+                alert("User ID tidak ditemukan!");
             }
         });
     }
@@ -1636,7 +1427,7 @@
                     <div class="friend-info">
                         <span class="friend-name">${friendName}</span>
                     </div>
-                    <button class="btn-action-friend" onclick="startPrivateChat('${friendName}')">CHAT PRIVATE 💬</button>
+                    <button class="btn-action-friend" onclick="startPrivateChat('${friendName}')">CHAT PRIVATE</button>
                 `;
                 container.appendChild(card);
             });
@@ -1663,8 +1454,8 @@
                         <span class="friend-name">${requester}</span>
                     </div>
                     <div style="display:flex; gap:4px;">
-                        <button class="btn-action-friend" style="background:#00ff88; color:#000;" onclick="acceptFriend('${requester}')">TERIMA</button>
-                        <button class="btn-action-friend" style="background:#ff007f;" onclick="rejectFriend('${requester}')">TOLAK</button>
+                        <button class="btn-action-friend" style="background:var(--primary-accent); color:#000;" onclick="acceptFriend('${requester}')">TERIMA</button>
+                        <button class="btn-action-friend" style="background:#ff4d6d;" onclick="rejectFriend('${requester}')">TOLAK</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -1717,7 +1508,6 @@
         });
     }
 
-    /* === FITUR PENGIRIMAN MEDIA (FOTO & VIDEO) === */
     function handleMediaUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -1746,7 +1536,6 @@
             }
 
             dbChat.push(payload);
-            playBeepSound('send');
             cancelReply();
         };
 
@@ -1756,7 +1545,7 @@
 
     function openTeamChat() {
         if (!activeUser) {
-            alert("🚫 AKSES DITOLAK! Silakan login terlebih dahulu.");
+            alert("Akses Ditolak: Silakan login terlebih dahulu.");
             openAuthModal();
             return;
         }
@@ -1765,7 +1554,7 @@
 
         currentChatMode = "GLOBAL";
         activeRefPath = "team_chat_messages";
-        document.getElementById('chatTitleHeader').innerText = "T'chat ✨";
+        document.getElementById('chatTitleHeader').innerText = "T-Chat";
         switchChatRoom(activeRefPath);
 
         document.getElementById('chatModal').style.display = 'flex';
@@ -1774,7 +1563,6 @@
 
     function closeTeamChat() {
         document.getElementById('chatModal').style.display = 'none';
-        document.getElementById('stickerPicker').style.display = 'none';
         document.getElementById('mainContainer').classList.remove('hidden-for-chat');
     }
 
@@ -1783,36 +1571,9 @@
         btnGroup.classList.toggle('swapped');
     }
 
-    function playBeepSound(type) {
-        try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            
-            if (type === 'send') {
-                osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.1);
-            } else if (type === 'receive') {
-                osc.frequency.setValueAtTime(880, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1174.66, ctx.currentTime + 0.12);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.12);
-            }
-        } catch(e) {}
-    }
-
     const userColors = [
-        '#ff80bf', '#c084fc', '#70e000', '#ffb703', 
-        '#00f5d4', '#ff4d6d', '#3a86ff', '#fb5607', 
-        '#ff99c8', '#ff006e', '#8338ec', '#00b4d8'
+        '#00f5d4', '#e0aaff', '#70e000', '#ffb703', 
+        '#00b4d8', '#ff4d6d', '#3a86ff', '#fb5607'
     ];
 
     function getUserColor(name) {
@@ -1838,39 +1599,6 @@
         formatted = formatted.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
         return formatted;
-    }
-
-    function toggleStickerPicker() {
-        const picker = document.getElementById('stickerPicker');
-        picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
-    }
-
-    function openReactionPicker(msgKey) {
-        window.targetMsgKeyForReaction = msgKey;
-        toggleStickerPicker();
-    }
-
-    function toggleReaction(msgKey, emoji) {
-        if (!activeUser) return;
-        
-        const user = activeUser.username;
-        const reactionRef = dbChat.child(msgKey).child('reactions').child(emoji);
-
-        reactionRef.once('value', (snapshot) => {
-            let users = snapshot.val() || [];
-            
-            if (users.includes(user)) {
-                users = users.filter(u => u !== user);
-                if (users.length === 0) {
-                    reactionRef.remove();
-                } else {
-                    reactionRef.set(users);
-                }
-            } else {
-                users.push(user);
-                reactionRef.set(users);
-            }
-        });
     }
 
     function setReplyToMessage(user, text) {
@@ -1909,11 +1637,11 @@
         const color = getUserColor(username);
         const isAdmin = (username === NAMA_ADMIN_RESMI);
         const badgeAdmin = isAdmin 
-            ? `<span style="background: #ff80bf; color: #ffffff; font-size: 8px; padding: 1px 6px; border-radius: 4px; margin-left: 5px; font-weight: 900; letter-spacing: 1px; box-shadow: 0 0 6px var(--sakura-pink);">ADMIN</span>` 
+            ? `<span style="background: var(--border-purple); color: #ffffff; font-size: 8px; padding: 1px 5px; border-radius: 3px; margin-left: 5px; font-weight: bold;">ADMIN</span>` 
             : '';
 
         const safeUser = username.replace(/'/g, "\\'");
-        const safeText = (data.msg || (data.isSticker ? data.sticker : (data.isMedia ? '[Media]' : ''))).replace(/'/g, "\\'").replace(/\n/g, ' ');
+        const safeText = (data.msg || (data.isMedia ? '[Media]' : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
         const avatarImg = document.createElement('img');
         avatarImg.className = 'msg-avatar';
@@ -1930,8 +1658,7 @@
             <span class="sender" style="color: ${color};">${username}${badgeAdmin}</span>
             <span class="time-stamp">${data.timestamp || ''}</span>
             <div class="msg-actions">
-                <span class="btn-action-msg" title="Beri Reaksi" onclick="openReactionPicker('${key}')">😊</span>
-                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
+                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">REPLY</span>
             </div>
         `;
 
@@ -1942,16 +1669,14 @@
         if (data.replyTo) {
             replyHTML = `
                 <div class="reply-quote-box">
-                    <span class="reply-author">↩️ ${data.replyTo.user.toUpperCase()}</span>
+                    <span class="reply-author">${data.replyTo.user.toUpperCase()}</span>
                     <span class="reply-text">${formatChatMessage(data.replyTo.text)}</span>
                 </div>
             `;
         }
 
         let contentHTML = '';
-        if (data.isSticker) {
-            contentHTML = `<span class="msg-sticker">${data.sticker}</span>`;
-        } else if (data.isMedia) {
+        if (data.isMedia) {
             if (data.mediaType === 'image') {
                 contentHTML = `<img class="chat-media-img" src="${data.mediaData}" onclick="viewFullsizeImage('${data.mediaData}', '${username}')" />`;
             } else if (data.mediaType === 'video') {
@@ -1963,28 +1688,8 @@
 
         msgDiv.innerHTML = `${replyHTML}${contentHTML}`;
 
-        const reactionsContainer = document.createElement('div');
-        reactionsContainer.className = 'msg-reactions-container';
-
-        if (data.reactions) {
-            Object.keys(data.reactions).forEach(emoji => {
-                const users = data.reactions[emoji] || [];
-                if (users.length > 0) {
-                    const isMyReaction = users.includes(currentUser);
-                    const badge = document.createElement('div');
-                    badge.className = `reaction-badge ${isMyReaction ? 'active-user' : ''}`;
-                    badge.title = `Direaksi oleh: ${users.join(', ')}`;
-                    badge.innerHTML = `<span>${emoji}</span><span class="reaction-count">${users.length}</span>`;
-                    
-                    badge.onclick = () => toggleReaction(key, emoji);
-                    reactionsContainer.appendChild(badge);
-                }
-            });
-        }
-
         contentContainer.appendChild(headerInfoDiv);
         contentContainer.appendChild(msgDiv);
-        contentContainer.appendChild(reactionsContainer); 
 
         wrapperDiv.appendChild(avatarImg);
         wrapperDiv.appendChild(contentContainer);
@@ -1994,34 +1699,6 @@
         }
         
         chatLogs.scrollTop = chatLogs.scrollHeight;
-    }
-
-    function sendSticker(stickerChar) {
-        if (!activeUser) return;
-
-        if (window.targetMsgKeyForReaction) {
-            toggleReaction(window.targetMsgKeyForReaction, stickerChar);
-            window.targetMsgKeyForReaction = null;
-            document.getElementById('stickerPicker').style.display = 'none';
-            return;
-        }
-
-        const payload = {
-            user: activeUser.username,
-            avatar: activeUser.avatar,
-            sticker: stickerChar,
-            isSticker: true,
-            timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-        };
-
-        if (selectedReplyData) {
-            payload.replyTo = selectedReplyData;
-        }
-
-        dbChat.push(payload);
-        playBeepSound('send');
-        cancelReply();
-        document.getElementById('stickerPicker').style.display = 'none';
     }
 
     function sendChatMessage() {
@@ -2042,17 +1719,15 @@
             }
 
             dbChat.push(payload);
-            playBeepSound('send');
             textInput.value = '';
-            textInput.style.height = '40px';
+            textInput.style.height = '38px';
             cancelReply();
-            document.getElementById('stickerPicker').style.display = 'none';
         }
     }
 
     function clearAllChat() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("🚫 AKSES DITOLAK! Hanya Admin yang bisa mereset obrolan.");
+            alert("Akses Ditolak: Hanya Admin yang bisa mereset obrolan.");
             return;
         }
 
@@ -2072,25 +1747,6 @@
             }
         }
     }
-
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(this.clientWidth, this.clientHeight);
-            const radius = diameter / 2;
-
-            const rect = this.getBoundingClientRect();
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${e.clientX - rect.left - radius}px`;
-            circle.style.top = `${e.clientY - rect.top - radius}px`;
-            circle.classList.add('ripple');
-
-            const ripple = this.querySelector('.ripple');
-            if (ripple) ripple.remove();
-
-            this.appendChild(circle);
-        });
-    });
 
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
@@ -2199,13 +1855,13 @@
         
         if (!hasilTeksUntukDisalin) {
             txt.innerText = "DATA KOSONG!";
-            setTimeout(() => { txt.innerText = "💖 SALIN DATA"; }, 1000);
+            setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1000);
             return;
         }
         
         navigator.clipboard.writeText(hasilTeksUntukDisalin).then(() => {
-            txt.innerText = "BERHASIL DISALIN ✨";
-            setTimeout(() => { txt.innerText = "💖 SALIN DATA"; }, 1200);
+            txt.innerText = "BERHASIL DISALIN";
+            setTimeout(() => { txt.innerText = "SALIN DATA"; }, 1200);
         }).catch(err => {
             console.error("Error: ", err);
         });
