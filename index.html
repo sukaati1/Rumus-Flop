@@ -71,40 +71,70 @@
         }
     }
 
-    /* CONTAINER UTAMA */
+    /* CONTAINER UTAMA (EFEK KACA TRANSPARAN & BASAH) */
     .container {
         position: relative;
         z-index: 2;
-        background: rgba(10, 8, 25, 0.75) !important; 
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        /* Dibuat sangat transparan dengan efek kaca buram */
+        background: rgba(12, 10, 28, 0.35) !important; 
+        backdrop-filter: blur(16px) saturate(140%);
+        -webkit-backdrop-filter: blur(16px) saturate(140%);
         border-radius: 40px !important;
         width: 100%;
         max-width: 900px;
         padding: 40px;
         margin: auto;
+        overflow: hidden;
 
         /* Conic-gradient lavender yang berputar melingkari bingkai */
-        border: 3px solid transparent !important;
+        border: 2px solid transparent !important;
         background-image: 
-            linear-gradient(rgba(10, 8, 25, 0.85), rgba(10, 8, 25, 0.85)), 
+            linear-gradient(rgba(12, 10, 28, 0.35), rgba(12, 10, 28, 0.35)), 
             conic-gradient(
                 from var(--border-angle), 
-                rgba(200, 158, 255, 0.1) 0%, 
+                rgba(200, 158, 255, 0.15) 0%, 
                 var(--lavender-border) 25%, 
                 #ffffff 50%, 
                 var(--lavender-glow) 75%, 
-                rgba(200, 158, 255, 0.1) 100%
+                rgba(200, 158, 255, 0.15) 100%
             ) !important;
         background-origin: border-box !important;
         background-clip: padding-box, border-box !important;
         
         animation: spinBorder 4s linear infinite;
         box-shadow: 
-            0 0 20px rgba(200, 158, 255, 0.4),
-            0 0 40px rgba(181, 126, 220, 0.25),
-            inset 0 0 15px rgba(200, 158, 255, 0.2);
+            0 20px 50px rgba(0, 0, 0, 0.6),
+            0 0 30px rgba(200, 158, 255, 0.25),
+            inset 0 0 20px rgba(255, 255, 255, 0.15);
         transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* EFEK EMBUN / EMBOSS AIR DI ATAS PERMUKAAN KACA CONTAINER */
+    .container::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+                    radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* SVG WATER DROPLETS OVERLAY */
+    .water-drops-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.75;
+    }
+
+    .container > * {
+        position: relative;
+        z-index: 2;
     }
 
     .container.hidden-for-chat {
@@ -208,10 +238,10 @@
     textarea#rawInput {
         width: 100%;
         height: 120px;
-        background: rgba(0, 0, 0, 0.3) !important;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        border: 1.5px solid rgba(168, 85, 247, 0.3) !important; 
+        background: rgba(0, 0, 0, 0.35) !important;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1.5px solid rgba(168, 85, 247, 0.35) !important; 
         border-radius: 12px;
         color: var(--cyan-neon) !important;
         padding: 14px;
@@ -228,12 +258,12 @@
     textarea#rawInput:focus {
         outline: none;
         border-color: var(--blue-electric) !important;
-        background: rgba(0, 0, 0, 0.5) !important;
+        background: rgba(0, 0, 0, 0.55) !important;
         box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
     }
 
     textarea#rawInput::placeholder {
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.35);
     }
 
     .btn-group {
@@ -260,23 +290,22 @@
         outline: none;
         border-radius: 35px !important;
         border: 2px solid var(--lavender-border) !important;
-        background: var(--lavender-bg) !important;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+        background: rgba(147, 112, 219, 0.2) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         color: var(--lavender-text) !important;
         text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
-        box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
+        box-shadow: 0 0 12px rgba(200, 158, 255, 0.4), inset 0 0 8px rgba(181, 126, 220, 0.2);
         transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     button:hover {
         animation: shakeBtn 0.2s ease-in-out infinite alternate;
-        background: rgba(147, 112, 219, 0.35) !important;
+        background: rgba(147, 112, 219, 0.4) !important;
         border-color: #ffffff !important;
         box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4);
     }
 
-    /* INDIKATOR BINGKAI SAAT TOMBOL DITEKAN TAB */
     button.btn-copy:focus,
     button.btn-reset:focus,
     button.btn-copy:focus-visible,
@@ -325,9 +354,9 @@
         max-height: 380px;
         border-radius: 12px;
         border: 1.5px solid rgba(168, 85, 247, 0.3) !important;
-        background: rgba(0, 0, 0, 0.25) !important;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
+        background: rgba(0, 0, 0, 0.3) !important;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
     }
     
     table {
@@ -349,9 +378,9 @@
         z-index: 3;
         font-family: 'Orbitron', sans-serif;
         font-weight: 800;
-        background: rgba(13, 10, 30, 0.75) !important; 
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+        background: rgba(13, 10, 30, 0.8) !important; 
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         color: var(--purple-bright) !important; 
         font-size: 11px;
         letter-spacing: 1.5px;
@@ -400,7 +429,7 @@
         z-index: 1003 !important;
     }
 
-    /* MODAL AUTH (LOGIN KHUSUS) */
+    /* MODAL AUTH */
     .auth-modal {
         position: relative;
         width: 100%;
@@ -447,7 +476,6 @@
         box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
     }
 
-    /* EDIT PROFIL MODAL STYLES */
     .avatar-selection-box {
         display: flex;
         flex-direction: column;
@@ -499,7 +527,6 @@
         box-shadow: none !important;
     }
 
-    /* KOTAK CHAT */
     .chat-modal {
         position: relative;
         width: 100%;
@@ -610,7 +637,6 @@
         box-shadow: none !important;
     }
 
-    /* AREA PESAN */
     .chat-body {
         flex: 1;
         overflow-y: auto;
@@ -709,7 +735,6 @@
         transform: scale(1.2);
     }
 
-    /* GELEMBUNG CHAT */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
@@ -737,7 +762,6 @@
         border-top-right-radius: 2px;
     }
 
-    /* MEDIA PREVIEW DI CHAT */
     .chat-msg .chat-media-img {
         max-width: 220px;
         max-height: 220px;
@@ -985,7 +1009,6 @@
         justify-content: center;
     }
 
-    /* MODAL PERTEMANAN & DM */
     .friends-nav-tabs {
         display: flex;
         gap: 8px;
@@ -1090,6 +1113,44 @@
 
 <!-- CONTAINER UTAMA -->
 <div class="container" id="mainContainer">
+    <!-- OVERLAY SVG PENEMPELAN TETESAN AIR PADA KACA -->
+    <svg class="water-drops-overlay" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="water-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="1" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+        </defs>
+        <!-- Tetesan Air Realistis dengan Refraksi/Bayangan -->
+        <g fill="rgba(255, 255, 255, 0.25)" stroke="rgba(255, 255, 255, 0.45)" stroke-width="0.8">
+            <ellipse cx="6%" cy="12%" rx="9" ry="11" />
+            <ellipse cx="6.5%" cy="11.5%" rx="3" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
+
+            <ellipse cx="94%" cy="18%" rx="14" ry="12" />
+            <ellipse cx="94.5%" cy="17%" rx="5" ry="3" fill="rgba(255,255,255,0.85)" stroke="none" />
+
+            <ellipse cx="12%" cy="75%" rx="18" ry="15" />
+            <ellipse cx="12.5%" cy="73.5%" rx="6" ry="4" fill="rgba(255,255,255,0.8)" stroke="none" />
+
+            <ellipse cx="88%" cy="82%" rx="10" ry="13" />
+            <ellipse cx="88.3%" cy="80.5%" rx="4" ry="3" fill="rgba(255,255,255,0.8)" stroke="none" />
+
+            <ellipse cx="3%" cy="45%" rx="6" ry="8" />
+            <ellipse cx="3.2%" cy="44%" rx="2" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
+
+            <ellipse cx="97%" cy="52%" rx="8" ry="7" />
+            <ellipse cx="97.2%" cy="51%" rx="3" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
+
+            <ellipse cx="25%" cy="6%" rx="7" ry="5" />
+            <ellipse cx="75%" cy="94%" rx="11" ry="9" />
+            <ellipse cx="75.4%" cy="92.8%" rx="4" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
+
+            <!-- Jejak Lelehan Air -->
+            <path d="M 94 18 Q 94.5 35 93 48" stroke="rgba(255,255,255,0.25)" stroke-width="3" fill="none" stroke-linecap="round" />
+            <ellipse cx="93" cy="49" rx="4" ry="5" />
+        </g>
+    </svg>
+
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
 
@@ -1270,7 +1331,6 @@
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
             <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
 
-            <!-- MEDIA ATTACHMENT -->
             <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
             <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
@@ -1301,8 +1361,7 @@
     let tempEditAvatar = "";
     window.targetMsgKeyForReaction = null;
 
-    // VARIABLE UNTUK PRIVAT DM CHAT
-    let currentChatMode = "GLOBAL"; // GLOBAL atau PERSONAL
+    let currentChatMode = "GLOBAL"; 
     let activeDMPartner = "";
     let activeRefPath = "team_chat_messages";
     let activeChatListener = null;
@@ -1332,7 +1391,6 @@
         }
     });
 
-    // FUNGSI HANDLE KLIK DATA (LANGSUNG BUKA CHAT / LOGIN)
     function handleChatClick() {
         if (activeUser) {
             openTeamChat();
@@ -1551,7 +1609,6 @@
         }
     }
 
-    /* === LOGIKA SISTEM PERTEMANAN & DM 2 ORANG === */
     function openFriendsModal() {
         if (!activeUser) return;
         document.getElementById('friendsModal').style.display = 'flex';
@@ -1704,7 +1761,6 @@
         });
     }
 
-    /* === FITUR PENGIRIMAN MEDIA (FOTO & VIDEO) === */
     function handleMediaUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
