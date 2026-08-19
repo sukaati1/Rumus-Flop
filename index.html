@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
-    <title>Rumus Flop Kasir</title>
+    <title>Rumus Flop Kasir - Ultra Light Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
     
 <style>
     :root {
         color-scheme: only dark !important;
-        --primary-accent: #00f5d4;
-        --secondary-accent: #7b2cbf;
-        --border-purple: #9d4edd;
-        --text-lavender: #e0aaff;
-        --bright-cyan: #560bad;
+        --blue-electric: #00d2ff;
+        --purple-neon: #a855f7;
+        --purple-bright: #d8b4fe;
+        --pink-neon: #ff007f;
+        --cyan-neon: #00f0ff;
         
-        --glass-bg: rgba(13, 10, 25, 0.88); 
+        --lavender-bg: rgba(147, 112, 219, 0.15); 
+        --lavender-border: #c89eff;               
+        --lavender-text: #e8d7ff;                 
+        --lavender-glow: #b57edc; 
     }
 
     * {
@@ -31,7 +34,7 @@
         min-height: 100vh;
         margin: 0;
         padding: 0;
-        background-color: #06040a;
+        background-color: #030308;
         overflow-x: hidden;
     }
 
@@ -42,9 +45,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-image: 
-            radial-gradient(circle at 10% 20%, rgba(123, 44, 191, 0.2) 0%, transparent 40%),
-            radial-gradient(circle at 90% 80%, rgba(0, 245, 212, 0.12) 0%, transparent 40%);
     }
 
     .bg-video {
@@ -56,9 +56,9 @@
         object-fit: cover;
         z-index: 1;
         pointer-events: none;
-        opacity: 0.85;
     }
 
+    /* ANIMASI CAHAYA BINGKAI MELINGKARI CONTAINER */
     @property --border-angle {
         syntax: '<angle>';
         inherits: false;
@@ -71,32 +71,39 @@
         }
     }
 
+    /* CONTAINER UTAMA */
     .container {
         position: relative;
         z-index: 2;
-        background: var(--glass-bg) !important; 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-radius: 20px !important;
+        background: rgba(10, 8, 25, 0.75) !important; 
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 40px !important;
         width: 100%;
         max-width: 900px;
         padding: 40px;
         margin: auto;
 
-        border: 2px solid transparent !important;
+        /* Conic-gradient lavender yang berputar melingkari bingkai */
+        border: 3px solid transparent !important;
         background-image: 
-            linear-gradient(rgba(13, 10, 25, 0.92), rgba(13, 10, 25, 0.92)), 
+            linear-gradient(rgba(10, 8, 25, 0.85), rgba(10, 8, 25, 0.85)), 
             conic-gradient(
                 from var(--border-angle), 
-                rgba(0, 245, 212, 0.2) 0%, 
-                var(--border-purple) 50%, 
-                rgba(0, 245, 212, 0.2) 100%
+                rgba(200, 158, 255, 0.1) 0%, 
+                var(--lavender-border) 25%, 
+                #ffffff 50%, 
+                var(--lavender-glow) 75%, 
+                rgba(200, 158, 255, 0.1) 100%
             ) !important;
         background-origin: border-box !important;
         background-clip: padding-box, border-box !important;
         
-        animation: spinBorder 6s linear infinite;
-        box-shadow: 0 0 30px rgba(123, 44, 191, 0.25);
+        animation: spinBorder 4s linear infinite;
+        box-shadow: 
+            0 0 20px rgba(200, 158, 255, 0.4),
+            0 0 40px rgba(181, 126, 220, 0.25),
+            inset 0 0 15px rgba(200, 158, 255, 0.2);
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
@@ -107,24 +114,39 @@
     h1 {
         text-align: center;
         font-family: 'Orbitron', sans-serif;
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: 3px;
+        font-size: 32px;
+        font-weight: 900;
+        letter-spacing: 4px;
         margin: 0;
-        color: var(--primary-accent) !important;
-        text-transform: uppercase;
-        filter: drop-shadow(0 0 10px rgba(0, 245, 212, 0.4));
+        background: linear-gradient(
+            90deg, 
+            var(--cyan-neon), 
+            var(--blue-electric), 
+            var(--pink-neon), 
+            var(--purple-neon), 
+            var(--cyan-neon)
+        );
+        background-size: 200% auto;
+        color: transparent !important;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shineText 3s linear infinite;
+        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.5));
+    }
+
+    @keyframes shineText {
+        to { background-position: 200% center; }
     }
 
     .sub-title {
         text-align: center;
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 13px;
-        color: var(--text-lavender) !important;
-        letter-spacing: 5px;
-        font-weight: 700;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 11px;
+        color: var(--purple-bright) !important;
+        letter-spacing: 6px;
+        font-weight: 800;
         text-transform: uppercase;
-        margin-top: 6px;
+        margin-top: 8px;
         margin-bottom: 28px;
     }
 
@@ -143,72 +165,75 @@
     
     label {
         display: block;
-        font-family: 'Rajdhani', sans-serif;
-        font-weight: 700;
-        color: var(--text-lavender) !important; 
-        font-size: 14px;
-        letter-spacing: 1.5px;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
+        color: var(--purple-bright) !important; 
+        font-size: 11px;
+        letter-spacing: 2px;
         text-transform: uppercase;
     }
 
     .badge-count, .btn-swap-pos {
         font-size: 11px;
-        font-weight: 700;
-        padding: 5px 14px;
-        border-radius: 6px;
-        background: rgba(0, 245, 212, 0.1);
-        color: var(--primary-accent) !important;
-        border: 1px solid rgba(0, 245, 212, 0.4);
-        font-family: 'Rajdhani', sans-serif;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 15px;
+        background: rgba(0, 210, 255, 0.15);
+        color: var(--cyan-neon) !important;
+        border: 1px solid rgba(0, 240, 255, 0.5);
+        font-family: 'Orbitron', sans-serif;
         cursor: pointer;
         transition: all 0.2s ease;
         display: inline-block;
-        letter-spacing: 1px;
     }
 
     .btn-swap-pos {
-        background: rgba(157, 78, 221, 0.15);
-        color: var(--text-lavender) !important;
-        border: 1px solid rgba(157, 78, 221, 0.4);
+        background: rgba(168, 85, 247, 0.15);
+        color: var(--purple-bright) !important;
+        border: 1px solid rgba(168, 85, 247, 0.5);
     }
 
     .badge-count:hover, .btn-swap-pos:hover {
-        background: rgba(0, 245, 212, 0.25);
-        border-color: var(--primary-accent);
+        background: rgba(0, 210, 255, 0.35);
+        border-color: #ffffff;
         color: #ffffff !important;
+        box-shadow: 0 0 12px var(--cyan-neon);
+        transform: scale(1.05);
     }
 
     .btn-swap-pos:hover {
-        background: rgba(157, 78, 221, 0.3);
-        border-color: var(--border-purple);
+        box-shadow: 0 0 12px var(--purple-neon);
     }
     
     textarea#rawInput {
         width: 100%;
         height: 120px;
-        background: rgba(8, 5, 15, 0.8) !important;
-        border: 1.5px solid rgba(157, 78, 221, 0.3) !important; 
-        border-radius: 10px;
-        color: var(--primary-accent) !important;
-        padding: 14px 16px;
+        background: rgba(0, 0, 0, 0.3) !important;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border: 1.5px solid rgba(168, 85, 247, 0.3) !important; 
+        border-radius: 12px;
+        color: var(--cyan-neon) !important;
+        padding: 14px;
         box-sizing: border-box;
         resize: vertical;
         font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        font-size: 13px;
+        font-weight: 700;
+        font-size: 13.5px;
         margin-bottom: 20px;
         user-select: text;
-        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        transition: border-color 0.2s ease, background 0.2s ease;
     }
 
     textarea#rawInput:focus {
         outline: none;
-        border-color: var(--primary-accent) !important;
-        box-shadow: 0 0 12px rgba(0, 245, 212, 0.25);
+        border-color: var(--blue-electric) !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
     }
 
     textarea#rawInput::placeholder {
-        color: rgba(224, 170, 255, 0.3);
+        color: rgba(255, 255, 255, 0.3);
     }
 
     .btn-group {
@@ -225,50 +250,84 @@
         position: relative;
         overflow: hidden;
         flex: 1;
-        padding: 14px 20px; 
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 14px;    
-        font-weight: 700;
+        padding: 16px 20px; 
+        font-family: 'Orbitron', sans-serif;
+        font-size: 12px;    
+        font-weight: 900;
         cursor: pointer;
         letter-spacing: 2px;
         text-transform: uppercase;
         outline: none;
-        border-radius: 8px !important;
-        border: 1px solid var(--primary-accent) !important;
-        background: rgba(0, 245, 212, 0.1) !important;
-        color: var(--primary-accent) !important;
-        transition: all 0.2s ease;
-    }
-
-    button#btnReset {
-        border-color: var(--border-purple) !important;
-        background: rgba(157, 78, 221, 0.1) !important;
-        color: var(--text-lavender) !important;
+        border-radius: 35px !important;
+        border: 2px solid var(--lavender-border) !important;
+        background: var(--lavender-bg) !important;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        color: var(--lavender-text) !important;
+        text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
+        box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
+        transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     button:hover {
-        background: rgba(0, 245, 212, 0.25) !important;
-        box-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
-        color: #ffffff !important;
+        animation: shakeBtn 0.2s ease-in-out infinite alternate;
+        background: rgba(147, 112, 219, 0.35) !important;
+        border-color: #ffffff !important;
+        box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4);
     }
 
-    button#btnReset:hover {
-        background: rgba(157, 78, 221, 0.25) !important;
-        box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
-        color: #ffffff !important;
+    /* INDIKATOR BINGKAI SAAT TOMBOL DITEKAN TAB */
+    button.btn-copy:focus,
+    button.btn-reset:focus,
+    button.btn-copy:focus-visible,
+    button.btn-reset:focus-visible {
+        outline: none !important;
+        border-color: #ffffff !important;
+        box-shadow: 
+            0 0 0 3px var(--cyan-neon), 
+            0 0 18px var(--lavender-glow), 
+            inset 0 0 10px rgba(255, 255, 255, 0.5) !important;
+        transform: scale(1.02);
+    }
+
+    @keyframes shakeBtn {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        25% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+        50% { transform: translate(-1px, 1px) rotate(0.5deg); }
+        75% { transform: translate(1px, -1px) rotate(0deg); }
+        100% { transform: translate(1px, 1px) rotate(0.5deg); }
     }
 
     button:active {
-        transform: scale(0.98);
+        transform: scale(0.96) !important;
+        animation: none !important;
+    }
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
     }
 
     .table-container { 
         position: relative;
         overflow-x: auto; 
         max-height: 380px;
-        border-radius: 10px;
-        border: 1px solid rgba(157, 78, 221, 0.25) !important;
-        background: rgba(8, 5, 15, 0.6) !important;
+        border-radius: 12px;
+        border: 1.5px solid rgba(168, 85, 247, 0.3) !important;
+        background: rgba(0, 0, 0, 0.25) !important;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
     }
     
     table {
@@ -288,42 +347,44 @@
         position: sticky;
         top: 0;
         z-index: 3;
-        font-family: 'Rajdhani', sans-serif;
-        font-weight: 700;
-        background: rgba(15, 10, 28, 0.95) !important; 
-        color: var(--text-lavender) !important; 
-        font-size: 13px;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
+        background: rgba(13, 10, 30, 0.75) !important; 
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        color: var(--purple-bright) !important; 
+        font-size: 11px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        border-bottom: 2px solid var(--border-purple) !important;
+        border-bottom: 2px solid var(--purple-neon) !important;
     }
     
     td {
         color: #ffffff !important;
-        border-bottom: 1px solid rgba(157, 78, 221, 0.12) !important;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.12) !important;
         font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 13px;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
-    td:nth-child(1) { color: var(--primary-accent) !important; }
+    td:nth-child(1) { color: var(--blue-electric) !important; }
     td:nth-child(2) { color: #ffffff !important; }
-    td:nth-child(3) { color: var(--text-lavender) !important; }
-    td:nth-child(4) { color: rgba(224, 170, 255, 0.7) !important; }
-    td:nth-child(5) { color: #ffb703 !important; }
+    td:nth-child(3) { color: var(--purple-bright) !important; }
+    td:nth-child(4) { color: var(--pink-neon) !important; }
+    td:nth-child(5) { color: var(--cyan-neon) !important; }
 
-    tr:hover td { background-color: rgba(157, 78, 221, 0.12) !important; }
+    tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
     tr:last-child td { border-bottom: none !important; }
 
-    /* MODALS */
+    /* MODAL OVERLAY UMUM */
     .chat-modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(4, 2, 8, 0.85);
-        backdrop-filter: blur(6px);
+        background: rgba(0, 0, 0, 0.7);
         z-index: 999;
         display: none;
         justify-content: center;
@@ -339,15 +400,16 @@
         z-index: 1003 !important;
     }
 
+    /* MODAL AUTH (LOGIN KHUSUS) */
     .auth-modal {
         position: relative;
         width: 100%;
-        max-width: 400px;
-        background: rgba(13, 10, 25, 0.95) !important;
-        border-radius: 12px !important;
-        border: 1.5px solid var(--border-purple) !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        padding: 28px;
+        max-width: 420px;
+        background: rgba(5, 5, 8, 0.95) !important;
+        border-radius: 20px !important;
+        border: 2px solid var(--lavender-border) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+        padding: 25px;
         display: flex;
         flex-direction: column;
         gap: 15px;
@@ -362,28 +424,30 @@
     .auth-input-group {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 5px;
     }
 
     .auth-input-group label {
-        font-size: 12px;
+        font-size: 9.5px;
     }
 
     .auth-input-group input {
-        background: rgba(8, 5, 15, 0.9) !important;
-        border: 1px solid rgba(157, 78, 221, 0.4) !important;
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
         padding: 10px 12px;
-        border-radius: 6px;
+        border-radius: 10px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         outline: none;
     }
 
     .auth-input-group input:focus {
-        border-color: var(--primary-accent) !important;
+        border-color: var(--cyan-neon) !important;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
     }
 
+    /* EDIT PROFIL MODAL STYLES */
     .avatar-selection-box {
         display: flex;
         flex-direction: column;
@@ -394,28 +458,30 @@
     }
 
     .avatar-preview-img {
-        width: 75px;
-        height: 75px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--primary-accent);
+        border: 2px solid var(--cyan-neon);
+        box-shadow: 0 0 10px var(--cyan-neon);
     }
 
     .btn-upload-avatar {
-        font-size: 11px !important;
-        padding: 8px 14px !important;
-        border-radius: 6px !important;
+        font-size: 10px !important;
+        padding: 6px 12px !important;
+        border-radius: 10px !important;
+        margin-top: 2px;
     }
 
     .btn-auth-submit {
         padding: 12px !important;
-        border-radius: 6px !important;
+        border-radius: 15px !important;
         margin-top: 10px;
     }
 
     .btn-admin-reg {
-        background: rgba(157, 78, 221, 0.2) !important;
-        border: 1px solid var(--border-purple) !important;
+        background: rgba(255, 0, 127, 0.2) !important;
+        border: 1px solid var(--pink-neon) !important;
         color: #ffffff !important;
         margin-top: 5px;
     }
@@ -426,26 +492,30 @@
         right: 15px;
         background: transparent !important;
         border: none !important;
-        color: var(--text-lavender) !important;
-        font-size: 16px;
-        font-weight: 700;
+        color: var(--pink-neon) !important;
+        font-size: 18px;
+        font-weight: 900;
         cursor: pointer;
+        box-shadow: none !important;
     }
 
+    /* KOTAK CHAT */
     .chat-modal {
         position: relative;
         width: 100%;
         max-width: 650px;
         height: 90vh;
         max-height: 720px;
-        background: rgba(13, 10, 25, 0.96) !important;
-        border-radius: 12px !important;
-        border: 1.5px solid var(--border-purple) !important;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-        padding: 22px;
+        background: rgba(5, 5, 8, 0.95) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-radius: 20px !important;
+        border: 2px solid var(--lavender-border) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+        padding: 20px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
         overflow: hidden;
     }
 
@@ -453,18 +523,32 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid rgba(157, 78, 221, 0.25);
-        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(200, 158, 255, 0.2);
+        padding-bottom: 10px;
         flex-shrink: 0;
     }
 
     .chat-header h3 {
         margin: 0;
         font-family: 'Orbitron', sans-serif;
-        font-weight: 700;
-        font-size: 18px;
-        letter-spacing: 2px;
-        color: var(--primary-accent) !important;
+        font-weight: 900;
+        font-size: 20px;
+        letter-spacing: 3px;
+        text-transform: none !important;
+        background: linear-gradient(
+            90deg, 
+            var(--cyan-neon), 
+            var(--blue-electric), 
+            var(--pink-neon), 
+            var(--purple-neon), 
+            var(--cyan-neon)
+        );
+        background-size: 200% auto;
+        color: transparent !important;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shineText 3s linear infinite;
+        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
     }
 
     .header-controls {
@@ -474,58 +558,66 @@
     }
 
     .btn-hdr-action {
-        font-size: 11px !important;
-        padding: 6px 12px !important;
-        border-radius: 6px !important;
-        font-family: 'Rajdhani', sans-serif;
-        font-weight: 700;
+        font-size: 9.5px !important;
+        padding: 6px 14px !important;
+        border-radius: 15px !important;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
         letter-spacing: 1px;
         cursor: pointer;
+        box-shadow: none !important;
         transition: all 0.2s ease;
         flex: none !important;
     }
 
     .btn-reset-chat {
-        background: rgba(255, 77, 109, 0.15) !important;
-        border: 1px solid rgba(255, 77, 109, 0.4) !important;
-        color: #ff4d6d !important;
+        background: rgba(255, 0, 127, 0.15) !important;
+        border: 1px solid rgba(255, 0, 127, 0.4) !important;
+        color: var(--pink-neon) !important;
     }
 
     .btn-logout-chat {
-        background: rgba(0, 245, 212, 0.15) !important;
-        border: 1px solid rgba(0, 245, 212, 0.4) !important;
-        color: var(--primary-accent) !important;
+        background: rgba(0, 210, 255, 0.15) !important;
+        border: 1px solid rgba(0, 210, 255, 0.4) !important;
+        color: var(--cyan-neon) !important;
     }
 
     .btn-profile-chat {
-        background: rgba(157, 78, 221, 0.15) !important;
-        border: 1px solid rgba(157, 78, 221, 0.4) !important;
-        color: var(--text-lavender) !important;
+        background: rgba(168, 85, 247, 0.15) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        color: var(--purple-bright) !important;
     }
 
     .btn-friends-chat {
-        background: rgba(224, 170, 255, 0.15) !important;
-        border: 1px solid rgba(224, 170, 255, 0.4) !important;
-        color: var(--text-lavender) !important;
+        background: rgba(0, 255, 136, 0.15) !important;
+        border: 1px solid rgba(0, 255, 136, 0.4) !important;
+        color: #00ff88 !important;
     }
+
+    .btn-reset-chat:hover { background: rgba(255, 0, 127, 0.35) !important; color: #ffffff !important; }
+    .btn-logout-chat:hover { background: rgba(0, 210, 255, 0.35) !important; color: #ffffff !important; }
+    .btn-profile-chat:hover { background: rgba(168, 85, 247, 0.35) !important; color: #ffffff !important; }
+    .btn-friends-chat:hover { background: rgba(0, 255, 136, 0.35) !important; color: #ffffff !important; }
 
     .btn-close-chat {
         background: transparent !important;
         border: none !important;
-        color: var(--text-lavender) !important;
-        font-size: 18px;
-        font-weight: 700;
+        color: var(--pink-neon) !important;
+        font-size: 20px;
+        font-weight: 900;
         cursor: pointer;
         padding: 0 6px !important;
+        box-shadow: none !important;
     }
 
+    /* AREA PESAN */
     .chat-body {
         flex: 1;
         overflow-y: auto;
-        border: 1px solid rgba(157, 78, 221, 0.2);
-        border-radius: 8px;
-        padding: 14px;
-        background: rgba(6, 4, 12, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 12px;
+        background: #09090d !important;
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -546,9 +638,16 @@
         height: 36px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1.5px solid var(--border-purple);
+        border: 1.5px solid var(--purple-bright);
         flex-shrink: 0;
+        margin-top: 2px;
         cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .msg-avatar:hover {
+        transform: scale(1.1);
+        border-color: var(--cyan-neon);
     }
 
     .msg-content-container {
@@ -566,7 +665,8 @@
         align-items: center;
         gap: 6px;
         margin-bottom: 3px;
-        font-size: 11px;
+        font-size: 10.5px;
+        padding: 0 2px;
     }
 
     .chat-msg-wrapper.own-msg .msg-header-info {
@@ -574,14 +674,14 @@
     }
 
     .sender {
-        font-weight: 700;
-        font-family: 'Rajdhani', sans-serif;
-        letter-spacing: 0.5px;
+        font-weight: 800;
+        font-family: 'JetBrains Mono', monospace;
+        text-transform: uppercase;
     }
 
     .time-stamp {
-        color: rgba(224, 170, 255, 0.4);
-        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 9.5px;
         font-family: 'JetBrains Mono', monospace;
     }
 
@@ -589,7 +689,9 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        opacity: 0.5;
+        margin-left: 4px;
+        margin-right: 4px;
+        opacity: 0.6;
         transition: opacity 0.2s ease;
     }
 
@@ -599,50 +701,56 @@
         color: rgba(255, 255, 255, 0.7);
         cursor: pointer;
         font-size: 11px;
-        font-weight: bold;
+        transition: color 0.2s ease, transform 0.1s ease;
     }
 
     .btn-action-msg:hover {
-        color: var(--primary-accent);
+        color: var(--cyan-neon);
+        transform: scale(1.2);
     }
 
+    /* GELEMBUNG CHAT */
     .chat-msg {
         position: relative;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         padding: 8px 12px;
-        border-radius: 8px;
+        border-radius: 12px;
         user-select: text;
         word-break: break-word;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         width: fit-content;
         display: flex;
         flex-direction: column;
-        line-height: 1.4;
+        line-height: 1.35;
     }
 
     .chat-msg-wrapper.other-msg .chat-msg {
-        background: rgba(22, 16, 40, 0.9) !important;
-        border: 1px solid rgba(157, 78, 221, 0.3) !important;
+        background: rgba(45, 45, 50, 0.9) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-top-left-radius: 2px;
     }
 
     .chat-msg-wrapper.own-msg .chat-msg {
-        background: rgba(35, 20, 58, 0.95) !important;
-        border: 1px solid rgba(0, 245, 212, 0.3) !important;
+        background: rgba(65, 65, 72, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        border-top-right-radius: 2px;
     }
 
+    /* MEDIA PREVIEW DI CHAT */
     .chat-msg .chat-media-img {
         max-width: 220px;
         max-height: 220px;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: pointer;
         margin-top: 4px;
-        border: 1px solid rgba(157, 78, 221, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .chat-msg .chat-media-video {
         max-width: 240px;
         max-height: 220px;
-        border-radius: 6px;
+        border-radius: 8px;
         margin-top: 4px;
         outline: none;
     }
@@ -662,36 +770,45 @@
         display: inline-flex;
         align-items: center;
         gap: 3px;
-        background: rgba(18, 12, 32, 0.9);
-        border: 1px solid rgba(157, 78, 221, 0.3);
-        border-radius: 4px;
-        padding: 1px 5px;
-        font-size: 10px;
+        background: rgba(20, 20, 30, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 2px 6px;
+        font-size: 11px;
         cursor: pointer;
+        user-select: none;
+        transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .reaction-badge:hover {
+        transform: scale(1.1);
+        border-color: var(--cyan-neon);
     }
 
     .reaction-badge.active-user {
-        border-color: var(--primary-accent);
+        background: rgba(0, 240, 255, 0.2);
+        border-color: var(--cyan-neon);
     }
 
     .reaction-badge .reaction-count {
         font-size: 10px;
-        color: var(--primary-accent);
+        color: var(--cyan-neon);
         font-weight: bold;
     }
 
     .reply-quote-box {
-        background: rgba(0, 0, 0, 0.3);
-        border-left: 2px solid var(--primary-accent);
-        padding: 4px 8px;
+        background: rgba(0, 0, 0, 0.4);
+        border-left: 3px solid var(--cyan-neon);
+        padding: 3px 6px;
         border-radius: 4px;
         margin-bottom: 6px;
         font-size: 10px;
     }
 
     .reply-quote-box .reply-author {
-        color: var(--primary-accent);
+        color: var(--cyan-neon);
         font-weight: bold;
+        text-transform: uppercase;
     }
 
     .reply-quote-box .reply-text {
@@ -699,29 +816,47 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 100%;
         display: block;
     }
 
     .chat-msg .msg-content {
-        color: #f0f0f0 !important;
+        color: #f0f0f5 !important;
         white-space: pre-wrap;
+        display: block;
+    }
+
+    .chat-msg .msg-sticker {
+        font-size: 32px;
+        display: block;
+        text-align: center;
+        filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+        padding: 2px 6px;
     }
 
     .chat-msg .msg-content a {
-        color: var(--primary-accent);
+        color: var(--cyan-neon);
         text-decoration: underline;
+    }
+
+    .chat-msg .msg-content code {
+        background: rgba(0, 0, 0, 0.3);
+        color: var(--cyan-neon);
+        padding: 1px 4px;
+        border-radius: 3px;
+        font-size: 11px;
     }
 
     .reply-preview-container {
         display: none;
         justify-content: space-between;
         align-items: center;
-        background: rgba(157, 78, 221, 0.15);
-        border-left: 3px solid var(--border-purple);
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 12px;
+        background: rgba(0, 210, 255, 0.15);
+        border-left: 3px solid var(--cyan-neon);
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
         flex-shrink: 0;
     }
 
@@ -734,14 +869,42 @@
     }
 
     .btn-cancel-reply {
-        color: var(--text-lavender);
+        color: var(--pink-neon);
         cursor: pointer;
         font-weight: bold;
+        font-size: 14px;
+    }
+
+    .sticker-picker-container {
+        display: none;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        background: rgba(16, 16, 24, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 8px;
+        max-height: 100px;
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+
+    .sticker-item {
+        font-size: 22px;
+        text-align: center;
+        cursor: pointer;
+        padding: 2px;
+        border-radius: 6px;
+        transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    .sticker-item:hover {
+        background: rgba(0, 210, 255, 0.25);
+        transform: scale(1.2);
     }
 
     .chat-footer {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         align-items: center;
         flex-shrink: 0;
     }
@@ -751,57 +914,57 @@
         height: 38px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1.5px solid var(--primary-accent);
+        border: 1.5px solid var(--cyan-neon);
         cursor: pointer;
     }
 
     .chat-footer input#chatUser {
-        width: 110px;
-        background: rgba(8, 5, 15, 0.9) !important;
-        border: 1px solid rgba(157, 78, 221, 0.4) !important;
-        color: var(--primary-accent) !important;
+        width: 100px;
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        color: var(--cyan-neon) !important;
         padding: 8px 10px;
-        border-radius: 6px;
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 12px;
+        border-radius: 12px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11.5px;
         outline: none;
-        height: 38px;
+        height: 40px;
         text-transform: uppercase;
         font-weight: bold;
     }
 
     .chat-footer textarea#chatText {
         flex: 1;
-        background: rgba(8, 5, 15, 0.9) !important;
-        border: 1px solid rgba(157, 78, 221, 0.4) !important;
+        background: rgba(20, 20, 28, 0.9) !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
         color: #fff !important;
         padding: 8px 12px;
-        border-radius: 6px;
+        border-radius: 12px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         outline: none;
         resize: none;
-        height: 38px;
-        max-height: 80px;
+        height: 40px;
+        max-height: 90px;
         line-height: 1.3;
     }
 
     .chat-footer input:focus, .chat-footer textarea:focus {
-        border-color: var(--primary-accent) !important;
+        border-color: var(--cyan-neon) !important;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
     }
 
-    .btn-attach-media {
-        width: 38px !important;
+    .btn-sticker-toggle, .btn-attach-media {
+        width: 40px !important;
         padding: 0 !important;
         flex: none !important;
-        border-radius: 6px !important;
-        border: 1px solid rgba(157, 78, 221, 0.4) !important;
-        background: rgba(8, 5, 15, 0.9) !important;
-        color: var(--text-lavender) !important;
-        font-size: 11px !important;
-        font-weight: bold;
+        border-radius: 12px !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        background: rgba(20, 20, 28, 0.9) !important;
+        color: #ffffff !important;
+        font-size: 16px !important;
         cursor: pointer;
-        height: 38px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -810,23 +973,23 @@
     .btn-send-chat {
         padding: 0 16px !important;
         flex: none !important;
-        border-radius: 6px !important;
-        border: 1px solid var(--primary-accent) !important;
-        background: rgba(0, 245, 212, 0.15) !important;
-        color: var(--primary-accent) !important;
-        font-size: 12px !important;
-        font-family: 'Rajdhani', sans-serif !important;
+        border-radius: 12px !important;
+        border: 1px solid var(--lavender-border) !important;
+        background: var(--lavender-bg) !important;
+        color: #ffffff !important;
+        font-size: 11px !important;
         letter-spacing: 1px !important;
-        height: 38px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
+    /* MODAL PERTEMANAN & DM */
     .friends-nav-tabs {
         display: flex;
-        gap: 6px;
-        border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+        gap: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding-bottom: 8px;
         margin-bottom: 10px;
     }
@@ -834,14 +997,14 @@
     .tab-btn {
         flex: 1;
         padding: 8px !important;
-        font-size: 11px !important;
-        border-radius: 6px !important;
+        font-size: 10px !important;
+        border-radius: 10px !important;
     }
 
     .tab-btn.active {
-        background: var(--border-purple) !important;
-        color: #fff !important;
-        border-color: var(--text-lavender) !important;
+        background: var(--cyan-neon) !important;
+        color: #000 !important;
+        border-color: #fff !important;
     }
 
     .friends-list-container {
@@ -856,10 +1019,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(8, 5, 15, 0.8);
-        border: 1px solid rgba(157, 78, 221, 0.2);
+        background: rgba(20, 20, 30, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 8px 12px;
-        border-radius: 6px;
+        border-radius: 10px;
     }
 
     .friend-info {
@@ -868,16 +1031,23 @@
         gap: 10px;
     }
 
+    .friend-info img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
     .friend-name {
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 13px;
-        font-weight: 700;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        font-weight: bold;
     }
 
     .btn-action-friend {
-        padding: 5px 10px !important;
-        font-size: 10px !important;
-        border-radius: 4px !important;
+        padding: 4px 8px !important;
+        font-size: 9px !important;
+        border-radius: 8px !important;
         flex: none !important;
     }
 
@@ -887,7 +1057,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(4, 2, 8, 0.9);
+        background: rgba(0, 0, 0, 0.85);
         display: none;
         justify-content: center;
         align-items: center;
@@ -897,18 +1067,18 @@
     .image-viewer-modal img {
         max-width: 85vw;
         max-height: 80vh;
-        border-radius: 10px;
-        border: 1.5px solid var(--primary-accent);
+        border-radius: 15px;
+        border: 2px solid var(--cyan-neon);
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
         object-fit: contain;
     }
 
     .image-viewer-username {
         margin-top: 15px;
-        font-family: 'Rajdhani', sans-serif;
+        font-family: 'Orbitron', sans-serif;
         color: #ffffff;
         font-size: 16px;
         letter-spacing: 2px;
-        font-weight: bold;
     }
 </style>
 </head>
@@ -921,10 +1091,10 @@
 <!-- CONTAINER UTAMA -->
 <div class="container" id="mainContainer">
     <h1>Rumus Flop Kasir</h1>
-    <div class="sub-title">System Conversion Tool</div>
+    <div class="sub-title">Ultra Light Edition</div>
 
     <div class="label-header">
-        <label for="rawInput">Input Log Transaksi</label>
+        <label for="rawInput">Tempel Log Transaksi</label>
     </div>
     <textarea id="rawInput" tabindex="1" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onpaste="setTimeout(konversiLog, 50)"></textarea>
     
@@ -940,7 +1110,7 @@
     <div class="label-header">
         <label>Hasil Konversi</label>
         <div class="label-actions">
-            <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP POSISI</span>
+            <span class="btn-swap-pos" onclick="toggleBtnPosition()">SWAP ⇄</span>
             <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
         </div>
     </div>
@@ -961,12 +1131,12 @@
     </div>
 </div>
 
-<!-- AUTH MODAL OVERLAY -->
+<!-- AUTH MODAL OVERLAY (LOGIN KHUSUS) -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeAuthModal()">X</button>
         
-        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--primary-accent); font-size: 16px; letter-spacing: 1.5px;">MASUK AKUN T-CHAT</h3>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--cyan-neon); font-size: 16px; letter-spacing: 2px;">MASUK AKUN</h3>
 
         <div class="auth-form" id="formLogin">
             <div class="auth-input-group">
@@ -977,16 +1147,16 @@
                 <label>PASSWORD</label>
                 <input type="password" id="loginPass" placeholder="Masukkan password...">
             </div>
-            <button class="btn-auth-submit" onclick="submitLogin()">LOGIN</button>
+            <button class="btn-auth-submit" onclick="submitLogin()">LOGIN SEKARANG 🔥</button>
         </div>
     </div>
 </div>
 
-<!-- MODAL REGISTRASI USER BARU -->
+<!-- MODAL REGISTRASI AKUN BARU (KHUSUS ADMIN) -->
 <div class="chat-modal-overlay" id="registerModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeRegisterModal()">X</button>
-        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--primary-accent); font-size: 16px;">REGISTRASI USER BARU</h3>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--pink-neon); font-size: 16px;">REGISTRASI USER BARU</h3>
         
         <div class="auth-form">
             <div class="auth-input-group">
@@ -997,7 +1167,7 @@
                 <label>PASSWORD BARU</label>
                 <input type="password" id="regPass" placeholder="Masukkan Password Baru...">
             </div>
-            <button class="btn-auth-submit btn-admin-reg" onclick="submitRegisterNewUser()">BUAT AKUN BARU</button>
+            <button class="btn-auth-submit btn-admin-reg" onclick="submitRegisterNewUser()">BUAT AKUN BARU 👑</button>
         </div>
     </div>
 </div>
@@ -1006,12 +1176,12 @@
 <div class="chat-modal-overlay" id="profileModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeProfileModal()">X</button>
-        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--text-lavender); font-size: 16px;">EDIT PROFIL AKUN</h3>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--purple-bright); font-size: 16px;">EDIT PROFIL AKUN</h3>
         
         <div class="auth-form">
             <div class="avatar-selection-box">
                 <img id="editAvatarPreview" class="avatar-preview-img" src="" alt="Preview">
-                <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PROFIL</button>
+                <button class="btn-upload-avatar" onclick="document.getElementById('editAvatarFile').click()">UPLOAD FOTO PC/HP 📷</button>
                 <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
             </div>
 
@@ -1024,7 +1194,7 @@
                 <input type="password" id="editUserPass" placeholder="Isi jika ingin ganti password...">
             </div>
 
-            <button class="btn-auth-submit" onclick="saveProfileChanges()">SIMPAN PERUBAHAN</button>
+            <button class="btn-auth-submit" onclick="saveProfileChanges()">SIMPAN PERUBAHAN 💾</button>
             <button id="btnAdminOpenReg" class="btn-auth-submit btn-admin-reg" style="display: none;" onclick="openRegisterModal()">+ REGISTRASI AKUN BARU (ADMIN)</button>
         </div>
     </div>
@@ -1034,23 +1204,27 @@
 <div class="chat-modal-overlay" id="friendsModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeFriendsModal()">X</button>
-        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: var(--primary-accent); font-size: 16px;">SISTEM PERTEMANAN</h3>
+        <h3 style="margin: 0; text-align: center; font-family: 'Orbitron', sans-serif; color: #00ff88; font-size: 16px;">SISTEM PERTEMANAN</h3>
 
         <div class="friends-nav-tabs">
-            <button class="tab-btn active" id="tabFriendsBtn" onclick="switchFriendsTab('friends')">TEMAN</button>
+            <button class="tab-btn active" id="tabFriendsBtn" onclick="switchFriendsTab('friends')">PERTEMANAN</button>
             <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">PERMINTAAN</button>
-            <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">CARI TEMAN</button>
+            <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">CARA TEMAN</button>
         </div>
 
+        <!-- TAB DAFTAR TEMAN -->
         <div id="tabFriendsContent" class="friends-list-container"></div>
+
+        <!-- TAB PERMINTAAN MASUK -->
         <div id="tabRequestsContent" class="friends-list-container" style="display: none;"></div>
 
+        <!-- TAB TAMBAH TEMAN -->
         <div id="tabAddContent" style="display: none;" class="auth-form">
             <div class="auth-input-group">
                 <label>CARI USER ID TEMAN</label>
                 <input type="text" id="targetFriendUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
             </div>
-            <button class="btn-auth-submit" onclick="sendFriendRequest()">KIRIM PERMINTAAN PERTEMANAN</button>
+            <button class="btn-auth-submit" onclick="sendFriendRequest()">KIRIM PERMINTAAN PERTEMANAN 🤝</button>
         </div>
     </div>
 </div>
@@ -1059,9 +1233,9 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3 id="chatTitleHeader">T-Chat</h3>
+            <h3 id="chatTitleHeader">T'chat</h3>
             <div class="header-controls">
-                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN</button>
+                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN 🤝</button>
                 <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
                 <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
                 <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
@@ -1072,8 +1246,23 @@
         <div class="chat-body" id="chatLogs"></div>
 
         <div class="reply-preview-container" id="replyPreview">
-            <div class="reply-preview-text" id="replyPreviewText">Membalas: ...</div>
-            <span class="btn-cancel-reply" onclick="cancelReply()">X</span>
+            <div class="reply-preview-text" id="replyPreviewText">Balas: ...</div>
+            <span class="btn-cancel-reply" onclick="cancelReply()">&times;</span>
+        </div>
+
+        <div class="sticker-picker-container" id="stickerPicker">
+            <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
+            <span class="sticker-item" onclick="sendSticker('⚡')">⚡</span>
+            <span class="sticker-item" onclick="sendSticker('🚀')">🚀</span>
+            <span class="sticker-item" onclick="sendSticker('😎')">😎</span>
+            <span class="sticker-item" onclick="sendSticker('👍')">👍</span>
+            <span class="sticker-item" onclick="sendSticker('🎉')">🎉</span>
+            <span class="sticker-item" onclick="sendSticker('💎')">💎</span>
+            <span class="sticker-item" onclick="sendSticker('👾')">👾</span>
+            <span class="sticker-item" onclick="sendSticker('🤖')">🤖</span>
+            <span class="sticker-item" onclick="sendSticker('💀')">💀</span>
+            <span class="sticker-item" onclick="sendSticker('💯')">💯</span>
+            <span class="sticker-item" onclick="sendSticker('🎯')">🎯</span>
         </div>
 
         <div class="chat-footer">
@@ -1081,10 +1270,12 @@
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
             <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
 
-            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Media">FILE</button>
+            <!-- MEDIA ATTACHMENT -->
+            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
             <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
-            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM</button>
+            <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
+            <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM 🔥</button>
         </div>
     </div>
 </div>
@@ -1108,10 +1299,13 @@
 
     let activeUser = null; 
     let tempEditAvatar = "";
+    window.targetMsgKeyForReaction = null;
 
-    let currentChatMode = "GLOBAL"; 
+    // VARIABLE UNTUK PRIVAT DM CHAT
+    let currentChatMode = "GLOBAL"; // GLOBAL atau PERSONAL
     let activeDMPartner = "";
     let activeRefPath = "team_chat_messages";
+    let activeChatListener = null;
 
     const firebaseConfig = {
         databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -1138,6 +1332,7 @@
         }
     });
 
+    // FUNGSI HANDLE KLIK DATA (LANGSUNG BUKA CHAT / LOGIN)
     function handleChatClick() {
         if (activeUser) {
             openTeamChat();
@@ -1181,17 +1376,17 @@
                     closeAuthModal();
                     openTeamChat();
                 } else {
-                    alert("Akses Ditolak: Password Salah");
+                    alert("🚫 AKSES DITOLAK (Password Salah)");
                 }
             } else {
-                alert("Akses Ditolak: User ID Tidak Ditemukan");
+                alert("🚫 AKSES DITOLAK (User ID Tidak Ditemukan)");
             }
         });
     }
 
     function openRegisterModal() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("Akses Ditolak: Hanya Admin yang dapat mendaftarkan akun baru.");
+            alert("🚫 AKSES DITOLAK! Hanya Admin yang dapat mendaftarkan akun baru.");
             return;
         }
         
@@ -1207,7 +1402,7 @@
 
     function submitRegisterNewUser() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("Akses Ditolak!");
+            alert("🚫 AKSES DITOLAK!");
             return;
         }
 
@@ -1221,7 +1416,7 @@
 
         dbAccounts.child(newUser).once('value', (snapshot) => {
             if (snapshot.exists()) {
-                alert("Username tersebut sudah digunakan!");
+                alert("❌ Username tersebut sudah digunakan!");
             } else {
                 dbAccounts.child(newUser).set({
                     password: newPass,
@@ -1231,7 +1426,7 @@
                     if (error) {
                         alert("Gagal membuat akun: " + error.message);
                     } else {
-                        alert("Berhasil membuat akun baru untuk: " + newUser);
+                        alert("✅ Berhasil membuat akun baru untuk: " + newUser + "\nUser tersebut sekarang sudah bisa login ke T'chat!");
                         closeRegisterModal();
                     }
                 });
@@ -1356,6 +1551,7 @@
         }
     }
 
+    /* === LOGIKA SISTEM PERTEMANAN & DM 2 ORANG === */
     function openFriendsModal() {
         if (!activeUser) return;
         document.getElementById('friendsModal').style.display = 'flex';
@@ -1398,12 +1594,12 @@
             if (snapshot.exists()) {
                 dbFriends.child(targetUser).child('requests').child(activeUser.username).set(true, (err) => {
                     if (!err) {
-                        alert("Permintaan pertemanan terkirim ke " + targetUser);
+                        alert("✅ Permintaan pertemanan terkirim ke " + targetUser);
                         document.getElementById('targetFriendUser').value = '';
                     }
                 });
             } else {
-                alert("User ID tidak ditemukan!");
+                alert("❌ User ID tidak ditemukan!");
             }
         });
     }
@@ -1427,7 +1623,7 @@
                     <div class="friend-info">
                         <span class="friend-name">${friendName}</span>
                     </div>
-                    <button class="btn-action-friend" onclick="startPrivateChat('${friendName}')">CHAT PRIVATE</button>
+                    <button class="btn-action-friend" onclick="startPrivateChat('${friendName}')">CHAT PRIVATE 💬</button>
                 `;
                 container.appendChild(card);
             });
@@ -1454,8 +1650,8 @@
                         <span class="friend-name">${requester}</span>
                     </div>
                     <div style="display:flex; gap:4px;">
-                        <button class="btn-action-friend" style="background:var(--primary-accent); color:#000;" onclick="acceptFriend('${requester}')">TERIMA</button>
-                        <button class="btn-action-friend" style="background:#ff4d6d;" onclick="rejectFriend('${requester}')">TOLAK</button>
+                        <button class="btn-action-friend" style="background:#00ff88; color:#000;" onclick="acceptFriend('${requester}')">TERIMA</button>
+                        <button class="btn-action-friend" style="background:#ff007f;" onclick="rejectFriend('${requester}')">TOLAK</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -1508,6 +1704,7 @@
         });
     }
 
+    /* === FITUR PENGIRIMAN MEDIA (FOTO & VIDEO) === */
     function handleMediaUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -1536,6 +1733,7 @@
             }
 
             dbChat.push(payload);
+            playBeepSound('send');
             cancelReply();
         };
 
@@ -1545,7 +1743,7 @@
 
     function openTeamChat() {
         if (!activeUser) {
-            alert("Akses Ditolak: Silakan login terlebih dahulu.");
+            alert("🚫 AKSES DITOLAK! Silakan login terlebih dahulu.");
             openAuthModal();
             return;
         }
@@ -1554,7 +1752,7 @@
 
         currentChatMode = "GLOBAL";
         activeRefPath = "team_chat_messages";
-        document.getElementById('chatTitleHeader').innerText = "T-Chat";
+        document.getElementById('chatTitleHeader').innerText = "T'chat";
         switchChatRoom(activeRefPath);
 
         document.getElementById('chatModal').style.display = 'flex';
@@ -1563,6 +1761,7 @@
 
     function closeTeamChat() {
         document.getElementById('chatModal').style.display = 'none';
+        document.getElementById('stickerPicker').style.display = 'none';
         document.getElementById('mainContainer').classList.remove('hidden-for-chat');
     }
 
@@ -1571,9 +1770,36 @@
         btnGroup.classList.toggle('swapped');
     }
 
+    function playBeepSound(type) {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            if (type === 'send') {
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.1);
+            } else if (type === 'receive') {
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1174.66, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.12);
+            }
+        } catch(e) {}
+    }
+
     const userColors = [
-        '#00f5d4', '#e0aaff', '#70e000', '#ffb703', 
-        '#00b4d8', '#ff4d6d', '#3a86ff', '#fb5607'
+        '#00f0ff', '#ff007f', '#00ff88', '#ffb703', 
+        '#a855f7', '#ff4d6d', '#3a86ff', '#fb5607', 
+        '#70e000', '#ff006e', '#8338ec', '#00b4d8'
     ];
 
     function getUserColor(name) {
@@ -1599,6 +1825,39 @@
         formatted = formatted.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
         return formatted;
+    }
+
+    function toggleStickerPicker() {
+        const picker = document.getElementById('stickerPicker');
+        picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
+    }
+
+    function openReactionPicker(msgKey) {
+        window.targetMsgKeyForReaction = msgKey;
+        toggleStickerPicker();
+    }
+
+    function toggleReaction(msgKey, emoji) {
+        if (!activeUser) return;
+        
+        const user = activeUser.username;
+        const reactionRef = dbChat.child(msgKey).child('reactions').child(emoji);
+
+        reactionRef.once('value', (snapshot) => {
+            let users = snapshot.val() || [];
+            
+            if (users.includes(user)) {
+                users = users.filter(u => u !== user);
+                if (users.length === 0) {
+                    reactionRef.remove();
+                } else {
+                    reactionRef.set(users);
+                }
+            } else {
+                users.push(user);
+                reactionRef.set(users);
+            }
+        });
     }
 
     function setReplyToMessage(user, text) {
@@ -1637,11 +1896,11 @@
         const color = getUserColor(username);
         const isAdmin = (username === NAMA_ADMIN_RESMI);
         const badgeAdmin = isAdmin 
-            ? `<span style="background: var(--border-purple); color: #ffffff; font-size: 8px; padding: 1px 5px; border-radius: 3px; margin-left: 5px; font-weight: bold;">ADMIN</span>` 
+            ? `<span style="background: #ff007f; color: #ffffff; font-size: 8px; padding: 1px 6px; border-radius: 4px; margin-left: 5px; font-weight: 900; letter-spacing: 1px; box-shadow: 0 0 6px var(--pink-neon);">ADMIN</span>` 
             : '';
 
         const safeUser = username.replace(/'/g, "\\'");
-        const safeText = (data.msg || (data.isMedia ? '[Media]' : '')).replace(/'/g, "\\'").replace(/\n/g, ' ');
+        const safeText = (data.msg || (data.isSticker ? data.sticker : (data.isMedia ? '[Media]' : ''))).replace(/'/g, "\\'").replace(/\n/g, ' ');
 
         const avatarImg = document.createElement('img');
         avatarImg.className = 'msg-avatar';
@@ -1658,7 +1917,8 @@
             <span class="sender" style="color: ${color};">${username}${badgeAdmin}</span>
             <span class="time-stamp">${data.timestamp || ''}</span>
             <div class="msg-actions">
-                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">REPLY</span>
+                <span class="btn-action-msg" title="Beri Reaksi" onclick="openReactionPicker('${key}')">😊</span>
+                <span class="btn-action-msg" title="Balas Pesan Ini" onclick="setReplyToMessage('${safeUser}', '${safeText}')">↩️</span>
             </div>
         `;
 
@@ -1669,14 +1929,16 @@
         if (data.replyTo) {
             replyHTML = `
                 <div class="reply-quote-box">
-                    <span class="reply-author">${data.replyTo.user.toUpperCase()}</span>
+                    <span class="reply-author">↩️ ${data.replyTo.user.toUpperCase()}</span>
                     <span class="reply-text">${formatChatMessage(data.replyTo.text)}</span>
                 </div>
             `;
         }
 
         let contentHTML = '';
-        if (data.isMedia) {
+        if (data.isSticker) {
+            contentHTML = `<span class="msg-sticker">${data.sticker}</span>`;
+        } else if (data.isMedia) {
             if (data.mediaType === 'image') {
                 contentHTML = `<img class="chat-media-img" src="${data.mediaData}" onclick="viewFullsizeImage('${data.mediaData}', '${username}')" />`;
             } else if (data.mediaType === 'video') {
@@ -1688,8 +1950,28 @@
 
         msgDiv.innerHTML = `${replyHTML}${contentHTML}`;
 
+        const reactionsContainer = document.createElement('div');
+        reactionsContainer.className = 'msg-reactions-container';
+
+        if (data.reactions) {
+            Object.keys(data.reactions).forEach(emoji => {
+                const users = data.reactions[emoji] || [];
+                if (users.length > 0) {
+                    const isMyReaction = users.includes(currentUser);
+                    const badge = document.createElement('div');
+                    badge.className = `reaction-badge ${isMyReaction ? 'active-user' : ''}`;
+                    badge.title = `Direaksi oleh: ${users.join(', ')}`;
+                    badge.innerHTML = `<span>${emoji}</span><span class="reaction-count">${users.length}</span>`;
+                    
+                    badge.onclick = () => toggleReaction(key, emoji);
+                    reactionsContainer.appendChild(badge);
+                }
+            });
+        }
+
         contentContainer.appendChild(headerInfoDiv);
         contentContainer.appendChild(msgDiv);
+        contentContainer.appendChild(reactionsContainer); 
 
         wrapperDiv.appendChild(avatarImg);
         wrapperDiv.appendChild(contentContainer);
@@ -1699,6 +1981,34 @@
         }
         
         chatLogs.scrollTop = chatLogs.scrollHeight;
+    }
+
+    function sendSticker(stickerChar) {
+        if (!activeUser) return;
+
+        if (window.targetMsgKeyForReaction) {
+            toggleReaction(window.targetMsgKeyForReaction, stickerChar);
+            window.targetMsgKeyForReaction = null;
+            document.getElementById('stickerPicker').style.display = 'none';
+            return;
+        }
+
+        const payload = {
+            user: activeUser.username,
+            avatar: activeUser.avatar,
+            sticker: stickerChar,
+            isSticker: true,
+            timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+        };
+
+        if (selectedReplyData) {
+            payload.replyTo = selectedReplyData;
+        }
+
+        dbChat.push(payload);
+        playBeepSound('send');
+        cancelReply();
+        document.getElementById('stickerPicker').style.display = 'none';
     }
 
     function sendChatMessage() {
@@ -1719,15 +2029,17 @@
             }
 
             dbChat.push(payload);
+            playBeepSound('send');
             textInput.value = '';
-            textInput.style.height = '38px';
+            textInput.style.height = '40px';
             cancelReply();
+            document.getElementById('stickerPicker').style.display = 'none';
         }
     }
 
     function clearAllChat() {
         if (!activeUser || activeUser.username !== NAMA_ADMIN_RESMI) {
-            alert("Akses Ditolak: Hanya Admin yang bisa mereset obrolan.");
+            alert("🚫 AKSES DITOLAK! Hanya Admin yang bisa mereset obrolan.");
             return;
         }
 
@@ -1747,6 +2059,25 @@
             }
         }
     }
+
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const circle = document.createElement('span');
+            const diameter = Math.max(this.clientWidth, this.clientHeight);
+            const radius = diameter / 2;
+
+            const rect = this.getBoundingClientRect();
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${e.clientX - rect.left - radius}px`;
+            circle.style.top = `${e.clientY - rect.top - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = this.querySelector('.ripple');
+            if (ripple) ripple.remove();
+
+            this.appendChild(circle);
+        });
+    });
 
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
