@@ -71,14 +71,14 @@
         }
     }
 
-    /* CONTAINER UTAMA (EFEK KACA TRANSPARAN & BASAH) */
+    /* CONTAINER UTAMA (BINGKAI KACA TRANSPARAN) */
     .container {
         position: relative;
         z-index: 2;
-        /* Dibuat sangat transparan dengan efek kaca buram */
-        background: rgba(12, 10, 28, 0.35) !important; 
-        backdrop-filter: blur(16px) saturate(140%);
-        -webkit-backdrop-filter: blur(16px) saturate(140%);
+        /* Kaca Transparan / Glassmorphism Clean */
+        background: rgba(10, 8, 22, 0.25) !important; 
+        backdrop-filter: blur(12px) saturate(130%);
+        -webkit-backdrop-filter: blur(12px) saturate(130%);
         border-radius: 40px !important;
         width: 100%;
         max-width: 900px;
@@ -86,10 +86,10 @@
         margin: auto;
         overflow: hidden;
 
-        /* Conic-gradient lavender yang berputar melingkari bingkai */
+        /* Gradient Bingkai Berputar */
         border: 2px solid transparent !important;
         background-image: 
-            linear-gradient(rgba(12, 10, 28, 0.35), rgba(12, 10, 28, 0.35)), 
+            linear-gradient(rgba(10, 8, 22, 0.25), rgba(10, 8, 22, 0.25)), 
             conic-gradient(
                 from var(--border-angle), 
                 rgba(200, 158, 255, 0.15) 0%, 
@@ -103,38 +103,9 @@
         
         animation: spinBorder 4s linear infinite;
         box-shadow: 
-            0 20px 50px rgba(0, 0, 0, 0.6),
-            0 0 30px rgba(200, 158, 255, 0.25),
-            inset 0 0 20px rgba(255, 255, 255, 0.15);
+            0 20px 50px rgba(0, 0, 0, 0.5),
+            0 0 25px rgba(200, 158, 255, 0.2);
         transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    /* EFEK EMBUN / EMBOSS AIR DI ATAS PERMUKAAN KACA CONTAINER */
-    .container::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
-                    radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    /* SVG WATER DROPLETS OVERLAY */
-    .water-drops-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-        opacity: 0.75;
-    }
-
-    .container > * {
-        position: relative;
-        z-index: 2;
     }
 
     .container.hidden-for-chat {
@@ -1113,44 +1084,6 @@
 
 <!-- CONTAINER UTAMA -->
 <div class="container" id="mainContainer">
-    <!-- OVERLAY SVG PENEMPELAN TETESAN AIR PADA KACA -->
-    <svg class="water-drops-overlay" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <filter id="water-glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="1" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-        </defs>
-        <!-- Tetesan Air Realistis dengan Refraksi/Bayangan -->
-        <g fill="rgba(255, 255, 255, 0.25)" stroke="rgba(255, 255, 255, 0.45)" stroke-width="0.8">
-            <ellipse cx="6%" cy="12%" rx="9" ry="11" />
-            <ellipse cx="6.5%" cy="11.5%" rx="3" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
-
-            <ellipse cx="94%" cy="18%" rx="14" ry="12" />
-            <ellipse cx="94.5%" cy="17%" rx="5" ry="3" fill="rgba(255,255,255,0.85)" stroke="none" />
-
-            <ellipse cx="12%" cy="75%" rx="18" ry="15" />
-            <ellipse cx="12.5%" cy="73.5%" rx="6" ry="4" fill="rgba(255,255,255,0.8)" stroke="none" />
-
-            <ellipse cx="88%" cy="82%" rx="10" ry="13" />
-            <ellipse cx="88.3%" cy="80.5%" rx="4" ry="3" fill="rgba(255,255,255,0.8)" stroke="none" />
-
-            <ellipse cx="3%" cy="45%" rx="6" ry="8" />
-            <ellipse cx="3.2%" cy="44%" rx="2" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
-
-            <ellipse cx="97%" cy="52%" rx="8" ry="7" />
-            <ellipse cx="97.2%" cy="51%" rx="3" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
-
-            <ellipse cx="25%" cy="6%" rx="7" ry="5" />
-            <ellipse cx="75%" cy="94%" rx="11" ry="9" />
-            <ellipse cx="75.4%" cy="92.8%" rx="4" ry="2" fill="rgba(255,255,255,0.8)" stroke="none" />
-
-            <!-- Jejak Lelehan Air -->
-            <path d="M 94 18 Q 94.5 35 93 48" stroke="rgba(255,255,255,0.25)" stroke-width="3" fill="none" stroke-linecap="round" />
-            <ellipse cx="93" cy="49" rx="4" ry="5" />
-        </g>
-    </svg>
-
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
 
