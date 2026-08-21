@@ -44,7 +44,10 @@
         syntax: '<angle>'; inherits: false; initial-value: 0deg;
     }
 
-    @keyframes spinBorder { to { --border-angle: 360deg; } }
+    @keyframes spinBorder { 
+        0% { --border-angle: 0deg; }
+        100% { --border-angle: 360deg; } 
+    }
 
     .container {
         position: relative; z-index: 2; background: rgba(10, 8, 25, 0.45) !important; 
@@ -55,9 +58,17 @@
         overflow: hidden;
     }
 
+    /* Bingkai animasi cahaya 360 derajat (Warna Biru & Putih) */
     .container::before {
         content: ''; position: absolute; inset: -3px; border-radius: 40px; padding: 3px;
-        background: conic-gradient(from var(--border-angle), rgba(200, 158, 255, 0.1) 0%, var(--lavender-border) 25%, #ffffff 50%, var(--lavender-glow) 75%, rgba(200, 158, 255, 0.1) 100%);
+        background: conic-gradient(
+            from var(--border-angle), 
+            rgba(0, 210, 255, 0.1) 0%, 
+            var(--blue-electric) 25%, 
+            #ffffff 50%, 
+            var(--cyan-neon) 75%, 
+            rgba(0, 210, 255, 0.1) 100%
+        );
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
         animation: spinBorder 4s linear infinite;
@@ -122,11 +133,54 @@
         background: var(--lavender-bg) !important; color: var(--lavender-text) !important;
         text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
         box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
-        transition: transform 0.1s ease, box-shadow 0.2s ease;
+        transition: transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     button:hover { background: rgba(147, 112, 219, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); }
-    button:active { transform: scale(0.96) !important; }
+
+    /* Bingkai biru tipis saat di-TAB (Focus State) */
+    #btnCopy:focus-visible, #btnReset:focus-visible {
+        outline: none;
+        border-color: var(--cyan-neon) !important;
+        box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.4), 0 0 15px var(--blue-electric) !important;
+    }
+
+    /* Efek Gelombang (Wave Pulse) saat tombol ditekan */
+    button::after {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 5px; height: 5px;
+        background: rgba(0, 240, 255, 0.6);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%, -50%);
+        transform-origin: 50% 50%;
+    }
+
+    button:active::after {
+        animation: rippleEffect 0.4s ease-out;
+    }
+
+    @keyframes rippleEffect {
+        0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.8; }
+        100% { transform: scale(40, 40) translate(-50%, -50%); opacity: 0; }
+    }
+
+    /* Animasi Getar (Vibrate) saat Klik */
+    @keyframes vibrateAnim {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+    }
+
+    button:active {
+        animation: vibrateAnim 0.15s linear infinite;
+        transform: scale(0.96) !important;
+    }
 
     .table-container { 
         overflow-x: auto; max-height: 380px; border-radius: 12px;
