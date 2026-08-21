@@ -136,7 +136,11 @@
         transition: transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    button:hover { background: rgba(147, 112, 219, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); }
+    button:hover { 
+        background: rgba(147, 112, 219, 0.35) !important; 
+        border-color: #fff !important; 
+        box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); 
+    }
 
     /* Bingkai biru tipis saat di-TAB (Focus State) */
     #btnCopy:focus-visible, #btnReset:focus-visible {
@@ -167,18 +171,22 @@
         100% { transform: scale(40, 40) translate(-50%, -50%); opacity: 0; }
     }
 
-    /* Animasi Getar (Vibrate) saat Klik */
+    /* Animasi Getar Visual (Visual Shake) saat Kursor Menempel (Hover) atau Navigasi TAB (Focus) */
     @keyframes vibrateAnim {
-        0% { transform: translate(0); }
+        0% { transform: translate(0, 0); }
         20% { transform: translate(-2px, 2px); }
         40% { transform: translate(-2px, -2px); }
         60% { transform: translate(2px, 2px); }
         80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
+        100% { transform: translate(0, 0); }
+    }
+
+    #btnCopy:hover, #btnCopy:focus,
+    #btnReset:hover, #btnReset:focus {
+        animation: vibrateAnim 0.15s linear infinite;
     }
 
     button:active {
-        animation: vibrateAnim 0.15s linear infinite;
         transform: scale(0.96) !important;
     }
 
