@@ -71,57 +71,49 @@
         }
     }
 
-  /* CONTAINER UTAMA */
-.container {
-    position: relative;
-    z-index: 2;
-    background: rgba(10, 8, 25, 0.45) !important; 
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 40px !important;
-    width: 100%;
-    max-width: 900px;
-    padding: 40px;
-    margin: auto;
-    /* Memberikan ruang untuk border melingkar */
-    border: 3px solid transparent !important;
-    box-shadow: 
-        0 0 20px rgba(200, 158, 255, 0.4),
-        0 0 40px rgba(181, 126, 220, 0.25),
-        inset 0 0 15px rgba(200, 158, 255, 0.2);
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    overflow: hidden; /* Menjaga agar cahaya border rapi di lekukan */
-}
+    /* CONTAINER UTAMA */
+    .container {
+        position: relative;
+        z-index: 2;
+        background: rgba(10, 8, 25, 0.45) !important; 
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border-radius: 40px !important;
+        width: 100%;
+        max-width: 900px;
+        padding: 40px;
+        margin: auto;
+        border: 3px solid transparent !important;
+        box-shadow: 
+            0 0 20px rgba(200, 158, 255, 0.4),
+            0 0 40px rgba(181, 126, 220, 0.25),
+            inset 0 0 15px rgba(200, 158, 255, 0.2);
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        overflow: hidden;
+    }
 
-/* CAHAYA BERPUTAR KHUSUS DI BORDER OUTLINE */
-.container::before {
-    content: '';
-    position: absolute;
-    inset: -3px; /* Menyesuaikan ketebalan border */
-    border-radius: 40px;
-    padding: 3px; /* Ketebalan garis cahaya */
-    background: conic-gradient(
-        from var(--border-angle), 
-        rgba(200, 158, 255, 0.1) 0%, 
-        var(--lavender-border) 25%, 
-        #ffffff 50%, 
-        var(--lavender-glow) 75%, 
-        rgba(200, 158, 255, 0.1) 100%
-    );
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    animation: spinBorder 4s linear infinite;
-}
-    box-shadow: 
-        0 0 20px rgba(200, 158, 255, 0.4),
-        0 0 40px rgba(181, 126, 220, 0.25),
-        inset 0 0 15px rgba(200, 158, 255, 0.2);
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+    /* CAHAYA BERPUTAR KHUSUS DI BORDER OUTLINE */
+    .container::before {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: 40px;
+        padding: 3px;
+        background: conic-gradient(
+            from var(--border-angle), 
+            rgba(200, 158, 255, 0.1) 0%, 
+            var(--lavender-border) 25%, 
+            #ffffff 50%, 
+            var(--lavender-glow) 75%, 
+            rgba(200, 158, 255, 0.1) 100%
+        );
+        -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        animation: spinBorder 4s linear infinite;
     }
 
     .container.hidden-for-chat {
@@ -423,7 +415,7 @@
         max-width: 420px;
         background: rgba(17, 17, 17, 0.95) !important;
         border-radius: 20px !important;
-        padding: 2px; /* Ketebalan Border Beam */
+        padding: 2px;
         overflow: hidden;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
     }
@@ -1138,7 +1130,6 @@
         letter-spacing: 2px;
     }
 
-    /* KEYFRAMES DARI KODE DUA */
     @keyframes rotateBeam {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
