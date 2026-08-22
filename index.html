@@ -283,7 +283,7 @@
         padding: 20px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;
     }
 
-    /* HEADER & CONTROLS CHAT (TOMBOL VERTIKAL) */
+    /* HEADER & CONTROLS CHAT (TOMBOL VERTIKAL DI SAMPING KIRI) */
     .chat-header { 
         display: flex; 
         justify-content: space-between; 
@@ -292,6 +292,13 @@
         padding-bottom: 10px; 
         flex-shrink: 0; 
     }
+
+    .chat-header-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
     .chat-header h3 {
         margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 3px;
         background: linear-gradient(90deg, var(--cyan-neon), var(--blue-electric), var(--pink-neon), var(--purple-neon), var(--cyan-neon));
@@ -302,7 +309,7 @@
     .header-controls { 
         display: flex; 
         flex-direction: column; 
-        align-items: flex-end; 
+        align-items: flex-start; 
         gap: 6px; 
     }
     
@@ -326,7 +333,6 @@
         cursor: pointer; 
         padding: 0 6px !important; 
         box-shadow: none !important; 
-        align-self: flex-end;
     }
 
     .chat-body {
@@ -590,14 +596,16 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3 id="chatTitleHeader">T'chat</h3>
-            <div class="header-controls">
-                <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
-                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN 🤝</button>
-                <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
-                <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
-                <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
+            <div class="chat-header-left">
+                <div class="header-controls">
+                    <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN 🤝</button>
+                    <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
+                    <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
+                    <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
+                </div>
+                <h3 id="chatTitleHeader">T'chat</h3>
             </div>
+            <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
         </div>
 
         <div class="chat-body" id="chatLogs"></div>
@@ -919,19 +927,13 @@
         switchChatRoom(`direct_messages/${sorted[0]}_${sorted[1]}`);
     }
 
-    // TERAPKAN FIX CHILD_REMOVED
     function switchChatRoom(path) {
-        if (dbChat) dbChat.off(); // Lepas listener lama
+        if (dbChat) dbChat.off();
         document.getElementById('chatLogs').innerHTML = '';
         dbChat = dbRoot.ref(path);
         
-        // 1. Pemantau Pesan Baru Tambah
         dbChat.limitToLast(60).on('child_added', (snap) => renderMessage(snap.key, snap.val()));
-
-        // 2. Pemantau Pesan Diubah / Edit / Reaksi
         dbChat.limitToLast(60).on('child_changed', (snap) => renderMessage(snap.key, snap.val()));
-
-        // 3. PEMANTAU PESAN DIHAPUS (Realtime tanpa Refresh!)
         dbChat.limitToLast(60).on('child_removed', (snap) => {
             const removedElem = document.getElementById(`msg-${snap.key}`);
             if (removedElem) {
@@ -942,7 +944,7 @@
 
     function clearAllChat() {
         if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua obrolan?")) {
-            dbChat.remove(); // Listener child_removed di semua pengguna akan otomatis menghapus tampilannya!
+            dbChat.remove();
         }
     }
 
