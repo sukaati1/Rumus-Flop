@@ -695,20 +695,24 @@
     });
 
     function initUnreadListener() {
-        if (globalUnreadRef) globalUnreadRef.off();
-        
-        globalUnreadRef = firebase.database().ref("team_chat_messages").limitToLast(1);
-        
-        globalUnreadRef.on('child_added', (snap) => {
-            const data = snap.val();
-            if (!data) return;
+    // 1. Pastikan terhubung langsung ke node pesan utama
+    const unreadRef = firebase.database().ref("team_chat_messages").limitToLast(1);
+    
+    // 2. Gunakan listener 'child_added' yang SELALU AKTIF tanpa fungsi .off()
+    unreadRef.on('child_added', (snap) => {
+        const data = snap.val();
+        if (!data) return;
 
-            const sender = (data.user || '').toUpperCase();
-            const myName = activeUser ? activeUser.username.toUpperCase() : '';
+        const sender = (data.user || '').toUpperCase();
+        const myName = activeUser ? activeUser.username.toUpperCase() : '';
 
-            if (!isChatOpen && sender !== '' && sender !== myName) {
-                unreadCount++;
-                updateUnreadBadge();
+        // 3. Jika pesan dari pengguna lain & modal chat sedang ditutup, tambahkan notifikasi
+        if (!isChatOpen && sender !== '' && sender !== myName) {
+            unreadCount++;
+            updateUnreadBadge();
+        }
+    });
+}
             }
         });
     }
