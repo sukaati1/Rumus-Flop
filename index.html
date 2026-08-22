@@ -121,16 +121,17 @@
     }
 
     .badge-count.has-unread {
-        background: rgba(255, 0, 127, 0.25);
-        border-color: var(--pink-neon);
-        color: #fff !important;
-        animation: pulseBadge 1.5s infinite;
+        background: rgba(255, 0, 127, 0.85) !important;
+        border-color: #ffffff !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 15px var(--pink-neon);
+        animation: pulseBadge 1.2s infinite;
     }
 
     @keyframes pulseBadge {
-        0% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(255, 0, 127, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.8); }
+        50% { transform: scale(1.08); box-shadow: 0 0 12px 6px rgba(255, 0, 127, 0.4); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
     }
 
     .btn-swap-pos { background: rgba(168, 85, 247, 0.15); color: var(--purple-bright) !important; border-color: rgba(168, 85, 247, 0.5); }
@@ -640,6 +641,8 @@
     let tempEditAvatar = "";
     let unreadCount = 0;
     let isChatOpen = false;
+    let globalUnreadRef = null;
+    let userAvatarCache = {}; 
     window.targetMsgKeyForReaction = null;
 
     if (!firebase.apps.length) {
@@ -668,6 +671,18 @@
         return elem;
     }
 
+    function fetchAvatarForUser(username, callback) {
+        if (userAvatarCache[username]) {
+            return callback(userAvatarCache[username]);
+        }
+        dbAccounts.child(username).once('value', (snap) => {
+            const val = snap.val();
+            const avatar = (val && val.avatar) ? val.avatar : ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username);
+            userAvatarCache[username] = avatar;
+            callback(avatar);
+        });
+    }
+
     function scrollToBottom() {
         const chatLogs = document.getElementById('chatLogs');
         chatLogs.scrollTop = chatLogs.scrollHeight;
@@ -680,9 +695,18 @@
     });
 
     function initUnreadListener() {
-        dbChat.limitToLast(1).on('child_added', (snap) => {
+        if (globalUnreadRef) globalUnreadRef.off();
+        
+        globalUnreadRef = firebase.database().ref("team_chat_messages").limitToLast(1);
+        
+        globalUnreadRef.on('child_added', (snap) => {
             const data = snap.val();
-            if (!isChatOpen && activeUser && data.user !== activeUser.username) {
+            if (!data) return;
+
+            const sender = (data.user || '').toUpperCase();
+            const myName = activeUser ? activeUser.username.toUpperCase() : '';
+
+            if (!isChatOpen && sender !== '' && sender !== myName) {
                 unreadCount++;
                 updateUnreadBadge();
             }
@@ -788,6 +812,7 @@
 
             dbAccounts.child(activeUser.username).update({ password: updatedPass, avatar: tempEditAvatar });
             activeUser.avatar = tempEditAvatar;
+            userAvatarCache[activeUser.username] = tempEditAvatar; 
             localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
             updateChatHeaderProfile();
             closeModal('profileModal');
@@ -908,7 +933,8 @@
             const reader = new FileReader();
             reader.onload = (e) => {
                 dbChat.push({
-                    user: activeUser.username, avatar: activeUser.avatar, mediaData: e.target.result,
+                    user: activeUser.username,
+                    mediaData: e.target.result,
                     isMedia: true, mediaType: isVideo ? 'video' : 'image',
                     timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     ...(selectedReplyData && { replyTo: selectedReplyData })
@@ -985,7 +1011,15 @@
             wrapperDiv.id = `msg-${key}`;
         } else { wrapperDiv.innerHTML = ''; }
 
-        const avatarElem = createAvatarElement(data.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username), 'msg-avatar', username);
+        const avatarHolder = document.createElement('div');
+        avatarHolder.style.display = 'contents';
+        
+        fetchAvatarForUser(username, (userAvatar) => {
+            avatarHolder.innerHTML = '';
+            const avatarElem = createAvatarElement(userAvatar, 'msg-avatar', username);
+            avatarHolder.appendChild(avatarElem);
+        });
+
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
 
@@ -1027,7 +1061,7 @@
         contentContainer.appendChild(msgDiv);
         contentContainer.appendChild(reactionsContainer);
 
-        wrapperDiv.appendChild(avatarElem);
+        wrapperDiv.appendChild(avatarHolder);
         wrapperDiv.appendChild(contentContainer);
 
         if (!document.getElementById(`msg-${key}`)) chatLogs.appendChild(wrapperDiv);
@@ -1040,7 +1074,7 @@
             window.targetMsgKeyForReaction = null;
         } else {
             dbChat.push({
-                user: activeUser.username, avatar: activeUser.avatar, sticker: stickerChar, isSticker: true,
+                user: activeUser.username, sticker: stickerChar, isSticker: true,
                 timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                 ...(selectedReplyData && { replyTo: selectedReplyData })
             });
@@ -1054,7 +1088,8 @@
         const text = textInput.value.trim();
         if (text) {
             dbChat.push({
-                user: activeUser.username, avatar: activeUser.avatar, msg: text,
+                user: activeUser.username,
+                msg: text,
                 timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                 ...(selectedReplyData && { replyTo: selectedReplyData })
             });
@@ -1089,7 +1124,6 @@
             if (!matchTime) return;
             let waktu = matchTime[1];
             
-            // Menggunakan regEx split yang fleksibel untuk berbagai format spasi/tab
             let parts = line.split(/\t+|\s{2,}/).filter(p => p !== '');
             
             if (parts.length >= 4) {
