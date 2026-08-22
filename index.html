@@ -125,6 +125,7 @@
     .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
     .btn-group.swapped { flex-direction: row-reverse; }
 
+    /* STYLE TOMBOL DENGAN EFEK HOVER & KLIK NEON */
     button {
         position: relative; overflow: hidden; flex: 1; padding: 16px 20px;
         font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 900;
@@ -133,7 +134,7 @@
         background: var(--lavender-bg) !important; color: var(--lavender-text) !important;
         text-shadow: 0 0 6px rgba(181, 126, 220, 0.6);
         box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
-        transition: transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
     button:hover { 
@@ -142,36 +143,37 @@
         box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); 
     }
 
-    /* Bingkai biru tipis saat di-TAB (Focus State) */
+    /* Bingkai cyan tipis saat di-TAB (Focus State) */
     #btnCopy:focus-visible, #btnReset:focus-visible {
         outline: none;
         border-color: var(--cyan-neon) !important;
         box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.4), 0 0 15px var(--blue-electric) !important;
     }
 
-    /* Efek Gelombang (Wave Pulse) saat tombol ditekan */
+    /* Efek Gelombang Cyan yang Lebih Kuat saat Klik */
     button::after {
         content: '';
         position: absolute;
         top: 50%; left: 50%;
-        width: 5px; height: 5px;
-        background: rgba(0, 240, 255, 0.6);
+        width: 10px; height: 10px;
+        background: var(--cyan-neon);
         opacity: 0;
         border-radius: 100%;
-        transform: scale(1, 1) translate(-50%, -50%);
-        transform-origin: 50% 50%;
+        transform: translate(-50%, -50%) scale(1);
+        pointer-events: none;
     }
 
     button:active::after {
-        animation: rippleEffect 0.4s ease-out;
+        animation: rippleEffect 0.35s ease-out;
     }
 
     @keyframes rippleEffect {
-        0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.8; }
-        100% { transform: scale(40, 40) translate(-50%, -50%); opacity: 0; }
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+        50% { opacity: 0.6; }
+        100% { transform: translate(-50%, -50%) scale(50); opacity: 0; }
     }
 
-    /* Animasi Getar Visual (Visual Shake) saat Kursor Menempel (Hover) atau Navigasi TAB (Focus) */
+    /* Animasi Getar Visual khusus Hover Kursor (Hanya aktif saat disorot mouse) */
     @keyframes vibrateAnim {
         0% { transform: translate(0, 0); }
         20% { transform: translate(-2px, 2px); }
@@ -182,12 +184,19 @@
     }
 
     #btnCopy:hover,
-#btnReset:hover {
-    animation: vibrateAnim 0.15s linear infinite;
-}
+    #btnReset:hover {
+        animation: vibrateAnim 0.15s linear infinite;
+    }
 
+    /* EFEK KLIK (ACTIVE STATE) */
     button:active {
-        transform: scale(0.96) !important;
+        animation: none !important; /* Hentikan getar hover saat ditekan */
+        transform: scale(0.92) translateY(2px) !important; /* Efek amblas ke dalam */
+        background: var(--cyan-neon) !important; /* Kilatan latar Cyan */
+        color: #000000 !important; /* Teks berubah hitam kontras */
+        text-shadow: none !important;
+        border-color: #ffffff !important;
+        box-shadow: 0 0 25px var(--cyan-neon), inset 0 0 15px #ffffff !important; /* Ledakan cahaya neon */
     }
 
     .table-container { 
