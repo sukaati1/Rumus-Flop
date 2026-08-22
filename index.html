@@ -50,16 +50,6 @@
     }
 
     .container {
-        position: relative; z-index: 2; background: rgba(10, 8, 25, 0.45) !important; 
-        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-        border-radius: 40px !important; width: 100%; max-width: 900px; padding: 40px; margin: auto;
-        border: 3px solid transparent !important;
-        box-shadow: 0 0 20px rgba(200, 158, 255, 0.4), 0 0 40px rgba(181, 126, 220, 0.25), inset 0 0 15px rgba(200, 158, 255, 0.2);
-        overflow: hidden;
-    }
-
-    /* Bingkai animasi cahaya 360 derajat (Warna Biru & Putih) */
-    .container {
         position: relative; 
         z-index: 2; 
         background: rgba(10, 8, 25, 0.55) !important; 
@@ -73,7 +63,6 @@
         box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 15px rgba(200, 158, 255, 0.15);
     }
 
-    /* Bingkai animasi cahaya 360 derajat yang rapi tanpa tertumpuk */
     .container::before {
         content: ''; 
         position: absolute; 
@@ -93,7 +82,6 @@
         mask-composite: exclude; 
         pointer-events: none;
         animation: spinBorder 4s linear infinite;
-    }
     }
 
     .container.hidden-for-chat { display: none !important; }
@@ -147,7 +135,6 @@
     .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
     .btn-group.swapped { flex-direction: row-reverse; }
 
-    /* STYLE TOMBOL DENGAN EFEK HOVER & KLIK NEON */
     button {
         position: relative; overflow: hidden; flex: 1; padding: 16px 20px;
         font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 900;
@@ -165,14 +152,12 @@
         box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); 
     }
 
-    /* Bingkai cyan tipis saat di-TAB (Focus State) */
     #btnCopy:focus-visible, #btnReset:focus-visible {
         outline: none;
         border-color: var(--cyan-neon) !important;
         box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.4), 0 0 15px var(--blue-electric) !important;
     }
 
-    /* Efek Gelombang Cyan yang Lebih Kuat saat Klik */
     button::after {
         content: '';
         position: absolute;
@@ -195,7 +180,6 @@
         100% { transform: translate(-50%, -50%) scale(50); opacity: 0; }
     }
 
-    /* Animasi Getar Visual khusus Hover Kursor (Hanya aktif saat disorot mouse) */
     @keyframes vibrateAnim {
         0% { transform: translate(0, 0); }
         20% { transform: translate(-2px, 2px); }
@@ -210,15 +194,14 @@
         animation: vibrateAnim 0.15s linear infinite;
     }
 
-    /* EFEK KLIK (ACTIVE STATE) */
     button:active {
-        animation: none !important; /* Hentikan getar hover saat ditekan */
-        transform: scale(0.92) translateY(2px) !important; /* Efek amblas ke dalam */
-        background: var(--cyan-neon) !important; /* Kilatan latar Cyan */
-        color: #000000 !important; /* Teks berubah hitam kontras */
+        animation: none !important;
+        transform: scale(0.92) translateY(2px) !important;
+        background: var(--cyan-neon) !important;
+        color: #000000 !important;
         text-shadow: none !important;
         border-color: #ffffff !important;
-        box-shadow: 0 0 25px var(--cyan-neon), inset 0 0 15px #ffffff !important; /* Ledakan cahaya neon */
+        box-shadow: 0 0 25px var(--cyan-neon), inset 0 0 15px #ffffff !important;
     }
 
     .table-container { 
@@ -240,7 +223,6 @@
     td:nth-child(5) { color: var(--cyan-neon) !important; }
     tr:hover td { background-color: rgba(168, 85, 247, 0.25) !important; }
 
-    /* MODAL OVERLAY */
     .chat-modal-overlay {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
         background: rgba(0, 0, 0, 0.7); z-index: 999; display: none;
@@ -294,7 +276,6 @@
         cursor: pointer; box-shadow: none !important; z-index: 2;
     }
 
-    /* KOTAK CHAT */
     .chat-modal {
         position: relative; width: 100%; max-width: 650px; height: 90vh; max-height: 720px;
         background: rgba(5, 5, 8, 0.95) !important; border-radius: 20px !important;
@@ -373,8 +354,6 @@
 
     .chat-msg .msg-content { color: #f0f0f5 !important; white-space: pre-wrap; }
     .chat-msg .msg-sticker { font-size: 32px; display: block; text-align: center; }
-    .chat-msg .msg-content a { color: var(--cyan-neon); text-decoration: underline; }
-    .chat-msg .msg-content code { background: rgba(0, 0, 0, 0.3); color: var(--cyan-neon); padding: 1px 4px; border-radius: 3px; font-size: 11px; }
 
     .reply-preview-container {
         display: none; justify-content: space-between; align-items: center; background: rgba(0, 210, 255, 0.15);
@@ -417,14 +396,12 @@
         color: #fff !important; font-size: 11px !important; height: 40px; display: flex; align-items: center; justify-content: center;
     }
 
-    /* MODAL PERTEMANAN */
     .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; margin-bottom: 10px; }
     .tab-btn { flex: 1; padding: 8px !important; font-size: 10px !important; border-radius: 10px !important; }
     .tab-btn.active { background: var(--cyan-neon) !important; color: #000 !important; border-color: #fff !important; }
 
     .friends-list-container { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; }
     .friend-card { display: flex; align-items: center; justify-content: space-between; background: rgba(20, 20, 30, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 12px; border-radius: 10px; }
-    .friend-info { display: flex; align-items: center; gap: 10px; }
     .friend-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; }
     .btn-action-friend { padding: 4px 8px !important; font-size: 9px !important; border-radius: 8px !important; flex: none !important; }
 
@@ -486,7 +463,7 @@
     </div>
 </div>
 
-<!-- AUTH MODAL OVERLAY -->
+<!-- AUTH MODAL -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeModal('authModal')">X</button>
@@ -579,7 +556,7 @@
     </div>
 </div>
 
-<!-- CHAT MODAL OVERLAY -->
+<!-- CHAT MODAL -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
@@ -644,15 +621,52 @@
     let selectedReplyData = null; 
     let activeUser = null; 
     let tempEditAvatar = "";
+    let isChatOpen = false;
+    let unreadCount = 0;
     window.targetMsgKeyForReaction = null;
 
+    // 1. Inisialisasi Firebase
     if (!firebase.apps.length) {
         firebase.initializeApp({ databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/" });
     }
     
-    let dbChat = firebase.database().ref("team_chat_messages");
-    const dbAccounts = firebase.database().ref("chat_accounts");
-    const dbFriends = firebase.database().ref("user_friends");
+    const dbRoot = firebase.database();
+    let dbChat = dbRoot.ref("team_chat_messages");
+    const dbAccounts = dbRoot.ref("chat_accounts");
+    const dbFriends = dbRoot.ref("user_friends");
+
+    // 2. Pemantau Pesan Unread Selalu Aktif
+    function initUnreadListener() {
+        const unreadRef = dbRoot.ref("team_chat_messages").limitToLast(1);
+        unreadRef.on('child_added', (snap) => {
+            const data = snap.val();
+            if (!data) return;
+
+            const sender = (data.user || '').toUpperCase();
+            const myName = activeUser ? activeUser.username.toUpperCase() : '';
+
+            if (!isChatOpen && sender !== '' && sender !== myName) {
+                unreadCount++;
+                updateUnreadBadge();
+            }
+        });
+    }
+
+    function updateUnreadBadge() {
+        const counterElem = document.getElementById('dataCounter');
+        if (!counterElem) return;
+
+        if (unreadCount > 0) {
+            counterElem.innerText = `🔴 ${unreadCount} PESAN BARU`;
+            counterElem.style.borderColor = '#ff007f';
+            counterElem.style.color = '#ff007f';
+        } else {
+            const lines = document.getElementById('rawInput').value.trim().split('\n').filter(l => l !== '');
+            counterElem.innerText = lines.length > 0 ? `${document.querySelectorAll('#tableBody tr').length} DATA` : "DATA";
+            counterElem.style.borderColor = 'rgba(0, 240, 255, 0.5)';
+            counterElem.style.color = 'var(--cyan-neon)';
+        }
+    }
 
     function isVideoUrl(url) {
         if (!url) return false;
@@ -675,6 +689,14 @@
     document.addEventListener("DOMContentLoaded", () => {
         const savedAccount = localStorage.getItem("chat_active_account");
         if (savedAccount) activeUser = JSON.parse(savedAccount);
+        
+        initUnreadListener();
+
+        dbRoot.ref(".info/connected").on("value", (snap) => {
+            if (snap.val() === true) {
+                console.log("Firebase Realtime Terhubung");
+            }
+        });
     });
 
     function closeModal(id) {
@@ -818,7 +840,7 @@
     function loadFriendsList() {
         const container = document.getElementById('tabFriendsContent');
         container.innerHTML = 'Loading...';
-        dbFriends.child(activeUser.username).child('list').once('value', (snapshot) => {
+        dbFriends.child(activeUser.username).child('list').on('value', (snapshot) => {
             container.innerHTML = snapshot.exists() ? '' : 'Belum ada teman.';
             snapshot.forEach((child) => {
                 container.innerHTML += `
@@ -833,7 +855,7 @@
     function loadFriendRequests() {
         const container = document.getElementById('tabRequestsContent');
         container.innerHTML = 'Loading...';
-        dbFriends.child(activeUser.username).child('requests').once('value', (snapshot) => {
+        dbFriends.child(activeUser.username).child('requests').on('value', (snapshot) => {
             container.innerHTML = snapshot.exists() ? '' : 'Tidak ada permintaan.';
             snapshot.forEach((child) => {
                 container.innerHTML += `
@@ -867,12 +889,31 @@
         switchChatRoom(`direct_messages/${sorted[0]}_${sorted[1]}`);
     }
 
+    // TERAPKAN FIX CHILD_REMOVED
     function switchChatRoom(path) {
-        if (dbChat) dbChat.off();
+        if (dbChat) dbChat.off(); // Lepas listener lama
         document.getElementById('chatLogs').innerHTML = '';
-        dbChat = firebase.database().ref(path);
+        dbChat = dbRoot.ref(path);
+        
+        // 1. Pemantau Pesan Baru Tambah
         dbChat.limitToLast(60).on('child_added', (snap) => renderMessage(snap.key, snap.val()));
+
+        // 2. Pemantau Pesan Diubah / Edit / Reaksi
         dbChat.limitToLast(60).on('child_changed', (snap) => renderMessage(snap.key, snap.val()));
+
+        // 3. PEMANTAU PESAN DIHAPUS (Realtime tanpa Refresh!)
+        dbChat.limitToLast(60).on('child_removed', (snap) => {
+            const removedElem = document.getElementById(`msg-${snap.key}`);
+            if (removedElem) {
+                removedElem.remove();
+            }
+        });
+    }
+
+    function clearAllChat() {
+        if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua obrolan?")) {
+            dbChat.remove(); // Listener child_removed di semua pengguna akan otomatis menghapus tampilannya!
+        }
     }
 
     function handleMediaUpload(event) {
@@ -894,6 +935,10 @@
     }
 
     function openTeamChat() {
+        isChatOpen = true;
+        unreadCount = 0;
+        updateUnreadBadge();
+
         document.getElementById('mainContainer').classList.add('hidden-for-chat');
         updateChatHeaderProfile();
         document.getElementById('chatTitleHeader').innerText = "T'chat";
@@ -902,6 +947,7 @@
     }
 
     function closeTeamChat() {
+        isChatOpen = false;
         document.getElementById('chatModal').style.display = 'none';
         document.getElementById('stickerPicker').style.display = 'none';
         document.getElementById('mainContainer').classList.remove('hidden-for-chat');
@@ -1029,13 +1075,6 @@
         }
     }
 
-    function clearAllChat() {
-        if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua obrolan?")) {
-            dbChat.remove();
-            document.getElementById('chatLogs').innerHTML = '';
-        }
-    }
-
     function handleChatKey(e) {
         if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
     }
@@ -1047,7 +1086,7 @@
         tbody.innerHTML = ''; 
         hasilTeksUntukDisalin = ""; 
 
-        if (!input) { document.getElementById('dataCounter').innerText = "DATA"; return; }
+        if (!input) { updateUnreadBadge(); return; }
 
         let parsedLogList = [], lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
 
@@ -1071,14 +1110,14 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        document.getElementById('dataCounter').innerText = `${parsedLogList.length} DATA`;
+        updateUnreadBadge();
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
-        document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
+        updateUnreadBadge();
     }
 
     function salinHasil() {
