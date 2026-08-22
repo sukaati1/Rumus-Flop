@@ -59,8 +59,27 @@
     }
 
     /* Bingkai animasi cahaya 360 derajat (Warna Biru & Putih) */
+    .container {
+        position: relative; 
+        z-index: 2; 
+        background: rgba(10, 8, 25, 0.55) !important; 
+        backdrop-filter: blur(8px); 
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 40px !important; 
+        width: 100%; 
+        max-width: 900px; 
+        padding: 40px; 
+        margin: auto;
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 15px rgba(200, 158, 255, 0.15);
+    }
+
+    /* Bingkai animasi cahaya 360 derajat yang rapi tanpa tertumpuk */
     .container::before {
-        content: ''; position: absolute; inset: -3px; border-radius: 40px; padding: 3px;
+        content: ''; 
+        position: absolute; 
+        inset: 0; 
+        border-radius: 40px; 
+        padding: 3px;
         background: conic-gradient(
             from var(--border-angle), 
             rgba(0, 210, 255, 0.1) 0%, 
@@ -70,8 +89,11 @@
             rgba(0, 210, 255, 0.1) 100%
         );
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+        -webkit-mask-composite: xor; 
+        mask-composite: exclude; 
+        pointer-events: none;
         animation: spinBorder 4s linear infinite;
+    }
     }
 
     .container.hidden-for-chat { display: none !important; }
