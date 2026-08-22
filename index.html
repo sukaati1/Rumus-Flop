@@ -50,6 +50,16 @@
     }
 
     .container {
+        position: relative; z-index: 2; background: rgba(10, 8, 25, 0.45) !important; 
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        border-radius: 40px !important; width: 100%; max-width: 900px; padding: 40px; margin: auto;
+        border: 3px solid transparent !important;
+        box-shadow: 0 0 20px rgba(200, 158, 255, 0.4), 0 0 40px rgba(181, 126, 220, 0.25), inset 0 0 15px rgba(200, 158, 255, 0.2);
+        overflow: hidden;
+    }
+
+    /* Bingkai animasi cahaya 360 derajat (Warna Biru & Putih) */
+    .container {
         position: relative; 
         z-index: 2; 
         background: rgba(10, 8, 25, 0.55) !important; 
@@ -61,9 +71,9 @@
         padding: 40px; 
         margin: auto;
         box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 15px rgba(200, 158, 255, 0.15);
-        overflow: hidden;
     }
 
+    /* Bingkai animasi cahaya 360 derajat yang rapi tanpa tertumpuk */
     .container::before {
         content: ''; 
         position: absolute; 
@@ -83,6 +93,7 @@
         mask-composite: exclude; 
         pointer-events: none;
         animation: spinBorder 4s linear infinite;
+    }
     }
 
     .container.hidden-for-chat { display: none !important; }
@@ -117,47 +128,26 @@
         font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 15px;
         background: rgba(0, 210, 255, 0.15); color: var(--cyan-neon) !important;
         border: 1px solid rgba(0, 240, 255, 0.5); font-family: 'Orbitron', sans-serif;
-        cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
-    }
-
-    .badge-count.has-unread {
-        background: rgba(255, 0, 127, 0.85) !important;
-        border-color: #ffffff !important;
-        color: #ffffff !important;
-        box-shadow: 0 0 15px var(--pink-neon);
-        animation: pulseBadge 1.2s infinite;
-    }
-
-    @keyframes pulseBadge {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.8); }
-        50% { transform: scale(1.08); box-shadow: 0 0 12px 6px rgba(255, 0, 127, 0.4); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
+        cursor: pointer; transition: all 0.2s ease; display: inline-block;
     }
 
     .btn-swap-pos { background: rgba(168, 85, 247, 0.15); color: var(--purple-bright) !important; border-color: rgba(168, 85, 247, 0.5); }
     .badge-count:hover, .btn-swap-pos:hover { background: rgba(0, 210, 255, 0.35); border-color: #fff; color: #fff !important; box-shadow: 0 0 12px var(--cyan-neon); transform: scale(1.05); }
 
-    .textarea-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
     textarea#rawInput {
         width: 100%; height: 120px; background: rgba(0, 0, 0, 0.3) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.3) !important; border-radius: 12px;
         color: var(--cyan-neon) !important; padding: 14px; resize: vertical;
         font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13.5px;
-        user-select: text; outline: none;
+        margin-bottom: 20px; user-select: text; outline: none;
     }
-    textarea#rawInput:focus { border-color: var(--blue-electric) !important; background: rgba(0, 0, 0, 0.5) !important; box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
 
-    .btn-clear-input {
-        position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 127, 0.2);
-        border: 1px solid var(--pink-neon); color: var(--pink-neon); border-radius: 50%;
-        width: 22px; height: 22px; display: flex; justify-content: center; align-items: center;
-        font-size: 11px; cursor: pointer; opacity: 0.7; transition: opacity 0.2s;
-    }
-    .btn-clear-input:hover { opacity: 1; }
+    textarea#rawInput:focus { border-color: var(--blue-electric) !important; background: rgba(0, 0, 0, 0.5) !important; box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
 
     .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
     .btn-group.swapped { flex-direction: row-reverse; }
 
+    /* STYLE TOMBOL DENGAN EFEK HOVER & KLIK NEON */
     button {
         position: relative; overflow: hidden; flex: 1; padding: 16px 20px;
         font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 900;
@@ -175,19 +165,29 @@
         box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); 
     }
 
+    /* Bingkai cyan tipis saat di-TAB (Focus State) */
     #btnCopy:focus-visible, #btnReset:focus-visible {
         outline: none;
         border-color: var(--cyan-neon) !important;
         box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.4), 0 0 15px var(--blue-electric) !important;
     }
 
+    /* Efek Gelombang Cyan yang Lebih Kuat saat Klik */
     button::after {
-        content: ''; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
-        background: var(--cyan-neon); opacity: 0; border-radius: 100%;
-        transform: translate(-50%, -50%) scale(1); pointer-events: none;
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 10px; height: 10px;
+        background: var(--cyan-neon);
+        opacity: 0;
+        border-radius: 100%;
+        transform: translate(-50%, -50%) scale(1);
+        pointer-events: none;
     }
 
-    button:active::after { animation: rippleEffect 0.35s ease-out; }
+    button:active::after {
+        animation: rippleEffect 0.35s ease-out;
+    }
 
     @keyframes rippleEffect {
         0% { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
@@ -195,6 +195,7 @@
         100% { transform: translate(-50%, -50%) scale(50); opacity: 0; }
     }
 
+    /* Animasi Getar Visual khusus Hover Kursor (Hanya aktif saat disorot mouse) */
     @keyframes vibrateAnim {
         0% { transform: translate(0, 0); }
         20% { transform: translate(-2px, 2px); }
@@ -204,16 +205,20 @@
         100% { transform: translate(0, 0); }
     }
 
-    #btnCopy:hover, #btnReset:hover { animation: vibrateAnim 0.15s linear infinite; }
+    #btnCopy:hover,
+    #btnReset:hover {
+        animation: vibrateAnim 0.15s linear infinite;
+    }
 
+    /* EFEK KLIK (ACTIVE STATE) */
     button:active {
-        animation: none !important;
-        transform: scale(0.92) translateY(2px) !important;
-        background: var(--cyan-neon) !important;
-        color: #000000 !important;
+        animation: none !important; /* Hentikan getar hover saat ditekan */
+        transform: scale(0.92) translateY(2px) !important; /* Efek amblas ke dalam */
+        background: var(--cyan-neon) !important; /* Kilatan latar Cyan */
+        color: #000000 !important; /* Teks berubah hitam kontras */
         text-shadow: none !important;
         border-color: #ffffff !important;
-        box-shadow: 0 0 25px var(--cyan-neon), inset 0 0 15px #ffffff !important;
+        box-shadow: 0 0 25px var(--cyan-neon), inset 0 0 15px #ffffff !important; /* Ledakan cahaya neon */
     }
 
     .table-container { 
@@ -315,7 +320,7 @@
 
     .chat-body {
         flex: 1; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
-        padding: 12px; background: #09090d !important; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth;
+        padding: 12px; background: #09090d !important; display: flex; flex-direction: column; gap: 12px;
     }
 
     .chat-msg-wrapper { display: flex; gap: 10px; width: 100%; align-items: flex-start; }
@@ -368,6 +373,8 @@
 
     .chat-msg .msg-content { color: #f0f0f5 !important; white-space: pre-wrap; }
     .chat-msg .msg-sticker { font-size: 32px; display: block; text-align: center; }
+    .chat-msg .msg-content a { color: var(--cyan-neon); text-decoration: underline; }
+    .chat-msg .msg-content code { background: rgba(0, 0, 0, 0.3); color: var(--cyan-neon); padding: 1px 4px; border-radius: 3px; font-size: 11px; }
 
     .reply-preview-container {
         display: none; justify-content: space-between; align-items: center; background: rgba(0, 210, 255, 0.15);
@@ -410,12 +417,14 @@
         color: #fff !important; font-size: 11px !important; height: 40px; display: flex; align-items: center; justify-content: center;
     }
 
+    /* MODAL PERTEMANAN */
     .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; margin-bottom: 10px; }
     .tab-btn { flex: 1; padding: 8px !important; font-size: 10px !important; border-radius: 10px !important; }
     .tab-btn.active { background: var(--cyan-neon) !important; color: #000 !important; border-color: #fff !important; }
 
     .friends-list-container { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; }
     .friend-card { display: flex; align-items: center; justify-content: space-between; background: rgba(20, 20, 30, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 12px; border-radius: 10px; }
+    .friend-info { display: flex; align-items: center; gap: 10px; }
     .friend-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; }
     .btn-action-friend { padding: 4px 8px !important; font-size: 9px !important; border-radius: 8px !important; flex: none !important; }
 
@@ -438,6 +447,7 @@
     <source src="./gb.mp4" type="video/mp4">
 </video>
 
+<!-- CONTAINER UTAMA -->
 <div class="container" id="mainContainer">
     <h1>Rumus Flop Kasir</h1>
     <div class="sub-title">Ultra Light Edition</div>
@@ -445,10 +455,7 @@
     <div class="label-header">
         <label for="rawInput">Tempel Log Transaksi</label>
     </div>
-    <div class="textarea-wrapper">
-        <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()"></textarea>
-        <span class="btn-clear-input" onclick="resetData()" title="Clear Text">&times;</span>
-    </div>
+    <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()"></textarea>
     
     <div class="btn-group" id="btnGroup">
         <button id="btnCopy" onclick="salinHasil()"><span id="txtCopy">SALIN DATA</span></button>
@@ -459,9 +466,7 @@
         <label>Hasil Konversi</label>
         <div class="label-actions">
             <span class="btn-swap-pos" onclick="document.getElementById('btnGroup').classList.toggle('swapped')">SWAP ⇄</span>
-            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">
-                <span id="counterText">DATA</span>
-            </span>
+            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
         </div>
     </div>
     
@@ -481,7 +486,7 @@
     </div>
 </div>
 
-<!-- MODAL AUTH -->
+<!-- AUTH MODAL OVERLAY -->
 <div class="chat-modal-overlay" id="authModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeModal('authModal')">X</button>
@@ -502,7 +507,7 @@
     </div>
 </div>
 
-<!-- MODAL REGISTRASI -->
+<!-- REGISTRASI USER MODAL -->
 <div class="chat-modal-overlay" id="registerModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeModal('registerModal')">X</button>
@@ -523,7 +528,7 @@
     </div>
 </div>
 
-<!-- MODAL EDIT PROFIL -->
+<!-- EDIT PROFIL MODAL -->
 <div class="chat-modal-overlay" id="profileModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeModal('profileModal')">X</button>
@@ -550,7 +555,7 @@
     </div>
 </div>
 
-<!-- MODAL PERTEMANAN -->
+<!-- PERTEMANAN MODAL -->
 <div class="chat-modal-overlay" id="friendsModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeModal('friendsModal')">X</button>
@@ -574,7 +579,7 @@
     </div>
 </div>
 
-<!-- MODAL CHAT -->
+<!-- CHAT MODAL OVERLAY -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
@@ -613,9 +618,9 @@
         <div class="chat-footer">
             <div id="myChatAvatarContainer" onclick="openProfileModal()" style="display:inline-block; cursor:pointer;"></div>
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
-            <textarea id="chatText" placeholder="Tulis pesan..." maxlength="500" onkeydown="handleChatKey(event)"></textarea>
+            <textarea id="chatText" placeholder="Tulis pesan..." onkeydown="handleChatKey(event)"></textarea>
 
-            <button class="btn-attach-media" id="btnAttach" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
+            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
             <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
             <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
@@ -639,10 +644,6 @@
     let selectedReplyData = null; 
     let activeUser = null; 
     let tempEditAvatar = "";
-    let unreadCount = 0;
-    let isChatOpen = false;
-    let globalUnreadRef = null;
-    let userAvatarCache = {}; 
     window.targetMsgKeyForReaction = null;
 
     if (!firebase.apps.length) {
@@ -671,68 +672,14 @@
         return elem;
     }
 
-    function fetchAvatarForUser(username, callback) {
-        if (userAvatarCache[username]) {
-            return callback(userAvatarCache[username]);
-        }
-        dbAccounts.child(username).once('value', (snap) => {
-            const val = snap.val();
-            const avatar = (val && val.avatar) ? val.avatar : ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username);
-            userAvatarCache[username] = avatar;
-            callback(avatar);
-        });
-    }
-
-    function scrollToBottom() {
-        const chatLogs = document.getElementById('chatLogs');
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
         const savedAccount = localStorage.getItem("chat_active_account");
         if (savedAccount) activeUser = JSON.parse(savedAccount);
-        initUnreadListener();
     });
-
-    function initUnreadListener() {
-    // 1. Pastikan terhubung langsung ke node pesan utama
-    const unreadRef = firebase.database().ref("team_chat_messages").limitToLast(1);
-    
-    // 2. Gunakan listener 'child_added' yang SELALU AKTIF tanpa fungsi .off()
-    unreadRef.on('child_added', (snap) => {
-        const data = snap.val();
-        if (!data) return;
-
-        const sender = (data.user || '').toUpperCase();
-        const myName = activeUser ? activeUser.username.toUpperCase() : '';
-
-        // 3. Jika pesan dari pengguna lain & modal chat sedang ditutup, tambahkan notifikasi
-        if (!isChatOpen && sender !== '' && sender !== myName) {
-            unreadCount++;
-            updateUnreadBadge();
-        }
-    });
-}
-            }
-        });
-    }
-
-    function updateUnreadBadge() {
-        const badge = document.getElementById('dataCounter');
-        if (unreadCount > 0) {
-            badge.classList.add('has-unread');
-            document.getElementById('counterText').innerText = `CHAT (${unreadCount})`;
-        } else {
-            badge.classList.remove('has-unread');
-            const dataLen = document.querySelectorAll('#tableBody tr').length;
-            document.getElementById('counterText').innerText = dataLen > 0 ? `${dataLen} DATA` : 'DATA';
-        }
-    }
 
     function closeModal(id) {
         document.getElementById(id).style.display = 'none';
         if (id === 'authModal') document.getElementById('mainContainer').classList.remove('hidden-for-chat');
-        if (id === 'chatModal') isChatOpen = false;
     }
 
     function handleChatClick() {
@@ -816,7 +763,6 @@
 
             dbAccounts.child(activeUser.username).update({ password: updatedPass, avatar: tempEditAvatar });
             activeUser.avatar = tempEditAvatar;
-            userAvatarCache[activeUser.username] = tempEditAvatar; 
             localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
             updateChatHeaderProfile();
             closeModal('profileModal');
@@ -851,6 +797,7 @@
         }
     }
 
+    /* SISTEM PERTEMANAN & DM */
     function openFriendsModal() { document.getElementById('friendsModal').style.display = 'flex'; switchFriendsTab('friends'); }
     
     function switchFriendsTab(tab) {
@@ -931,40 +878,30 @@
     function handleMediaUpload(event) {
         const file = event.target.files[0];
         if (file && file.size <= 2 * 1024 * 1024) {
-            const btnAttach = document.getElementById('btnAttach');
-            btnAttach.innerText = "⏳";
             const isVideo = file.type.startsWith('video/');
             const reader = new FileReader();
             reader.onload = (e) => {
                 dbChat.push({
-                    user: activeUser.username,
-                    mediaData: e.target.result,
+                    user: activeUser.username, avatar: activeUser.avatar, mediaData: e.target.result,
                     isMedia: true, mediaType: isVideo ? 'video' : 'image',
                     timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     ...(selectedReplyData && { replyTo: selectedReplyData })
-                }, () => {
-                    btnAttach.innerText = "📷";
-                    cancelReply();
                 });
+                cancelReply();
             };
             reader.readAsDataURL(file);
         } else alert("File terlalu besar (Max 2MB)");
     }
 
     function openTeamChat() {
-        isChatOpen = true;
-        unreadCount = 0;
-        updateUnreadBadge();
         document.getElementById('mainContainer').classList.add('hidden-for-chat');
         updateChatHeaderProfile();
         document.getElementById('chatTitleHeader').innerText = "T'chat";
         switchChatRoom("team_chat_messages");
         document.getElementById('chatModal').style.display = 'flex';
-        setTimeout(scrollToBottom, 100);
     }
 
     function closeTeamChat() {
-        isChatOpen = false;
         document.getElementById('chatModal').style.display = 'none';
         document.getElementById('stickerPicker').style.display = 'none';
         document.getElementById('mainContainer').classList.remove('hidden-for-chat');
@@ -1015,15 +952,7 @@
             wrapperDiv.id = `msg-${key}`;
         } else { wrapperDiv.innerHTML = ''; }
 
-        const avatarHolder = document.createElement('div');
-        avatarHolder.style.display = 'contents';
-        
-        fetchAvatarForUser(username, (userAvatar) => {
-            avatarHolder.innerHTML = '';
-            const avatarElem = createAvatarElement(userAvatar, 'msg-avatar', username);
-            avatarHolder.appendChild(avatarElem);
-        });
-
+        const avatarElem = createAvatarElement(data.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username), 'msg-avatar', username);
         const contentContainer = document.createElement('div');
         contentContainer.className = 'msg-content-container';
 
@@ -1065,11 +994,11 @@
         contentContainer.appendChild(msgDiv);
         contentContainer.appendChild(reactionsContainer);
 
-        wrapperDiv.appendChild(avatarHolder);
+        wrapperDiv.appendChild(avatarElem);
         wrapperDiv.appendChild(contentContainer);
 
         if (!document.getElementById(`msg-${key}`)) chatLogs.appendChild(wrapperDiv);
-        scrollToBottom();
+        chatLogs.scrollTop = chatLogs.scrollHeight;
     }
 
     function sendSticker(stickerChar) {
@@ -1078,7 +1007,7 @@
             window.targetMsgKeyForReaction = null;
         } else {
             dbChat.push({
-                user: activeUser.username, sticker: stickerChar, isSticker: true,
+                user: activeUser.username, avatar: activeUser.avatar, sticker: stickerChar, isSticker: true,
                 timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                 ...(selectedReplyData && { replyTo: selectedReplyData })
             });
@@ -1092,8 +1021,7 @@
         const text = textInput.value.trim();
         if (text) {
             dbChat.push({
-                user: activeUser.username,
-                msg: text,
+                user: activeUser.username, avatar: activeUser.avatar, msg: text,
                 timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                 ...(selectedReplyData && { replyTo: selectedReplyData })
             });
@@ -1112,14 +1040,14 @@
         if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
     }
 
-    /* KASIR LOGIKA PARSER ENHANCED */
+    /* KASIR LOGIKA */
     function konversiLog() {
         const input = document.getElementById('rawInput').value.trim();
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; 
         hasilTeksUntukDisalin = ""; 
 
-        if (!input) { updateUnreadBadge(); return; }
+        if (!input) { document.getElementById('dataCounter').innerText = "DATA"; return; }
 
         let parsedLogList = [], lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
 
@@ -1127,17 +1055,10 @@
             let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
             if (!matchTime) return;
             let waktu = matchTime[1];
+            let parts = line.split(/\t|\s{2,}/).filter(p => p !== '');
             
-            let parts = line.split(/\t+|\s{2,}/).filter(p => p !== '');
-            
-            if (parts.length >= 4) {
-                parsedLogList.push({
-                    waktu,
-                    userId: parts[2] || parts[1] || "-",
-                    tujuanBank: parts[4] || parts[3] || "-",
-                    creditStatus: "0",
-                    jumlah: (parts[6] || parts[5] || parts[parts.length - 1] || "0").replace(/^-/, '')
-                });
+            if (parts.length >= 5) {
+                parsedLogList.push({ waktu, userId: parts[2]||"-", tujuanBank: parts[4]||"-", creditStatus: "0", jumlah: (parts[6]||parts[5]||"0").replace(/^-/, '') });
             }
         });
 
@@ -1150,14 +1071,14 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        updateUnreadBadge();
+        document.getElementById('dataCounter').innerText = `${parsedLogList.length} DATA`;
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
+        document.getElementById('dataCounter').innerText = "0 DATA";
         hasilTeksUntukDisalin = "";
-        updateUnreadBadge();
     }
 
     function salinHasil() {
