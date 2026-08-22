@@ -283,22 +283,7 @@
         padding: 20px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;
     }
 
-    /* HEADER & CONTROLS CHAT (TOMBOL VERTIKAL DI SAMPING KIRI) */
-    .chat-header { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: flex-start; 
-        border-bottom: 1px solid rgba(200, 158, 255, 0.2); 
-        padding-bottom: 10px; 
-        flex-shrink: 0; 
-    }
-
-    .chat-header-left {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
+    .chat-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(200, 158, 255, 0.2); padding-bottom: 10px; flex-shrink: 0; }
     .chat-header h3 {
         margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 3px;
         background: linear-gradient(90deg, var(--cyan-neon), var(--blue-electric), var(--pink-neon), var(--purple-neon), var(--cyan-neon));
@@ -306,34 +291,20 @@
         animation: shineText 3s linear infinite; filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
     }
 
-    .header-controls { 
-        display: flex; 
-        flex-direction: column; 
-        align-items: flex-start; 
-        gap: 6px; 
-    }
-    
+    .header-controls { display: flex; align-items: center; gap: 6px; }
     .btn-hdr-action { 
-        font-size: 9.5px !important; 
-        padding: 6px 14px !important; 
-        border-radius: 12px !important; 
-        flex: none !important; 
-        width: 100px; 
-        text-align: center;
+        font-size: 8px !important; 
+        padding: 3px 8px !important; 
+        border-radius: 10px !important; 
+        flex: none !important;
+        height: 24px !important;
+        line-height: 1 !important;
     }
     .btn-reset-chat { background: rgba(255, 0, 127, 0.15) !important; border: 1px solid rgba(255, 0, 127, 0.4) !important; color: var(--pink-neon) !important; }
     .btn-logout-chat { background: rgba(0, 210, 255, 0.15) !important; border: 1px solid rgba(0, 210, 255, 0.4) !important; color: var(--cyan-neon) !important; }
     .btn-profile-chat { background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.4) !important; color: var(--purple-bright) !important; }
     .btn-friends-chat { background: rgba(0, 255, 136, 0.15) !important; border: 1px solid rgba(0, 255, 136, 0.4) !important; color: #00ff88 !important; }
-    .btn-close-chat { 
-        background: transparent !important; 
-        border: none !important; 
-        color: var(--pink-neon) !important; 
-        font-size: 20px; 
-        cursor: pointer; 
-        padding: 0 6px !important; 
-        box-shadow: none !important; 
-    }
+    .btn-close-chat { background: transparent !important; border: none !important; color: var(--pink-neon) !important; font-size: 20px; cursor: pointer; padding: 0 6px !important; box-shadow: none !important; }
 
     .chat-body {
         flex: 1; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
@@ -596,16 +567,14 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <div class="chat-header-left">
-                <div class="header-controls">
-                    <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN 🤝</button>
-                    <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
-                    <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
-                    <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
-                </div>
-                <h3 id="chatTitleHeader">T'chat</h3>
+            <h3 id="chatTitleHeader">T'chat</h3>
+            <div class="header-controls">
+                <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">TEMAN</button>
+                <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">PROFIL</button>
+                <button class="btn-hdr-action btn-logout-chat" onclick="logoutChat()">LOGOUT</button>
+                <button class="btn-hdr-action btn-reset-chat" onclick="clearAllChat()">RESET</button>
+                <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
             </div>
-            <button class="btn-close-chat" onclick="closeTeamChat()">X</button>
         </div>
 
         <div class="chat-body" id="chatLogs"></div>
@@ -928,7 +897,7 @@
     }
 
     function switchChatRoom(path) {
-        if (dbChat) dbChat.off();
+        if (dbChat) dbChat.off(); 
         document.getElementById('chatLogs').innerHTML = '';
         dbChat = dbRoot.ref(path);
         
@@ -944,7 +913,7 @@
 
     function clearAllChat() {
         if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua obrolan?")) {
-            dbChat.remove();
+            dbChat.remove(); 
         }
     }
 
