@@ -49,7 +49,7 @@
         100% { --border-angle: 360deg; } 
     }
 
-    /* BINGKAI UTAMA & CHAT (DESAIN SAMA SERAGAM) */
+    /* BINGKAI UTAMA & CHAT */
     .container, .chat-modal-box {
         position: relative; 
         z-index: 2; 
@@ -136,7 +136,7 @@
     .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
     .btn-group.swapped { flex-direction: row-reverse; }
 
-    /* TOMBOL DENGAN TEMA RUMUS FLOP KASIR */
+    /* TOMBOL FLOP KASIR */
     button, .btn-flop-style {
         position: relative; overflow: hidden; flex: 1; padding: 16px 20px;
         font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 900;
@@ -216,7 +216,7 @@
     }
 
     /* ==========================================
-       T'CHAT - SAMA PERSIS RUMUS FLOP KASIR UI
+       T'CHAT - DESAIN SERAGAM RUMUS FLOP KASIR
        ========================================== */
 
     .chat-modal-box {
@@ -264,12 +264,20 @@
     .msg-header-info { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; font-size: 11px; color: rgba(255, 255, 255, 0.7); }
     .chat-msg-wrapper.own-msg .msg-header-info { flex-direction: row-reverse; }
 
-    .sender { font-weight: 800; font-family: 'Orbitron', sans-serif; color: var(--cyan-neon) !important; }
+    .sender { font-weight: 800; font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--cyan-neon) !important; }
     .time-stamp { color: rgba(255, 255, 255, 0.5); font-size: 10px; font-family: 'JetBrains Mono', monospace; }
 
-    .msg-actions { display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s ease; }
+    /* TOMBOL EMOT DI SEBELAH NAMA: UKURAN SAMA SEPERTI NAMA USER (11px) */
+    .msg-actions { display: flex; gap: 5px; opacity: 0; transition: opacity 0.2s ease; }
     .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
-    .btn-action-msg { color: #fff; cursor: pointer; font-size: 12px; }
+    .btn-action-msg { 
+        color: #fff; 
+        cursor: pointer; 
+        font-size: 11px !important; /* Disamakan dengan font nama user (11px) */
+        line-height: 1; 
+        display: inline-flex; 
+        align-items: center; 
+    }
 
     .chat-msg {
         position: relative; font-family: 'JetBrains Mono', monospace; 
@@ -316,20 +324,20 @@
     .sticker-item { font-size: 22px; text-align: center; cursor: pointer; border-radius: 6px; padding: 4px; }
     .sticker-item:hover { background: rgba(255, 255, 255, 0.2); }
 
-    /* FOOTER INPUT PESAN T'CHAT SAMA RUMUS FLOP KASIR */
+    /* FOOTER INPUT PESAN CHAT */
     .chat-footer { 
-        display: flex; gap: 10px; align-items: center; flex-shrink: 0; width: 100%;
+        display: flex; gap: 8px; align-items: center; flex-shrink: 0; width: 100%;
     }
 
-    /* Input Ketik Pesan: Memanjang Kiri */
+    /* Input Ketik Pesan: Mengisi Ruang Panjang Sebelah Kiri secara Maksimal */
     .chat-footer textarea#chatText {
         flex: 1; 
-        height: 48px; 
+        height: 42px; 
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
         border-radius: 12px !important;
         color: #ffffff !important; 
-        padding: 12px 14px;
+        padding: 10px 14px;
         font-family: 'JetBrains Mono', monospace; 
         font-size: 13.5px; 
         font-weight: 700;
@@ -342,20 +350,23 @@
         box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
     }
 
-    /* Tombol Emot & Upload Foto: Kecil di Kanan Input */
+    /* TOMBOL EMOT & UPLOAD FOTO DIKECILKAN (DIBUAT PRESI KOTAK 38px x 38px) */
     .btn-chat-small {
-        width: 38px;
-        height: 48px;
-        min-width: 38px;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+        padding: 0 !important;
+        flex: none !important;
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         color: #ffffff !important;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
+        font-size: 15px;
         transition: all 0.2s ease;
     }
     .btn-chat-small:hover {
@@ -364,13 +375,13 @@
         box-shadow: 0 0 8px var(--cyan-neon);
     }
 
-    /* Tombol Kirim Pesan: Sama Seperti Tombol RESET */
+    /* TOMBOL KIRIM PESAN: TETAP PERSIS TOMBOL RESET FLOP KASIR */
     .btn-send-chat {
         flex: none !important;
         width: auto !important;
-        min-width: 110px !important;
-        height: 48px !important;
-        padding: 0 18px !important;
+        min-width: 100px !important;
+        height: 42px !important;
+        padding: 0 16px !important;
         border-radius: 35px !important;
         border: 2px solid var(--lavender-border) !important;
         background: var(--lavender-bg) !important;
@@ -543,7 +554,7 @@
     </div>
 </div>
 
-<!-- CHAT MODAL (BINGKAI DESAIN SAMA DENGAN RUMUS FLOP KASIR) -->
+<!-- CHAT MODAL -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal-box">
         <div class="chat-modal-header">
@@ -579,19 +590,19 @@
             <span class="sticker-item" onclick="sendSticker('🎯')">🎯</span>
         </div>
 
-        <!-- FOOTER T'CHAT DENGAN STRUKTUR BARU -->
+        <!-- FOOTER T'CHAT DENGAN STRUKTUR DAN UKURAN BARU -->
         <div class="chat-footer">
-            <!-- Input Ketik Pesan (Memanjang di Kiri) -->
+            <!-- Kolom Ketik Pesan (Memanjang di Kiri) -->
             <textarea id="chatText" placeholder="Ketik pesan di sini..." onkeydown="handleChatKey(event)"></textarea>
             
-            <!-- Tombol Emoticon (Kecil di Kanan Input) -->
+            <!-- Tombol Emoticon Dikecilkan Presisi -->
             <button class="btn-chat-small" onclick="toggleStickerPicker()" title="Pilih Emoticon">😊</button>
 
-            <!-- Tombol Upload Foto/Video (Kecil di Kanan Input) -->
+            <!-- Tombol Upload Foto Dikecilkan Presisi -->
             <button class="btn-chat-small" onclick="document.getElementById('mediaFileInput').click()" title="Upload Foto/Video">📷</button>
             <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
-            <!-- Tombol Kirim Pesan (Sama Persis Seperti Tombol RESET) -->
+            <!-- Tombol Kirim Pesan (Ukuran & Style Persis RESET) -->
             <button class="btn-send-chat" onclick="sendChatMessage()">KIRIM</button>
         </div>
     </div>
