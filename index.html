@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
-    <title>Rumus Flop Kasir - Full Features</title>
+    <title>Rumus Flop Kasir - Ultra Light Edition</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,17 +16,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
+        /* ==========================================================================
+           1. VARIABLE DEFINITIONS & BASE STYLES
+           ========================================================================== */
         :root {
             color-scheme: only dark !important;
             --blue-electric: #00d2ff;
             --purple-neon: #a855f7;
+            --purple-bright: #d8b4fe;
             --pink-neon: #ff007f;
             --cyan-neon: #00f0ff;
             --lavender-bg: rgba(147, 112, 219, 0.15); 
             --lavender-border: #c89eff;               
+            --lavender-glow: #b57edc; 
         }
 
-        * { box-sizing: border-box; user-select: none; }
+        * { 
+            box-sizing: border-box; 
+            user-select: none; 
+        }
 
         html, body {
             width: 100%; 
@@ -57,6 +65,9 @@
             pointer-events: none;
         }
 
+        /* ==========================================================================
+           2. LAYOUT & CONTAINERS
+           ========================================================================== */
         @property --border-angle {
             syntax: '<angle>'; 
             inherits: false; 
@@ -103,7 +114,10 @@
             animation: spinBorder 4s linear infinite;
         }
 
-        h1 {
+        /* ==========================================================================
+           3. TYPOGRAPHY & UI ELEMENTS
+           ========================================================================== */
+        h1, .chat-modal-header h1 {
             text-align: center; 
             font-family: 'Orbitron', sans-serif; 
             font-size: 32px; 
@@ -119,7 +133,9 @@
             filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.5));
         }
 
-        @keyframes shineText { to { background-position: 200% center; } }
+        @keyframes shineText { 
+            to { background-position: 200% center; } 
+        }
 
         .sub-title {
             text-align: center; 
@@ -140,7 +156,11 @@
             margin-bottom: 8px; 
         }
 
-        .label-actions { display: flex; align-items: center; gap: 8px; }
+        .label-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
 
         label {
             display: block; 
@@ -170,16 +190,21 @@
 
         .btn-swap-pos { 
             background: rgba(168, 85, 247, 0.15); 
+            color: #ffffff !important; 
             border-color: rgba(168, 85, 247, 0.5); 
         }
 
         .badge-count:hover, .btn-swap-pos:hover { 
             background: rgba(0, 210, 255, 0.35); 
             border-color: #fff; 
+            color: #fff !important; 
             box-shadow: 0 0 12px var(--cyan-neon); 
             transform: scale(1.05); 
         }
 
+        /* ==========================================================================
+           4. FORM INPUTS & BUTTONS
+           ========================================================================== */
         textarea#rawInput {
             width: 100%; 
             height: 120px; 
@@ -203,8 +228,15 @@
             box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); 
         }
 
-        .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
-        .btn-group.swapped { flex-direction: row-reverse; }
+        .btn-group { 
+            display: flex; 
+            gap: 16px; 
+            margin-bottom: 28px; 
+        }
+
+        .btn-group.swapped { 
+            flex-direction: row-reverse; 
+        }
 
         button, .btn-flop-style {
             position: relative; 
@@ -237,6 +269,7 @@
             box-shadow: 0 0 15px #b57edc, inset 0 0 10px rgba(255, 255, 255, 0.4); 
         }
 
+        /* GRID ACTION BUTTONS FOR PROFILE MODAL */
         .profile-action-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -252,6 +285,9 @@
             height: 38px !important;
         }
 
+        /* ==========================================================================
+           5. DATA TABLE
+           ========================================================================== */
         .table-container { 
             overflow-x: auto; 
             max-height: 380px; 
@@ -260,9 +296,18 @@
             background: rgba(0, 0, 0, 0.25) !important;
         }
 
-        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0; 
+        }
 
-        th, td { padding: 12px 16px; text-align: left; white-space: nowrap; user-select: text; }
+        th, td { 
+            padding: 12px 16px; 
+            text-align: left; 
+            white-space: nowrap; 
+            user-select: text; 
+        }
 
         th { 
             position: sticky; 
@@ -287,6 +332,9 @@
             font-size: 13px; 
         }
 
+        /* ==========================================================================
+           6. MODALS & POPUPS
+           ========================================================================== */
         .chat-modal-overlay {
             position: fixed; 
             top: 0; 
@@ -303,8 +351,13 @@
             padding: 15px;
         }
 
-        #profileModal, #friendsModal, #registerModal, #createGroupModal { z-index: 1002 !important; }
-        #imageViewerModal { z-index: 1003 !important; }
+        #profileModal, #registerModal, #friendsModal, #createGroupModal { 
+            z-index: 1002 !important; 
+        }
+
+        #imageViewerModal { 
+            z-index: 1003 !important; 
+        }
 
         .auth-modal {
             position: relative; 
@@ -323,15 +376,30 @@
         .auth-modal-content {
             position: relative; 
             z-index: 1; 
+            background: transparent !important;
             padding: 20px; 
             display: flex; 
             flex-direction: column; 
             gap: 12px;
         }
 
-        .auth-header { display: flex; align-items: center; justify-content: space-between; }
-        .auth-form { display: flex; flex-direction: column; gap: 10px; }
-        .auth-input-group { display: flex; flex-direction: column; gap: 4px; }
+        .auth-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .auth-form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+
+        .auth-input-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 4px; 
+        }
 
         .auth-input-group label { 
             font-size: 10px; 
@@ -353,7 +421,13 @@
             text-align: center;
         }
 
-        .avatar-selection-box { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 2px 0; }
+        .avatar-selection-box { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 6px; 
+            margin: 2px 0; 
+        }
 
         .avatar-preview-container {
             width: 64px; 
@@ -365,10 +439,6 @@
             align-items: center; 
             justify-content: center; 
             background: #000;
-        }
-
-        .avatar-preview-container img, .avatar-preview-container video {
-            width: 100%; height: 100%; object-fit: cover;
         }
 
         .auth-close-btn, .btn-back-arrow {
@@ -394,6 +464,9 @@
             box-shadow: 0 0 10px var(--pink-neon);
         }
 
+        /* ==========================================================================
+           7. CHAT INTERFACE & MESSAGES
+           ========================================================================== */
         .chat-modal-box {
             height: 90vh; 
             max-height: 780px;
@@ -413,13 +486,24 @@
             border-bottom: 1px solid rgba(168, 85, 247, 0.3);
         }
 
-        .header-left, .header-controls { display: flex; align-items: center; gap: 10px; }
+        .header-left { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+
+        .header-controls { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
 
         .btn-hdr-action { 
             font-size: 10px !important; 
             padding: 6px 12px !important; 
             border-radius: 20px !important; 
             flex: none !important; 
+            height: auto !important;
             font-family: 'Orbitron', sans-serif !important; 
             font-weight: 800 !important;
         }
@@ -437,8 +521,16 @@
             margin-bottom: 16px;
         }
 
-        .chat-msg-wrapper { display: flex; gap: 8px; width: 100%; align-items: flex-end; }
-        .chat-msg-wrapper.own-msg { flex-direction: row-reverse; }
+        .chat-msg-wrapper { 
+            display: flex; 
+            gap: 8px; 
+            width: 100%; 
+            align-items: flex-end; 
+        }
+
+        .chat-msg-wrapper.own-msg { 
+            flex-direction: row-reverse; 
+        }
 
         .msg-avatar, .msg-avatar-video {
             width: 30px; 
@@ -447,7 +539,6 @@
             object-fit: cover;
             border: 1.5px solid var(--cyan-neon); 
             flex-shrink: 0;
-            cursor: pointer;
         }
 
         .msg-avatar.admin-avatar, .msg-avatar-video.admin-avatar {
@@ -455,13 +546,36 @@
             box-shadow: 0 0 10px #ffd700, 0 0 15px var(--pink-neon) !important;
         }
 
-        .msg-content-container { display: flex; flex-direction: column; max-width: 80%; width: auto; }
-        .chat-msg-wrapper.own-msg .msg-content-container { align-items: flex-end; }
+        .msg-content-container { 
+            display: flex; 
+            flex-direction: column; 
+            max-width: 80%; 
+            width: auto; 
+        }
 
-        .msg-header-info { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; font-size: 10px; color: rgba(255, 255, 255, 0.7); }
-        .chat-msg-wrapper.own-msg .msg-header-info { flex-direction: row-reverse; }
+        .chat-msg-wrapper.own-msg .msg-content-container { 
+            align-items: flex-end; 
+        }
 
-        .sender { font-weight: 800; font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--cyan-neon) !important; }
+        .msg-header-info { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            margin-bottom: 2px; 
+            font-size: 10px; 
+            color: rgba(255, 255, 255, 0.7); 
+        }
+
+        .chat-msg-wrapper.own-msg .msg-header-info { 
+            flex-direction: row-reverse; 
+        }
+
+        .sender { 
+            font-weight: 800; 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 10px; 
+            color: var(--cyan-neon) !important; 
+        }
 
         .admin-badge {
             font-size: 8px; 
@@ -475,18 +589,37 @@
             display: inline-block;
         }
 
-        .time-stamp { color: rgba(255, 255, 255, 0.5); font-size: 9px; font-family: 'JetBrains Mono', monospace; }
+        .time-stamp { 
+            color: rgba(255, 255, 255, 0.5); 
+            font-size: 9px; 
+            font-family: 'JetBrains Mono', monospace; 
+        }
 
-        .msg-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s ease; }
-        .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
+        .msg-actions { 
+            display: flex; 
+            gap: 4px; 
+            opacity: 0; 
+            transition: opacity 0.2s ease; 
+        }
 
-        .btn-action-msg { color: #fff; cursor: pointer; font-size: 10px !important; line-height: 1; display: inline-flex; align-items: center; }
+        .chat-msg-wrapper:hover .msg-actions { 
+            opacity: 1; 
+        }
+
+        .btn-action-msg { 
+            color: #fff; 
+            cursor: pointer; 
+            font-size: 10px !important; 
+            line-height: 1; 
+            display: inline-flex; 
+            align-items: center; 
+        }
 
         .chat-msg {
             position: relative; 
             font-family: 'JetBrains Mono', monospace; 
             font-size: 12px; 
-            padding: 6px 10px !important; 
+            padding: 4px 8px !important; 
             border-radius: 8px; 
             user-select: text; 
             word-break: break-word; 
@@ -511,18 +644,43 @@
             border-bottom-right-radius: 2px;
         }
 
-        .chat-msg .chat-media-img { max-width: 180px; max-height: 180px; border-radius: 6px; cursor: pointer; display: block; }
-        .chat-msg .chat-media-video { max-width: 200px; max-height: 180px; border-radius: 6px; display: block; }
+        .chat-msg .chat-media-img { 
+            max-width: 180px; 
+            max-height: 180px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            display: block; 
+        }
 
-        .reactions-container { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+        .chat-msg .chat-media-video { 
+            max-width: 200px; 
+            max-height: 180px; 
+            border-radius: 6px; 
+            display: block; 
+        }
+
+        .msg-reactions-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 4px; 
+            margin-top: 3px; 
+        }
+
+        .chat-msg-wrapper.own-msg .msg-reactions-container { 
+            justify-content: flex-end; 
+        }
+
         .reaction-badge {
-            background: rgba(0,0,0,0.6); 
-            border: 1px solid var(--cyan-neon); 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 3px; 
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--purple-neon); 
             border-radius: 10px; 
             padding: 1px 5px; 
-            font-size: 9px; 
-            cursor: pointer;
-            display: inline-flex; align-items: center; gap: 3px;
+            font-size: 10px; 
+            cursor: pointer; 
+            color: #ffffff;
         }
 
         .reply-quote-box { 
@@ -547,7 +705,38 @@
             margin-bottom: 8px;
         }
 
-        .chat-footer { display: flex; gap: 6px; align-items: center; flex-shrink: 0; width: 100%; position: relative; }
+        .sticker-picker-container {
+            display: none; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 6px; 
+            background: rgba(10, 8, 25, 0.95);
+            border: 1px solid var(--purple-neon); 
+            border-radius: 10px; 
+            padding: 8px; 
+            max-height: 100px; 
+            overflow-y: auto; 
+            margin-bottom: 8px;
+        }
+
+        .sticker-item { 
+            font-size: 18px; 
+            text-align: center; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            padding: 2px; 
+        }
+
+        .sticker-item:hover { 
+            background: rgba(255, 255, 255, 0.2); 
+        }
+
+        .chat-footer { 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+            flex-shrink: 0; 
+            width: 100%; 
+        }
 
         .chat-footer textarea#chatText {
             flex: 1; 
@@ -573,6 +762,8 @@
         .btn-chat-small {
             width: 36px !important; 
             height: 36px !important; 
+            min-width: 36px !important; 
+            max-width: 36px !important;
             padding: 0 !important; 
             flex: none !important; 
             background: rgba(0, 0, 0, 0.4) !important;
@@ -595,6 +786,8 @@
 
         .btn-send-chat {
             flex: none !important; 
+            width: auto !important; 
+            min-width: 90px !important; 
             height: 40px !important;
             padding: 0 14px !important; 
             border-radius: 35px !important; 
@@ -618,25 +811,9 @@
             box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4) !important; 
         }
 
-        /* Picker Sticker Popover */
-        .sticker-picker-popover {
-            position: absolute;
-            bottom: 50px;
-            right: 80px;
-            background: rgba(10, 8, 25, 0.95);
-            border: 1px solid var(--lavender-border);
-            border-radius: 12px;
-            padding: 8px;
-            display: none;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            z-index: 100;
-            box-shadow: 0 0 15px rgba(0,0,0,0.8);
-        }
-
-        .sticker-item { font-size: 20px; cursor: pointer; text-align: center; padding: 4px; border-radius: 6px; }
-        .sticker-item:hover { background: rgba(255,255,255,0.2); }
-
+        /* ==========================================================================
+           8. FRIENDS & GROUPS TABS
+           ========================================================================== */
         .friends-nav-tabs { 
             display: flex; 
             gap: 6px; 
@@ -644,7 +821,6 @@
             padding-bottom: 12px; 
             margin-bottom: 12px; 
             align-items: center; 
-            overflow-x: auto;
         }
 
         .tab-btn {
@@ -666,7 +842,6 @@
             box-shadow: 0 0 8px rgba(200, 158, 255, 0.3); 
             transition: all 0.2s ease;
             text-align: center;
-            white-space: nowrap;
         }
 
         .tab-btn:hover { 
@@ -738,11 +913,43 @@
             font-size: 8px !important; 
             padding: 4px 8px !important; 
             height: auto !important; 
+            min-height: 0 !important;
             border-radius: 12px !important; 
             flex: none !important; 
             font-family: 'Orbitron', sans-serif !important; 
             letter-spacing: 0.5px !important;
             text-align: center;
+        }
+
+        .btn-danger-action {
+            background: rgba(255, 0, 127, 0.25) !important; 
+            border-color: rgba(255, 0, 127, 0.6) !important;
+        }
+
+        .btn-danger-action:hover {
+            background: rgba(255, 0, 127, 0.6) !important; 
+            box-shadow: 0 0 10px var(--pink-neon) !important;
+        }
+
+        .checkbox-list { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 6px; 
+            max-height: 140px; 
+            overflow-y: auto; 
+            border: 1px solid rgba(168, 85, 247, 0.3); 
+            padding: 8px; 
+            border-radius: 8px; 
+            background: rgba(0,0,0,0.3); 
+        }
+
+        .checkbox-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 12px; 
+            cursor: pointer; 
         }
 
         .image-viewer-modal {
@@ -759,18 +966,24 @@
             z-index: 1005;
         }
 
-        .image-viewer-modal img, .image-viewer-modal video { max-width: 85vw; max-height: 80vh; border-radius: 12px; }
+        .image-viewer-modal img, .image-viewer-modal video { 
+            max-width: 85vw; 
+            max-height: 80vh; 
+            border-radius: 12px; 
+        }
     </style>
 </head>
 <body>
 
+    <!-- Video Latar Belakang -->
     <video class="bg-video" autoplay loop muted playsinline disablepictureinpicture>
         <source src="./gb.mp4" type="video/mp4">
     </video>
 
+    <!-- Kontainer Utama Aplikasi -->
     <main class="container" id="mainContainer">
         <h1>Rumus Flop Kasir</h1>
-        <div class="sub-title">Full Features Edition</div>
+        <div class="sub-title">Ultra Light Edition</div>
 
         <div class="label-header">
             <label for="rawInput">Tempel Log Transaksi</label>
@@ -806,7 +1019,7 @@
         </div>
     </main>
 
-    <!-- Modal Login -->
+    <!-- Modal: Login -->
     <section class="chat-modal-overlay" id="authModal">
         <div class="auth-modal">
             <div class="auth-modal-content">
@@ -825,37 +1038,36 @@
                         <input type="password" id="loginPass" placeholder="Masukkan password...">
                     </div>
                     <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitLogin()">MASUK</button>
-                    <button class="btn-flop-style" style="background: transparent !important; border: none !important; font-size: 9px;" onclick="openRegisterModal()">Belum punya akun? Daftar</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal Registrasi -->
+    <!-- Modal: Registrasi Baru -->
     <section class="chat-modal-overlay" id="registerModal">
         <div class="auth-modal">
             <div class="auth-modal-content">
                 <div class="auth-header">
-                    <button class="btn-back-arrow" onclick="closeModal('registerModal'); openAuthModal();" title="Kembali">⬅️</button>
-                    <h1 style="font-size: 18px;">DAFTAR AKUN</h1>
+                    <button class="btn-back-arrow" onclick="backToProfileModal()" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">REGISTRASI AKUN</h1>
                     <button class="auth-close-btn" onclick="closeModal('registerModal')">❌</button>
                 </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
-                        <label for="regUser">USER ID BARU</label>
-                        <input type="text" id="regUser" placeholder="User ID..." oninput="this.value = this.value.toUpperCase()">
+                        <label for="regUser">USERNAME BARU</label>
+                        <input type="text" id="regUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
                     </div>
                     <div class="auth-input-group">
-                        <label for="regPass">PASSWORD</label>
-                        <input type="password" id="regPass" placeholder="Password...">
+                        <label for="regPass">PASSWORD BARU</label>
+                        <input type="password" id="regPass" placeholder="Masukkan Password...">
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitRegister()">BUAT AKUN</button>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitRegisterNewUser()">BUAT AKUN</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal Edit Profil -->
+    <!-- Modal: Edit Profil Ringkas -->
     <section class="chat-modal-overlay" id="profileModal">
         <div class="auth-modal">
             <div class="auth-modal-content">
@@ -879,16 +1091,43 @@
                         <input type="password" id="editUserPass" placeholder="Opsional...">
                     </div>
                     
+                    <!-- MENU TOMBOL HEMAT TEMPAT (GRID) -->
                     <div class="profile-action-grid">
                         <button class="btn-flop-style" onclick="saveProfileChanges()">💾 SIMPAN</button>
                         <button class="btn-flop-style btn-logout-tab" onclick="logoutChat()">🚪 LOGOUT</button>
+                        <button id="btnAdminOpenReg" class="btn-flop-style" style="display: none; background: rgba(255, 0, 127, 0.2) !important;" onclick="openRegisterModal()">➕ REGISTRASI</button>
+                        <button id="btnAdminCreateGroup" class="btn-flop-style" style="display: none; background: rgba(0, 210, 255, 0.2) !important;" onclick="openCreateGroupModal()">👥 BUAT GRUP</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal Navigasi Obrolan -->
+    <!-- Modal: Buat Grup -->
+    <section class="chat-modal-overlay" id="createGroupModal">
+        <div class="auth-modal">
+            <div class="auth-modal-content">
+                <div class="auth-header">
+                    <button class="btn-back-arrow" onclick="backToProfileModal()" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">BUAT GRUP BARU</h1>
+                    <button class="auth-close-btn" onclick="closeModal('createGroupModal')">❌</button>
+                </div>
+                <div class="auth-form">
+                    <div class="auth-input-group">
+                        <label for="newGroupName">NAMA GRUP</label>
+                        <input type="text" id="newGroupName" placeholder="Nama Grup..." oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                    <div class="auth-input-group">
+                        <label>PILIH ANGGOTA KHUSUS</label>
+                        <div class="checkbox-list" id="groupMembersChecklist"></div>
+                    </div>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitCreateGroup()">BUAT GRUP</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Navigasi Teman/Obrolan -->
     <section class="chat-modal-overlay" id="friendsModal">
         <div class="auth-modal">
             <div class="auth-modal-content">
@@ -913,33 +1152,12 @@
                         <input type="text" id="targetFriendUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
                     </div>
                     <button class="btn-flop-style" style="margin-top: 6px;" onclick="sendFriendRequest()">KIRIM PERMINTAAN</button>
-                    <button class="btn-flop-style" id="btnAdminCreateGroup" style="margin-top: 6px; display: none;" onclick="openCreateGroupModal()">➕ BUAT GRUP (ADMIN)</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal Buat Grup (Khusus Admin) -->
-    <section class="chat-modal-overlay" id="createGroupModal">
-        <div class="auth-modal">
-            <div class="auth-modal-content">
-                <div class="auth-header">
-                    <button class="btn-back-arrow" onclick="closeModal('createGroupModal'); openFriendsModal();" title="Kembali">⬅️</button>
-                    <h1 style="font-size: 18px;">BUAT GRUP BARU</h1>
-                    <button class="auth-close-btn" onclick="closeModal('createGroupModal')">❌</button>
-                </div>
-                <div class="auth-form">
-                    <div class="auth-input-group">
-                        <label for="newGroupName">NAMA GRUP</label>
-                        <input type="text" id="newGroupName" placeholder="Masukkan Nama Grup...">
-                    </div>
-                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitCreateGroup()">BUAT GRUP</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal Room Chat -->
+    <!-- Modal: Obrolan Utama (Chat) -->
     <section class="chat-modal-overlay" id="chatModal">
         <div class="chat-modal-box">
             <div class="chat-modal-header">
@@ -960,22 +1178,25 @@
                 <span style="color:#ff007f; cursor:pointer; font-weight:bold;" onclick="cancelReply()">❌</span>
             </div>
 
-            <div class="chat-footer">
-                <!-- Popover Stiker / Emoji -->
-                <div class="sticker-picker-popover" id="stickerPopover">
-                    <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
-                    <span class="sticker-item" onclick="sendSticker('👍')">👍</span>
-                    <span class="sticker-item" onclick="sendSticker('❤️')">❤️</span>
-                    <span class="sticker-item" onclick="sendSticker('🤣')">🤣</span>
-                    <span class="sticker-item" onclick="sendSticker('😎')">😎</span>
-                    <span class="sticker-item" onclick="sendSticker('🙏')">🙏</span>
-                    <span class="sticker-item" onclick="sendSticker('💸')">💸</span>
-                    <span class="sticker-item" onclick="sendSticker('🚀')">🚀</span>
-                </div>
+            <div class="sticker-picker-container" id="stickerPicker">
+                <span class="sticker-item" onclick="sendSticker('🔥')">🔥</span>
+                <span class="sticker-item" onclick="sendSticker('⚡')">⚡</span>
+                <span class="sticker-item" onclick="sendSticker('🚀')">🚀</span>
+                <span class="sticker-item" onclick="sendSticker('😎')">😎</span>
+                <span class="sticker-item" onclick="sendSticker('👍')">👍</span>
+                <span class="sticker-item" onclick="sendSticker('🎉')">🎉</span>
+                <span class="sticker-item" onclick="sendSticker('💎')">💎</span>
+                <span class="sticker-item" onclick="sendSticker('👾')">👾</span>
+                <span class="sticker-item" onclick="sendSticker('🤖')">🤖</span>
+                <span class="sticker-item" onclick="sendSticker('💀')">💀</span>
+                <span class="sticker-item" onclick="sendSticker('💯')">💯</span>
+                <span class="sticker-item" onclick="sendSticker('🎯')">🎯</span>
+            </div>
 
+            <div class="chat-footer">
                 <textarea id="chatText" placeholder="Ketik pesan di sini..." onkeydown="handleChatKey(event)"></textarea>
                 
-                <button class="btn-chat-small" onclick="toggleStickerPopover()" title="Stiker / Emoji">😀</button>
+                <button class="btn-chat-small" onclick="toggleStickerPicker()" title="Pilih Emoticon">😊</button>
                 <button class="btn-chat-small" onclick="document.getElementById('mediaFileInput').click()" title="Upload Foto/Video">📷</button>
                 <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
@@ -984,21 +1205,28 @@
         </div>
     </section>
 
-    <!-- Modal Fullscreen Media -->
+    <!-- Modal: View Media Fullscreen -->
     <section class="image-viewer-modal" id="imageViewerModal" onclick="closeModal('imageViewerModal')">
         <div id="fullsizeMediaContainer"></div>
         <div style="margin-top: 15px; font-family: 'Orbitron', sans-serif; color: var(--cyan-neon); font-size: 14px;" id="fullsizeUsername">USERNAME</div>
     </section>
 
+    <!-- App Logic Script -->
     <script>
+        /* ==========================================================================
+           1. CONFIGURATION & STATE MANAGEMENT
+           ========================================================================== */
         const NAMA_ADMIN_RESMI = "JAKA SEMBUNG";
         
         let hasilTeksUntukDisalin = "";
         let selectedReplyData = null; 
         let activeUser = null; 
         let tempEditAvatar = "";
+        let isChatOpen = false;
         let windowTargetMsgKeyForReaction = null;
+        let currentChatPath = null;
 
+        // Firebase Initialization
         if (!firebase.apps.length) {
             firebase.initializeApp({ databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/" });
         }
@@ -1008,14 +1236,23 @@
         const dbAccounts = dbRoot.ref("chat_accounts");
         const dbFriends = dbRoot.ref("user_friends");
         const dbCustomGroups = dbRoot.ref("custom_groups");
+        const dbDirectMessages = dbRoot.ref("direct_messages");
 
+        // MEMUAT SESI TERBAIK/PERSISTEN USER DARI LOCALSTORAGE
         window.addEventListener('DOMContentLoaded', () => {
             const savedUserData = localStorage.getItem('flop_chat_active_user');
             if (savedUserData) {
-                try { activeUser = JSON.parse(savedUserData); } catch (e) { activeUser = null; }
+                try {
+                    activeUser = JSON.parse(savedUserData);
+                } catch (e) {
+                    activeUser = null;
+                }
             }
         });
 
+        /* ==========================================================================
+           2. HELPER FUNCTIONS & UI MODAL CONTROL
+           ========================================================================== */
         function isVideoUrl(url) {
             if (!url) return false;
             if (url.startsWith('data:video/')) return true;
@@ -1031,8 +1268,14 @@
             elem.className = className + (isVid ? '-video' : '') + extraClass;
             elem.src = avatarUrl;
 
-            if (isVid) { elem.autoplay = true; elem.loop = true; elem.muted = true; elem.playsInline = true; } 
-            else { elem.alt = username; }
+            if (isVid) { 
+                elem.autoplay = true; 
+                elem.loop = true; 
+                elem.muted = true; 
+                elem.playsInline = true; 
+            } else { 
+                elem.alt = username; 
+            }
 
             if (username) elem.onclick = () => viewFullsizeImage(avatarUrl, username);
             return elem;
@@ -1046,50 +1289,28 @@
         function checkMainContainerVisibility() {
             const overlays = document.querySelectorAll('.chat-modal-overlay');
             let isAnyOverlayVisible = false;
-            overlays.forEach(modal => { if (modal.style.display === 'flex') isAnyOverlayVisible = true; });
+            overlays.forEach(modal => {
+                if (modal.style.display === 'flex') isAnyOverlayVisible = true;
+            });
 
-            if (!isAnyOverlayVisible) document.getElementById('mainContainer').style.display = 'block';
-        }
-
-        function handleChatClick() {
-            document.getElementById('mainContainer').style.display = 'none';
-            if (activeUser && activeUser.username) {
-                openFriendsModal();
-            } else {
-                openAuthModal();
+            if (!isAnyOverlayVisible) {
+                document.getElementById('mainContainer').style.display = 'block';
             }
         }
 
-        function openAuthModal() {
-            document.getElementById('loginUser').value = '';
-            document.getElementById('loginPass').value = '';
-            document.getElementById('authModal').style.display = 'flex';
-        }
-
-        function openRegisterModal() {
-            closeModal('authModal');
-            document.getElementById('regUser').value = '';
-            document.getElementById('regPass').value = '';
-            document.getElementById('registerModal').style.display = 'flex';
-        }
-
-        function submitRegister() {
-            const user = document.getElementById('regUser').value.trim().toUpperCase();
-            const pass = document.getElementById('regPass').value.trim();
-            if (!user || !pass) return alert("User ID dan Password wajib diisi!");
-
-            dbAccounts.child(user).once('value', (snapshot) => {
-                if (snapshot.exists()) {
-                    alert("User ID sudah digunakan! Pilih nama lain.");
-                } else {
-                    const defaultAvatar = "https://api.dicebear.com/7.x/bottts/svg?seed=" + user;
-                    dbAccounts.child(user).set({ password: pass, avatar: defaultAvatar }, () => {
-                        alert("Registrasi Berhasil! Silakan Login.");
-                        closeModal('registerModal');
-                        openAuthModal();
-                    });
-                }
-            });
+        /* ==========================================================================
+           3. AUTHENTICATION & PROFILE
+           ========================================================================== */
+        function handleChatClick() {
+            document.getElementById('mainContainer').style.display = 'none';
+            
+            if (activeUser && activeUser.username) {
+                openFriendsModal();
+            } else {
+                document.getElementById('loginUser').value = '';
+                document.getElementById('loginPass').value = '';
+                document.getElementById('authModal').style.display = 'flex';
+            }
         }
 
         function submitLogin() {
@@ -1104,6 +1325,7 @@
                         avatar: snapshot.val().avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user) 
                     };
                     localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
+
                     closeModal('authModal');
                     openFriendsModal();
                 } else {
@@ -1116,11 +1338,36 @@
             if (confirm("Logout dari akun?")) {
                 activeUser = null;
                 localStorage.removeItem('flop_chat_active_user');
+
                 closeModal('profileModal');
                 closeModal('friendsModal');
                 closeTeamChat();
                 document.getElementById('mainContainer').style.display = 'block';
+                alert("Berhasil Logout.");
             }
+        }
+
+        function openRegisterModal() {
+            if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("🚫 Hanya Admin yang dapat mendaftar.");
+            document.getElementById('profileModal').style.display = 'none';
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+
+        function submitRegisterNewUser() {
+            const newUser = document.getElementById('regUser').value.trim().toUpperCase();
+            const newPass = document.getElementById('regPass').value.trim();
+            if (!newUser || !newPass) return alert("Lengkapi data baru!");
+
+            dbAccounts.child(newUser).set({
+                password: newPass, 
+                avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=" + newUser, 
+                createdAt: new Date().toISOString()
+            }, (err) => {
+                if (!err) { 
+                    alert("✅ Berhasil membuat akun " + newUser); 
+                    backToProfileModal();
+                }
+            });
         }
 
         function openProfileModal() {
@@ -1134,6 +1381,10 @@
             document.getElementById('editUserName').value = activeUser.username;
             document.getElementById('editUserPass').value = '';
             
+            const isAdmin = (activeUser.username === NAMA_ADMIN_RESMI);
+            document.getElementById('btnAdminOpenReg').style.display = isAdmin ? 'inline-flex' : 'none';
+            document.getElementById('btnAdminCreateGroup').style.display = isAdmin ? 'inline-flex' : 'none';
+            
             document.getElementById('friendsModal').style.display = 'none';
             document.getElementById('profileModal').style.display = 'flex';
         }
@@ -1141,6 +1392,12 @@
         function backToFriendsModalFromProfile() {
             document.getElementById('profileModal').style.display = 'none';
             openFriendsModal();
+        }
+
+        function backToProfileModal() {
+            document.getElementById('registerModal').style.display = 'none';
+            document.getElementById('createGroupModal').style.display = 'none';
+            document.getElementById('profileModal').style.display = 'flex';
         }
 
         function handleEditAvatarUpload(event) {
@@ -1154,7 +1411,9 @@
                     container.appendChild(createAvatarElement(tempEditAvatar, 'avatar-preview-img'));
                 };
                 reader.readAsDataURL(file);
-            } else { alert("File terlalu besar! Max 2.5 MB."); }
+            } else { 
+                alert("File terlalu besar! Max 2.5 MB."); 
+            }
         }
 
         function saveProfileChanges() {
@@ -1164,50 +1423,30 @@
 
             dbAccounts.child(activeUser.username).once('value', (snapshot) => {
                 const currentData = snapshot.val();
-                dbAccounts.child(activeUser.username).update({ password: newPass || currentData.password, avatar: tempEditAvatar });
+                const updatedPass = newPass || currentData.password;
+
+                dbAccounts.child(activeUser.username).update({ password: updatedPass, avatar: tempEditAvatar });
                 activeUser.avatar = tempEditAvatar;
+                
                 localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
+
                 alert("Profil diperbarui!");
                 backToFriendsModalFromProfile();
             });
         }
 
+        /* ==========================================================================
+           4. GROUPS & FRIENDS MANAGEMENT
+           ========================================================================== */
         function openFriendsModal() {
             document.getElementById('mainContainer').style.display = 'none';
             document.getElementById('friendsModal').style.display = 'flex';
-            
-            const btnAdminGroup = document.getElementById('btnAdminCreateGroup');
-            if (btnAdminGroup) {
-                btnAdminGroup.style.display = (activeUser && activeUser.username === NAMA_ADMIN_RESMI) ? 'block' : 'none';
-            }
-
             switchFriendsTab('recent');
         }
 
         function backToFriendsModal() {
             closeModal('chatModal');
             openFriendsModal();
-        }
-
-        function openCreateGroupModal() {
-            closeModal('friendsModal');
-            document.getElementById('newGroupName').value = '';
-            document.getElementById('createGroupModal').style.display = 'flex';
-        }
-
-        function submitCreateGroup() {
-            const gName = document.getElementById('newGroupName').value.trim();
-            if (!gName) return alert("Nama grup wajib diisi!");
-
-            const newGroupRef = dbCustomGroups.push();
-            const members = {};
-            members[activeUser.username] = true;
-
-            newGroupRef.set({ name: gName, createdBy: activeUser.username, members: members }, () => {
-                alert("Grup berhasil dibuat!");
-                closeModal('createGroupModal');
-                openFriendsModal();
-            });
         }
 
         function switchFriendsTab(tab) {
@@ -1227,18 +1466,25 @@
             const container = document.getElementById('tabRecentContent');
             container.innerHTML = 'Memuat obrolan...';
 
+            const isAdmin = (activeUser?.username === NAMA_ADMIN_RESMI);
+
             dbCustomGroups.once('value', (groupSnap) => {
                 let groupsHTML = '<div class="section-label">👥 GRUP SAYA</div>';
                 let groupCount = 0;
 
                 groupSnap.forEach((child) => {
                     const group = child.val();
+                    const groupId = child.key;
                     if (group.members && group.members[activeUser.username]) {
                         groupCount++;
+                        let deleteBtn = isAdmin ? `<button class="btn-flop-style btn-friend-action btn-danger-action" onclick="deleteGroup('${groupId}', '${group.name}')">HAPUS</button>` : '';
                         groupsHTML += `
                             <div class="friend-card">
                                 <span class="friend-name">👥 ${group.name}</span>
-                                <button class="btn-flop-style btn-friend-action" onclick="startGroupChat('${child.key}', '${group.name}')">BUKA</button>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="btn-flop-style btn-friend-action" onclick="startGroupChat('${groupId}', '${group.name}')">BUKA</button>
+                                    ${deleteBtn}
+                                </div>
                             </div>`;
                     }
                 });
@@ -1258,10 +1504,73 @@
                             </div>`;
                     });
 
-                    if (friendCount === 0) friendsHTML += '<span style="font-size:11px; color:#888; text-align:center;">Belum ada chat pribadi.</span>';
+                    if (friendCount === 0) friendsHTML += '<span style="font-size:11px; color:#888; text-align:center;">Belum ada riwayat chat pribadi.</span>';
+
                     container.innerHTML = groupsHTML + friendsHTML;
                 });
             });
+        }
+
+        function openCreateGroupModal() {
+            if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("Hanya Admin yang dapat membuat grup.");
+            document.getElementById('profileModal').style.display = 'none';
+            
+            const container = document.getElementById('groupMembersChecklist');
+            container.innerHTML = 'Memuat user...';
+            
+            dbAccounts.once('value', (snapshot) => {
+                container.innerHTML = '';
+                snapshot.forEach((child) => {
+                    const u = child.key;
+                    if (u !== NAMA_ADMIN_RESMI) {
+                        container.innerHTML += `
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="${u}" class="group-member-checkbox">
+                                ${u}
+                            </label>`;
+                    }
+                });
+            });
+            document.getElementById('createGroupModal').style.display = 'flex';
+        }
+
+        function submitCreateGroup() {
+            const groupName = document.getElementById('newGroupName').value.trim().toUpperCase();
+            if (!groupName) return alert("Nama Grup Wajib Diisi!");
+
+            const checkboxes = document.querySelectorAll('.group-member-checkbox:checked');
+            let selectedUsers = [NAMA_ADMIN_RESMI];
+            checkboxes.forEach(cb => selectedUsers.push(cb.value));
+
+            if (selectedUsers.length < 2) return alert("Pilih minimal 1 anggota tambahan!");
+
+            const newGroupKey = dbCustomGroups.push().key;
+            let membersObj = {};
+            selectedUsers.forEach(user => { membersObj[user] = true; });
+
+            dbCustomGroups.child(newGroupKey).set({
+                name: groupName,
+                createdBy: activeUser.username,
+                members: membersObj
+            }, (err) => {
+                if (!err) {
+                    alert("✅ Grup berhasil dibuat!");
+                    backToProfileModal();
+                }
+            });
+        }
+
+        function deleteGroup(groupId, groupName) {
+            if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("Hanya Admin yang bisa menghapus grup!");
+            if (confirm(`Apakah Anda yakin ingin menghapus grup "${groupName}"?`)) {
+                dbCustomGroups.child(groupId).remove()
+                    .then(() => {
+                        dbRoot.ref(`group_chats/${groupId}`).remove();
+                        alert("✅ Grup berhasil dihapus!");
+                        loadRecentChatsAndGroups();
+                    })
+                    .catch(err => alert("Gagal menghapus grup: " + err.message));
+            }
         }
 
         function sendFriendRequest() {
@@ -1301,6 +1610,9 @@
             loadFriendRequests();
         }
 
+        /* ==========================================================================
+           5. CHAT ROOM ENGINE
+           ========================================================================== */
         function startPrivateChat(targetUser) {
             closeModal('friendsModal');
             const sorted = [activeUser.username, targetUser].sort();
@@ -1317,6 +1629,7 @@
         function switchChatRoom(path) {
             if (dbChat) dbChat.off(); 
             document.getElementById('chatLogs').innerHTML = '';
+            currentChatPath = path;
             dbChat = dbRoot.ref(path);
             
             dbChat.limitToLast(60).on('child_added', (snap) => renderMessage(snap.key, snap.val()));
@@ -1326,31 +1639,19 @@
                 if (removedElem) removedElem.remove();
             });
             document.getElementById('chatModal').style.display = 'flex';
+            isChatOpen = true;
         }
 
         function closeTeamChat() {
+            isChatOpen = false;
             closeModal('chatModal');
+            document.getElementById('stickerPicker').style.display = 'none';
         }
 
         function clearAllChat() {
             if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua pesan di obrolan ini?")) {
                 if (dbChat) dbChat.remove(); 
             }
-        }
-
-        function toggleStickerPopover() {
-            const pop = document.getElementById('stickerPopover');
-            pop.style.display = (pop.style.display === 'grid') ? 'none' : 'grid';
-        }
-
-        function sendSticker(emoji) {
-            toggleStickerPopover();
-            dbChat.push({
-                user: activeUser.username,
-                avatar: activeUser.avatar,
-                msg: emoji,
-                timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-            });
         }
 
         function sendChatMessage() {
@@ -1397,11 +1698,6 @@
             } else alert("File terlalu besar (Max 2MB)");
         }
 
-        function addReaction(key, emoji) {
-            if (!dbChat || !activeUser) return;
-            dbChat.child(key).child('reactions').child(activeUser.username).set(emoji);
-        }
-
         function renderMessage(key, data) {
             const chatLogs = document.getElementById('chatLogs');
             const currentUser = activeUser ? activeUser.username : '';
@@ -1414,7 +1710,9 @@
                 wrapperDiv = document.createElement('div');
                 wrapperDiv.className = `chat-msg-wrapper ${isSelf ? 'own-msg' : 'other-msg'}`;
                 wrapperDiv.id = `msg-${key}`;
-            } else { wrapperDiv.innerHTML = ''; }
+            } else { 
+                wrapperDiv.innerHTML = ''; 
+            }
 
             const avatarElem = createAvatarElement(data.avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + username), 'msg-avatar', username);
             const contentContainer = document.createElement('div');
@@ -1422,39 +1720,87 @@
 
             const headerInfoDiv = document.createElement('div');
             headerInfoDiv.className = 'msg-header-info';
+            
+            let adminLabelHTML = isAdmin ? `<span class="admin-badge">👑 ADMIN</span>` : '';
 
             headerInfoDiv.innerHTML = `
                 <span class="sender">${username}</span>
-                ${isAdmin ? `<span class="admin-badge">👑 ADMIN</span>` : ''}
+                ${adminLabelHTML}
                 <span class="time-stamp">${data.timestamp || ''}</span>
                 <div class="msg-actions">
-                    <span class="btn-action-msg" onclick="addReaction('${key}', '❤️')">❤️</span>
-                    <span class="btn-action-msg" onclick="addReaction('${key}', '👍')">👍</span>
+                    <span class="btn-action-msg" onclick="windowTargetMsgKeyForReaction='${key}'; toggleStickerPicker();">😊</span>
                     <span class="btn-action-msg" onclick="setReplyToMessage('${username}', '${(data.msg||'').replace(/'/g, "\\'")}')">↩️</span>
                 </div>`;
 
             const msgDiv = document.createElement('div');
             msgDiv.className = 'chat-msg';
 
-            let contentHTML = data.isMedia ? (data.mediaType === 'image' ? `<img class="chat-media-img" src="${data.mediaData}" onclick="viewFullsizeImage('${data.mediaData}', '${username}')"/>` : `<video class="chat-media-video" src="${data.mediaData}" controls></video>`) : `<span>${data.msg || ''}</span>`;
+            let contentHTML = data.isSticker ? `<span style="font-size:22px;">${data.sticker}</span>` : 
+                              data.isMedia ? (data.mediaType === 'image' ? `<img class="chat-media-img" src="${data.mediaData}" onclick="viewFullsizeImage('${data.mediaData}', '${username}')"/>` : `<video class="chat-media-video" src="${data.mediaData}" controls></video>`) :
+                              `<span>${data.msg || ''}</span>`;
 
-            // Reaction badges
-            let reactionsHTML = '';
+            msgDiv.innerHTML = (data.replyTo ? `<div class="reply-quote-box"><b>${data.replyTo.user}:</b> ${data.replyTo.text}</div>` : '') + contentHTML;
+
+            const reactionsContainer = document.createElement('div');
+            reactionsContainer.className = 'msg-reactions-container';
             if (data.reactions) {
-                const reactionCounts = {};
-                Object.values(data.reactions).forEach(e => reactionCounts[e] = (reactionCounts[e] || 0) + 1);
-                reactionsHTML = '<div class="reactions-container">' + Object.entries(reactionCounts).map(([emoji, count]) => `<span class="reaction-badge">${emoji} ${count}</span>`).join('') + '</div>';
+                Object.keys(data.reactions).forEach(emoji => {
+                    const users = data.reactions[emoji] || [];
+                    if (users.length > 0) {
+                        const badge = document.createElement('div');
+                        badge.className = 'reaction-badge';
+                        badge.innerHTML = `<span>${emoji}</span> <span>${users.length}</span>`;
+                        badge.onclick = () => toggleReaction(key, emoji);
+                        reactionsContainer.appendChild(badge);
+                    }
+                });
             }
-
-            msgDiv.innerHTML = (data.replyTo ? `<div class="reply-quote-box"><b>${data.replyTo.user}:</b> ${data.replyTo.text}</div>` : '') + contentHTML + reactionsHTML;
 
             contentContainer.appendChild(headerInfoDiv);
             contentContainer.appendChild(msgDiv);
+            contentContainer.appendChild(reactionsContainer);
+
             wrapperDiv.appendChild(avatarElem);
             wrapperDiv.appendChild(contentContainer);
 
             if (!document.getElementById(`msg-${key}`)) chatLogs.appendChild(wrapperDiv);
             chatLogs.scrollTop = chatLogs.scrollHeight;
+        }
+
+        /* ==========================================================================
+           6. STICKERS, REACTIONS & REPLIES
+           ========================================================================== */
+        function toggleStickerPicker() {
+            const picker = document.getElementById('stickerPicker');
+            picker.style.display = (picker.style.display === 'grid') ? 'none' : 'grid';
+        }
+
+        function sendSticker(stickerChar) {
+            if (windowTargetMsgKeyForReaction) {
+                toggleReaction(windowTargetMsgKeyForReaction, stickerChar);
+                windowTargetMsgKeyForReaction = null;
+            } else {
+                dbChat.push({
+                    user: activeUser.username, 
+                    avatar: activeUser.avatar, 
+                    sticker: stickerChar, 
+                    isSticker: true,
+                    timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+                    ...(selectedReplyData && { replyTo: selectedReplyData })
+                });
+                cancelReply();
+            }
+            document.getElementById('stickerPicker').style.display = 'none';
+        }
+
+        function toggleReaction(msgKey, emoji) {
+            const user = activeUser.username;
+            const reactionRef = dbChat.child(msgKey).child('reactions').child(emoji);
+            reactionRef.once('value', (snapshot) => {
+                let users = snapshot.val() || [];
+                users = users.includes(user) ? users.filter(u => u !== user) : [...users, user];
+                if (users.length === 0) reactionRef.remove(); else reactionRef.set(users);
+            });
         }
 
         function setReplyToMessage(user, text) {
@@ -1475,13 +1821,21 @@
             const isVid = isVideoUrl(avatarUrl);
             const elem = document.createElement(isVid ? 'video' : 'img');
             elem.src = avatarUrl;
-            if (isVid) { elem.autoplay = true; elem.controls = true; elem.loop = true; }
+            
+            if (isVid) { 
+                elem.autoplay = true; 
+                elem.controls = true; 
+                elem.loop = true; 
+            }
             
             container.appendChild(elem);
             document.getElementById('fullsizeUsername').innerText = username;
             document.getElementById('imageViewerModal').style.display = 'flex';
         }
 
+        /* ==========================================================================
+           7. TRANSACTION LOG CONVERTER (CORE KASIR APP)
+           ========================================================================== */
         function konversiLog() {
             const input = document.getElementById('rawInput').value.trim();
             const tbody = document.getElementById('tableBody');
@@ -1490,10 +1844,9 @@
 
             if (!input) return;
 
-            let lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
-            let barisDataDisalin = [];
+            let parsedLogList = [], lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
 
-            lines.reverse().forEach(line => {
+            lines.forEach(line => {
                 let matchTime = line.match(/(\d{2}:\d{2}:\d{2})/);
                 if (!matchTime) return;
                 
@@ -1501,13 +1854,22 @@
                 let parts = line.split(/\t|\s{2,}/).filter(p => p !== '');
                 
                 if (parts.length >= 5) {
-                    let userId = parts[2] || "-";
-                    let tujuanBank = parts[4] || "-";
-                    let jumlah = (parts[6] || parts[5] || "0").replace(/^-/, '');
-
-                    tbody.innerHTML += `<tr><td>${waktu}</td><td>${userId}</td><td>${tujuanBank}</td><td>0</td><td>${jumlah}</td></tr>`;
-                    barisDataDisalin.push(`${waktu}\t${userId}\t${tujuanBank}\t\t${jumlah}`);
+                    parsedLogList.push({ 
+                        waktu, 
+                        userId: parts[2] || "-", 
+                        tujuanBank: parts[4] || "-", 
+                        creditStatus: "0", 
+                        jumlah: (parts[6] || parts[5] || "0").replace(/^-/, '') 
+                    });
                 }
+            });
+
+            parsedLogList.reverse();
+            let barisDataDisalin = [];
+
+            parsedLogList.forEach((item) => {
+                tbody.innerHTML += `<tr><td>${item.waktu}</td><td>${item.userId}</td><td>${item.tujuanBank}</td><td>${item.creditStatus}</td><td>${item.jumlah}</td></tr>`;
+                barisDataDisalin.push(`${item.waktu}\t${item.userId}\t${item.tujuanBank}\t\t${item.jumlah}`);
             });
 
             hasilTeksUntukDisalin = barisDataDisalin.join('\n');
@@ -1531,6 +1893,15 @@
                 setTimeout(() => txt.innerText = "SALIN DATA", 1200);
             });
         }
+
+        /* ==========================================================================
+           8. GLOBAL EVENT LISTENERS
+           ========================================================================== */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
+            }
+        });
     </script>
 </body>
 </html>
