@@ -206,7 +206,7 @@
     .auth-close-btn {
         position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.1) !important;
         border: 1px solid var(--lavender-border) !important; color: #ffffff !important; font-size: 14px; width: 28px; height: 28px; border-radius: 50%;
-        cursor: pointer; display: flex; align-items: center; justify-content: justify-center; z-index: 2;
+        cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2;
     }
 
     .chat-modal-box {
@@ -553,7 +553,7 @@
         <div class="auth-modal-content">
             <h1 style="font-size: 20px;">MENU OBROLAN</h1>
             <div class="friends-nav-tabs">
-                <button class="tab-btn" id="tabProfileBtn" onclick="openProfileModal()">Profil</button>
+                <button class="tab-btn" id="tabProfileBtn" onclick="openProfileModalDirect()">Profil</button>
                 <button class="tab-btn active" id="tabRecentBtn" onclick="switchFriendsTab('recent')">Chat</button>
                 <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">Permintaan</button>
                 <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">Cari</button>
@@ -675,9 +675,6 @@
 
     function closeModal(id) {
         document.getElementById(id).style.display = 'none';
-        if (id === 'authModal' && !activeUser) {
-            document.getElementById('mainContainer').style.display = 'block';
-        }
     }
 
     function handleChatClick() {
@@ -724,6 +721,11 @@
         }, (err) => {
             if (!err) { alert("✅ Berhasil membuat akun " + newUser); closeModal('registerModal'); }
         });
+    }
+
+    function openProfileModalDirect() {
+        closeModal('friendsModal');
+        openProfileModal();
     }
 
     function openProfileModal() {
