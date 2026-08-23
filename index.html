@@ -977,8 +977,7 @@
             <label>Hasil Konversi</label>
             <div class="label-actions">
                 <span class="btn-swap-pos" onclick="document.getElementById('btnGroup').classList.toggle('swapped')">SWAP ⇄</span>
-                <!-- Event onclick=handleChatClick() dihapus di sini -->
-                <span class="badge-count" id="dataCounter">DATA</span>
+                <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
             </div>
         </div>
         
@@ -1240,8 +1239,15 @@
            3. AUTHENTICATION & PROFILE
            ========================================================================== */
         function handleChatClick() {
-            // Fitur login dinonaktifkan
-            return;
+            document.getElementById('mainContainer').style.display = 'none';
+            
+            if (!activeUser) {
+                document.getElementById('loginUser').value = '';
+                document.getElementById('loginPass').value = '';
+                document.getElementById('authModal').style.display = 'flex';
+            } else {
+                openFriendsModal();
+            }
         }
 
         function submitLogin() {
