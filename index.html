@@ -1220,6 +1220,18 @@
         const dbCustomGroups = dbRoot.ref("custom_groups");
         const dbDirectMessages = dbRoot.ref("direct_messages");
 
+        // MEMUAT SESI TERBAIK/PERSISTEN USER DARI LOCALSTORAGE
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUserData = localStorage.getItem('flop_chat_active_user');
+            if (savedUserData) {
+                try {
+                    activeUser = JSON.parse(savedUserData);
+                } catch (e) {
+                    activeUser = null;
+                }
+            }
+        });
+
         /* ==========================================================================
            2. HELPER FUNCTIONS & UI MODAL CONTROL
            ========================================================================== */
@@ -1274,12 +1286,13 @@
         function handleChatClick() {
             document.getElementById('mainContainer').style.display = 'none';
             
-            if (!activeUser) {
+            // JIKA SUDAH ADA ACTIVE USER (TERUTAMA SESI LOCALSTORAGE), LANGSUNG MASUK MENU OBROLAN
+            if (activeUser && activeUser.username) {
+                openFriendsModal();
+            } else {
                 document.getElementById('loginUser').value = '';
                 document.getElementById('loginPass').value = '';
                 document.getElementById('authModal').style.display = 'flex';
-            } else {
-                openFriendsModal();
             }
         }
 
@@ -1294,6 +1307,9 @@
                         username: user, 
                         avatar: snapshot.val().avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user) 
                     };
+                    // SIMPAN SESI AKTIF KE LOCALSTORAGE SUPAYA TIDAK DIMINTA PASSWORD LAGI KELAK
+                    localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
+
                     closeModal('authModal');
                     openFriendsModal();
                 } else {
@@ -1305,6 +1321,9 @@
         function logoutChat() {
             if (confirm("Logout dari akun?")) {
                 activeUser = null;
+                // HAPUS SESI USER DARI LOCALSTORAGE
+                localStorage.removeItem('flop_chat_active_user');
+
                 closeModal('profileModal');
                 closeModal('friendsModal');
                 closeTeamChat();
@@ -1393,6 +1412,10 @@
 
                 dbAccounts.child(activeUser.username).update({ password: updatedPass, avatar: tempEditAvatar });
                 activeUser.avatar = tempEditAvatar;
+                
+                // UPDATE JUGA DATA LOKAL DI BROWSER
+                localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
+
                 alert("Profil diperbarui!");
                 backToFriendsModalFromProfile();
             });
