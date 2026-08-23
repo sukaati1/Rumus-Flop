@@ -174,7 +174,7 @@
         z-index: 999; display: none; justify-content: center; align-items: center; padding: 15px;
     }
 
-    #profileModal, #registerModal, #friendsModal { z-index: 1002 !important; }
+    #profileModal, #registerModal, #friendsModal, #createGroupModal { z-index: 1002 !important; }
     #imageViewerModal { z-index: 1003 !important; }
 
     .auth-modal {
@@ -204,7 +204,6 @@
         width: 76px; height: 76px; border-radius: 50%; overflow: hidden; border: 2px solid var(--cyan-neon);
         display: flex; align-items: center; justify-content: center; background: #000;
     }
-    .avatar-preview-img, .avatar-preview-video { width: 100%; height: 100%; object-fit: cover; }
     
     .auth-close-btn {
         position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.1) !important;
@@ -284,9 +283,6 @@
         align-items: center; 
     }
 
-    /* ==========================================
-       GELEMUNG PESAN CHAT DIBUAT DENGAN UKURAN MINI
-       ========================================== */
     .chat-msg {
         position: relative; 
         font-family: 'JetBrains Mono', monospace; 
@@ -366,53 +362,22 @@
     }
 
     .btn-chat-small {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        max-width: 36px !important;
-        padding: 0 !important;
-        flex: none !important;
-        background: rgba(0, 0, 0, 0.4) !important;
-        border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
-        border-radius: 10px !important;
-        color: #ffffff !important;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        transition: all 0.2s ease;
+        width: 36px !important; height: 36px !important; min-width: 36px !important; max-width: 36px !important;
+        padding: 0 !important; flex: none !important; background: rgba(0, 0, 0, 0.4) !important;
+        border: 1.5px solid rgba(168, 85, 247, 0.4) !important; border-radius: 10px !important; color: #ffffff !important;
+        cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;
     }
-    .btn-chat-small:hover {
-        border-color: var(--cyan-neon) !important;
-        background: rgba(0, 210, 255, 0.2) !important;
-        box-shadow: 0 0 8px var(--cyan-neon);
-    }
+    .btn-chat-small:hover { border-color: var(--cyan-neon) !important; background: rgba(0, 210, 255, 0.2) !important; box-shadow: 0 0 8px var(--cyan-neon); }
 
     .btn-send-chat {
-        flex: none !important;
-        width: auto !important;
-        min-width: 90px !important;
-        height: 40px !important;
-        padding: 0 14px !important;
-        border-radius: 35px !important;
-        border: 2px solid var(--lavender-border) !important;
-        background: var(--lavender-bg) !important;
-        color: #ffffff !important;
-        font-family: 'Orbitron', sans-serif !important;
-        font-size: 11px !important;
-        font-weight: 900 !important;
-        letter-spacing: 2px !important;
-        text-transform: uppercase !important;
-        text-shadow: 0 0 6px rgba(255, 255, 255, 0.6) !important;
-        box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2) !important;
+        flex: none !important; width: auto !important; min-width: 90px !important; height: 40px !important;
+        padding: 0 14px !important; border-radius: 35px !important; border: 2px solid var(--lavender-border) !important;
+        background: var(--lavender-bg) !important; color: #ffffff !important; font-family: 'Orbitron', sans-serif !important;
+        font-size: 11px !important; font-weight: 900 !important; letter-spacing: 2px !important; text-transform: uppercase !important;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.6) !important; box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2) !important;
         cursor: pointer;
     }
-    .btn-send-chat:hover {
-        background: rgba(147, 112, 219, 0.35) !important;
-        border-color: #fff !important;
-        box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4) !important;
-    }
+    .btn-send-chat:hover { background: rgba(147, 112, 219, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4) !important; }
 
     .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; margin-bottom: 12px; }
     .tab-btn { flex: 1; padding: 6px !important; font-size: 10px !important; border-radius: 8px !important; color: #b0b3b8 !important; background: rgba(255, 255, 255, 0.1) !important; border: none !important; font-family: 'Orbitron', sans-serif !important; }
@@ -431,9 +396,11 @@
 
     .btn-friend-action {
         font-size: 8px !important; padding: 3px 6px !important; height: auto !important; min-height: 0 !important;
-        border-radius: 12px !important; flex: none !important; font-family: 'Orbitron', sans-serif !important;
-        letter-spacing: 0.5px !important;
+        border-radius: 12px !important; flex: none !important; font-family: 'Orbitron', sans-serif !important; letter-spacing: 0.5px !important;
     }
+
+    .checkbox-list { display: flex; flex-direction: column; gap: 6px; max-height: 140px; overflow-y: auto; border: 1px solid rgba(168, 85, 247, 0.3); padding: 8px; border-radius: 8px; background: rgba(0,0,0,0.3); }
+    .checkbox-item { display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; cursor: pointer; }
 
     .image-viewer-modal {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.9);
@@ -466,7 +433,7 @@
         <label>Hasil Konversi</label>
         <div class="label-actions">
             <span class="btn-swap-pos" onclick="document.getElementById('btnGroup').classList.toggle('swapped')">SWAP ⇄</span>
-            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
+            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">OBROLAN</span>
         </div>
     </div>
     
@@ -552,17 +519,40 @@
     </div>
 </div>
 
+<div class="chat-modal-overlay" id="createGroupModal">
+    <div class="auth-modal">
+        <button class="auth-close-btn" onclick="closeModal('createGroupModal')">&times;</button>
+        <div class="auth-modal-content">
+            <h1 style="font-size: 20px;">BUAT GRUP BARU</h1>
+            <div class="auth-form">
+                <div class="auth-input-group">
+                    <label>NAMA GRUP</label>
+                    <input type="text" id="newGroupName" placeholder="Nama Grup..." oninput="this.value = this.value.toUpperCase()">
+                </div>
+                <div class="auth-input-group">
+                    <label>PILIH ANGGOTA KHUSUS</label>
+                    <div class="checkbox-list" id="groupMembersChecklist"></div>
+                </div>
+                <button class="btn-flop-style" style="margin-top: 10px;" onclick="submitCreateGroup()">BUAT GRUP</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="chat-modal-overlay" id="friendsModal">
     <div class="auth-modal">
         <button class="auth-close-btn" onclick="closeModal('friendsModal')">&times;</button>
         <div class="auth-modal-content">
-            <h1 style="font-size: 20px;">PERTEMANAN</h1>
+            <h1 style="font-size: 20px;">MENU CHAT</h1>
             <div class="friends-nav-tabs">
-                <button class="tab-btn active" id="tabFriendsBtn" onclick="switchFriendsTab('friends')">Teman</button>
+                <button class="tab-btn active" id="tabGroupsBtn" onclick="switchFriendsTab('groups')">Grup Saya</button>
+                <button class="tab-btn" id="tabFriendsBtn" onclick="switchFriendsTab('friends')">Teman</button>
                 <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">Permintaan</button>
                 <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">Cari</button>
             </div>
-            <div id="tabFriendsContent" class="friends-list-container"></div>
+            
+            <div id="tabGroupsContent" class="friends-list-container"></div>
+            <div id="tabFriendsContent" class="friends-list-container" style="display: none;"></div>
             <div id="tabRequestsContent" class="friends-list-container" style="display: none;"></div>
             <div id="tabAddContent" style="display: none;" class="auth-form">
                 <div class="auth-input-group">
@@ -571,6 +561,7 @@
                 </div>
                 <button class="btn-flop-style" style="margin-top: 10px;" onclick="sendFriendRequest()">KIRIM PERMINTAAN</button>
             </div>
+            <button id="btnAdminCreateGroup" class="btn-flop-style" style="display: none; margin-top: 10px; background: rgba(0, 210, 255, 0.2) !important;" onclick="openCreateGroupModal()">+ BUAT GRUP BARU</button>
         </div>
     </div>
 </div>
@@ -578,12 +569,12 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal-box">
         <div class="chat-modal-header">
-            <h1 id="chatTitleHeader" style="font-size: 24px;">T'CHAT</h1>
+            <h1 id="chatTitleHeader" style="font-size: 20px;">T'CHAT</h1>
             <div class="header-controls">
-                <button class="btn-hdr-action btn-flop-style" onclick="openFriendsModal()">TEMAN</button>
+                <button class="btn-hdr-action btn-flop-style" onclick="openFriendsModal()">MENU OBROLAN</button>
                 <button class="btn-hdr-action btn-flop-style" onclick="openProfileModal()">PROFIL</button>
                 <button class="btn-hdr-action btn-flop-style" onclick="logoutChat()">LOGOUT</button>
-                <button class="btn-hdr-action btn-flop-style" onclick="clearAllChat()">RESET</button>
+                <button class="btn-hdr-action btn-flop-style" id="btnClearChat" onclick="clearAllChat()">RESET</button>
                 <button class="auth-close-btn" style="position: static;" onclick="closeTeamChat()">&times;</button>
             </div>
         </div>
@@ -638,49 +629,18 @@
     let activeUser = null; 
     let tempEditAvatar = "";
     let isChatOpen = false;
-    let unreadCount = 0;
-    window.targetMsgKeyForReaction = null;
+    let windowTargetMsgKeyForReaction = null;
+    let currentChatPath = null;
 
     if (!firebase.apps.length) {
         firebase.initializeApp({ databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/" });
     }
     
     const dbRoot = firebase.database();
-    let dbChat = dbRoot.ref("team_chat_messages");
+    let dbChat = null;
     const dbAccounts = dbRoot.ref("chat_accounts");
     const dbFriends = dbRoot.ref("user_friends");
-
-    function initUnreadListener() {
-        const unreadRef = dbRoot.ref("team_chat_messages").limitToLast(1);
-        unreadRef.on('child_added', (snap) => {
-            const data = snap.val();
-            if (!data) return;
-
-            const sender = (data.user || '').toUpperCase();
-            const myName = activeUser ? activeUser.username.toUpperCase() : '';
-
-            if (!isChatOpen && sender !== '' && sender !== myName) {
-                unreadCount++;
-                updateUnreadBadge();
-            }
-        });
-    }
-
-    function updateUnreadBadge() {
-        const counterElem = document.getElementById('dataCounter');
-        if (!counterElem) return;
-
-        if (unreadCount > 0) {
-            counterElem.innerText = `🔴 ${unreadCount} PESAN BARU`;
-            counterElem.style.borderColor = '#ff007f';
-            counterElem.style.color = '#ffffff';
-        } else {
-            const lines = document.getElementById('rawInput').value.trim().split('\n').filter(l => l !== '');
-            counterElem.innerText = lines.length > 0 ? `${document.querySelectorAll('#tableBody tr').length} DATA` : "DATA";
-            counterElem.style.borderColor = 'rgba(0, 240, 255, 0.5)';
-            counterElem.style.color = '#ffffff';
-        }
-    }
+    const dbCustomGroups = dbRoot.ref("custom_groups");
 
     function isVideoUrl(url) {
         if (!url) return false;
@@ -706,7 +666,6 @@
     document.addEventListener("DOMContentLoaded", () => {
         const savedAccount = localStorage.getItem("chat_active_account");
         if (savedAccount) activeUser = JSON.parse(savedAccount);
-        initUnreadListener();
     });
 
     function closeModal(id) {
@@ -715,7 +674,7 @@
     }
 
     function handleChatClick() {
-        if (activeUser) openTeamChat();
+        if (activeUser) openFriendsModal();
         else {
             document.getElementById('authModal').style.display = 'flex';
         }
@@ -731,7 +690,7 @@
                 activeUser = { username: user, avatar: snapshot.val().avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user) };
                 localStorage.setItem("chat_active_account", JSON.stringify(activeUser));
                 closeModal('authModal');
-                openTeamChat();
+                openFriendsModal();
             } else {
                 alert("🚫 AKSES DITOLAK (User/Password Salah)");
             }
@@ -800,6 +759,54 @@
         });
     }
 
+    function openCreateGroupModal() {
+        if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("Hanya Admin yang dapat membuat grup.");
+        const container = document.getElementById('groupMembersChecklist');
+        container.innerHTML = 'Memuat user...';
+        
+        dbAccounts.once('value', (snapshot) => {
+            container.innerHTML = '';
+            snapshot.forEach((child) => {
+                const u = child.key;
+                if (u !== NAMA_ADMIN_RESMI) {
+                    container.innerHTML += `
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="${u}" class="group-member-checkbox">
+                            ${u}
+                        </label>`;
+                }
+            });
+        });
+        document.getElementById('createGroupModal').style.display = 'flex';
+    }
+
+    function submitCreateGroup() {
+        const groupName = document.getElementById('newGroupName').value.trim().toUpperCase();
+        if (!groupName) return alert("Nama Grup Wajib Diisi!");
+
+        const checkboxes = document.querySelectorAll('.group-member-checkbox:checked');
+        let selectedUsers = [NAMA_ADMIN_RESMI];
+        checkboxes.forEach(cb => selectedUsers.push(cb.value));
+
+        if (selectedUsers.length < 2) return alert("Pilih minimal 1 anggota tambahan!");
+
+        const newGroupKey = dbCustomGroups.push().key;
+        let membersObj = {};
+        selectedUsers.forEach(user => { membersObj[user] = true; });
+
+        dbCustomGroups.child(newGroupKey).set({
+            name: groupName,
+            createdBy: activeUser.username,
+            members: membersObj
+        }, (err) => {
+            if (!err) {
+                alert("✅ Grup berhasil dibuat!");
+                closeModal('createGroupModal');
+                loadUserGroups();
+            }
+        });
+    }
+
     function viewFullsizeImage(avatarUrl, username) {
         const container = document.getElementById('fullsizeMediaContainer');
         container.innerHTML = '';
@@ -819,15 +826,42 @@
         }
     }
 
-    function openFriendsModal() { document.getElementById('friendsModal').style.display = 'flex'; switchFriendsTab('friends'); }
-    
+    function openFriendsModal() {
+        document.getElementById('friendsModal').style.display = 'flex';
+        document.getElementById('btnAdminCreateGroup').style.display = (activeUser?.username === NAMA_ADMIN_RESMI) ? 'block' : 'none';
+        switchFriendsTab('groups');
+    }
+
     function switchFriendsTab(tab) {
-        ['Friends', 'Requests', 'Add'].forEach(t => {
+        ['Groups', 'Friends', 'Requests', 'Add'].forEach(t => {
             document.getElementById(`tab${t}Btn`).classList.toggle('active', t.toLowerCase() === tab);
             document.getElementById(`tab${t}Content`).style.display = (t.toLowerCase() === tab) ? 'flex' : 'none';
         });
+        if (tab === 'groups') loadUserGroups();
         if (tab === 'friends') loadFriendsList();
         if (tab === 'requests') loadFriendRequests();
+    }
+
+    function loadUserGroups() {
+        const container = document.getElementById('tabGroupsContent');
+        container.innerHTML = 'Memuat grup...';
+        dbCustomGroups.on('value', (snapshot) => {
+            container.innerHTML = '';
+            let count = 0;
+            snapshot.forEach((child) => {
+                const group = child.val();
+                const groupId = child.key;
+                if (group.members && group.members[activeUser.username]) {
+                    count++;
+                    container.innerHTML += `
+                        <div class="friend-card">
+                            <span class="friend-name">👥 ${group.name}</span>
+                            <button class="btn-flop-style btn-friend-action" onclick="startGroupChat('${groupId}', '${group.name}')">BUKA</button>
+                        </div>`;
+                }
+            });
+            if (count === 0) container.innerHTML = '<span style="font-size:11px;">Belum dimasukkan ke grup manapun.</span>';
+        });
     }
 
     function sendFriendRequest() {
@@ -844,7 +878,7 @@
             snapshot.forEach((child) => {
                 container.innerHTML += `
                     <div class="friend-card">
-                        <span class="friend-name">${child.key}</span>
+                        <span class="friend-name">👤 ${child.key}</span>
                         <button class="btn-flop-style btn-friend-action" onclick="startPrivateChat('${child.key}')">PESAN</button>
                     </div>`;
             });
@@ -884,13 +918,20 @@
     function startPrivateChat(targetUser) {
         closeModal('friendsModal');
         const sorted = [activeUser.username, targetUser].sort();
-        document.getElementById('chatTitleHeader').innerText = `${targetUser}`;
+        document.getElementById('chatTitleHeader').innerText = `👤 ${targetUser}`;
         switchChatRoom(`direct_messages/${sorted[0]}_${sorted[1]}`);
+    }
+
+    function startGroupChat(groupId, groupName) {
+        closeModal('friendsModal');
+        document.getElementById('chatTitleHeader').innerText = `👥 ${groupName}`;
+        switchChatRoom(`group_chats/${groupId}`);
     }
 
     function switchChatRoom(path) {
         if (dbChat) dbChat.off(); 
         document.getElementById('chatLogs').innerHTML = '';
+        currentChatPath = path;
         dbChat = dbRoot.ref(path);
         
         dbChat.limitToLast(60).on('child_added', (snap) => renderMessage(snap.key, snap.val()));
@@ -899,11 +940,13 @@
             const removedElem = document.getElementById(`msg-${snap.key}`);
             if (removedElem) removedElem.remove();
         });
+        document.getElementById('chatModal').style.display = 'flex';
+        isChatOpen = true;
     }
 
     function clearAllChat() {
-        if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua obrolan?")) {
-            dbChat.remove(); 
+        if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua pesan di obrolan ini?")) {
+            if (dbChat) dbChat.remove(); 
         }
     }
 
@@ -923,16 +966,6 @@
             };
             reader.readAsDataURL(file);
         } else alert("File terlalu besar (Max 2MB)");
-    }
-
-    function openTeamChat() {
-        isChatOpen = true;
-        unreadCount = 0;
-        updateUnreadBadge();
-
-        document.getElementById('chatTitleHeader').innerText = "T'CHAT";
-        switchChatRoom("team_chat_messages");
-        document.getElementById('chatModal').style.display = 'flex';
     }
 
     function closeTeamChat() {
@@ -995,7 +1028,7 @@
             ${adminLabelHTML}
             <span class="time-stamp">${data.timestamp || ''}</span>
             <div class="msg-actions">
-                <span class="btn-action-msg" onclick="window.targetMsgKeyForReaction='${key}'; toggleStickerPicker();">😊</span>
+                <span class="btn-action-msg" onclick="windowTargetMsgKeyForReaction='${key}'; toggleStickerPicker();">😊</span>
                 <span class="btn-action-msg" onclick="setReplyToMessage('${username}', '${(data.msg||'').replace(/'/g, "\\'")}')">↩️</span>
             </div>`;
 
@@ -1035,9 +1068,9 @@
     }
 
     function sendSticker(stickerChar) {
-        if (window.targetMsgKeyForReaction) {
-            toggleReaction(window.targetMsgKeyForReaction, stickerChar);
-            window.targetMsgKeyForReaction = null;
+        if (windowTargetMsgKeyForReaction) {
+            toggleReaction(windowTargetMsgKeyForReaction, stickerChar);
+            windowTargetMsgKeyForReaction = null;
         } else {
             dbChat.push({
                 user: activeUser.username, avatar: activeUser.avatar, sticker: stickerChar, isSticker: true,
@@ -1072,7 +1105,7 @@
         tbody.innerHTML = ''; 
         hasilTeksUntukDisalin = ""; 
 
-        if (!input) { updateUnreadBadge(); return; }
+        if (!input) return;
 
         let parsedLogList = [], lines = input.split('\n').map(l => l.trim()).filter(l => l !== '');
 
@@ -1096,14 +1129,12 @@
         });
 
         hasilTeksUntukDisalin = barisDataDisalin.join('\n');
-        updateUnreadBadge();
     }
 
     function resetData() {
         document.getElementById('rawInput').value = '';
         document.getElementById('tableBody').innerHTML = '';
         hasilTeksUntukDisalin = "";
-        updateUnreadBadge();
     }
 
     function salinHasil() {
@@ -1116,7 +1147,7 @@
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal'].forEach(closeModal);
+            ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
         }
     });
 </script>
