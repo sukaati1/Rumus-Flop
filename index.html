@@ -227,6 +227,14 @@
         border-bottom: 1px solid rgba(168, 85, 247, 0.3);
     }
 
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .btn-back-arrow {
+        font-size: 16px !important; padding: 4px 10px !important; border-radius: 50% !important;
+        flex: none !important; width: 32px !important; height: 32px !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        font-family: 'Orbitron', sans-serif !important; cursor: pointer;
+    }
+
     .header-controls { display: flex; align-items: center; gap: 6px; }
     .btn-hdr-action { 
         font-size: 10px !important; padding: 6px 12px !important; 
@@ -355,9 +363,14 @@
     }
     .btn-send-chat:hover { background: rgba(147, 112, 219, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4) !important; }
 
-    .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; margin-bottom: 12px; }
+    .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; margin-bottom: 12px; align-items: center; }
     .tab-btn { flex: 1; padding: 6px !important; font-size: 10px !important; border-radius: 8px !important; color: #b0b3b8 !important; background: rgba(255, 255, 255, 0.1) !important; border: none !important; font-family: 'Orbitron', sans-serif !important; }
     .tab-btn.active { background: var(--blue-electric) !important; color: #fff !important; }
+
+    .btn-profile-tab {
+        flex: 0.8 !important; background: rgba(168, 85, 247, 0.2) !important; border: 1px solid var(--purple-neon) !important;
+        color: #fff !important; font-size: 10px !important; border-radius: 8px !important; font-family: 'Orbitron', sans-serif !important;
+    }
 
     .friends-list-container { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
     .section-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--cyan-neon); letter-spacing: 1.5px; margin: 8px 0 4px 0; font-weight: 800; text-transform: uppercase; }
@@ -418,7 +431,7 @@
         <label>Hasil Konversi</label>
         <div class="label-actions">
             <span class="btn-swap-pos" onclick="document.getElementById('btnGroup').classList.toggle('swapped')">SWAP ⇄</span>
-            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">OBROLAN</span>
+            <span class="badge-count" id="dataCounter" onclick="handleChatClick()">DATA</span>
         </div>
     </div>
     
@@ -533,6 +546,7 @@
                 <button class="tab-btn active" id="tabRecentBtn" onclick="switchFriendsTab('recent')">Chat & Grup</button>
                 <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">Permintaan</button>
                 <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">Cari User</button>
+                <button class="btn-flop-style btn-profile-tab" onclick="openProfileModal()">PROFIL</button>
             </div>
             
             <div id="tabRecentContent" class="friends-list-container"></div>
@@ -552,10 +566,11 @@
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal-box">
         <div class="chat-modal-header">
-            <h1 id="chatTitleHeader" style="font-size: 20px;">T'CHAT</h1>
+            <div class="header-left">
+                <button class="btn-flop-style btn-back-arrow" onclick="backToFriendsModal()" title="Kembali">←</button>
+                <h1 id="chatTitleHeader" style="font-size: 20px;">T'CHAT</h1>
+            </div>
             <div class="header-controls">
-                <button class="btn-hdr-action btn-flop-style" onclick="openFriendsModal()">MENU OBROLAN</button>
-                <button class="btn-hdr-action btn-flop-style" onclick="openProfileModal()">PROFIL</button>
                 <button class="btn-hdr-action btn-flop-style" onclick="logoutChat()">LOGOUT</button>
                 <button class="btn-hdr-action btn-flop-style" id="btnClearChat" onclick="clearAllChat()">RESET</button>
                 <button class="auth-close-btn" style="position: static;" onclick="closeTeamChat()">&times;</button>
@@ -827,6 +842,11 @@
         document.getElementById('friendsModal').style.display = 'flex';
         document.getElementById('btnAdminCreateGroup').style.display = (activeUser?.username === NAMA_ADMIN_RESMI) ? 'block' : 'none';
         switchFriendsTab('recent');
+    }
+
+    function backToFriendsModal() {
+        closeModal('chatModal');
+        openFriendsModal();
     }
 
     function switchFriendsTab(tab) {
