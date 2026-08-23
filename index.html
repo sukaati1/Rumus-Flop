@@ -170,6 +170,7 @@
             font-size: 11px; 
             letter-spacing: 2px; 
             text-transform: uppercase;
+            text-align: center;
         }
 
         .badge-count, .btn-swap-pos {
@@ -184,6 +185,7 @@
             cursor: pointer; 
             transition: all 0.2s ease; 
             display: inline-block;
+            text-align: center;
         }
 
         .btn-swap-pos { 
@@ -240,30 +242,47 @@
             position: relative; 
             overflow: hidden; 
             flex: 1; 
-            padding: 16px 20px;
+            padding: 12px 16px;
             font-family: 'Orbitron', sans-serif; 
-            font-size: 12px; 
+            font-size: 11px; 
             font-weight: 900;
             cursor: pointer; 
-            letter-spacing: 2px; 
+            letter-spacing: 1px; 
             text-transform: uppercase; 
             outline: none;
-            border-radius: 35px !important; 
-            border: 2px solid var(--lavender-border) !important;
+            border-radius: 25px !important; 
+            border: 1.5px solid var(--lavender-border) !important;
             background: var(--lavender-bg) !important; 
             color: #ffffff !important;
             text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2);
+            box-shadow: 0 0 10px rgba(200, 158, 255, 0.4), inset 0 0 6px rgba(181, 126, 220, 0.2);
             transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.2s ease, border-color 0.2s ease;
             display: inline-flex; 
             align-items: center; 
             justify-content: center;
+            text-align: center;
         }
 
         button:hover, .btn-flop-style:hover { 
             background: rgba(147, 112, 219, 0.35) !important; 
             border-color: #fff !important; 
-            box-shadow: 0 0 20px #b57edc, inset 0 0 12px rgba(255, 255, 255, 0.4); 
+            box-shadow: 0 0 15px #b57edc, inset 0 0 10px rgba(255, 255, 255, 0.4); 
+        }
+
+        /* GRID ACTION BUTTONS FOR PROFILE MODAL */
+        .profile-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .profile-action-grid .btn-flop-style {
+            padding: 8px 10px !important;
+            font-size: 9.5px !important;
+            letter-spacing: 0.5px !important;
+            border-radius: 18px !important;
+            height: 38px !important;
         }
 
         /* ==========================================================================
@@ -343,11 +362,11 @@
         .auth-modal {
             position: relative; 
             width: 100%; 
-            max-width: 480px; 
+            max-width: 440px; 
             background: rgba(10, 8, 25, 0.85) !important;
             backdrop-filter: blur(12px); 
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px !important; 
+            border-radius: 24px !important; 
             border: 1.5px solid var(--lavender-border) !important;
             padding: 0; 
             overflow: hidden; 
@@ -358,10 +377,10 @@
             position: relative; 
             z-index: 1; 
             background: transparent !important;
-            padding: 24px; 
+            padding: 20px; 
             display: flex; 
             flex-direction: column; 
-            gap: 16px;
+            gap: 12px;
         }
 
         .auth-header {
@@ -373,44 +392,46 @@
         .auth-form { 
             display: flex; 
             flex-direction: column; 
-            gap: 12px; 
+            gap: 10px; 
         }
 
         .auth-input-group { 
             display: flex; 
             flex-direction: column; 
-            gap: 6px; 
+            gap: 4px; 
         }
 
         .auth-input-group label { 
-            font-size: 11px; 
+            font-size: 10px; 
             color: #ffffff !important; 
             font-family: 'Orbitron', sans-serif; 
             letter-spacing: 1px; 
+            text-align: center;
         }
 
         .auth-input-group input {
             background: rgba(0, 0, 0, 0.4) !important; 
             border: 1px solid rgba(168, 85, 247, 0.4) !important;
             color: #ffffff !important; 
-            padding: 12px 14px; 
+            padding: 10px 12px; 
             border-radius: 8px; 
             font-family: 'JetBrains Mono', monospace;
-            font-size: 14px; 
+            font-size: 13px; 
             outline: none;
+            text-align: center;
         }
 
         .avatar-selection-box { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            gap: 10px; 
-            margin: 5px 0; 
+            gap: 6px; 
+            margin: 2px 0; 
         }
 
         .avatar-preview-container {
-            width: 76px; 
-            height: 76px; 
+            width: 64px; 
+            height: 64px; 
             border-radius: 50%; 
             overflow: hidden; 
             border: 2px solid var(--cyan-neon);
@@ -420,22 +441,27 @@
             background: #000;
         }
 
-        .auth-close-btn {
-            position: absolute; 
-            top: 15px; 
-            right: 15px; 
+        .auth-close-btn, .btn-back-arrow {
             background: rgba(255, 255, 255, 0.1) !important;
             border: 1px solid var(--lavender-border) !important; 
             color: #ffffff !important; 
-            font-size: 14px; 
-            width: 28px; 
-            height: 28px; 
-            border-radius: 50%;
+            font-size: 13px; 
+            width: 32px !important; 
+            height: 32px !important; 
+            border-radius: 50% !important;
             cursor: pointer; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            z-index: 2;
+            padding: 0 !important;
+            flex: none !important;
+            transition: all 0.2s ease;
+        }
+
+        .auth-close-btn:hover, .btn-back-arrow:hover {
+            background: rgba(255, 0, 127, 0.3) !important;
+            border-color: #fff !important;
+            box-shadow: 0 0 10px var(--pink-neon);
         }
 
         /* ==========================================================================
@@ -464,20 +490,6 @@
             display: flex; 
             align-items: center; 
             gap: 10px; 
-        }
-
-        .btn-back-arrow {
-            font-size: 16px !important; 
-            padding: 4px 10px !important; 
-            border-radius: 50% !important;
-            flex: none !important; 
-            width: 32px !important; 
-            height: 32px !important;
-            display: flex !important; 
-            align-items: center !important; 
-            justify-content: center !important;
-            font-family: 'Orbitron', sans-serif !important; 
-            cursor: pointer;
         }
 
         .header-controls { 
@@ -790,6 +802,7 @@
             text-shadow: 0 0 6px rgba(255, 255, 255, 0.6) !important; 
             box-shadow: 0 0 12px rgba(200, 158, 255, 0.5), inset 0 0 8px rgba(181, 126, 220, 0.2) !important;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn-send-chat:hover { 
@@ -828,6 +841,7 @@
             justify-content: center !important;
             box-shadow: 0 0 8px rgba(200, 158, 255, 0.3); 
             transition: all 0.2s ease;
+            text-align: center;
         }
 
         .tab-btn:hover { 
@@ -870,6 +884,7 @@
             margin: 8px 0 4px 0; 
             font-weight: 800; 
             text-transform: uppercase; 
+            text-align: center;
         }
 
         .friend-card { 
@@ -903,6 +918,7 @@
             flex: none !important; 
             font-family: 'Orbitron', sans-serif !important; 
             letter-spacing: 0.5px !important;
+            text-align: center;
         }
 
         .btn-danger-action {
@@ -1008,9 +1024,9 @@
         <div class="auth-modal">
             <div class="auth-modal-content">
                 <div class="auth-header">
-                    <button class="btn-flop-style btn-back-arrow" onclick="closeModal('authModal')" title="Kembali">←</button>
-                    <h1 style="font-size: 20px;">MASUK CHAT</h1>
-                    <button class="auth-close-btn" onclick="closeModal('authModal')">&times;</button>
+                    <button class="btn-back-arrow" onclick="closeModal('authModal')" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">MASUK CHAT</h1>
+                    <button class="auth-close-btn" onclick="closeModal('authModal')">❌</button>
                 </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
@@ -1021,7 +1037,7 @@
                         <label for="loginPass">PASSWORD</label>
                         <input type="password" id="loginPass" placeholder="Masukkan password...">
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="submitLogin()">MASUK</button>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitLogin()">MASUK</button>
                 </div>
             </div>
         </div>
@@ -1032,9 +1048,9 @@
         <div class="auth-modal">
             <div class="auth-modal-content">
                 <div class="auth-header">
-                    <button class="btn-flop-style btn-back-arrow" onclick="backToProfileModal()" title="Kembali">←</button>
-                    <h1 style="font-size: 20px;">REGISTRASI AKUN</h1>
-                    <button class="auth-close-btn" onclick="closeModal('registerModal')">&times;</button>
+                    <button class="btn-back-arrow" onclick="backToProfileModal()" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">REGISTRASI AKUN</h1>
+                    <button class="auth-close-btn" onclick="closeModal('registerModal')">❌</button>
                 </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
@@ -1045,25 +1061,25 @@
                         <label for="regPass">PASSWORD BARU</label>
                         <input type="password" id="regPass" placeholder="Masukkan Password...">
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="submitRegisterNewUser()">BUAT AKUN</button>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitRegisterNewUser()">BUAT AKUN</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal: Edit Profil -->
+    <!-- Modal: Edit Profil Ringkas -->
     <section class="chat-modal-overlay" id="profileModal">
         <div class="auth-modal">
             <div class="auth-modal-content">
                 <div class="auth-header">
-                    <button class="btn-flop-style btn-back-arrow" onclick="backToFriendsModalFromProfile()" title="Kembali">←</button>
-                    <h1 style="font-size: 20px;">PROFIL SAYA</h1>
-                    <button class="auth-close-btn" onclick="closeModal('profileModal')">&times;</button>
+                    <button class="btn-back-arrow" onclick="backToFriendsModalFromProfile()" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">PROFIL SAYA</h1>
+                    <button class="auth-close-btn" onclick="closeModal('profileModal')">❌</button>
                 </div>
                 <div class="auth-form">
                     <div class="avatar-selection-box">
                         <div class="avatar-preview-container" id="editAvatarContainer"></div>
-                        <button class="btn-flop-style" style="padding: 6px 12px; font-size: 9px;" onclick="document.getElementById('editAvatarFile').click()">UBAH FOTO / VIDEO</button>
+                        <button class="btn-flop-style" style="padding: 4px 10px; font-size: 8.5px; height: auto;" onclick="document.getElementById('editAvatarFile').click()">UBAH FOTO / VIDEO</button>
                         <input type="file" id="editAvatarFile" accept="image/*,video/*" style="display: none;" onchange="handleEditAvatarUpload(event)">
                     </div>
                     <div class="auth-input-group">
@@ -1074,12 +1090,14 @@
                         <label for="editUserPass">PASSWORD BARU</label>
                         <input type="password" id="editUserPass" placeholder="Opsional...">
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="saveProfileChanges()">SIMPAN PROFIL</button>
                     
-                    <button id="btnAdminOpenReg" class="btn-flop-style" style="display: none; margin-top: 5px; background: rgba(255, 0, 127, 0.2) !important;" onclick="openRegisterModal()">+ REGISTRASI AKUN BARU</button>
-                    <button id="btnAdminCreateGroup" class="btn-flop-style" style="display: none; margin-top: 5px; background: rgba(0, 210, 255, 0.2) !important;" onclick="openCreateGroupModal()">+ BUAT GRUP BARU</button>
-                    
-                    <button class="btn-flop-style btn-logout-tab" style="margin-top: 15px;" onclick="logoutChat()">LOGOUT</button>
+                    <!-- MENU TOMBOL HEMAT TEMPAT (GRID) -->
+                    <div class="profile-action-grid">
+                        <button class="btn-flop-style" onclick="saveProfileChanges()">💾 SIMPAN</button>
+                        <button class="btn-flop-style btn-logout-tab" onclick="logoutChat()">🚪 LOGOUT</button>
+                        <button id="btnAdminOpenReg" class="btn-flop-style" style="display: none; background: rgba(255, 0, 127, 0.2) !important;" onclick="openRegisterModal()">➕ REGISTRASI</button>
+                        <button id="btnAdminCreateGroup" class="btn-flop-style" style="display: none; background: rgba(0, 210, 255, 0.2) !important;" onclick="openCreateGroupModal()">👥 BUAT GRUP</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1090,9 +1108,9 @@
         <div class="auth-modal">
             <div class="auth-modal-content">
                 <div class="auth-header">
-                    <button class="btn-flop-style btn-back-arrow" onclick="backToProfileModal()" title="Kembali">←</button>
-                    <h1 style="font-size: 20px;">BUAT GRUP BARU</h1>
-                    <button class="auth-close-btn" onclick="closeModal('createGroupModal')">&times;</button>
+                    <button class="btn-back-arrow" onclick="backToProfileModal()" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">BUAT GRUP BARU</h1>
+                    <button class="auth-close-btn" onclick="closeModal('createGroupModal')">❌</button>
                 </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
@@ -1103,7 +1121,7 @@
                         <label>PILIH ANGGOTA KHUSUS</label>
                         <div class="checkbox-list" id="groupMembersChecklist"></div>
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="submitCreateGroup()">BUAT GRUP</button>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitCreateGroup()">BUAT GRUP</button>
                 </div>
             </div>
         </div>
@@ -1114,9 +1132,9 @@
         <div class="auth-modal">
             <div class="auth-modal-content">
                 <div class="auth-header">
-                    <button class="btn-flop-style btn-back-arrow" onclick="closeModal('friendsModal')" title="Kembali">←</button>
-                    <h1 style="font-size: 20px;">MENU OBROLAN</h1>
-                    <button class="auth-close-btn" onclick="closeModal('friendsModal')">&times;</button>
+                    <button class="btn-back-arrow" onclick="closeModal('friendsModal')" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">MENU OBROLAN</h1>
+                    <button class="auth-close-btn" onclick="closeModal('friendsModal')">❌</button>
                 </div>
                 
                 <div class="friends-nav-tabs">
@@ -1133,7 +1151,7 @@
                         <label for="targetFriendUser">USER ID TEMAN</label>
                         <input type="text" id="targetFriendUser" placeholder="Masukkan User ID..." oninput="this.value = this.value.toUpperCase()">
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="sendFriendRequest()">KIRIM PERMINTAAN</button>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="sendFriendRequest()">KIRIM PERMINTAAN</button>
                 </div>
             </div>
         </div>
@@ -1144,12 +1162,12 @@
         <div class="chat-modal-box">
             <div class="chat-modal-header">
                 <div class="header-left">
-                    <button class="btn-flop-style btn-back-arrow" onclick="backToFriendsModal()" title="Kembali">←</button>
-                    <h1 id="chatTitleHeader" style="font-size: 20px;">T'CHAT</h1>
+                    <button class="btn-back-arrow" onclick="backToFriendsModal()" title="Kembali">⬅️</button>
+                    <h1 id="chatTitleHeader" style="font-size: 18px;">T'CHAT</h1>
                 </div>
                 <div class="header-controls">
                     <button class="btn-hdr-action btn-flop-style" id="btnClearChat" onclick="clearAllChat()">RESET</button>
-                    <button class="auth-close-btn" style="position: static;" onclick="closeTeamChat()">&times;</button>
+                    <button class="auth-close-btn" onclick="closeTeamChat()">❌</button>
                 </div>
             </div>
 
@@ -1157,7 +1175,7 @@
 
             <div class="reply-preview-container" id="replyPreview">
                 <div id="replyPreviewText" style="color: var(--cyan-neon);">Balas: ...</div>
-                <span style="color:#ff007f; cursor:pointer; font-weight:bold;" onclick="cancelReply()">&times;</span>
+                <span style="color:#ff007f; cursor:pointer; font-weight:bold;" onclick="cancelReply()">❌</span>
             </div>
 
             <div class="sticker-picker-container" id="stickerPicker">
@@ -1286,7 +1304,6 @@
         function handleChatClick() {
             document.getElementById('mainContainer').style.display = 'none';
             
-            // JIKA SUDAH ADA ACTIVE USER (TERUTAMA SESI LOCALSTORAGE), LANGSUNG MASUK MENU OBROLAN
             if (activeUser && activeUser.username) {
                 openFriendsModal();
             } else {
@@ -1307,7 +1324,6 @@
                         username: user, 
                         avatar: snapshot.val().avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user) 
                     };
-                    // SIMPAN SESI AKTIF KE LOCALSTORAGE SUPAYA TIDAK DIMINTA PASSWORD LAGI KELAK
                     localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
 
                     closeModal('authModal');
@@ -1321,7 +1337,6 @@
         function logoutChat() {
             if (confirm("Logout dari akun?")) {
                 activeUser = null;
-                // HAPUS SESI USER DARI LOCALSTORAGE
                 localStorage.removeItem('flop_chat_active_user');
 
                 closeModal('profileModal');
@@ -1367,8 +1382,8 @@
             document.getElementById('editUserPass').value = '';
             
             const isAdmin = (activeUser.username === NAMA_ADMIN_RESMI);
-            document.getElementById('btnAdminOpenReg').style.display = isAdmin ? 'block' : 'none';
-            document.getElementById('btnAdminCreateGroup').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('btnAdminOpenReg').style.display = isAdmin ? 'inline-flex' : 'none';
+            document.getElementById('btnAdminCreateGroup').style.display = isAdmin ? 'inline-flex' : 'none';
             
             document.getElementById('friendsModal').style.display = 'none';
             document.getElementById('profileModal').style.display = 'flex';
@@ -1413,7 +1428,6 @@
                 dbAccounts.child(activeUser.username).update({ password: updatedPass, avatar: tempEditAvatar });
                 activeUser.avatar = tempEditAvatar;
                 
-                // UPDATE JUGA DATA LOKAL DI BROWSER
                 localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
 
                 alert("Profil diperbarui!");
@@ -1475,7 +1489,7 @@
                     }
                 });
 
-                if (groupCount === 0) groupsHTML += '<span style="font-size:11px; color:#888;">Belum ada grup.</span>';
+                if (groupCount === 0) groupsHTML += '<span style="font-size:11px; color:#888; text-align:center;">Belum ada grup.</span>';
 
                 dbFriends.child(activeUser.username).child('list').once('value', (friendSnap) => {
                     let friendsHTML = '<div class="section-label" style="margin-top:12px;">👤 CHAT PRIBADI</div>';
@@ -1490,7 +1504,7 @@
                             </div>`;
                     });
 
-                    if (friendCount === 0) friendsHTML += '<span style="font-size:11px; color:#888;">Belum ada riwayat chat pribadi.</span>';
+                    if (friendCount === 0) friendsHTML += '<span style="font-size:11px; color:#888; text-align:center;">Belum ada riwayat chat pribadi.</span>';
 
                     container.innerHTML = groupsHTML + friendsHTML;
                 });
@@ -1570,7 +1584,7 @@
             container.innerHTML = 'Loading...';
             
             dbFriends.child(activeUser.username).child('requests').on('value', (snapshot) => {
-                container.innerHTML = snapshot.exists() ? '' : '<span style="font-size:11px;">Tidak ada permintaan.</span>';
+                container.innerHTML = snapshot.exists() ? '' : '<span style="font-size:11px; text-align:center;">Tidak ada permintaan.</span>';
                 snapshot.forEach((child) => {
                     container.innerHTML += `
                         <div class="friend-card">
