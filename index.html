@@ -169,7 +169,8 @@
 
     .chat-modal-overlay {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0, 0, 0, 0.8) !important; backdrop-filter: blur(8px);
+        background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         z-index: 999; display: none; justify-content: center; align-items: center; padding: 15px;
     }
 
@@ -177,13 +178,15 @@
     #imageViewerModal { z-index: 1003 !important; }
 
     .auth-modal {
-        position: relative; width: 100%; max-width: 420px; background: #242526 !important;
-        border-radius: 16px !important; border: 1px solid #3a3b3c !important;
+        position: relative; width: 100%; max-width: 420px; 
+        background: rgba(36, 37, 38, 0.85) !important;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px !important; border: 1px solid rgba(255, 255, 255, 0.2) !important;
         padding: 0; overflow: hidden; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
     }
 
     .auth-modal-content {
-        position: relative; z-index: 1; background: #242526 !important;
+        position: relative; z-index: 1; background: transparent !important;
         padding: 24px; display: flex; flex-direction: column; gap: 16px;
     }
 
@@ -191,7 +194,7 @@
     .auth-input-group { display: flex; flex-direction: column; gap: 6px; }
     .auth-input-group label { font-size: 11px; color: #b0b3b8 !important; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 0.5px; }
     .auth-input-group input {
-        background: #3a3b3c !important; border: none !important;
+        background: rgba(255, 255, 255, 0.15) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important;
         color: #e4e6eb !important; padding: 12px 14px; border-radius: 8px; font-family: system-ui, -apple-system, sans-serif;
         font-size: 14px; outline: none;
     }
@@ -202,40 +205,48 @@
         display: flex; align-items: center; justify-content: center; background: #18191a;
     }
     .avatar-preview-img, .avatar-preview-video { width: 100%; height: 100%; object-fit: cover; }
-    .btn-upload-avatar { font-size: 11px !important; padding: 8px 14px !important; border-radius: 20px !important; color: #0084ff !important; background: #263951 !important; border: none !important; }
+    .btn-upload-avatar { font-size: 11px !important; padding: 8px 14px !important; border-radius: 20px !important; color: #0084ff !important; background: rgba(38, 57, 81, 0.8) !important; border: none !important; }
     .btn-auth-submit { padding: 12px !important; border-radius: 8px !important; margin-top: 10px; color: #ffffff !important; background: #0084ff !important; border: none !important; font-family: system-ui, -apple-system, sans-serif !important; font-weight: 600 !important; }
-    .btn-admin-reg { background: #3a3b3c !important; color: #e4e6eb !important; }
+    .btn-admin-reg { background: rgba(255, 255, 255, 0.2) !important; color: #e4e6eb !important; }
 
     .auth-close-btn {
-        position: absolute; top: 15px; right: 15px; background: #3a3b3c !important;
+        position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.2) !important;
         border: none !important; color: #e4e6eb !important; font-size: 14px; width: 28px; height: 28px; border-radius: 50%;
         cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2;
     }
 
     /* ==========================================
-       T'CHAT - MESSENGER DARK MODE REDESIGN
+       T'CHAT - TRANSLUCENT GLASSMORPHISM DESIGN
        ========================================== */
 
     .chat-modal {
-        position: relative; width: 100%; max-width: 680px; height: 90vh; max-height: 740px;
-        background: #242526 !important;
-        border-radius: 16px !important;
-        border: 1px solid #3a3b3c !important; 
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-        padding: 0 !important;
-        display: flex; flex-direction: column; overflow: hidden;
+      position: relative; 
+      width: 100%; 
+      max-width: 680px; 
+      height: 90vh; 
+      max-height: 740px;
+      background: rgba(255, 255, 255, 0.12) !important; 
+      backdrop-filter: blur(12px);          
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 20px !important;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      padding: 0 !important;
+      display: flex; 
+      flex-direction: column; 
+      overflow: hidden;
     }
 
     /* Header Chat */
     .chat-header { 
         display: flex; justify-content: space-between; align-items: center; 
         padding: 12px 16px; flex-shrink: 0;
-        background: #242526 !important;
-        border-bottom: 1px solid #393a3b !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
     }
     .chat-header h3 {
-        margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important; 
-        font-weight: 700; font-size: 18px; color: #e4e6eb !important;
+        margin: 0; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important; 
+        font-weight: 700; font-size: 18px; color: #ffffff !important;
         background: none !important; -webkit-background-clip: unset !important; animation: none !important; filter: none !important;
     }
 
@@ -244,24 +255,24 @@
     .btn-hdr-action { 
         font-size: 12px !important; padding: 6px 12px !important; 
         border-radius: 18px !important; flex: none !important; height: auto !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; font-weight: 600 !important; 
-        border: none !important; box-shadow: none !important; text-shadow: none !important; transition: background 0.2s;
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important; font-weight: 600 !important; 
+        border: 1px solid rgba(255, 255, 255, 0.2) !important; box-shadow: none !important; text-shadow: none !important; transition: background 0.2s;
     }
-    .btn-reset-chat { background: rgba(255, 59, 48, 0.15) !important; color: #ff453a !important; }
-    .btn-logout-chat { background: #3a3b3c !important; color: #e4e6eb !important; }
-    .btn-profile-chat { background: #3a3b3c !important; color: #e4e6eb !important; }
-    .btn-friends-chat { background: #263951 !important; color: #2374e1 !important; }
+    .btn-reset-chat { background: rgba(255, 59, 48, 0.25) !important; color: #ff6b6b !important; }
+    .btn-logout-chat { background: rgba(255, 255, 255, 0.15) !important; color: #ffffff !important; }
+    .btn-profile-chat { background: rgba(255, 255, 255, 0.15) !important; color: #ffffff !important; }
+    .btn-friends-chat { background: rgba(0, 210, 255, 0.25) !important; color: #00d2ff !important; }
     .btn-close-chat { 
-        background: #3a3b3c !important; border-radius: 50% !important; color: #b0b3b8 !important; 
+        background: rgba(255, 255, 255, 0.15) !important; border-radius: 50% !important; color: #ffffff !important; 
         width: 32px; height: 32px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; 
         border: none !important; box-shadow: none !important;
     }
-    .btn-close-chat:hover { background: #4e4f50 !important; color: #fff !important; }
+    .btn-close-chat:hover { background: rgba(255, 255, 255, 0.3) !important; color: #fff !important; }
 
     /* Area Pesan / Chat Body */
     .chat-body {
         flex: 1; overflow-y: auto; padding: 16px;
-        background: #18191a !important; border: none !important; border-radius: 0 !important;
+        background: transparent !important; border: none !important; border-radius: 0 !important;
         display: flex; flex-direction: column; gap: 10px;
     }
 
@@ -277,39 +288,39 @@
     .msg-content-container { display: flex; flex-direction: column; max-width: 72%; }
     .chat-msg-wrapper.own-msg .msg-content-container { align-items: flex-end; }
 
-    .msg-header-info { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; font-size: 11px; color: #b0b3b8 !important; }
+    .msg-header-info { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; font-size: 11px; color: rgba(255, 255, 255, 0.7) !important; }
     .chat-msg-wrapper.own-msg .msg-header-info { flex-direction: row-reverse; }
 
-    .sender { font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; color: #b0b3b8 !important; text-transform: none !important; }
-    .time-stamp { color: #8a8d91 !important; font-size: 10px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
+    .sender { font-weight: 600; font-family: 'Segoe UI', -apple-system, sans-serif !important; color: rgba(255, 255, 255, 0.85) !important; text-transform: none !important; }
+    .time-stamp { color: rgba(255, 255, 255, 0.6) !important; font-size: 10px; font-family: 'Segoe UI', -apple-system, sans-serif !important; }
 
     .msg-actions { display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s ease; }
     .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
-    .btn-action-msg { color: #b0b3b8; cursor: pointer; font-size: 12px; }
-    .btn-action-msg:hover { color: #0084ff; transform: scale(1.15); }
+    .btn-action-msg { color: rgba(255, 255, 255, 0.8); cursor: pointer; font-size: 12px; }
+    .btn-action-msg:hover { color: #00d2ff; transform: scale(1.15); }
 
-    /* Gelembung Pesan (Messenger Dark Bubbles) */
+    /* Gelembung Pesan Transparan */
     .chat-msg {
-        position: relative; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important; 
-        font-size: 14px; padding: 10px 14px; border-radius: 18px !important; 
+        position: relative; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important; 
+        font-size: 14px; padding: 10px 14px; border-radius: 16px !important; 
         user-select: text; word-break: break-word; box-shadow: none !important;
         width: fit-content; display: flex; flex-direction: column; line-height: 1.4;
     }
 
-    /* Pesan Penerima */
+    /* Pesan Penerima (Transparan Gelap) */
     .chat-msg-wrapper.other-msg .chat-msg { 
-        background: #3a3b3c !important; 
-        color: #e4e6eb !important; 
-        border: none !important; 
+        background: rgba(0, 0, 0, 0.3) !important; 
+        color: #ffffff !important; 
+        border: 1px solid rgba(255, 255, 255, 0.1) !important; 
         border-bottom-left-radius: 4px !important; 
     }
-    .chat-msg-wrapper.other-msg .chat-msg .msg-content { color: #e4e6eb !important; }
+    .chat-msg-wrapper.other-msg .chat-msg .msg-content { color: #ffffff !important; }
 
-    /* Pesan Pengirim */
+    /* Pesan Pengirim (Transparan Terang) */
     .chat-msg-wrapper.own-msg .chat-msg { 
-        background: #0084ff !important; 
+        background: rgba(255, 255, 255, 0.25) !important; 
         color: #ffffff !important; 
-        border: none !important; 
+        border: 1px solid rgba(255, 255, 255, 0.2) !important; 
         border-bottom-right-radius: 4px !important; 
     }
     .chat-msg-wrapper.own-msg .chat-msg .msg-content { color: #ffffff !important; }
@@ -321,41 +332,41 @@
     .chat-msg-wrapper.own-msg .msg-reactions-container { justify-content: flex-end; }
 
     .reaction-badge {
-        display: inline-flex; align-items: center; gap: 4px; background: #242526;
-        border: 1px solid #3a3b3c; border-radius: 12px; padding: 2px 7px; font-size: 11px; cursor: pointer; color: #e4e6eb;
+        display: inline-flex; align-items: center; gap: 4px; background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 2px 7px; font-size: 11px; cursor: pointer; color: #ffffff;
     }
-    .reaction-badge.active-user { background: #263951; border-color: #0084ff; }
-    .reaction-badge .reaction-count { font-size: 10px; color: #b0b3b8; font-weight: 600; }
+    .reaction-badge.active-user { background: rgba(0, 132, 255, 0.4); border-color: #0084ff; }
+    .reaction-badge .reaction-count { font-size: 10px; color: rgba(255, 255, 255, 0.8); font-weight: 600; }
 
     /* Reply Quote Box */
     .reply-quote-box { 
-        background: rgba(0, 0, 0, 0.25); border-left: 3px solid #0084ff; 
+        background: rgba(0, 0, 0, 0.25); border-left: 3px solid #00d2ff; 
         padding: 5px 8px; border-radius: 6px; margin-bottom: 6px; font-size: 11px; 
     }
-    .chat-msg-wrapper.own-msg .reply-quote-box { background: rgba(255, 255, 255, 0.2); border-left-color: #ffffff; }
+    .chat-msg-wrapper.own-msg .reply-quote-box { background: rgba(255, 255, 255, 0.15); border-left-color: #ffffff; }
     .reply-quote-box .reply-author { color: inherit; font-weight: bold; }
     .reply-quote-box .reply-text { color: inherit; opacity: 0.85; }
 
     .reply-preview-container {
-        display: none; justify-content: space-between; align-items: center; background: #242526;
-        border-left: 3px solid #0084ff; padding: 8px 14px; font-family: sans-serif; font-size: 12px;
-        border-top: 1px solid #3a3b3c;
+        display: none; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.3);
+        border-left: 3px solid #00d2ff; padding: 8px 14px; font-family: sans-serif; font-size: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
-    .reply-preview-text { color: #b0b3b8; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 90%; }
-    .btn-cancel-reply { color: #b0b3b8; cursor: pointer; font-weight: bold; font-size: 16px; }
+    .reply-preview-text { color: rgba(255, 255, 255, 0.8); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 90%; }
+    .btn-cancel-reply { color: #ffffff; cursor: pointer; font-weight: bold; font-size: 16px; }
 
     .sticker-picker-container {
-        display: none; grid-template-columns: repeat(6, 1fr); gap: 8px; background: #242526;
-        border-top: 1px solid #3a3b3c; padding: 12px; max-height: 120px; overflow-y: auto;
+        display: none; grid-template-columns: repeat(6, 1fr); gap: 8px; background: rgba(0, 0, 0, 0.4);
+        border-top: 1px solid rgba(255, 255, 255, 0.15); padding: 12px; max-height: 120px; overflow-y: auto;
     }
     .sticker-item { font-size: 24px; text-align: center; cursor: pointer; border-radius: 8px; padding: 4px; transition: transform 0.15s; }
-    .sticker-item:hover { background: #3a3b3c; transform: scale(1.2); }
+    .sticker-item:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.2); }
 
-    /* Footer / Input Bar */
+    /* Footer / Input Bar Transparan */
     .chat-footer { 
         display: flex; gap: 8px; align-items: center; flex-shrink: 0; 
-        padding: 12px 16px; background: #242526 !important; 
-        border-top: 1px solid #393a3b !important; 
+        padding: 12px 16px; background: rgba(0, 0, 0, 0.2) !important; 
+        border-top: 1px solid rgba(255, 255, 255, 0.15) !important; 
     }
 
     .user-profile-thumb { width: 32px; height: 32px; border-radius: 50%; border: none !important; object-fit: cover; }
@@ -363,38 +374,59 @@
     .chat-footer input#chatUser { display: none !important; }
 
     .chat-footer textarea#chatText {
-        flex: 1; background: #3a3b3c !important; border: none !important;
-        color: #e4e6eb !important; padding: 10px 14px; border-radius: 20px !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; 
-        font-size: 14px; outline: none; resize: none; height: 40px; max-height: 80px; line-line-height: 1.3;
+        flex: 1; background: rgba(255, 255, 255, 0.2) !important; border: none !important;
+        color: #ffffff !important; padding: 10px 14px; border-radius: 20px !important;
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important; 
+        font-size: 14px; outline: none; resize: none; height: 40px; max-height: 80px; line-height: 1.3;
     }
-    .chat-footer textarea#chatText::placeholder { color: #b0b3b8; }
+    .chat-footer textarea#chatText::placeholder { color: rgba(255, 255, 255, 0.7); }
 
-    .btn-sticker-toggle, .btn-attach-media {
-        width: 36px !important; height: 36px !important; border-radius: 50% !important;
-        border: none !important; background: transparent !important;
-        color: #0084ff !important; font-size: 20px !important; cursor: pointer;
-        display: flex; align-items: center; justify-content: center; box-shadow: none !important;
+    /* Action Buttons (dengan Latar Belakang Solid Kecil dari Kode 1) */
+    .btn-action-small {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        border: none !important;
+        border-radius: 50% !important;
+        background-color: #ffffff !important;
+        color: #333 !important;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+        transition: transform 0.1s ease, background-color 0.2s;
     }
-    .btn-sticker-toggle:hover, .btn-attach-media:hover { background: #3a3b3c !important; }
+    .btn-action-small:hover {
+        background-color: #f0f0f0 !important;
+        transform: scale(1.08);
+    }
 
     .btn-send-chat {
-        padding: 0 16px !important; border-radius: 20px !important;
-        border: none !important; background: #0084ff !important;
-        color: #ffffff !important; font-size: 13px !important; font-weight: 700;
-        height: 36px; display: flex; align-items: center; justify-content: center;
-        box-shadow: none !important; text-shadow: none !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        border-radius: 50% !important;
+        border: none !important; 
+        background: #00e676 !important;
+        color: #ffffff !important; 
+        font-size: 13px !important; 
+        font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; 
+        text-shadow: none !important;
+        cursor: pointer;
     }
-    .btn-send-chat:hover { background: #0073e6 !important; }
+    .btn-send-chat:hover { background: #00c853 !important; transform: scale(1.05); }
 
     /* Friends Modal Tabs */
-    .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid #3a3b3c; padding-bottom: 12px; margin-bottom: 12px; }
-    .tab-btn { flex: 1; padding: 8px !important; font-size: 11px !important; border-radius: 8px !important; color: #b0b3b8 !important; background: #3a3b3c !important; border: none !important; font-family: system-ui, -apple-system, sans-serif !important; }
+    .friends-nav-tabs { display: flex; gap: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; margin-bottom: 12px; }
+    .tab-btn { flex: 1; padding: 8px !important; font-size: 11px !important; border-radius: 8px !important; color: #b0b3b8 !important; background: rgba(255, 255, 255, 0.1) !important; border: none !important; font-family: system-ui, -apple-system, sans-serif !important; }
     .tab-btn.active { background: #0084ff !important; color: #fff !important; }
 
     .friends-list-container { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; }
-    .friend-card { display: flex; align-items: center; justify-content: space-between; background: #3a3b3c; padding: 10px 14px; border-radius: 10px; }
+    .friend-card { display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.1); padding: 10px 14px; border-radius: 10px; }
     .friend-name { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 600; color: #e4e6eb; }
     .btn-action-friend { padding: 6px 12px !important; font-size: 11px !important; border-radius: 16px !important; flex: none !important; color: #ffffff !important; background: #0084ff !important; border: none !important; font-family: system-ui, -apple-system, sans-serif !important; }
 
@@ -548,11 +580,11 @@
     </div>
 </div>
 
-<!-- CHAT MODAL (MESSENGER DARK REDESIGN) -->
+<!-- CHAT MODAL (TRANSLUCENT GLASSMORPHISM INTEGRATION) -->
 <div class="chat-modal-overlay" id="chatModal">
     <div class="chat-modal">
         <div class="chat-header">
-            <h3 id="chatTitleHeader">T'chat</h3>
+            <h3 id="chatTitleHeader">Ruang Chat</h3>
             <div class="header-controls">
                 <button class="btn-hdr-action btn-friends-chat" onclick="openFriendsModal()">Teman</button>
                 <button class="btn-hdr-action btn-profile-chat" onclick="openProfileModal()">Profil</button>
@@ -587,13 +619,19 @@
         <div class="chat-footer">
             <div id="myChatAvatarContainer" onclick="openProfileModal()" style="display:inline-block; cursor:pointer;"></div>
             <input type="text" id="chatUser" readonly title="Akun Terkunci" />
-            <textarea id="chatText" placeholder="Ketik pesan..." onkeydown="handleChatKey(event)"></textarea>
-
-            <button class="btn-attach-media" onclick="document.getElementById('mediaFileInput').click()" title="Kirim Foto/Video">📷</button>
+            
+            <!-- Tombol Upload Foto (Aksi dengan latar bulat solid) -->
+            <button class="btn-action-small" onclick="document.getElementById('mediaFileInput').click()" title="Upload Foto/Video">📷</button>
             <input type="file" id="mediaFileInput" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(event)">
 
-            <button class="btn-sticker-toggle" onclick="toggleStickerPicker()" title="Pilih Stiker">😊</button>
-            <button class="btn-send-chat" onclick="sendChatMessage()">Kirim</button>
+            <!-- Tombol Emoticon (Aksi dengan latar bulat solid) -->
+            <button class="btn-action-small" onclick="toggleStickerPicker()" title="Pilih Emoticon">😊</button>
+
+            <!-- Text Input Chat -->
+            <textarea id="chatText" placeholder="Ketik pesan..." onkeydown="handleChatKey(event)"></textarea>
+
+            <!-- Tombol Kirim -->
+            <button class="btn-send-chat" onclick="sendChatMessage()" title="Kirim Pesan">➤</button>
         </div>
     </div>
 </div>
@@ -835,7 +873,7 @@
                 container.innerHTML += `
                     <div class="friend-card">
                         <span class="friend-name">${child.key}</span>
-                        <button class="btn-action-friend" onclick="startPrivateChat('${child.key}')">Kirium Pesan</button>
+                        <button class="btn-action-friend" onclick="startPrivateChat('${child.key}')">Kirim Pesan</button>
                     </div>`;
             });
         });
@@ -924,7 +962,7 @@
 
         document.getElementById('mainContainer').classList.add('hidden-for-chat');
         updateChatHeaderProfile();
-        document.getElementById('chatTitleHeader').innerText = "T'chat";
+        document.getElementById('chatTitleHeader').innerText = "Ruang Chat";
         switchChatRoom("team_chat_messages");
         document.getElementById('chatModal').style.display = 'flex';
     }
