@@ -364,6 +364,12 @@
             gap: 16px;
         }
 
+        .auth-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         .auth-form { 
             display: flex; 
             flex-direction: column; 
@@ -1000,9 +1006,12 @@
     <!-- Modal: Login -->
     <section class="chat-modal-overlay" id="authModal">
         <div class="auth-modal">
-            <button class="auth-close-btn" onclick="closeModal('authModal')">&times;</button>
             <div class="auth-modal-content">
-                <h1 style="font-size: 20px;">MASUK CHAT</h1>
+                <div class="auth-header">
+                    <button class="btn-flop-style btn-back-arrow" onclick="closeModal('authModal')" title="Kembali">←</button>
+                    <h1 style="font-size: 20px;">MASUK CHAT</h1>
+                    <button class="auth-close-btn" onclick="closeModal('authModal')">&times;</button>
+                </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
                         <label for="loginUser">USER ID</label>
@@ -1021,9 +1030,12 @@
     <!-- Modal: Registrasi Baru -->
     <section class="chat-modal-overlay" id="registerModal">
         <div class="auth-modal">
-            <button class="auth-close-btn" onclick="closeModal('registerModal')">&times;</button>
             <div class="auth-modal-content">
-                <h1 style="font-size: 20px;">REGISTRASI AKUN</h1>
+                <div class="auth-header">
+                    <button class="btn-flop-style btn-back-arrow" onclick="backToProfileModal()" title="Kembali">←</button>
+                    <h1 style="font-size: 20px;">REGISTRASI AKUN</h1>
+                    <button class="auth-close-btn" onclick="closeModal('registerModal')">&times;</button>
+                </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
                         <label for="regUser">USERNAME BARU</label>
@@ -1042,9 +1054,12 @@
     <!-- Modal: Edit Profil -->
     <section class="chat-modal-overlay" id="profileModal">
         <div class="auth-modal">
-            <button class="auth-close-btn" onclick="closeModal('profileModal')">&times;</button>
             <div class="auth-modal-content">
-                <h1 style="font-size: 20px;">EDIT PROFIL</h1>
+                <div class="auth-header">
+                    <button class="btn-flop-style btn-back-arrow" onclick="backToFriendsModalFromProfile()" title="Kembali">←</button>
+                    <h1 style="font-size: 20px;">PROFIL SAYA</h1>
+                    <button class="auth-close-btn" onclick="closeModal('profileModal')">&times;</button>
+                </div>
                 <div class="auth-form">
                     <div class="avatar-selection-box">
                         <div class="avatar-preview-container" id="editAvatarContainer"></div>
@@ -1059,10 +1074,12 @@
                         <label for="editUserPass">PASSWORD BARU</label>
                         <input type="password" id="editUserPass" placeholder="Opsional...">
                     </div>
-                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="saveProfileChanges()">SIMPAN</button>
+                    <button class="btn-flop-style" style="margin-top: 10px;" onclick="saveProfileChanges()">SIMPAN PROFIL</button>
                     
-                    <button id="btnAdminOpenReg" class="btn-flop-style" style="display: none; margin-top: 5px; background: rgba(255, 0, 127, 0.2) !important;" onclick="openRegisterModal()">+ REGISTRASI AKUN</button>
+                    <button id="btnAdminOpenReg" class="btn-flop-style" style="display: none; margin-top: 5px; background: rgba(255, 0, 127, 0.2) !important;" onclick="openRegisterModal()">+ REGISTRASI AKUN BARU</button>
                     <button id="btnAdminCreateGroup" class="btn-flop-style" style="display: none; margin-top: 5px; background: rgba(0, 210, 255, 0.2) !important;" onclick="openCreateGroupModal()">+ BUAT GRUP BARU</button>
+                    
+                    <button class="btn-flop-style btn-logout-tab" style="margin-top: 15px;" onclick="logoutChat()">LOGOUT</button>
                 </div>
             </div>
         </div>
@@ -1071,9 +1088,12 @@
     <!-- Modal: Buat Grup -->
     <section class="chat-modal-overlay" id="createGroupModal">
         <div class="auth-modal">
-            <button class="auth-close-btn" onclick="closeModal('createGroupModal')">&times;</button>
             <div class="auth-modal-content">
-                <h1 style="font-size: 20px;">BUAT GRUP BARU</h1>
+                <div class="auth-header">
+                    <button class="btn-flop-style btn-back-arrow" onclick="backToProfileModal()" title="Kembali">←</button>
+                    <h1 style="font-size: 20px;">BUAT GRUP BARU</h1>
+                    <button class="auth-close-btn" onclick="closeModal('createGroupModal')">&times;</button>
+                </div>
                 <div class="auth-form">
                     <div class="auth-input-group">
                         <label for="newGroupName">NAMA GRUP</label>
@@ -1092,15 +1112,18 @@
     <!-- Modal: Navigasi Teman/Obrolan -->
     <section class="chat-modal-overlay" id="friendsModal">
         <div class="auth-modal">
-            <button class="auth-close-btn" onclick="closeModal('friendsModal')">&times;</button>
             <div class="auth-modal-content">
-                <h1 style="font-size: 20px;">MENU OBROLAN</h1>
+                <div class="auth-header">
+                    <button class="btn-flop-style btn-back-arrow" onclick="closeModal('friendsModal')" title="Kembali">←</button>
+                    <h1 style="font-size: 20px;">MENU OBROLAN</h1>
+                    <button class="auth-close-btn" onclick="closeModal('friendsModal')">&times;</button>
+                </div>
+                
                 <div class="friends-nav-tabs">
                     <button class="tab-btn" id="tabProfileBtn" onclick="openProfileModal()">Profil</button>
                     <button class="tab-btn active" id="tabRecentBtn" onclick="switchFriendsTab('recent')">Chat</button>
                     <button class="tab-btn" id="tabRequestsBtn" onclick="switchFriendsTab('requests')">Permintaan</button>
                     <button class="tab-btn" id="tabAddBtn" onclick="switchFriendsTab('add')">Cari</button>
-                    <button class="tab-btn btn-logout-tab" onclick="logoutChat()">Logout</button>
                 </div>
                 
                 <div id="tabRecentContent" class="friends-list-container"></div>
@@ -1198,7 +1221,7 @@
         const dbDirectMessages = dbRoot.ref("direct_messages");
 
         /* ==========================================================================
-           2. HELPER FUNCTIONS
+           2. HELPER FUNCTIONS & UI MODAL CONTROL
            ========================================================================== */
         function isVideoUrl(url) {
             if (!url) return false;
@@ -1230,7 +1253,17 @@
 
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
-            if (id === 'authModal' && !activeUser) {
+            checkMainContainerVisibility();
+        }
+
+        function checkMainContainerVisibility() {
+            const overlays = document.querySelectorAll('.chat-modal-overlay');
+            let isAnyOverlayVisible = false;
+            overlays.forEach(modal => {
+                if (modal.style.display === 'flex') isAnyOverlayVisible = true;
+            });
+
+            if (!isAnyOverlayVisible) {
                 document.getElementById('mainContainer').style.display = 'block';
             }
         }
@@ -1272,15 +1305,17 @@
         function logoutChat() {
             if (confirm("Logout dari akun?")) {
                 activeUser = null;
+                closeModal('profileModal');
                 closeModal('friendsModal');
                 closeTeamChat();
+                document.getElementById('mainContainer').style.display = 'block';
                 alert("Berhasil Logout.");
             }
         }
 
         function openRegisterModal() {
             if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("🚫 Hanya Admin yang dapat mendaftar.");
-            closeModal('profileModal');
+            document.getElementById('profileModal').style.display = 'none';
             document.getElementById('registerModal').style.display = 'flex';
         }
 
@@ -1296,7 +1331,7 @@
             }, (err) => {
                 if (!err) { 
                     alert("✅ Berhasil membuat akun " + newUser); 
-                    closeModal('registerModal'); 
+                    backToProfileModal();
                 }
             });
         }
@@ -1316,6 +1351,18 @@
             document.getElementById('btnAdminOpenReg').style.display = isAdmin ? 'block' : 'none';
             document.getElementById('btnAdminCreateGroup').style.display = isAdmin ? 'block' : 'none';
             
+            document.getElementById('friendsModal').style.display = 'none';
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        function backToFriendsModalFromProfile() {
+            document.getElementById('profileModal').style.display = 'none';
+            openFriendsModal();
+        }
+
+        function backToProfileModal() {
+            document.getElementById('registerModal').style.display = 'none';
+            document.getElementById('createGroupModal').style.display = 'none';
             document.getElementById('profileModal').style.display = 'flex';
         }
 
@@ -1346,8 +1393,8 @@
 
                 dbAccounts.child(activeUser.username).update({ password: updatedPass, avatar: tempEditAvatar });
                 activeUser.avatar = tempEditAvatar;
-                closeModal('profileModal');
                 alert("Profil diperbarui!");
+                backToFriendsModalFromProfile();
             });
         }
 
@@ -1355,6 +1402,7 @@
            4. GROUPS & FRIENDS MANAGEMENT
            ========================================================================== */
         function openFriendsModal() {
+            document.getElementById('mainContainer').style.display = 'none';
             document.getElementById('friendsModal').style.display = 'flex';
             switchFriendsTab('recent');
         }
@@ -1365,7 +1413,7 @@
         }
 
         function switchFriendsTab(tab) {
-            ['Recent', 'Requests', 'Add'].forEach(t => {
+            ['Profile', 'Recent', 'Requests', 'Add'].forEach(t => {
                 const btn = document.getElementById(`tab${t}Btn`);
                 if (btn) btn.classList.toggle('active', t.toLowerCase() === tab);
                 
@@ -1428,7 +1476,7 @@
 
         function openCreateGroupModal() {
             if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("Hanya Admin yang dapat membuat grup.");
-            closeModal('profileModal');
+            document.getElementById('profileModal').style.display = 'none';
             
             const container = document.getElementById('groupMembersChecklist');
             container.innerHTML = 'Memuat user...';
@@ -1470,8 +1518,7 @@
             }, (err) => {
                 if (!err) {
                     alert("✅ Grup berhasil dibuat!");
-                    closeModal('createGroupModal');
-                    loadRecentChatsAndGroups();
+                    backToProfileModal();
                 }
             });
         }
@@ -1560,7 +1607,7 @@
 
         function closeTeamChat() {
             isChatOpen = false;
-            document.getElementById('chatModal').style.display = 'none';
+            closeModal('chatModal');
             document.getElementById('stickerPicker').style.display = 'none';
         }
 
