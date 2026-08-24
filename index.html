@@ -1225,6 +1225,7 @@
         let isChatOpen = false;
         let windowTargetMsgKeyForReaction = null;
         let currentChatPath = null;
+        let sessionListenerRef = null;
 
         // Firebase Initialization
         if (!firebase.apps.length) {
@@ -1244,6 +1245,9 @@
             if (savedUserData) {
                 try {
                     activeUser = JSON.parse(savedUserData);
+                    if (activeUser && activeUser.username && activeUser.sessionToken) {
+                        listenSingleSession(activeUser.username, activeUser.sessionToken);
+                    }
                 } catch (e) {
                     activeUser = null;
                 }
@@ -1282,7 +1286,8 @@
         }
 
         function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
+            const elem = document.getElementById(id);
+            if (elem) elem.style.display = 'none';
             checkMainContainerVisibility();
         }
 
@@ -1299,7 +1304,7 @@
         }
 
         /* ==========================================================================
-           3. AUTHENTICATION & PROFILE
+           3. AUTHENTICATION & SINGLE SESSION REALTIME LISTENER
            ========================================================================== */
         function handleChatClick() {
             document.getElementById('mainContainer').style.display = 'none';
@@ -1320,22 +1325,61 @@
 
             dbAccounts.child(user).once('value', (snapshot) => {
                 if (snapshot.exists() && snapshot.val().password === pass) {
-                    activeUser = { 
-                        username: user, 
-                        avatar: snapshot.val().avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user) 
-                    };
-                    localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
+                    const newSessionToken = Date.now() + "_" + Math.random().toString(36).substring(2, 9);
 
-                    closeModal('authModal');
-                    openFriendsModal();
+                    dbAccounts.child(user).update({
+                        sessionToken: newSessionToken
+                    }).then(() => {
+                        activeUser = { 
+                            username: user, 
+                            avatar: snapshot.val().avatar || ("https://api.dicebear.com/7.x/bottts/svg?seed=" + user),
+                            sessionToken: newSessionToken
+                        };
+
+                        localStorage.setItem('flop_chat_active_user', JSON.stringify(activeUser));
+                        listenSingleSession(user, newSessionToken);
+
+                        closeModal('authModal');
+                        openFriendsModal();
+                    });
                 } else {
                     alert("🚫 AKSES DITOLAK (User/Password Salah)");
                 }
             });
         }
 
+        function listenSingleSession(username, myToken) {
+            if (sessionListenerRef) {
+                sessionListenerRef.off();
+            }
+
+            sessionListenerRef = dbAccounts.child(username).child('sessionToken');
+            
+            sessionListenerRef.on('value', (snapshot) => {
+                const latestToken = snapshot.val();
+                if (latestToken && latestToken !== myToken) {
+                    sessionListenerRef.off();
+                    forceLogoutDueToNewLogin();
+                }
+            });
+        }
+
+        function forceLogoutDueToNewLogin() {
+            if (dbChat) dbChat.off();
+            isChatOpen = false;
+
+            activeUser = null;
+            localStorage.removeItem('flop_chat_active_user');
+
+            ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
+            document.getElementById('mainContainer').style.display = 'block';
+
+            alert("⚠️ Akun Anda telah login di perangkat/browser lain. Anda telah dikeluarkan secara otomatis.");
+        }
+
         function logoutChat() {
             if (confirm("Logout dari akun?")) {
+                if (sessionListenerRef) sessionListenerRef.off();
                 activeUser = null;
                 localStorage.removeItem('flop_chat_active_user');
 
@@ -1895,39 +1939,12 @@
         }
 
         /* ==========================================================================
-           8. GLOBAL EVENT LISTENERS & SECURITY CONTROL
+           8. GLOBAL EVENT LISTENERS
            ========================================================================== */
         document.addEventListener('keydown', (e) => {
-            // Tutup Modal via ESC
             if (e.key === 'Escape') {
                 ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
             }
-
-            // Memblokir Ctrl+U (View Source)
-            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-                e.preventDefault();
-                alert("🚫 AKSES DITOLAK: Fitur View Source dinonaktifkan!");
-                return false;
-            }
-
-            // Memblokir F12 (Developer Tools)
-            if (e.key === 'F12') {
-                e.preventDefault();
-                alert("🚫 AKSES DITOLAK: Inspect Element dinonaktifkan!");
-                return false;
-            }
-
-            // Memblokir Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C (Inspect / Console)
-            if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) {
-                e.preventDefault();
-                alert("🚫 AKSES DITOLAK: Fitur Developer Tools dinonaktifkan!");
-                return false;
-            }
-        });
-
-        // Memblokir Klik Kanan (Context Menu)
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
         });
     </script>
 </body>
