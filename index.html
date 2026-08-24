@@ -1895,12 +1895,39 @@
         }
 
         /* ==========================================================================
-           8. GLOBAL EVENT LISTENERS
+           8. GLOBAL EVENT LISTENERS & SECURITY CONTROL
            ========================================================================== */
         document.addEventListener('keydown', (e) => {
+            // Tutup Modal via ESC
             if (e.key === 'Escape') {
                 ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
             }
+
+            // Memblokir Ctrl+U (View Source)
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                alert("🚫 AKSES DITOLAK: Fitur View Source dinonaktifkan!");
+                return false;
+            }
+
+            // Memblokir F12 (Developer Tools)
+            if (e.key === 'F12') {
+                e.preventDefault();
+                alert("🚫 AKSES DITOLAK: Inspect Element dinonaktifkan!");
+                return false;
+            }
+
+            // Memblokir Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C (Inspect / Console)
+            if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) {
+                e.preventDefault();
+                alert("🚫 AKSES DITOLAK: Fitur Developer Tools dinonaktifkan!");
+                return false;
+            }
+        });
+
+        // Memblokir Klik Kanan (Context Menu)
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
         });
     </script>
 </body>
