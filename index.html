@@ -96,7 +96,7 @@
         }
         
         /* Border menyala saat berpindah TAB keyboard */
-        #btnCopy:focus-visible, #btnReset:focus-visible {
+        #btnCopy:focus-visible, #btnReset:focus-visible, #btnCopy:focus, #btnReset:focus {
             border: 2px solid #ffffff !important;
             box-shadow: 0 0 20px var(--red-main), 0 0 10px #ffffff, inset 0 0 12px var(--red-glow) !important;
             outline: 2px solid var(--red-main);
@@ -257,7 +257,8 @@
         <div class="label-header">
             <label for="rawInput">Tempel Log Transaksi</label>
         </div>
-        <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()"></textarea>
+        <!-- Menambahkan event listener onkeydown untuk mengarahkan tombol Tab langsung ke btnCopy -->
+        <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onkeydown="handleRawInputTab(event)"></textarea>
         
         <div class="btn-group" id="btnGroup">
             <button id="btnCopy" tabindex="1" onclick="executeSalinData(event)" onkeydown="handleBtnKey(event, executeSalinData)">
@@ -506,6 +507,14 @@
                 } catch (e) { activeUser = null; }
             }
         });
+
+        /* FUNGSI PINDAH FOKUS TAB DARI TEXTAREA KE TOMBOL SALIN DATA */
+        function handleRawInputTab(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault(); // Mencegah karakter tab / fokus lompat liar
+                document.getElementById('btnCopy').focus(); // Langsung mengunci fokus ke tombol SALIN DATA
+            }
+        }
 
         /* FUNGSI EFEK FLASH & GELOMBANG (RIPPLE) */
         function triggerButtonEffects(btnElement, flashOverlayId, event) {
