@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only dark">
-    <title>Rumus Flop Kasir - Ultra white Edition</title>
+    <title>Rumus Flop Kasir - red Edition</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,32 @@
 
         @property --border-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
         @keyframes spinBorder { 0% { --border-angle: 0deg; } 100% { --border-angle: 360deg; } }
-        @keyframes shineText { to { background-position: 200% center; } }
+
+        /* Animasi Teks Warna Merah-Putih Berjalan */
+        @keyframes redWhiteFlow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Animasi Getar (Shake) untuk Tombol */
+        @keyframes btnShake {
+            0% { transform: translate(0, 0) scale(1.03); }
+            20% { transform: translate(-2px, 1px) scale(1.03); }
+            40% { transform: translate(2px, -1px) scale(1.03); }
+            60% { transform: translate(-2px, -1px) scale(1.03); }
+            80% { transform: translate(2px, 1px) scale(1.03); }
+            100% { transform: translate(0, 0) scale(1.03); }
+        }
+
+        /* Animasi Pelangi / Warna-Warni pada Border & Glow Tombol */
+        @keyframes rainbowGlow {
+            0% { border-color: #ff0000 !important; box-shadow: 0 0 15px #ff0000, inset 0 0 10px #ff0000; }
+            20% { border-color: #ff9900 !important; box-shadow: 0 0 15px #ff9900, inset 0 0 10px #ff9900; }
+            40% { border-color: #33ff00 !important; box-shadow: 0 0 15px #33ff00, inset 0 0 10px #33ff00; }
+            60% { border-color: #00ffff !important; box-shadow: 0 0 15px #00ffff, inset 0 0 10px #00ffff; }
+            80% { border-color: #cc00ff !important; box-shadow: 0 0 15px #cc00ff, inset 0 0 10px #cc00ff; }
+            100% { border-color: #ff0000 !important; box-shadow: 0 0 15px #ff0000, inset 0 0 10px #ff0000; }
+        }
 
         /* Bingkai utama dengan rotasi cahaya MERAH */
         .container, .chat-modal-box {
@@ -48,11 +73,12 @@
             -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; animation: spinBorder 4s linear infinite;
         }
 
+        /* Judul Rumus Flop Kasir: Merah Putih Berjalan */
         h1, .chat-modal-header h1 {
             text-align: center; font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 900; letter-spacing: 4px; margin: 0;
-            background: linear-gradient(90deg, #ff0055, #ff0033, #ff6600, #ff0055);
+            background: linear-gradient(90deg, #ff0033 0%, #ffffff 25%, #ff0033 50%, #ffffff 75%, #ff0033 100%);
             background-size: 200% auto; color: transparent !important; -webkit-background-clip: text; background-clip: text;
-            animation: shineText 3s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.6));
+            animation: redWhiteFlow 2.5s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.8));
         }
 
         .sub-title { text-align: center; font-family: 'Orbitron', sans-serif; font-size: 11px; color: #fff !important; letter-spacing: 6px; font-weight: 800; text-transform: uppercase; margin: 8px 0 28px; }
@@ -67,7 +93,6 @@
             font-family: 'Orbitron', sans-serif; cursor: pointer; transition: all 0.2s ease; display: inline-block; text-align: center;
         }
         .btn-swap-pos { background: rgba(255, 0, 85, 0.2); border-color: rgba(255, 0, 85, 0.6); }
-        .badge-count:hover, .btn-swap-pos:hover { background: rgba(255, 0, 51, 0.45); border-color: #fff; box-shadow: 0 0 12px var(--red-glow); transform: scale(1.05); }
 
         textarea#rawInput {
             width: 100%; height: 120px; background: rgba(0, 0, 0, 0.4) !important; border: 1.5px solid rgba(255, 0, 51, 0.4) !important; 
@@ -79,64 +104,45 @@
         .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
         .btn-group.swapped { flex-direction: row-reverse; }
 
-        /* Style Umum Tombol Flop */
-        button, .btn-flop-style {
-            position: relative; overflow: hidden; flex: 1; padding: 12px 16px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 900;
-            cursor: pointer; letter-spacing: 1px; text-transform: uppercase; outline: none; border-radius: 25px !important; 
-            border: 1.5px solid var(--red-border) !important; background: var(--red-bg) !important; color: #fff !important;
+        /* Style Umum Semua Tombol */
+        button, .btn-flop-style, .btn-send-chat, .btn-chat-small, .btn-hdr-action, .auth-close-btn, .btn-back-arrow, .tab-btn, .badge-count, .btn-swap-pos {
+            position: relative; overflow: hidden; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 900;
+            cursor: pointer; letter-spacing: 1px; text-transform: uppercase; outline: none; border-radius: 25px; 
+            border: 1.5px solid var(--red-border); background: var(--red-bg); color: #fff !important;
             text-shadow: 0 0 6px rgba(255, 255, 255, 0.6); box-shadow: 0 0 10px rgba(255, 42, 85, 0.4), inset 0 0 6px rgba(255, 0, 51, 0.2);
-            transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; text-align: center;
+            transition: all 0.15s ease-in-out; display: inline-flex; align-items: center; justify-content: center; text-align: center;
         }
-        button:hover, .btn-flop-style:hover { background: rgba(255, 0, 51, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 15px #ff2a55, inset 0 0 10px rgba(255, 255, 255, 0.4); }
 
-        /* Style Khusus Tombol Salin & Reset (Focus Tab, Gelombang, & Flash) */
-        #btnCopy, #btnReset {
-            position: relative;
-            overflow: hidden;
+        .btn-group button { flex: 1; padding: 12px 16px; }
+
+        /* EFEK HOVER KURSOR: BERGETAR & WARNA-WARNI UNTUK SEMUA TOMBOL */
+        button:hover, .btn-flop-style:hover, .btn-send-chat:hover, .btn-chat-small:hover, .btn-hdr-action:hover, .auth-close-btn:hover, .btn-back-arrow:hover, .tab-btn:hover, .badge-count:hover, .btn-swap-pos:hover {
+            animation: btnShake 0.15s infinite linear, rainbowGlow 1.5s infinite linear !important;
+            color: #ffffff !important;
+            text-shadow: 0 0 8px #ffffff;
         }
-        
-        /* Border menyala saat berpindah TAB keyboard */
+
+        #btnCopy, #btnReset { position: relative; overflow: hidden; }
         #btnCopy:focus-visible, #btnReset:focus-visible, #btnCopy:focus, #btnReset:focus {
             border: 2px solid #ffffff !important;
             box-shadow: 0 0 20px var(--red-main), 0 0 10px #ffffff, inset 0 0 12px var(--red-glow) !important;
-            outline: 2px solid var(--red-main);
-            outline-offset: 3px;
+            outline: 2px solid var(--red-main); outline-offset: 3px;
         }
 
-        /* Elemen Efek Flash */
         .flash-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #ffffff 10%, #ff0055 80%);
-            opacity: 0; pointer-events: none; z-index: 5;
-            transition: opacity 0.05s ease-out;
+            opacity: 0; pointer-events: none; z-index: 5; transition: opacity 0.05s ease-out;
         }
 
-        /* Elemen Efek Gelombang (Ripple) */
         .ripple-effect {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
-            transform: scale(0);
-            animation: rippleAnim 0.5s linear;
-            pointer-events: none;
-            z-index: 4;
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.8);
+            transform: scale(0); animation: rippleAnim 0.5s linear; pointer-events: none; z-index: 4;
         }
 
-        @keyframes rippleAnim {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        @keyframes flashAnim {
-            0% { opacity: 0.95; }
-            100% { opacity: 0; }
-        }
-
-        .btn-flash-active {
-            animation: flashAnim 0.35s ease-out forwards;
-        }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+        @keyframes flashAnim { 0% { opacity: 0.95; } 100% { opacity: 0; } }
+        .btn-flash-active { animation: flashAnim 0.35s ease-out forwards; }
 
         .profile-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
         .profile-action-grid .btn-flop-style { padding: 8px 10px !important; font-size: 9.5px !important; letter-spacing: 0.5px !important; border-radius: 18px !important; height: 38px !important; }
@@ -162,15 +168,14 @@
         .avatar-selection-box { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 2px 0; }
         .avatar-preview-container { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; border: 2px solid var(--red-glow); display: flex; align-items: center; justify-content: center; background: #000; }
 
-        .auth-close-btn, .btn-back-arrow { background: rgba(255, 255, 255, 0.1) !important; border: 1px solid var(--red-border) !important; color: #fff !important; font-size: 13px; width: 32px !important; height: 32px !important; border-radius: 50% !important; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 !important; flex: none !important; transition: all 0.2s ease; }
-        .auth-close-btn:hover, .btn-back-arrow:hover { background: rgba(255, 0, 51, 0.4) !important; border-color: #fff !important; box-shadow: 0 0 10px var(--red-main); }
+        .auth-close-btn, .btn-back-arrow { font-size: 13px; width: 32px !important; height: 32px !important; border-radius: 50% !important; padding: 0 !important; flex: none !important; }
 
         .chat-modal-box { height: 90vh; max-height: 780px; padding: 24px !important; display: flex; flex-direction: column; overflow: hidden; background: rgba(15, 5, 8, 0.7) !important; }
         .chat-modal-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 0, 51, 0.3); }
         .header-left, .header-controls { display: flex; align-items: center; gap: 10px; }
         .header-controls { gap: 6px; }
 
-        .btn-hdr-action { font-size: 10px !important; padding: 6px 12px !important; border-radius: 20px !important; flex: none !important; height: auto !important; font-family: 'Orbitron', sans-serif !important; font-weight: 800 !important; }
+        .btn-hdr-action { font-size: 10px !important; padding: 6px 12px !important; border-radius: 20px !important; flex: none !important; height: auto !important; }
 
         .chat-body { flex: 1; overflow-y: auto; padding: 12px; background: rgba(0, 0, 0, 0.45) !important; border: 1.5px solid rgba(255, 0, 51, 0.3) !important; border-radius: 16px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
         .chat-msg-wrapper { display: flex; gap: 8px; width: 100%; align-items: flex-end; }
@@ -214,28 +219,22 @@
         .chat-footer textarea#chatText { flex: 1; height: 40px; background: rgba(0, 0, 0, 0.4) !important; border: 1.5px solid rgba(255, 0, 51, 0.4) !important; border-radius: 12px !important; color: #fff !important; padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; outline: none; resize: none; line-height: 1.3; }
         .chat-footer textarea#chatText:focus { border-color: var(--red-glow) !important; box-shadow: 0 0 10px rgba(255, 0, 51, 0.4); }
 
-        .btn-chat-small { width: 36px !important; height: 36px !important; min-width: 36px !important; max-width: 36px !important; padding: 0 !important; flex: none !important; background: rgba(0, 0, 0, 0.4) !important; border: 1.5px solid rgba(255, 0, 51, 0.4) !important; border-radius: 10px !important; color: #fff !important; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease; }
-        .btn-chat-small:hover { border-color: var(--red-glow) !important; background: rgba(255, 0, 51, 0.25) !important; box-shadow: 0 0 8px var(--red-glow); }
-
-        .btn-send-chat { flex: none !important; width: auto !important; min-width: 90px !important; height: 40px !important; padding: 0 14px !important; border-radius: 35px !important; border: 2px solid var(--red-border) !important; background: var(--red-bg) !important; color: #fff !important; font-family: 'Orbitron', sans-serif !important; font-size: 11px !important; font-weight: 900 !important; letter-spacing: 2px !important; text-transform: uppercase !important; text-shadow: 0 0 6px rgba(255, 255, 255, 0.6) !important; box-shadow: 0 0 12px rgba(255, 42, 85, 0.5), inset 0 0 8px rgba(255, 0, 51, 0.2) !important; cursor: pointer; text-align: center; }
-        .btn-send-chat:hover { background: rgba(255, 0, 51, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 20px #ff2a55, inset 0 0 12px rgba(255, 255, 255, 0.4) !important; }
+        .btn-chat-small { width: 36px !important; height: 36px !important; min-width: 36px !important; max-width: 36px !important; padding: 0 !important; flex: none !important; border-radius: 10px !important; font-size: 14px; }
+        .btn-send-chat { flex: none !important; width: auto !important; min-width: 90px !important; height: 40px !important; padding: 0 14px !important; border-radius: 35px !important; }
 
         .friends-nav-tabs { display: flex; gap: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; margin-bottom: 12px; align-items: center; }
-        .tab-btn { flex: 1; padding: 8px 4px !important; font-size: 10px !important; border-radius: 8px !important; color: #fff !important; background: var(--red-bg) !important; border: 1.5px solid var(--red-border) !important; font-family: 'Orbitron', sans-serif !important; font-weight: 800 !important; letter-spacing: 1px !important; text-transform: uppercase !important; height: 34px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; box-shadow: 0 0 8px rgba(255, 42, 85, 0.3); transition: all 0.2s ease; text-align: center; }
-        .tab-btn:hover { background: rgba(255, 0, 51, 0.35) !important; border-color: #fff !important; box-shadow: 0 0 12px #ff2a55; }
+        .tab-btn { flex: 1; padding: 8px 4px !important; font-size: 10px !important; border-radius: 8px !important; height: 34px !important; }
         .tab-btn.active { background: rgba(255, 0, 51, 0.4) !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 12px var(--red-glow); }
 
         .btn-logout-tab { background: rgba(255, 0, 51, 0.2) !important; border-color: rgba(255, 0, 51, 0.6) !important; }
-        .btn-logout-tab:hover { background: rgba(255, 0, 51, 0.5) !important; border-color: #fff !important; box-shadow: 0 0 12px var(--red-glow) !important; }
 
         .friends-list-container { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
         .section-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--red-glow); letter-spacing: 1.5px; margin: 8px 0 4px 0; font-weight: 800; text-transform: uppercase; text-align: center; }
         .friend-card { display: flex; align-items: center; justify-content: space-between; background: rgba(0, 0, 0, 0.4); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255, 0, 51, 0.3); gap: 10px; }
         .friend-name { font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
         
-        .btn-friend-action { font-size: 8px !important; padding: 4px 8px !important; height: auto !important; min-height: 0 !important; border-radius: 12px !important; flex: none !important; font-family: 'Orbitron', sans-serif !important; letter-spacing: 0.5px !important; text-align: center; }
+        .btn-friend-action { font-size: 8px !important; padding: 4px 8px !important; height: auto !important; min-height: 0 !important; border-radius: 12px !important; flex: none !important; }
         .btn-danger-action { background: rgba(255, 0, 51, 0.3) !important; border-color: rgba(255, 0, 51, 0.7) !important; }
-        .btn-danger-action:hover { background: rgba(255, 0, 51, 0.7) !important; box-shadow: 0 0 10px var(--red-main) !important; }
 
         .checkbox-list { display: flex; flex-direction: column; gap: 6px; max-height: 140px; overflow-y: auto; border: 1px solid rgba(255, 0, 51, 0.3); padding: 8px; border-radius: 8px; background: rgba(0,0,0,0.3); }
         .checkbox-item { display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; cursor: pointer; }
@@ -252,12 +251,11 @@
 
     <main class="container" id="mainContainer">
         <h1>Rumus Flop Kasir</h1>
-        <div class="sub-title">Ultra white Edition</div>
+        <div class="sub-title">red Edition</div>
 
         <div class="label-header">
-            <label for="rawInput">Tempel Log Transaksi</label>
+            <label for="rawInput">Export All Data</label>
         </div>
-        <!-- Menambahkan event listener onkeydown untuk mengarahkan tombol Tab langsung ke btnCopy -->
         <textarea id="rawInput" placeholder="Tempelkan log transaksi di sini..." oninput="konversiLog()" onkeydown="handleRawInputTab(event)"></textarea>
         
         <div class="btn-group" id="btnGroup">
@@ -508,25 +506,21 @@
             }
         });
 
-        /* FUNGSI PINDAH FOKUS TAB DARI TEXTAREA KE TOMBOL SALIN DATA */
         function handleRawInputTab(e) {
             if (e.key === 'Tab') {
-                e.preventDefault(); // Mencegah karakter tab / fokus lompat liar
-                document.getElementById('btnCopy').focus(); // Langsung mengunci fokus ke tombol SALIN DATA
+                e.preventDefault();
+                document.getElementById('btnCopy').focus();
             }
         }
 
-        /* FUNGSI EFEK FLASH & GELOMBANG (RIPPLE) */
         function triggerButtonEffects(btnElement, flashOverlayId, event) {
-            // 1. Efek Flash
             const flashOverlay = document.getElementById(flashOverlayId);
             if (flashOverlay) {
                 flashOverlay.classList.remove('btn-flash-active');
-                void flashOverlay.offsetWidth; // Trigger reflow
+                void flashOverlay.offsetWidth;
                 flashOverlay.classList.add('btn-flash-active');
             }
 
-            // 2. Efek Gelombang (Ripple)
             const circle = document.createElement('span');
             circle.classList.add('ripple-effect');
             
