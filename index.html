@@ -180,7 +180,7 @@
         .msg-avatar, .msg-avatar-video { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--red-glow); flex-shrink: 0; }
         .msg-avatar.admin-avatar, .msg-avatar-video.admin-avatar { border: 2px solid #ffd700 !important; box-shadow: 0 0 10px #ffd700, 0 0 15px var(--red-main) !important; }
 
-        .msg-content-container { display: flex; flex-direction: column; max-width: 80%; width: auto; }
+        .msg-content-container { display: flex; flex-direction: column; max-width: 80%; width: auto; align-items: flex-start; }
         .chat-msg-wrapper.own-msg .msg-content-container { align-items: flex-end; }
         .msg-header-info { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; font-size: 10px; color: rgba(255, 255, 255, 0.7); }
         .chat-msg-wrapper.own-msg .msg-header-info { flex-direction: row-reverse; }
@@ -193,19 +193,19 @@
         .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
         .btn-action-msg { color: #fff; cursor: pointer; font-size: 10px !important; line-height: 1; display: inline-flex; align-items: center; }
 
-        /* PERUBAHAN: Semua gelembung pesan menjadi warna Abu-abu Muda */
+        /* PERUBAHAN: Gelembung mengecil menyesuaikan panjang teks */
         .chat-msg { 
             position: relative; 
             font-family: 'JetBrains Mono', monospace; 
             font-size: 12px; 
-            padding: 8px 12px !important; 
+            padding: 6px 10px !important; 
             border-radius: 12px; 
             user-select: text; 
             word-break: break-word; 
             line-height: 1.35; 
             display: inline-block !important; 
-            width: max-content !important; 
-            max-width: fit-content !important; 
+            width: fit-content !important; 
+            max-width: 100% !important; 
             box-sizing: border-box;
             background: #e0e0e0 !important; 
             color: #1a1a1a !important; 
@@ -246,7 +246,6 @@
 
         .friends-list-container { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
         
-        /* PERUBAHAN: Kartu Teman & Grup bisa diklik langsung */
         .friend-card { 
             display: flex; align-items: center; justify-content: space-between; 
             background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 8px; 
@@ -424,7 +423,7 @@
         </div>
     </section>
 
-    <!-- Modal: Tambah Anggota Ke Grup (Fitur Khusus Admin) -->
+    <!-- Modal: Tambah Anggota Ke Grup -->
     <section class="chat-modal-overlay" id="addMemberModal">
         <div class="auth-modal">
             <div class="auth-modal-content">
@@ -551,14 +550,13 @@
             }
         });
 
-        // PERUBAHAN: Fungsi untuk menghasilkan warna unik yang konsisten berdasarkan nama user
         function getUserColor(username) {
             let hash = 0;
             for (let i = 0; i < username.length; i++) {
                 hash = username.charCodeAt(i) + ((hash << 5) - hash);
             }
             const hue = Math.abs(hash) % 360;
-            return `hsl(${hue}, 85%, 65%)`; // Menggunakan format HSL agar warna selalu terang dan bagus
+            return `hsl(${hue}, 85%, 65%)`;
         }
 
         function handleRawInputTab(e) {
@@ -789,7 +787,6 @@
             if (tab === 'requests') loadFriendRequests();
         }
 
-        /* PERUBAHAN: Menghapus tulisan "GRUP SAYA", "CHAT PRIBADI", serta tombol Buka/Pesan */
         function loadRecentChatsAndGroups() {
             const container = document.getElementById('tabRecentContent');
             container.innerHTML = 'Memuat obrolan...';
@@ -798,7 +795,6 @@
             dbCustomGroups.once('value', (groupSnap) => {
                 let listHTML = '', itemCount = 0;
                 
-                // Tambahkan daftar Grup
                 groupSnap.forEach((child) => {
                     const group = child.val(), groupId = child.key;
                     if (group.members && group.members[activeUser.username]) {
@@ -808,7 +804,6 @@
                     }
                 });
 
-                // Tambahkan daftar Chat Pribadi
                 dbFriends.child(activeUser.username).child('list').once('value', (friendSnap) => {
                     friendSnap.forEach((child) => {
                         itemCount++;
@@ -1025,7 +1020,6 @@
             } else alert("File terlalu besar (Max 2MB)");
         }
 
-        /* PERUBAHAN: Pengaturan Warna User yang Berbeda-beda */
         function renderMessage(key, data) {
             const chatLogs = document.getElementById('chatLogs');
             const currentUser = activeUser ? activeUser.username : '';
@@ -1044,7 +1038,7 @@
             const contentContainer = document.createElement('div');
             contentContainer.className = 'msg-content-container';
 
-            const userColor = getUserColor(username); // Dapatkan warna acak yang unik untuk user ini
+            const userColor = getUserColor(username);
 
             const headerInfoDiv = document.createElement('div');
             headerInfoDiv.className = 'msg-header-info';
