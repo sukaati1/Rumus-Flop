@@ -32,13 +32,11 @@
         @property --border-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
         @keyframes spinBorder { 0% { --border-angle: 0deg; } 100% { --border-angle: 360deg; } }
 
-        /* Animasi Teks Warna Merah-Putih Berjalan */
         @keyframes redWhiteFlow {
             0% { background-position: 0% center; }
             100% { background-position: 200% center; }
         }
 
-        /* Animasi Getar (Shake) untuk Tombol */
         @keyframes btnShake {
             0% { transform: translate(0, 0) scale(1.03); }
             20% { transform: translate(-2px, 1px) scale(1.03); }
@@ -48,7 +46,6 @@
             100% { transform: translate(0, 0) scale(1.03); }
         }
 
-        /* Animasi Pelangi / Warna-Warni pada Border & Glow Tombol */
         @keyframes rainbowGlow {
             0% { border-color: #ff0000 !important; box-shadow: 0 0 15px #ff0000, inset 0 0 10px #ff0000; }
             20% { border-color: #ff9900 !important; box-shadow: 0 0 15px #ff9900, inset 0 0 10px #ff9900; }
@@ -58,7 +55,6 @@
             100% { border-color: #ff0000 !important; box-shadow: 0 0 15px #ff0000, inset 0 0 10px #ff0000; }
         }
 
-        /* Bingkai utama dengan rotasi cahaya MERAH */
         .container, .chat-modal-box {
             position: relative; z-index: 2; background: rgba(15, 5, 8, 0.55) !important; 
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -73,7 +69,6 @@
             -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; animation: spinBorder 4s linear infinite;
         }
 
-        /* Judul Rumus Flop Kasir: Teks Merah-Putih Berjalan */
         h1, .chat-modal-header h1 {
             text-align: center; font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 900; letter-spacing: 4px; margin: 0;
             background: linear-gradient(90deg, #ffffff 0%, #ff0033 25%, #ffffff 50%, #ff0033 75%, #ffffff 100%);
@@ -104,7 +99,6 @@
         .btn-group { display: flex; gap: 16px; margin-bottom: 28px; }
         .btn-group.swapped { flex-direction: row-reverse; }
 
-        /* Style Umum Semua Tombol (Berwarna Merah) */
         button, .btn-flop-style, .btn-send-chat, .btn-chat-small, .btn-hdr-action, .auth-close-btn, .btn-back-arrow, .tab-btn, .badge-count, .btn-swap-pos {
             position: relative; overflow: hidden; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 900;
             cursor: pointer; letter-spacing: 1px; text-transform: uppercase; outline: none; border-radius: 25px; 
@@ -115,7 +109,6 @@
 
         .btn-group button { flex: 1; padding: 12px 16px; }
 
-        /* Efek Hover Kursor: Bergetar & Pelangi */
         button:hover, .btn-flop-style:hover, .btn-send-chat:hover, .btn-chat-small:hover, .btn-hdr-action:hover, .auth-close-btn:hover, .btn-back-arrow:hover, .tab-btn:hover, .badge-count:hover, .btn-swap-pos:hover {
             animation: btnShake 0.15s infinite linear, rainbowGlow 1.5s infinite linear !important;
             color: #ffffff !important;
@@ -129,7 +122,6 @@
             outline: 2px solid var(--red-main); outline-offset: 3px;
         }
 
-        /* Overlay Cahaya Flash Putih */
         .flash-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #ffffff !important;
@@ -158,7 +150,7 @@
         td { color: #fff !important; border-bottom: 1px solid rgba(255, 0, 51, 0.15) !important; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; }
 
         .chat-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 999; display: none; justify-content: center; align-items: center; padding: 15px; }
-        #profileModal, #registerModal, #friendsModal, #createGroupModal { z-index: 1002 !important; }
+        #profileModal, #registerModal, #friendsModal, #createGroupModal, #addMemberModal { z-index: 1002 !important; }
         #imageViewerModal { z-index: 1003 !important; }
 
         .auth-modal { position: relative; width: 100%; max-width: 440px; background: rgba(15, 5, 8, 0.9) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 24px !important; border: 1.5px solid var(--red-border) !important; padding: 0; overflow: hidden; box-shadow: 0 0 25px rgba(255, 0, 51, 0.3); }
@@ -201,10 +193,8 @@
         .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
         .btn-action-msg { color: #fff; cursor: pointer; font-size: 10px !important; line-height: 1; display: inline-flex; align-items: center; }
 
-        /* Style Gelembung Chat Umum */
         .chat-msg { position: relative; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 12px !important; border-radius: 12px; user-select: text; word-break: break-word; line-height: 1.35; display: inline-block !important; width: max-content !important; max-width: fit-content !important; box-sizing: border-box; }
 
-        /* Gelembung Pesan Pengguna Lain (Tone Slate Dark Grey - Santai & Soft) */
         .chat-msg-wrapper.other-msg .chat-msg { 
             background: rgba(35, 39, 47, 0.85) !important; 
             color: #e3e3e3 !important; 
@@ -213,7 +203,6 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
-        /* Gelembung Pesan Sendiri (Tone Burgundy/Dark Maroon - Santai & Aksentuasi) */
         .chat-msg-wrapper.own-msg .chat-msg { 
             background: rgba(120, 20, 40, 0.75) !important; 
             color: #ffffff !important; 
@@ -229,7 +218,6 @@
         .chat-msg-wrapper.own-msg .msg-reactions-container { justify-content: flex-end; }
         .reaction-badge { display: inline-flex; align-items: center; gap: 3px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--red-main); border-radius: 10px; padding: 1px 5px; font-size: 10px; cursor: pointer; color: #fff; }
 
-        /* Kutipan Balasan Pesan */
         .reply-quote-box { padding: 4px 8px; border-radius: 4px; margin-bottom: 6px; font-size: 10px; }
         .chat-msg-wrapper.other-msg .reply-quote-box { background: rgba(0, 0, 0, 0.3); border-left: 2px solid rgba(255, 255, 255, 0.3); }
         .chat-msg-wrapper.own-msg .reply-quote-box { background: rgba(0, 0, 0, 0.25); border-left: 2px solid var(--red-glow); }
@@ -425,6 +413,26 @@
         </div>
     </section>
 
+    <!-- Modal: Tambah Anggota Ke Grup (Fitur Khusus Admin) -->
+    <section class="chat-modal-overlay" id="addMemberModal">
+        <div class="auth-modal">
+            <div class="auth-modal-content">
+                <div class="auth-header">
+                    <button class="btn-back-arrow" onclick="closeModal('addMemberModal')" title="Kembali">⬅️</button>
+                    <h1 style="font-size: 18px;">TAMBAH ANGGOTA</h1>
+                    <button class="auth-close-btn" onclick="closeModal('addMemberModal')">❌</button>
+                </div>
+                <div class="auth-form">
+                    <div class="auth-input-group">
+                        <label>PILIH ANGGOTA BARU</label>
+                        <div class="checkbox-list" id="addMemberChecklist"></div>
+                    </div>
+                    <button class="btn-flop-style" style="margin-top: 6px;" onclick="submitAddMembersToGroup()">TAMBAHKAN</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Modal: Navigasi Teman/Obrolan -->
     <section class="chat-modal-overlay" id="friendsModal">
         <div class="auth-modal">
@@ -464,6 +472,7 @@
                     <h1 id="chatTitleHeader" style="font-size: 18px;">T'CHAT</h1>
                 </div>
                 <div class="header-controls">
+                    <button class="btn-hdr-action btn-flop-style" id="btnAddMember" style="display:none;" onclick="openAddMemberModal()">➕ ANGGOTA</button>
                     <button class="btn-hdr-action btn-flop-style" id="btnClearChat" onclick="clearAllChat()">RESET</button>
                     <button class="auth-close-btn" onclick="closeTeamChat()">❌</button>
                 </div>
@@ -509,7 +518,7 @@
 
     <script>
         const NAMA_ADMIN_RESMI = "JAKA SEMBUNG";
-        let hasilTeksUntukDisalin = "", selectedReplyData = null, activeUser = null, tempEditAvatar = "", isChatOpen = false, windowTargetMsgKeyForReaction = null, currentChatPath = null, sessionListenerRef = null;
+        let hasilTeksUntukDisalin = "", selectedReplyData = null, activeUser = null, tempEditAvatar = "", isChatOpen = false, windowTargetMsgKeyForReaction = null, currentChatPath = null, sessionListenerRef = null, currentActiveGroupId = null;
 
         if (!firebase.apps.length) {
             firebase.initializeApp({ databaseURL: "https://kasir-flop-chat-default-rtdb.asia-southeast1.firebasedatabase.app/" });
@@ -531,7 +540,6 @@
             }
         });
 
-        // Pindah fokus kursor ke tombol SALIN DATA secara otomatis saat menekan TAB dari textarea
         function handleRawInputTab(e) {
             if (e.key === 'Tab') {
                 e.preventDefault();
@@ -539,7 +547,6 @@
             }
         }
 
-        // Memicu Efek Flash Putih & Efek Ripple
         function triggerButtonEffects(btnElement, flashOverlayId, event) {
             const flashOverlay = document.getElementById(flashOverlayId);
             if (flashOverlay) {
@@ -662,7 +669,7 @@
             if (dbChat) dbChat.off();
             isChatOpen = false; activeUser = null;
             localStorage.removeItem('flop_chat_active_user');
-            ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
+            ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal', 'addMemberModal'].forEach(closeModal);
             document.getElementById('mainContainer').style.display = 'block';
             alert("⚠️ Akun Anda telah login di perangkat/browser lain. Anda telah dikeluarkan secara otomatis.");
         }
@@ -824,6 +831,56 @@
             });
         }
 
+        /* --- FITUR KHUSUS ADMIN: MENAMBAHKAN ANGGOTA BARU KE GRUP YAG SUDAH ADA --- */
+        function openAddMemberModal() {
+            if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("Hanya Admin yang dapat menambahkan anggota!");
+            if (!currentActiveGroupId) return alert("Grup tidak ditemukan.");
+
+            const container = document.getElementById('addMemberChecklist');
+            container.innerHTML = 'Memuat user...';
+
+            dbCustomGroups.child(currentActiveGroupId).child('members').once('value', (groupMembersSnap) => {
+                const currentMembers = groupMembersSnap.val() || {};
+                
+                dbAccounts.once('value', (accountsSnap) => {
+                    container.innerHTML = '';
+                    let availableCount = 0;
+                    accountsSnap.forEach((child) => {
+                        const username = child.key;
+                        // Tampilkan hanya user yang belum masuk ke dalam grup
+                        if (!currentMembers[username]) {
+                            availableCount++;
+                            container.innerHTML += `<label class="checkbox-item"><input type="checkbox" value="${username}" class="add-member-checkbox"> ${username}</label>`;
+                        }
+                    });
+                    if (availableCount === 0) {
+                        container.innerHTML = '<span style="font-size:11px; color:#aaa;">Semua pengguna sudah bergabung dalam grup ini.</span>';
+                    }
+                });
+            });
+
+            document.getElementById('addMemberModal').style.display = 'flex';
+        }
+
+        function submitAddMembersToGroup() {
+            if (!currentActiveGroupId) return;
+
+            let selectedUsers = [];
+            document.querySelectorAll('.add-member-checkbox:checked').forEach(cb => selectedUsers.push(cb.value));
+
+            if (selectedUsers.length === 0) return alert("Pilih minimal 1 pengguna untuk ditambahkan!");
+
+            let updateObj = {};
+            selectedUsers.forEach(user => {
+                updateObj[`${currentActiveGroupId}/members/${user}`] = true;
+            });
+
+            dbCustomGroups.update(updateObj).then(() => {
+                alert("✅ Berhasil menambahkan anggota baru!");
+                closeModal('addMemberModal');
+            }).catch(err => alert("Gagal menambahkan anggota: " + err.message));
+        }
+
         function deleteGroup(groupId, groupName) {
             if (activeUser?.username !== NAMA_ADMIN_RESMI) return alert("Hanya Admin yang bisa menghapus grup!");
             if (confirm(`Apakah Anda yakin ingin menghapus grup "${groupName}"?`)) {
@@ -866,15 +923,23 @@
         }
 
         function startPrivateChat(targetUser) {
+            currentActiveGroupId = null;
             closeModal('friendsModal');
             const sorted = [activeUser.username, targetUser].sort();
             document.getElementById('chatTitleHeader').innerText = `👤 ${targetUser}`;
+            document.getElementById('btnAddMember').style.display = 'none';
             switchChatRoom(`direct_messages/${sorted[0]}_${sorted[1]}`);
         }
 
         function startGroupChat(groupId, groupName) {
+            currentActiveGroupId = groupId;
             closeModal('friendsModal');
             document.getElementById('chatTitleHeader').innerText = `👥 ${groupName}`;
+            
+            // Tampilkan tombol Tambah Anggota hanya jika yang membuka adalah Admin Resmi
+            const isAdmin = (activeUser?.username === NAMA_ADMIN_RESMI);
+            document.getElementById('btnAddMember').style.display = isAdmin ? 'inline-flex' : 'none';
+
             switchChatRoom(`group_chats/${groupId}`);
         }
 
@@ -1099,7 +1164,7 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal'].forEach(closeModal);
+                ['imageViewerModal', 'friendsModal', 'registerModal', 'profileModal', 'chatModal', 'authModal', 'createGroupModal', 'addMemberModal'].forEach(closeModal);
             }
         });
     </script>
