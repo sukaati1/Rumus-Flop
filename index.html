@@ -109,10 +109,29 @@
 
         .btn-group button { flex: 1; padding: 12px 16px; }
 
-        button:hover, .btn-flop-style:hover, .btn-send-chat:hover, .btn-chat-small:hover, .btn-hdr-action:hover, .auth-close-btn:hover, .btn-back-arrow:hover, .tab-btn:hover, .badge-count:hover, .btn-swap-pos:hover {
+        /* Efek hover khusus tombol utama (Salin Data & Reset) */
+        .btn-group button:hover {
             animation: btnShake 0.15s infinite linear, rainbowGlow 1.5s infinite linear !important;
             color: #ffffff !important;
             text-shadow: 0 0 8px #ffffff;
+        }
+
+        /* Hover standar tanpa getar untuk semua elemen UI Chat & Modal */
+        .chat-modal-overlay button:hover, 
+        .chat-modal-overlay .btn-flop-style:hover, 
+        .chat-modal-overlay .btn-send-chat:hover, 
+        .chat-modal-overlay .btn-chat-small:hover, 
+        .chat-modal-overlay .btn-hdr-action:hover, 
+        .chat-modal-overlay .auth-close-btn:hover, 
+        .chat-modal-overlay .btn-back-arrow:hover, 
+        .chat-modal-overlay .tab-btn:hover,
+        .badge-count:hover, .btn-swap-pos:hover {
+            background: rgba(255, 0, 51, 0.4) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 15px var(--red-glow), inset 0 0 10px rgba(255, 255, 255, 0.5) !important;
+            color: #ffffff !important;
+            text-shadow: 0 0 8px #ffffff;
+            transform: scale(1.02);
         }
 
         #btnCopy, #btnReset { position: relative; overflow: hidden; }
@@ -803,7 +822,6 @@
             if (tab === 'requests') loadFriendRequests();
         }
 
-        // LOGIKA BARU PEMBACAAN CHAT SECARA EFISIEN DAN CEPAT
         async function loadRecentChatsAndGroups() {
             const container = document.getElementById('tabRecentContent');
             container.innerHTML = 'Memuat obrolan...';
@@ -815,14 +833,12 @@
             try {
                 let chatList = [];
 
-                // 1. Ambil Grup
                 const grpSnap = await dbCustomGroups.once('value');
                 const customGroups = grpSnap.val() || {};
 
                 for (let groupId of Object.keys(customGroups)) {
                     const grp = customGroups[groupId];
                     if (grp.members && grp.members[myUser]) {
-                        // Ambil maksimal 15 pesan terakhir untuk cek unread & waktu
                         const msgSnap = await dbRoot.ref(`group_chats/${groupId}`).limitToLast(15).once('value');
                         const messages = msgSnap.val() || {};
                         
@@ -843,7 +859,6 @@
                     }
                 }
 
-                // 2. Ambil Teman / DM
                 const friendSnap = await dbFriends.child(myUser).child('list').once('value');
                 const friendsObj = friendSnap.val() || {};
 
@@ -868,7 +883,6 @@
                     });
                 }
 
-                // Urutkan obrolan yang paling baru menerima/mengirim pesan di urutan paling atas
                 chatList.sort((a, b) => b.lastTime - a.lastTime);
 
                 let listHTML = '';
