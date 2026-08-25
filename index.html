@@ -901,7 +901,7 @@
         }
 
         function clearAllChat() {
-            if (activeUser?.username === NAMA_ADMIN_RESMI && confirm("Hapus semua pesan di obrolan ini?")) {
+            if (confirm("Hapus semua pesan di obrolan ini?")) {
                 if (dbChat) dbChat.remove(); 
             }
         }
