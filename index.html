@@ -193,7 +193,6 @@
         .chat-msg-wrapper:hover .msg-actions { opacity: 1; }
         .btn-action-msg { color: #fff; cursor: pointer; font-size: 10px !important; line-height: 1; display: inline-flex; align-items: center; }
 
-        /* PERUBAHAN: Gelembung mengecil menyesuaikan panjang teks */
         .chat-msg { 
             position: relative; 
             font-family: 'JetBrains Mono', monospace; 
@@ -254,8 +253,26 @@
         }
         .friend-card:hover { background: rgba(255, 0, 51, 0.15); border-color: var(--red-glow); }
 
-        .friend-name { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+        .friend-name { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; display: flex; align-items: center; gap: 8px; }
         
+        /* CSS UNREAD BADGE TITIK MERAH */
+        .unread-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff0033;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #ff0033, 0 0 12px #ff2a55;
+            animation: pulseDot 1.2s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.9); box-shadow: 0 0 4px #ff0033; }
+            50% { transform: scale(1.25); box-shadow: 0 0 12px #ff0033, 0 0 16px #ff2a55; }
+            100% { transform: scale(0.9); box-shadow: 0 0 4px #ff0033; }
+        }
+
         .btn-friend-action { font-size: 8px !important; padding: 4px 8px !important; height: auto !important; min-height: 0 !important; border-radius: 12px !important; flex: none !important; }
         .btn-danger-action { background: rgba(255, 0, 51, 0.3) !important; border-color: rgba(255, 0, 51, 0.7) !important; }
 
@@ -791,30 +808,85 @@
             const container = document.getElementById('tabRecentContent');
             container.innerHTML = 'Memuat obrolan...';
             const isAdmin = (activeUser?.username === NAMA_ADMIN_RESMI);
+            const myUser = activeUser.username;
 
-            dbCustomGroups.once('value', (groupSnap) => {
-                let listHTML = '', itemCount = 0;
-                
-                groupSnap.forEach((child) => {
-                    const group = child.val(), groupId = child.key;
-                    if (group.members && group.members[activeUser.username]) {
-                        itemCount++;
-                        let deleteBtn = isAdmin ? `<button class="btn-flop-style btn-friend-action btn-danger-action" onclick="event.stopPropagation(); deleteGroup('${groupId}', '${group.name}')">HAPUS</button>` : '';
-                        listHTML += `<div class="friend-card" onclick="startGroupChat('${groupId}', '${group.name}')"><span class="friend-name">👥 ${group.name}</span>${deleteBtn}</div>`;
+            dbRoot.once('value', (rootSnap) => {
+                const rootData = rootSnap.val() || {};
+                const customGroups = rootData.custom_groups || {};
+                const userFriends = (rootData.user_friends && rootData.user_friends[myUser] && rootData.user_friends[myUser].list) || {};
+                const groupChats = rootData.group_chats || {};
+                const directMessages = rootData.direct_messages || {};
+
+                let chatList = [];
+
+                // 1. Ambil Semua Grup User Ini
+                Object.keys(customGroups).forEach(groupId => {
+                    const grp = customGroups[groupId];
+                    if (grp.members && grp.members[myUser]) {
+                        const messages = groupChats[groupId] || {};
+                        let lastTime = 0;
+                        let hasUnread = false;
+
+                        Object.keys(messages).forEach(msgKey => {
+                            const msg = messages[msgKey];
+                            if (msg.timeMs && msg.timeMs > lastTime) lastTime = msg.timeMs;
+                            if (msg.user !== myUser && (!msg.readBy || !msg.readBy[myUser])) {
+                                hasUnread = true;
+                            }
+                        });
+
+                        chatList.push({
+                            type: 'group',
+                            id: groupId,
+                            name: grp.name,
+                            lastTime: lastTime,
+                            hasUnread: hasUnread
+                        });
                     }
                 });
 
-                dbFriends.child(activeUser.username).child('list').once('value', (friendSnap) => {
-                    friendSnap.forEach((child) => {
-                        itemCount++;
-                        listHTML += `<div class="friend-card" onclick="startPrivateChat('${child.key}')"><span class="friend-name">👤 ${child.key}</span></div>`;
+                // 2. Ambil Semua Teman / DM User Ini
+                Object.keys(userFriends).forEach(friendUser => {
+                    const roomKey = [myUser, friendUser].sort().join('_');
+                    const messages = directMessages[roomKey] || {};
+                    let lastTime = 0;
+                    let hasUnread = false;
+
+                    Object.keys(messages).forEach(msgKey => {
+                        const msg = messages[msgKey];
+                        if (msg.timeMs && msg.timeMs > lastTime) lastTime = msg.timeMs;
+                        if (msg.user !== myUser && (!msg.readBy || !msg.readBy[myUser])) {
+                            hasUnread = true;
+                        }
                     });
-                    
-                    if (itemCount === 0) {
-                        listHTML = '<span style="font-size:11px; color:#888; text-align:center;">Belum ada obrolan.</span>';
-                    }
-                    container.innerHTML = listHTML;
+
+                    chatList.push({
+                        type: 'private',
+                        id: friendUser,
+                        name: friendUser,
+                        lastTime: lastTime,
+                        hasUnread: hasUnread
+                    });
                 });
+
+                // Sortir Obrolan: Yang Memiliki Pesan Terbaru (lastTime Terbesar) Naik ke Paling Atas
+                chatList.sort((a, b) => b.lastTime - a.lastTime);
+
+                let listHTML = '';
+                chatList.forEach(item => {
+                    const dotBadge = item.hasUnread ? '<span class="unread-dot" title="Pesan Baru"></span>' : '';
+                    if (item.type === 'group') {
+                        let deleteBtn = isAdmin ? `<button class="btn-flop-style btn-friend-action btn-danger-action" onclick="event.stopPropagation(); deleteGroup('${item.id}', '${item.name}')">HAPUS</button>` : '';
+                        listHTML += `<div class="friend-card" onclick="startGroupChat('${item.id}', '${item.name}')"><span class="friend-name">👥 ${item.name} ${dotBadge}</span>${deleteBtn}</div>`;
+                    } else {
+                        listHTML += `<div class="friend-card" onclick="startPrivateChat('${item.id}')"><span class="friend-name">👤 ${item.name} ${dotBadge}</span></div>`;
+                    }
+                });
+
+                if (chatList.length === 0) {
+                    listHTML = '<span style="font-size:11px; color:#888; text-align:center;">Belum ada obrolan.</span>';
+                }
+                container.innerHTML = listHTML;
             });
         }
 
@@ -967,14 +1039,28 @@
             currentChatPath = path;
             dbChat = dbRoot.ref(path);
             
-            dbChat.limitToLast(60).on('child_added', (snap) => renderMessage(snap.key, snap.val()));
+            dbChat.limitToLast(60).on('child_added', (snap) => {
+                const key = snap.key;
+                const data = snap.val();
+                renderMessage(key, data);
+                markMessageAsRead(key, data);
+            });
+
             dbChat.limitToLast(60).on('child_changed', (snap) => renderMessage(snap.key, snap.val()));
             dbChat.limitToLast(60).on('child_removed', (snap) => {
                 const removedElem = document.getElementById(`msg-${snap.key}`);
                 if (removedElem) removedElem.remove();
             });
+
             document.getElementById('chatModal').style.display = 'flex';
             isChatOpen = true;
+        }
+
+        function markMessageAsRead(msgKey, msgData) {
+            if (!activeUser || !msgData || msgData.user === activeUser.username) return;
+            if (!msgData.readBy || !msgData.readBy[activeUser.username]) {
+                dbChat.child(msgKey).child('readBy').child(activeUser.username).set(true);
+            }
         }
 
         function closeTeamChat() {
@@ -992,8 +1078,16 @@
         function sendChatMessage() {
             const textInput = document.getElementById('chatText'), text = textInput.value.trim();
             if (text) {
+                const now = Date.now();
+                let initialReadBy = {};
+                initialReadBy[activeUser.username] = true;
+
                 dbChat.push({
-                    user: activeUser.username, avatar: activeUser.avatar, msg: text,
+                    user: activeUser.username, 
+                    avatar: activeUser.avatar, 
+                    msg: text,
+                    timeMs: now,
+                    readBy: initialReadBy,
                     timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     ...(selectedReplyData && { replyTo: selectedReplyData })
                 });
@@ -1008,9 +1102,15 @@
             if (file && file.size <= 2 * 1024 * 1024) {
                 const isVideo = file.type.startsWith('video/'), reader = new FileReader();
                 reader.onload = (e) => {
+                    const now = Date.now();
+                    let initialReadBy = {};
+                    initialReadBy[activeUser.username] = true;
+
                     dbChat.push({
                         user: activeUser.username, avatar: activeUser.avatar, mediaData: e.target.result,
                         isMedia: true, mediaType: isVideo ? 'video' : 'image',
+                        timeMs: now,
+                        readBy: initialReadBy,
                         timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                         ...(selectedReplyData && { replyTo: selectedReplyData })
                     });
@@ -1092,8 +1192,14 @@
                 toggleReaction(windowTargetMsgKeyForReaction, stickerChar);
                 windowTargetMsgKeyForReaction = null;
             } else {
+                const now = Date.now();
+                let initialReadBy = {};
+                initialReadBy[activeUser.username] = true;
+
                 dbChat.push({
                     user: activeUser.username, avatar: activeUser.avatar, sticker: stickerChar, isSticker: true,
+                    timeMs: now,
+                    readBy: initialReadBy,
                     timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     ...(selectedReplyData && { replyTo: selectedReplyData })
                 });
