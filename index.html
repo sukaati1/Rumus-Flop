@@ -255,7 +255,6 @@
 
         .friend-name { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; display: flex; align-items: center; gap: 8px; }
         
-        /* CSS UNREAD BADGE TITIK MERAH */
         .unread-dot {
             width: 10px;
             height: 10px;
@@ -804,72 +803,72 @@
             if (tab === 'requests') loadFriendRequests();
         }
 
-        function loadRecentChatsAndGroups() {
+        // LOGIKA BARU PEMBACAAN CHAT SECARA EFISIEN DAN CEPAT
+        async function loadRecentChatsAndGroups() {
             const container = document.getElementById('tabRecentContent');
             container.innerHTML = 'Memuat obrolan...';
-            const isAdmin = (activeUser?.username === NAMA_ADMIN_RESMI);
+            
+            if (!activeUser?.username) return;
             const myUser = activeUser.username;
+            const isAdmin = (myUser === NAMA_ADMIN_RESMI);
 
-            dbRoot.once('value', (rootSnap) => {
-                const rootData = rootSnap.val() || {};
-                const customGroups = rootData.custom_groups || {};
-                const userFriends = (rootData.user_friends && rootData.user_friends[myUser] && rootData.user_friends[myUser].list) || {};
-                const groupChats = rootData.group_chats || {};
-                const directMessages = rootData.direct_messages || {};
-
+            try {
                 let chatList = [];
 
-                // 1. Ambil Semua Grup User Ini
-                Object.keys(customGroups).forEach(groupId => {
+                // 1. Ambil Grup
+                const grpSnap = await dbCustomGroups.once('value');
+                const customGroups = grpSnap.val() || {};
+
+                for (let groupId of Object.keys(customGroups)) {
                     const grp = customGroups[groupId];
                     if (grp.members && grp.members[myUser]) {
-                        const messages = groupChats[groupId] || {};
+                        // Ambil maksimal 15 pesan terakhir untuk cek unread & waktu
+                        const msgSnap = await dbRoot.ref(`group_chats/${groupId}`).limitToLast(15).once('value');
+                        const messages = msgSnap.val() || {};
+                        
                         let lastTime = 0;
                         let hasUnread = false;
 
-                        Object.keys(messages).forEach(msgKey => {
-                            const msg = messages[msgKey];
-                            if (msg.timeMs && msg.timeMs > lastTime) lastTime = msg.timeMs;
-                            if (msg.user !== myUser && (!msg.readBy || !msg.readBy[myUser])) {
+                        Object.keys(messages).forEach(k => {
+                            const m = messages[k];
+                            if (m.timeMs && m.timeMs > lastTime) lastTime = m.timeMs;
+                            if (m.user !== myUser && (!m.readBy || !m.readBy[myUser])) {
                                 hasUnread = true;
                             }
                         });
 
                         chatList.push({
-                            type: 'group',
-                            id: groupId,
-                            name: grp.name,
-                            lastTime: lastTime,
-                            hasUnread: hasUnread
+                            type: 'group', id: groupId, name: grp.name, lastTime, hasUnread
                         });
                     }
-                });
+                }
 
-                // 2. Ambil Semua Teman / DM User Ini
-                Object.keys(userFriends).forEach(friendUser => {
+                // 2. Ambil Teman / DM
+                const friendSnap = await dbFriends.child(myUser).child('list').once('value');
+                const friendsObj = friendSnap.val() || {};
+
+                for (let friendUser of Object.keys(friendsObj)) {
                     const roomKey = [myUser, friendUser].sort().join('_');
-                    const messages = directMessages[roomKey] || {};
+                    const msgSnap = await dbRoot.ref(`direct_messages/${roomKey}`).limitToLast(15).once('value');
+                    const messages = msgSnap.val() || {};
+
                     let lastTime = 0;
                     let hasUnread = false;
 
-                    Object.keys(messages).forEach(msgKey => {
-                        const msg = messages[msgKey];
-                        if (msg.timeMs && msg.timeMs > lastTime) lastTime = msg.timeMs;
-                        if (msg.user !== myUser && (!msg.readBy || !msg.readBy[myUser])) {
+                    Object.keys(messages).forEach(k => {
+                        const m = messages[k];
+                        if (m.timeMs && m.timeMs > lastTime) lastTime = m.timeMs;
+                        if (m.user !== myUser && (!m.readBy || !m.readBy[myUser])) {
                             hasUnread = true;
                         }
                     });
 
                     chatList.push({
-                        type: 'private',
-                        id: friendUser,
-                        name: friendUser,
-                        lastTime: lastTime,
-                        hasUnread: hasUnread
+                        type: 'private', id: friendUser, name: friendUser, lastTime, hasUnread
                     });
-                });
+                }
 
-                // Sortir Obrolan: Yang Memiliki Pesan Terbaru (lastTime Terbesar) Naik ke Paling Atas
+                // Urutkan obrolan yang paling baru menerima/mengirim pesan di urutan paling atas
                 chatList.sort((a, b) => b.lastTime - a.lastTime);
 
                 let listHTML = '';
@@ -884,10 +883,15 @@
                 });
 
                 if (chatList.length === 0) {
-                    listHTML = '<span style="font-size:11px; color:#888; text-align:center;">Belum ada obrolan.</span>';
+                    listHTML = '<span style="font-size:11px; color:#888; text-align:center;">Belum ada obrolan/teman. Tambahkan teman di tab CARI.</span>';
                 }
+
                 container.innerHTML = listHTML;
-            });
+
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<span style="font-size:11px; color:#ff0033; text-align:center;">Gagal memuat obrolan. Silakan coba lagi.</span>';
+            }
         }
 
         function openCreateGroupModal() {
